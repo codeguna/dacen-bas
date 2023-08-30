@@ -24,7 +24,9 @@ with font-awesome or any other icon font library -->
             request()->is('admin/levels/*') ||
             request()->is('admin/levels') ||
             request()->is('admin/knowledges/*') ||
-            request()->is('admin/knowledges')
+            request()->is('admin/knowledges') ||
+            request()->is('admin/functional-positions/*') ||
+            request()->is('admin/functional-positions')
                 ? 'menu-open'
                 : '' }}">
             <a href="#"
@@ -40,7 +42,9 @@ with font-awesome or any other icon font library -->
                 request()->is('admin/levels/*') ||
                 request()->is('admin/levels') ||
                 request()->is('admin/knowledges/*') ||
-                request()->is('admin/knowledges')
+                request()->is('admin/knowledges') ||
+                request()->is('admin/functional-positions/*') ||
+                request()->is('admin/functional-positions')
                     ? 'active'
                     : '' }}">
                 <i class="nav-icon fa fa-cogs"></i>
@@ -69,6 +73,13 @@ with font-awesome or any other icon font library -->
                         class="nav-link {{ request()->is('admin/homebases') || request()->is('admin/homebases/*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-home"></i>
                         <p>Homebase</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.functional-positions.index') }}"
+                        class="nav-link {{ request()->is('admin/functional-positions') || request()->is('admin/functional-positions/*') ? 'active' : '' }}">
+                        <i class="fas fa-angle-double-down nav-icon"></i>
+                        <p>Jabatan Fungsional</p>
                     </a>
                 </li>
                 <li class="nav-item">

@@ -38,4 +38,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route knowledges
     Route::resource('knowledges', 'KnowledgeController');
     //End Route knowledges
+    //Route functional_positions
+    Route::resource('functional-positions', 'FunctionalPositionController');
+    //End Route functional_positions
 });
