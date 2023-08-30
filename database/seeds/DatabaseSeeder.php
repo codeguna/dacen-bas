@@ -1,5 +1,7 @@
 <?php
 
+use Database\Seeders\DepartmensSeeder;
+use Database\Seeders\HomebaseSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,5 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeed::class);
         $this->call(RoleSeed::class);
         $this->call(UserSeed::class);
+        $this->call(HomebaseSeeder::class);
+        $this->call(DepartmensSeeder::class);
     }
 }

@@ -1,4 +1,9 @@
 <?php
+
+use App\Http\Controllers\HomebaseController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::redirect('/', 'admin/home');
 
 Auth::routes(['register' => false]);
@@ -15,4 +20,13 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::delete('roles_mass_destroy', 'Admin\RolesController@massDestroy')->name('roles.mass_destroy');
     Route::resource('users', 'Admin\UsersController');
     Route::delete('users_mass_destroy', 'Admin\UsersController@massDestroy')->name('users.mass_destroy');
+    //Route homebases
+    Route::resource('homebases', 'HomebaseController');
+    //End Route homebases
+    //Route departmens
+    Route::resource('departmens', 'DepartmenController');
+    //End Route departmens
+    //Route university
+    Route::resource('universities', 'UniversityController');
+    //End Route university
 });

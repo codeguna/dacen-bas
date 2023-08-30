@@ -1,5 +1,7 @@
 @extends('layouts.dashboard')
-
+@section('template_title')
+    Welcome
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">

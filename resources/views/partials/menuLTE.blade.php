@@ -13,6 +13,47 @@ with font-awesome or any other icon font library -->
             </a>
         </li>
         <li
+            class="nav-item {{ request()->is('admin/homebases/*') || request()->is('admin/homebases') ? 'menu-open' : '' }}">
+            <a href="#"
+                class="nav-link 
+                {{ request()->is('admin/homebases/*') ||
+                request()->is('admin/homebases') ||
+                request()->is('admin/departmens/*') ||
+                request()->is('admin/departmens') ||
+                request()->is('admin/universities/*') ||
+                request()->is('admin/universities')
+                    ? 'active'
+                    : '' }}">
+                <i class="nav-icon fa fa-cogs"></i>
+                <p>
+                    Setup
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('admin.departmens.index') }}"
+                        class="nav-link {{ request()->is('admin/departmens') || request()->is('admin/departmens/*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-flag"></i>
+                        <p>Departemen</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.homebases.index') }}"
+                        class="nav-link {{ request()->is('admin/homebases') || request()->is('admin/homebases/*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>Homebase</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.universities.index') }}"
+                        class="nav-link {{ request()->is('admin/universities') || request()->is('admin/universities/*') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-university"></i>
+                        <p>Universitas</p>
+                    </a>
+                </li>
+            </ul>
+        <li
             class="nav-item {{ request()->is('admin/roles/*') ||
             request()->is('admin/roles') ||
             request()->is('admin/permissions') ||
