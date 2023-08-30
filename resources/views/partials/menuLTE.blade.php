@@ -13,7 +13,20 @@ with font-awesome or any other icon font library -->
             </a>
         </li>
         <li
-            class="nav-item {{ request()->is('admin/homebases/*') || request()->is('admin/homebases') ? 'menu-open' : '' }}">
+            class="nav-item {{ request()->is('admin/homebases/*') ||
+            request()->is('admin/homebases') ||
+            request()->is('admin/departmens/*') ||
+            request()->is('admin/departmens') ||
+            request()->is('admin/universities/*') ||
+            request()->is('admin/universities') ||
+            request()->is('admin/study-programs/*') ||
+            request()->is('admin/study-programs') ||
+            request()->is('admin/levels/*') ||
+            request()->is('admin/levels') ||
+            request()->is('admin/knowledges/*') ||
+            request()->is('admin/knowledges')
+                ? 'menu-open'
+                : '' }}">
             <a href="#"
                 class="nav-link 
                 {{ request()->is('admin/homebases/*') ||
@@ -21,7 +34,13 @@ with font-awesome or any other icon font library -->
                 request()->is('admin/departmens/*') ||
                 request()->is('admin/departmens') ||
                 request()->is('admin/universities/*') ||
-                request()->is('admin/universities')
+                request()->is('admin/universities') ||
+                request()->is('admin/study-programs/*') ||
+                request()->is('admin/study-programs') ||
+                request()->is('admin/levels/*') ||
+                request()->is('admin/levels') ||
+                request()->is('admin/knowledges/*') ||
+                request()->is('admin/knowledges')
                     ? 'active'
                     : '' }}">
                 <i class="nav-icon fa fa-cogs"></i>
@@ -31,6 +50,13 @@ with font-awesome or any other icon font library -->
                 </p>
             </a>
             <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('admin.knowledges.index') }}"
+                        class="nav-link {{ request()->is('admin/knowledges') || request()->is('admin/knowledges/*') ? 'active' : '' }}">
+                        <i class="fas fa-lightbulb nav-icon"></i>
+                        <p>Bidang Ilmu</p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.departmens.index') }}"
                         class="nav-link {{ request()->is('admin/departmens') || request()->is('admin/departmens/*') ? 'active' : '' }}">
@@ -43,6 +69,20 @@ with font-awesome or any other icon font library -->
                         class="nav-link {{ request()->is('admin/homebases') || request()->is('admin/homebases/*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-home"></i>
                         <p>Homebase</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.levels.index') }}"
+                        class="nav-link {{ request()->is('admin/levels') || request()->is('admin/levels/*') ? 'active' : '' }}">
+                        <i class="fas fa-sort nav-icon"></i>
+                        <p>Jenjang Pendidikan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.study-programs.index') }}"
+                        class="nav-link {{ request()->is('admin/study-programs') || request()->is('admin/study-programs/*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-graduation-cap"></i>
+                        <p>Program Studi</p>
                     </a>
                 </li>
                 <li class="nav-item">

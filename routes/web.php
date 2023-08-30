@@ -29,4 +29,13 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route university
     Route::resource('universities', 'UniversityController');
     //End Route university
+    //Route study_programs
+    Route::resource('study-programs', 'StudyProgramController');
+    //End Route study_programs
+    //Route level
+    Route::resource('levels', 'LevelController');
+    //End Route level
+    //Route knowledges
+    Route::resource('knowledges', 'KnowledgeController');
+    //End Route knowledges
 });

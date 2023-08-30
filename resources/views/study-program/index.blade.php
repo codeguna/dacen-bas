@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    Departmen
+    Study Program
 @endsection
 
 @section('content')
@@ -13,13 +13,13 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Departmen') }}
+                                {{ __('Study Program') }}
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('admin.departmens.create') }}" class="btn btn-primary btn-sm float-right"
-                                    data-placement="left">
-                                    <i class="fa fa-plus-circle"></i>
+                                <a href="{{ route('admin.study-programs.create') }}"
+                                    class="btn btn-primary btn-sm float-right" data-placement="left">
+                                    <i class="fas fa-plus-circle"></i>
                                 </a>
                             </div>
                         </div>
@@ -44,21 +44,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($departmens as $departmen)
+                                    @foreach ($studyPrograms as $studyProgram)
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-                                            <td>{{ $departmen->name }}</td>
-                                            <td>{{ $departmen->short_name }}</td>
+                                            <td>{{ $studyProgram->name }}</td>
+                                            <td>{{ $studyProgram->short_name }}</td>
 
                                             <td>
-                                                <form action="{{ route('admin.departmens.destroy', $departmen->id) }}"
+                                                <form
+                                                    action="{{ route('admin.study-programs.destroy', $studyProgram->id) }}"
                                                     method="POST">
                                                     <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('admin.departmens.show', $departmen->id) }}"><i
+                                                        href="{{ route('admin.study-programs.show', $studyProgram->id) }}"><i
                                                             class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
                                                     <a class="btn btn-sm btn-success"
-                                                        href="{{ route('admin.departmens.edit', $departmen->id) }}"><i
+                                                        href="{{ route('admin.study-programs.edit', $studyProgram->id) }}"><i
                                                             class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
@@ -73,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $departmens->links() !!}
+                {!! $studyPrograms->links() !!}
             </div>
         </div>
     </div>

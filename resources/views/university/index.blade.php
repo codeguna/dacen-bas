@@ -19,7 +19,7 @@
                             <div class="float-right">
                                 <a href="{{ route('admin.universities.create') }}" class="btn btn-primary btn-sm float-right"
                                     data-placement="left">
-                                    {{ __('Create New') }}
+                                    <i class="fa fa-plus-circle"></i>
                                 </a>
                             </div>
                         </div>

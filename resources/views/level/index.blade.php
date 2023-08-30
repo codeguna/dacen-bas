@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    Departmen
+    Jenjang Pendidikan
 @endsection
 
 @section('content')
@@ -13,13 +13,13 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Departmen') }}
+                                Jenjang Pendidikan
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('admin.departmens.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('admin.levels.create') }}" class="btn btn-primary btn-sm float-right"
                                     data-placement="left">
-                                    <i class="fa fa-plus-circle"></i>
+                                    {{ __('Create New') }}
                                 </a>
                             </div>
                         </div>
@@ -38,27 +38,25 @@
                                         <th>No</th>
 
                                         <th>Name</th>
-                                        <th>Short Name</th>
 
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($departmens as $departmen)
+                                    @foreach ($levels as $level)
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-                                            <td>{{ $departmen->name }}</td>
-                                            <td>{{ $departmen->short_name }}</td>
+                                            <td>{{ $level->name }}</td>
 
                                             <td>
-                                                <form action="{{ route('admin.departmens.destroy', $departmen->id) }}"
+                                                <form action="{{ route('admin.levels.destroy', $level->id) }}"
                                                     method="POST">
                                                     <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('admin.departmens.show', $departmen->id) }}"><i
+                                                        href="{{ route('admin.levels.show', $level->id) }}"><i
                                                             class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
                                                     <a class="btn btn-sm btn-success"
-                                                        href="{{ route('admin.departmens.edit', $departmen->id) }}"><i
+                                                        href="{{ route('admin.levels.edit', $level->id) }}"><i
                                                             class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
@@ -73,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $departmens->links() !!}
+                {!! $levels->links() !!}
             </div>
         </div>
     </div>
