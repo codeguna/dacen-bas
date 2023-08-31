@@ -47,4 +47,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route certificate-types
     Route::resource('certificate-types', 'CertificateTypeController');
     //End Route certificate-types
+    //Route educational-staffs
+    Route::resource('educational-staffs', 'EducationalStaffController');
+    Route::get('/educational-staff/inactive/', 'EducationalStaffController@inactive')->name('educational-staff.inactive');
+    //End Route educational-staffs
 });

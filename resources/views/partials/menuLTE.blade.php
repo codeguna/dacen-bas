@@ -13,6 +13,49 @@ with font-awesome or any other icon font library -->
             </a>
         </li>
         <li
+            class="nav-item {{ request()->is('admin/educational-staffs/*') ||
+            request()->is('admin/educational-staffs') ||
+            request()->is('admin/educational-staff/inactive')
+                ? 'menu-open'
+                : '' }}">
+            <a href="#"
+                class="nav-link 
+                {{ request()->is('admin/educational-staffs/*') ||
+                request()->is('admin/educational-staffs') ||
+                request()->is('admin/educational-staff/inactive')
+                    ? 'active'
+                    : '' }}">
+                <i class="nav-icon fa fa-user-check"></i>
+                <p>
+                    Tendik
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('admin.educational-staffs.index') }}"
+                        class="nav-link {{ request()->is('admin/educational-staffs') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-check-circle"></i>
+                        <p>Aktif</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.educational-staff.inactive') }}"
+                        class="nav-link {{ request()->is('admin/educational-staff/inactive') || request()->is('admin/educational-staff/inactive/*') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-times-circle"></i>
+                        <p>Tidak Aktif</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.educational-staffs.create') }}"
+                        class="nav-link {{ request()->is('admin/educational-staffs/create') || request()->is('admin/educational-staffs/create/*') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-user-plus"></i>
+                        <p>Tambah Tendik</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li
             class="nav-item {{ request()->is('admin/homebases/*') ||
             request()->is('admin/homebases') ||
             request()->is('admin/departmens/*') ||
@@ -126,6 +169,7 @@ with font-awesome or any other icon font library -->
                     </a>
                 </li>
             </ul>
+        </li>
         <li
             class="nav-item {{ request()->is('admin/roles/*') ||
             request()->is('admin/roles') ||
