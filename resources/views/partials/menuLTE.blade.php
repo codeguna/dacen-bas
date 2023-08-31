@@ -26,7 +26,11 @@ with font-awesome or any other icon font library -->
             request()->is('admin/knowledges/*') ||
             request()->is('admin/knowledges') ||
             request()->is('admin/functional-positions/*') ||
-            request()->is('admin/functional-positions')
+            request()->is('admin/functional-positions') ||
+            request()->is('admin/functional-ranks/*') ||
+            request()->is('admin/functional-ranks') ||
+            request()->is('admin/certificate-types/*') ||
+            request()->is('admin/certificate-types')
                 ? 'menu-open'
                 : '' }}">
             <a href="#"
@@ -44,7 +48,11 @@ with font-awesome or any other icon font library -->
                 request()->is('admin/knowledges/*') ||
                 request()->is('admin/knowledges') ||
                 request()->is('admin/functional-positions/*') ||
-                request()->is('admin/functional-positions')
+                request()->is('admin/functional-positions') ||
+                request()->is('admin/functional-ranks/*') ||
+                request()->is('admin/functional-ranks') ||
+                request()->is('admin/certificate-types/*') ||
+                request()->is('admin/certificate-types')
                     ? 'active'
                     : '' }}">
                 <i class="nav-icon fa fa-cogs"></i>
@@ -69,6 +77,13 @@ with font-awesome or any other icon font library -->
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.functional-ranks.index') }}"
+                        class="nav-link {{ request()->is('admin/functional-ranks') || request()->is('admin/functional-ranks/*') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-id-badge" aria-hidden="true"></i>
+                        <p>Golongan/Pangkat</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.homebases.index') }}"
                         class="nav-link {{ request()->is('admin/homebases') || request()->is('admin/homebases/*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-home"></i>
@@ -80,6 +95,13 @@ with font-awesome or any other icon font library -->
                         class="nav-link {{ request()->is('admin/functional-positions') || request()->is('admin/functional-positions/*') ? 'active' : '' }}">
                         <i class="fas fa-angle-double-down nav-icon"></i>
                         <p>Jabatan Fungsional</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.certificate-types.index') }}"
+                        class="nav-link {{ request()->is('admin/certificate-types') || request()->is('admin/certificate-types/*') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-certificate" aria-hidden="true"></i>
+                        <p>Jenis Sertifikat</p>
                     </a>
                 </li>
                 <li class="nav-item">

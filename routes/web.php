@@ -40,5 +40,11 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //End Route knowledges
     //Route functional_positions
     Route::resource('functional-positions', 'FunctionalPositionController');
-    //End Route functional_positions
+    //End Route functional_ranks
+    //Route functional_positions
+    Route::resource('functional-ranks', 'FunctionalRankController');
+    //End Route functional_ranks
+    //Route certificate-types
+    Route::resource('certificate-types', 'CertificateTypeController');
+    //End Route certificate-types
 });
