@@ -104,8 +104,8 @@ class EducationalStaffController extends Controller
     public function edit($id)
     {
         $educationalStaff = EducationalStaff::find($id);
-
-        return view('educational-staff.edit', compact('educationalStaff'));
+        $getDepartmensId    = Departmen::orderBy('name','ASC')->pluck('id','name');
+        return view('educational-staff.edit', compact('educationalStaff','getDepartmensId'));
     }
 
     /**

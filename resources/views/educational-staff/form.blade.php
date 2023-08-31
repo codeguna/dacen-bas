@@ -13,7 +13,7 @@ $lastTwoDigits = substr($currentYear, -2);
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('NIP') }}
-                    <input class="form-control" type="text" name="nip" value="{{ $lastTwoDigits }}"
+                    <input class="form-control" type="text" name="nip" value="{{ $educationalStaff->nip }}"
                         {{ $errors->has('nip') ? ' is-invalid' : '' }} required>
                     {!! $errors->first('nip', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
@@ -21,7 +21,8 @@ $lastTwoDigits = substr($currentYear, -2);
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Nama Lengkap') }}
-                    <input type="text" name="name" class="form-control" required>
+                    <input type="text" name="name" class="form-control" value="{{ $educationalStaff->name }}"
+                        required>
                     {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -30,7 +31,7 @@ $lastTwoDigits = substr($currentYear, -2);
                     {{ Form::label('Departemen') }}
                     <select class="form-control" name="department_id"
                         {{ $errors->has('department_id') ? ' is-invalid' : '' }} required>
-                        <option disabled selected>==Pilih Departemen==</option>
+                        <option disabled selected>{{ $educationalStaff->departmens->short_name }}</option>
                         @foreach ($getDepartmensId as $value => $key)
                             <option value="{{ $key }}">{{ $value }}</option>
                         @endforeach
@@ -42,6 +43,7 @@ $lastTwoDigits = substr($currentYear, -2);
                 <div class="form-group">
                     {{ Form::label('Tanggal Masuk') }}
                     <input class="form-control" type="date" name="date_of_entry"
+                        value="{{ $educationalStaff->date_of_entry }}"
                         {{ $errors->has('date_of_entry') ? ' is-invalid' : '' }} required>
                     {!! $errors->first('date_of_entry', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
@@ -54,7 +56,7 @@ $lastTwoDigits = substr($currentYear, -2);
                         {{ $errors->has('date_of_entry') ? ' is-id_card' : '' }} required>
                     {!! $errors->first('id_card', '<div class="invalid-feedback">:message</div>') !!}
                     <small class="text-danger">
-                        *Maksimum ukuran file 2mb,jenis file: *pdf, *jpg, *jpeg
+                        *Maksimum ukuran file 2mb, jenis file: *pdf, *jpg, *jpeg
                     </small>
                 </div>
             </div>
