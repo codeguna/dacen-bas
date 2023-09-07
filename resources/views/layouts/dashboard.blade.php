@@ -28,6 +28,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 
 <body class="hold-transition sidebar-mini">
+    <script src="{{ asset('/js/jquery.js') }}"></script>
     <div class="wrapper">
 
         <!-- Navbar -->

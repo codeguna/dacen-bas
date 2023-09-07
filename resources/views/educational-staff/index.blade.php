@@ -35,7 +35,6 @@
                                         <th>Departemen</th>
                                         <th>Tanggal Masuk</th>
                                         <th>Status</th>
-                                        <th>KTP</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -54,12 +53,6 @@
                                                 @else
                                                     <i class="fa fa-times-circle text-danger"></i> Tidak Aktif
                                                 @endif
-                                            </td>
-                                            <td>
-                                                <a href="{{ url('/data_ktp_tendik/' . $educationalStaff->id_card) }}"
-                                                    target="_blank">
-                                                    <i class="fa fa-paperclip"></i>
-                                                </a>
                                             </td>
 
                                             <td>
