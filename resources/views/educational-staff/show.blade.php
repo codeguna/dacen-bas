@@ -88,7 +88,7 @@
                                         <a href="#">
                                             <i class="fa fa-paperclip" aria-hidden="true"></i> Ijazah
                                         </a>
-                                        <button class="btn btn-sm btn-outline-danger w-100">
+                                        <button class="btn btn-sm btn-outline-danger">
                                             <i class="fa fa-trash" aria-hidden="true"></i> Delete
                                         </button>
                                         <hr>
@@ -112,8 +112,8 @@
                                 </span>
 
                                 <div class="float-right">
-                                    <a href="{{ route('admin.levels.create') }}" class="btn btn-success btn-sm float-right"
-                                        data-placement="left">
+                                    <a href="#" data-toggle="modal" data-target="#createCertificate"
+                                        class="btn btn-success btn-sm float-right" data-placement="left">
                                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                     </a>
                                 </div>
@@ -165,6 +165,7 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
         @include('educational-staff.modal.create-education')
+        @include('educational-staff.modal.create-certificate')
     </section>
     <!-- /.content -->
 @endsection
