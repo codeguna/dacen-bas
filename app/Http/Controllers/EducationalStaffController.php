@@ -42,6 +42,7 @@ class EducationalStaffController extends Controller
     {
         $getDepartmensId    = Departmen::orderBy('name','ASC')->pluck('id','name');
         $educationalStaff   = new EducationalStaff();
+
         return view('educational-staff.create', 
         compact('educationalStaff'
     ,'getDepartmensId'));
@@ -119,11 +120,32 @@ class EducationalStaffController extends Controller
     {
         request()->validate(EducationalStaff::$rules);
 
-        $educationalStaff->update($request->all());
+        $id_card_file   = $request->file('id_card');
+        $nip            = $request->nip;
+        $name           = $request->name;
+        $department_id  = $request->department_id;
+        $date_of_entry  = $request->date_of_entry;
+        $status         = $request->status;
+
+        $name_file = time() . "_" . $id_card_file->getClientOriginalName();
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'data_ktp_tendik';
+        $id_card_file->move($tujuan_upload, $name_file);
+
+        if ($educationalStaff) {
+        $educationalStaff->update([
+            'nip'           => $nip,
+            'name'          => $name,
+            'department_id' => $department_id,
+            'date_of_entry' => $date_of_entry,
+            'status'        => $status,
+            'id_card'       => $name_file,
+        ]);
 
         return redirect()->route('admin.educational-staffs.index')
             ->with('success', 'EducationalStaff updated successfully');
     }
+}
 
     /**
      * @param int $id

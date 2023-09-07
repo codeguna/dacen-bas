@@ -30,7 +30,6 @@ class EducationalStaff extends Model
 		'name' => 'required',
 		'department_id' => 'required',
 		'date_of_entry' => 'required',
-		'status' => 'required',
 		'id_card' => 'required|mimes:pdf,jpg,jpeg|max:2048',
     ];
 

@@ -66,16 +66,25 @@
                                                 <form
                                                     action="{{ route('admin.educational-staffs.destroy', $educationalStaff->id) }}"
                                                     method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('admin.educational-staffs.show', $educationalStaff->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('admin.educational-staffs.edit', $educationalStaff->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    @can('show_tendik')
+                                                        <a class="btn btn-sm btn-primary "
+                                                            href="{{ route('admin.educational-staffs.show', $educationalStaff->id) }}">
+                                                            <i class="fa fa-fw fa-eye"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('update_tendik')
+                                                        <a class="btn btn-sm btn-success"
+                                                            href="{{ route('admin.educational-staffs.edit', $educationalStaff->id) }}">
+                                                            <i class="fa fa-fw fa-edit"></i>
+                                                        </a>
+                                                    @endcan
+
+                                                    @can('delete_tendik')
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                class="fa fa-fw fa-trash"></i></button>
+                                                    @endcan
                                                 </form>
                                             </td>
                                         </tr>

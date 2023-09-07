@@ -14,5 +14,11 @@ class RoleSeed extends Seeder
     {
         $role = Role::create(['name' => 'administrator']);
         $role->givePermissionTo('users_manage');
+        $role->givePermissionTo('delete_tendik');
+
+        $role = Role::create(['name' => 'bas']);
+        $role->givePermissionTo('create_tendik');
+        $role->givePermissionTo('update_tendik');
+        $role->givePermissionTo('show_tendik');
     }
 }

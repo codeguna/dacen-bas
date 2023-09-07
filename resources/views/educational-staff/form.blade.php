@@ -31,7 +31,18 @@ $lastTwoDigits = substr($currentYear, -2);
                     {{ Form::label('Departemen') }}
                     <select class="form-control" name="department_id"
                         {{ $errors->has('department_id') ? ' is-invalid' : '' }} required>
-                        <option disabled selected>{{ $educationalStaff->departmens->short_name }}</option>
+                        <option disabled selected>
+                            @if (request()->is('admin/educational-staffs/create'))
+                        <option disabled selected>
+                            == Pilih Departemen ==
+                        </option>
+                    @else
+                        <option value="{{ $educationalStaff->department_id }}" selected>
+                            {{ $educationalStaff->departmens->short_name }}
+                        </option>
+                        @endif
+
+
                         @foreach ($getDepartmensId as $value => $key)
                             <option value="{{ $key }}">{{ $value }}</option>
                         @endforeach
