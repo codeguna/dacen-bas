@@ -13,6 +13,31 @@
 
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span id="card_title">
+                                    <i class="fa fa-user-circle" aria-hidden="true"></i> Detail TenDik
+                                </span>
+                                <div class="float-right">
+                                    <form action="{{ route('admin.educational-staff.setstatus') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $educationalStaff->id }}">
+                                        @if ($educationalStaff->status == 1)
+                                            <button class="btn btn-danger btn-sm float-right" title="Non Aktifkan TenDik">
+                                                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                            </button>
+                                            <input type="hidden" name="status" value="0">
+                                        @else
+                                            <button class="btn btn-success btn-sm float-right" title="Aktifkan TenDik">
+                                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                            </button>
+                                            <input type="hidden" name="status" value="1">
+                                        @endif
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle"
@@ -28,6 +53,7 @@
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
                                     <b>Tanggal Masuk</b> <a class="float-right">
+                                        <i class="fa fa-calendar-check" aria-hidden="true"></i>
                                         {{ $educationalStaff->date_of_entry }}
                                     </a>
                                 </li>
@@ -72,7 +98,6 @@
                                     </a>
                                 </div>
                             </div>
-
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -98,7 +123,7 @@
                                             <p class="text-muted">
                                                 {{ $education->studyProgram->name }} - {{ $education->knowledge->name }}
                                             </p>
-                                            <a class="text-cyan btn-outline-info"
+                                            <a class="text-cyan"
                                                 href="{{ url('/data_ijazah_tendik/' . $education->certificate) }}"
                                                 target="_blank">
                                                 <i class="fa fa-paperclip" aria-hidden="true"></i> Ijazah
@@ -116,11 +141,8 @@
                                             <hr>
                                         </div>
                                     @endforelse
-
-
                                 </div>
                             </div>
-
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -151,32 +173,57 @@
                                     <!-- The timeline -->
                                     <div class="timeline timeline-inverse">
                                         <!-- timeline time label -->
-                                        <div class="time-label">
-                                            <span class="bg-warning">
-                                                <i class="fa fa-calendar" aria-hidden="true"></i> 10 Feb. 2014
-                                            </span>
-                                        </div>
+
                                         <!-- /.timeline-label -->
                                         <!-- timeline item -->
-                                        <div>
-                                            <i class="fa fa-certificate bg-primary" aria-hidden="true"></i>
-                                            <div class="timeline-item">
-                                                <h3 class="timeline-header">
-                                                    <a class="text-danger" href="#">
-                                                        <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="#">Jenis Sertifikat</a>
-                                                </h3>
-                                                <div class="timeline-body">
-                                                    Keterangan
-                                                </div>
-                                                <div class="timeline-footer">
-                                                    <a href="#" class="text-cyan">
-                                                        <i class="fa fa-paperclip" aria-hidden="true"></i> Sertifikat
-                                                    </a>
+                                        @forelse ($educationalStaff->educationalStaffCertificates as $certificates)
+                                            <div class="time-label">
+                                                <span class="bg-warning">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    {{ $certificates->created_at->format('m-d-Y') }}
+                                                </span>
+                                            </div>
+                                            <div id="certificate">
+                                                <i class="fa fa-certificate bg-primary" aria-hidden="true"></i>
+                                                <div class="timeline-item">
+                                                    <h3 class="timeline-header">
+                                                        <form
+                                                            action="{{ route('admin.educational-staff-certificates.destroy', $certificates->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-xs btn-danger mr-1"
+                                                                onclick="return confirm('Hapus data sertifikat {{ $certificates->certificateType->name }}?')">
+                                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                                            </button><a
+                                                                href="#">{{ $certificates->certificateType->name }}</a>
+                                                        </form>
+
+                                                    </h3>
+                                                    <div class="timeline-body">
+                                                        {{ $certificates->note }}
+                                                    </div>
+                                                    <div class="timeline-footer">
+                                                        <a href="{{ url('/data_sertifikat_tendik/' . $certificates->certificate_attachment) }}"
+                                                            class="text-cyan" target="_blank">
+                                                            <i class="fa fa-paperclip" aria-hidden="true"></i> Sertifikat
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @empty
+                                            <div id="certificate">
+                                                <i class="fa fa-times bg-warning" aria-hidden="true"></i>
+                                                <div class="timeline-item">
+                                                    <h3 class="timeline-header font-weight-bold">
+                                                        Belum ada data Sertifikat
+                                                    </h3>
+                                                    <div class="timeline-body">
+                                                        Silahkan tambahkan dengan klik tombol plus diatas
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforelse
                                         <!-- END timeline item -->
                                     </div>
                                 </div>

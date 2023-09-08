@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CertificateType;
 use App\Models\Departmen;
 use App\Models\EducationalStaff;
 use App\Models\Knowledge;
@@ -100,6 +101,7 @@ class EducationalStaffController extends Controller
         $levels             = Level::orderBy('name','ASC')->pluck('id','name');   
         $studyPrograms      = StudyProgram::orderBy('name','ASC')->pluck('id','name');   
         $knowledges         = Knowledge::orderBy('name','ASC')->pluck('id','name');   
+        $certificateTypes   = CertificateType::orderBy('name','ASC')->pluck('id','name');  
 
         return view('educational-staff.show', 
         compact(
@@ -107,7 +109,8 @@ class EducationalStaffController extends Controller
             'universities',
             'levels',
             'studyPrograms',
-            'knowledges'
+            'knowledges',
+            'certificateTypes'
         ));
     }
 
@@ -178,5 +181,17 @@ class EducationalStaffController extends Controller
 
         return redirect()->route('admin.educational-staffs.index')
             ->with('success', 'Berhasil menghapus data TenDik');
+    }
+
+    public function setStatus(Request $request){
+        $status = $request->status;
+        $id     = $request->id;
+
+        $educationalStaff = EducationalStaff::find($id);
+        $educationalStaff->update([
+            'status'           => $status,
+        ]);
+        
+        return redirect()->back()->with('warning', 'Berhasil memperbarui Status TenDik.');
     }
 }

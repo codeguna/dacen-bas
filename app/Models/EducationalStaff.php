@@ -48,7 +48,7 @@ class EducationalStaff extends Model
      */
     public function educationalStaffCertificates()
     {
-        return $this->hasMany('App\Models\EducationalStaffCertificate', 'educational_staff_id', 'id');
+        return $this->hasMany('App\Models\EducationalStaffCertificate');
     }
     
     /**

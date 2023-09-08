@@ -50,8 +50,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route educational-staffs
     Route::resource('educational-staffs', 'EducationalStaffController');
     Route::get('/educational-staff/inactive/', 'EducationalStaffController@inactive')->name('educational-staff.inactive');
+    Route::post('/educational-staff/setstatus/', 'EducationalStaffController@setStatus')->name('educational-staff.setstatus');
     //End Route educational-staffs
     //Route Educational Staff Education
     Route::resource('educational-staff-educations', 'EducationalStaffEducationController');
     //End Route Educational Staff Education
+    //Route Educational Staff Certificate
+    Route::resource('educational-staff-certificates', 'EducationalStaffCertificateController');
+    //End Route Educational Staff Certificate
 });

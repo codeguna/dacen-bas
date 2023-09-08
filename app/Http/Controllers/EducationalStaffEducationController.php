@@ -128,5 +128,6 @@ class EducationalStaffEducationController extends Controller
         $educationalStaffEducation = EducationalStaffEducation::find($id)->delete();
 
         return redirect()->back()->with('warning', 'Berhasil menghapus data Pendidikan.');
-    }
+    }    
+    
 }

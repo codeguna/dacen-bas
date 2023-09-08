@@ -80,8 +80,8 @@
                             <div class="form-group">
                                 <label>File Ijazah</label>
                                 <input type="file" class="form-control-file" name="certificate" required>
-                                <small id="fileHelpId" class="form-text text-muted">*Jenis file .pdf, .jpg
-                                    maksimal</small>
+                                <small class="form-text text-danger">*Jenis file .pdf, .jpg
+                                    maksimal 2MB</small>
                             </div>
                         </div>
                     </div>
