@@ -13,31 +13,6 @@
 
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
-                        <div class="card-header">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span id="card_title">
-                                    <i class="fa fa-user-circle" aria-hidden="true"></i> Detail TenDik
-                                </span>
-                                <div class="float-right">
-                                    <form action="{{ route('admin.educational-staff.setstatus') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $educationalStaff->id }}">
-                                        @if ($educationalStaff->status == 1)
-                                            <button class="btn btn-danger btn-sm float-right" title="Non Aktifkan TenDik">
-                                                <i class="fa fa-times-circle" aria-hidden="true"></i>
-                                            </button>
-                                            <input type="hidden" name="status" value="0">
-                                        @else
-                                            <button class="btn btn-success btn-sm float-right" title="Aktifkan TenDik">
-                                                <i class="fa fa-check-circle" aria-hidden="true"></i>
-                                            </button>
-                                            <input type="hidden" name="status" value="1">
-                                        @endif
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle"
@@ -49,6 +24,7 @@
                             </h3>
                             <p class="text-muted text-center">
                                 {{ $educationalStaff->departmens->name }}
+                                <br>({{ $educationalStaff->departmens->short_name }})
                             </p>
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
@@ -59,17 +35,35 @@
                                 </li>
                                 <li class="list-group-item">
                                     <b>Status</b> <a class="float-right">
-                                        @if ($educationalStaff->status == 1)
-                                            <div class="badge bg-success">
-                                                <i class="fa fa-check-circle" aria-hidden="true"></i>
-                                                Aktif
-                                            </div>
-                                        @else
-                                            <div class="badge bg-secondary">
-                                                <i class="fa fa-check-times" aria-hidden="true"></i>
-                                                Non Aktif
-                                            </div>
-                                        @endif
+                                        <form id="statusForm" action="{{ route('admin.educational-staff.setstatus') }}"
+                                            method="POST">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $educationalStaff->id }}">
+                                            @if ($educationalStaff->status == 1)
+                                                <div class="form-group">
+                                                    <div
+                                                        class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                        <input type="checkbox" class="custom-control-input" checked
+                                                            id="statusCheckbox">
+                                                        <label class="custom-control-label text-success"
+                                                            for="statusCheckbox">Aktif</label>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="status" value="0">
+                                            @else
+                                                <div class="form-group">
+                                                    <div
+                                                        class="custom-control custom-switch custom-switch-off-secondary custom-switch-on-success">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="statusCheckbox">
+                                                        <label class="custom-control-label text-muted"
+                                                            for="statusCheckbox">Non
+                                                            Aktif</label>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="status" value="1">
+                                            @endif
+                                        </form>
                                     </a>
                                 </li>
                             </ul>
@@ -242,4 +236,15 @@
         @include('educational-staff.modal.create-certificate')
     </section>
     <!-- /.content -->
+@endsection
+@section('scripts')
+    <script>
+        const statusForm = document.getElementById('statusForm');
+        const statusCheckbox = document.getElementById('statusCheckbox');
+
+        statusCheckbox.addEventListener('click', function() {
+            // Submit the form when the checkbox is clicked
+            statusForm.submit();
+        });
+    </script>
 @endsection
