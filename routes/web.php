@@ -51,4 +51,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('educational-staffs', 'EducationalStaffController');
     Route::get('/educational-staff/inactive/', 'EducationalStaffController@inactive')->name('educational-staff.inactive');
     //End Route educational-staffs
+    //Route Educational Staff Education
+    Route::resource('educational-staff-educations', 'EducationalStaffEducationController');
+    //End Route Educational Staff Education
 });

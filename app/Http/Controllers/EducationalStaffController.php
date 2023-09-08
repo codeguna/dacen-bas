@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Departmen;
 use App\Models\EducationalStaff;
+use App\Models\Knowledge;
+use App\Models\Level;
+use App\Models\StudyProgram;
+use App\Models\University;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -91,9 +95,20 @@ class EducationalStaffController extends Controller
      */
     public function show($id)
     {
-        $educationalStaff = EducationalStaff::find($id);
+        $educationalStaff   = EducationalStaff::find($id);
+        $universities       = University::orderBy('name','ASC')->pluck('id','name');   
+        $levels             = Level::orderBy('name','ASC')->pluck('id','name');   
+        $studyPrograms      = StudyProgram::orderBy('name','ASC')->pluck('id','name');   
+        $knowledges         = Knowledge::orderBy('name','ASC')->pluck('id','name');   
 
-        return view('educational-staff.show', compact('educationalStaff'));
+        return view('educational-staff.show', 
+        compact(
+            'educationalStaff',
+            'universities',
+            'levels',
+            'studyPrograms',
+            'knowledges'
+        ));
     }
 
     /**

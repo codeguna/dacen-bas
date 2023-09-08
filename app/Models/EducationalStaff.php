@@ -56,7 +56,7 @@ class EducationalStaff extends Model
      */
     public function educationalStaffEducations()
     {
-        return $this->hasMany('App\Models\EducationalStaffEducation', 'educational_staff_id', 'id');
+        return $this->hasMany('App\Models\EducationalStaffEducation');
     }
 
     public function departmens(){

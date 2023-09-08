@@ -78,21 +78,46 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div id="education">
-                                        <strong>
-                                            <i class="fas fa-book mr-1"></i> Nama PT - Bidang Ilmu - S1
-                                        </strong>
-                                        <p class="text-muted">
-                                            Program Studi - Sistem Informasi
-                                        </p>
-                                        <a href="#">
-                                            <i class="fa fa-paperclip" aria-hidden="true"></i> Ijazah
-                                        </a>
-                                        <button class="btn btn-sm btn-outline-danger">
-                                            <i class="fa fa-trash" aria-hidden="true"></i> Delete
-                                        </button>
-                                        <hr>
-                                    </div>
+                                    @forelse ($educationalStaff->educationalStaffEducations  as $education)
+                                        <div id="education">
+                                            <strong>
+                                                <form
+                                                    action="{{ route('admin.educational-staff-educations.destroy', $education->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-xs btn-danger mr-1"
+                                                        onclick="return confirm('Hapus data pendidikan {{ $education->university->name }}?')">
+                                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                                    </button><i class="fas fa-book"></i>
+                                                    {{ $education->university->name }} -
+                                                    {{ $education->level->name }}
+                                                </form>
+
+                                            </strong>
+                                            <p class="text-muted">
+                                                {{ $education->studyProgram->name }} - {{ $education->knowledge->name }}
+                                            </p>
+                                            <a class="text-cyan btn-outline-info"
+                                                href="{{ url('/data_ijazah_tendik/' . $education->certificate) }}"
+                                                target="_blank">
+                                                <i class="fa fa-paperclip" aria-hidden="true"></i> Ijazah
+                                            </a>
+                                            <hr>
+                                        </div>
+                                    @empty
+                                        <div id="education">
+                                            <strong>
+                                                <i class="fas fa-times mr-1"></i> Belum ada data Pendidikan
+                                            </strong>
+                                            <p class="text-muted">
+                                                Tambahkan dengan klik tombol plus disamping pendidikan
+                                            </p>
+                                            <hr>
+                                        </div>
+                                    @endforelse
+
+
                                 </div>
                             </div>
 
@@ -103,7 +128,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-md-9">
-                    <div class="card">
+                    <div class="card card-warning card-outline">
                         <div class="card-header p-2">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <span id="card_title">
@@ -128,7 +153,7 @@
                                         <!-- timeline time label -->
                                         <div class="time-label">
                                             <span class="bg-warning">
-                                                10 Feb. 2014
+                                                <i class="fa fa-calendar" aria-hidden="true"></i> 10 Feb. 2014
                                             </span>
                                         </div>
                                         <!-- /.timeline-label -->
@@ -136,16 +161,18 @@
                                         <div>
                                             <i class="fa fa-certificate bg-primary" aria-hidden="true"></i>
                                             <div class="timeline-item">
-                                                <h3 class="timeline-header"><a href="#">Jenis Sertifikat</a></h3>
+                                                <h3 class="timeline-header">
+                                                    <a class="text-danger" href="#">
+                                                        <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a href="#">Jenis Sertifikat</a>
+                                                </h3>
                                                 <div class="timeline-body">
                                                     Keterangan
                                                 </div>
                                                 <div class="timeline-footer">
-                                                    <a href="#" class="btn btn-primary btn-sm">
+                                                    <a href="#" class="text-cyan">
                                                         <i class="fa fa-paperclip" aria-hidden="true"></i> Sertifikat
-                                                    </a>
-                                                    <a href="#" class="btn btn-danger btn-sm">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i> Delete
                                                     </a>
                                                 </div>
                                             </div>
