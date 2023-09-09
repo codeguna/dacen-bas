@@ -125,7 +125,7 @@ class EducationalStaffCertificateController extends Controller
         $file = public_path('data_sertifikat_tendik/' . $educationalStaffCertificate->certificate_attachment);
         $img = File::delete($file);
 
-        $educationalStaffCertificate = EducationalStaffCertificate::find($id)->delete();
+            $educationalStaffCertificate = EducationalStaffCertificate::find($id)->delete();
 
         return redirect()->back()->with('warning', 'Berhasil menghapus data Sertifikat.');
     }

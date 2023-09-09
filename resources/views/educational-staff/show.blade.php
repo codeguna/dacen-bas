@@ -24,7 +24,8 @@
                             </h3>
                             <p class="text-muted text-center">
                                 {{ $educationalStaff->departmens->name }}
-                                <br>({{ $educationalStaff->departmens->short_name }})
+                                <br>
+                                ({{ $educationalStaff->departmens->short_name }})
                             </p>
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">

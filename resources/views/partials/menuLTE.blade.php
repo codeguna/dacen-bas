@@ -13,6 +13,55 @@ with font-awesome or any other icon font library -->
             </a>
         </li>
         <li
+            class="nav-item {{ request()->is('admin/lecturers/*') ||
+            request()->is('admin/lecturers') ||
+            request()->is('admin/lecturer/inactive/*') ||
+            request()->is('admin/lecturer/inactive') ||
+            request()->is('admin/lecturer/setstatus/*') ||
+            request()->is('admin/lecturer/setstatus')
+                ? 'menu-open'
+                : '' }}">
+            <a href="#"
+                class="nav-link 
+                {{ request()->is('admin/lecturers/*') ||
+                request()->is('admin/lecturers') ||
+                request()->is('admin/lecturer/inactive/*') ||
+                request()->is('admin/lecturer/inactive') ||
+                request()->is('admin/lecturer/setstatus/*') ||
+                request()->is('admin/lecturer/setstatus')
+                    ? 'active'
+                    : '' }}">
+                <i class="nav-icon fa fa-graduation-cap"></i>
+                <p>
+                    Dosen
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('admin.lecturers.index') }}"
+                        class="nav-link {{ request()->is('admin/lecturers') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-check-circle"></i>
+                        <p>Aktif</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.lecturer.inactive') }}"
+                        class="nav-link {{ request()->is('admin/lecturer/inactive') || request()->is('admin/lecturer/inactive/*') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-times-circle"></i>
+                        <p>Tidak Aktif</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.lecturers.create') }}"
+                        class="nav-link {{ request()->is('admin/lecturers/create') || request()->is('admin/lecturers/create/*') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-user-plus"></i>
+                        <p>Tambah Dosen</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li
             class="nav-item {{ request()->is('admin/educational-staffs/*') ||
             request()->is('admin/educational-staffs') ||
             request()->is('admin/educational-staff/inactive')

@@ -58,4 +58,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route Educational Staff Certificate
     Route::resource('educational-staff-certificates', 'EducationalStaffCertificateController');
     //End Route Educational Staff Certificate
+    //Route Lecturer
+    Route::resource('lecturers', 'LecturerController');
+    Route::get('/lecturer/inactive/', 'LecturerController@inactive')->name('lecturer.inactive');
+    Route::post('/lecturer/setstatus/', 'LecturerController@setStatus')->name('lecturer.setstatus');
+    //End Route Lecturer
 });

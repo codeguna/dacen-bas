@@ -30,7 +30,7 @@
                                     <tr>
                                         <th>No</th>
 
-                                        <th>NIP</th>
+                                        <th>NIP/NITK</th>
                                         <th>Nama</th>
                                         <th>Departemen</th>
                                         <th>Tanggal Masuk</th>

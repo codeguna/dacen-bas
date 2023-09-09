@@ -31,20 +31,19 @@ $lastTwoDigits = substr($currentYear, -2);
                     {{ Form::label('Departemen') }}
                     <select class="form-control" name="department_id"
                         {{ $errors->has('department_id') ? ' is-invalid' : '' }} required>
-                        <option disabled selected>
-                            @if (request()->is('admin/educational-staffs/create'))
-                        <option disabled selected>
-                            == Pilih Departemen ==
-                        </option>
-                    @else
-                        <option value="{{ $educationalStaff->department_id }}" selected>
-                            {{ $educationalStaff->departmens->short_name }}
-                        </option>
+                        @if (request()->is('admin/educational-staffs/create'))
+                            <option disabled selected>
+                                == Pilih Departemen ==
+                            </option>
+                        @else
+                            <option value="{{ $educationalStaff->department_id }}" selected>
+                                {{ $educationalStaff->departmens->short_name }}
+                            </option>
                         @endif
-
-
                         @foreach ($getDepartmensId as $value => $key)
-                            <option value="{{ $key }}">{{ $value }}</option>
+                            <option value="{{ $key }}">
+                                {{ $value }}
+                            </option>
                         @endforeach
                     </select>
                     {!! $errors->first('department_id', '<div class="invalid-feedback">:message</div>') !!}
@@ -64,7 +63,7 @@ $lastTwoDigits = substr($currentYear, -2);
                 <div class="form-group">
                     {{ Form::label('Upload KTP') }} <br>
                     <input class="form-control-file" type="file" name="id_card"
-                        {{ $errors->has('date_of_entry') ? ' is-id_card' : '' }} required>
+                        {{ $errors->has('id_card') ? ' is-id_card' : '' }} required>
                     {!! $errors->first('id_card', '<div class="invalid-feedback">:message</div>') !!}
                     <small class="text-danger">
                         *Maksimum ukuran file 2mb, jenis file: *pdf, *jpg, *jpeg
