@@ -33,7 +33,7 @@ class Lecturer extends Model
 		'homebase_id' => 'required',
 		'appointment_date' => 'required',
 		'status' => 'required',
-		'id_card' => 'required',
+		'id_card' => 'required|mimes:pdf,jpg,jpeg|max:2048',
     ];
 
     protected $perPage = 20;
@@ -55,7 +55,7 @@ class Lecturer extends Model
     }
     public function homebases()
     {
-        return $this->belongsTo('App\Models\Homebase');
+        return $this->belongsTo('App\Models\Homebase','homebase_id');
     }
     
     /**
@@ -71,7 +71,7 @@ class Lecturer extends Model
      */
     public function lecturerEducations()
     {
-        return $this->hasMany('App\Models\LecturerEducation', 'lecturer_id', 'id');
+        return $this->hasMany('App\Models\LecturerEducation');
     }
     
     /**

@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CertificateType;
 use App\Models\Homebase;
+use App\Models\Knowledge;
 use App\Models\Lecturer;
+use App\Models\Level;
+use App\Models\StudyProgram;
+use App\Models\University;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class LecturerController
@@ -55,26 +61,26 @@ class LecturerController extends Controller
     public function store(Request $request)
     {
         request()->validate(Lecturer::$rules);
-        $id_card_file   = $request->file('id_card');
-        $nip            = $request->nip;
-        $name           = $request->name;
-        $department_id  = $request->department_id;
-        $date_of_entry  = $request->date_of_entry;
-        $status         = $request->status;
+        $id_card_file       = $request->file('id_card');        
+        $nidn               = $request->nidn;        
+        $name               = $request->name;        
+        $homebase_id        = $request->homebase_id;      
+        $appointment_date   = $request->appointment_date;         
+        $status             = $request->status;
 
         $name_file = time() . "_" . $id_card_file->getClientOriginalName();
         // isi dengan nama folder tempat kemana file diupload
         $tujuan_upload = 'data_ktp_dosen';
         $id_card_file->move($tujuan_upload, $name_file);
 
-        $educationalStaffs  = Lecturer::create([
-            'nip'           => $nip,
-            'name'          => $name,
-            'department_id' => $department_id,
-            'date_of_entry' => $date_of_entry,
-            'status'        => $status,
-            'id_card'       => $name_file,
-            'created_at'    => now()
+        $lecturers  = Lecturer::create([
+            'nidn'              => $nidn,
+            'name'              => $name,
+            'homebase_id'       => $homebase_id,
+            'appointment_date'  => $appointment_date,
+            'status'            => $status,
+            'id_card'           => $name_file,
+            'created_at'        => now()
         ]);
 
         return redirect()->route('admin.lecturers.index')
@@ -90,8 +96,21 @@ class LecturerController extends Controller
     public function show($id)
     {
         $lecturer = Lecturer::find($id);
+        $universities       = University::orderBy('name','ASC')->pluck('id','name');   
+        $levels             = Level::orderBy('name','ASC')->pluck('id','name');   
+        $studyPrograms      = StudyProgram::orderBy('name','ASC')->pluck('id','name');   
+        $knowledges         = Knowledge::orderBy('name','ASC')->pluck('id','name');   
+        $certificateTypes   = CertificateType::orderBy('name','ASC')->pluck('id','name');  
 
-        return view('lecturer.show', compact('lecturer'));
+        return view('lecturer.show', 
+        compact(
+            'lecturer',
+            'universities',
+            'levels',
+            'studyPrograms',
+            'knowledges',
+            'certificateTypes'
+        ));
     }
 
     /**
@@ -131,8 +150,14 @@ class LecturerController extends Controller
      */
     public function destroy($id)
     {
-        $lecturer = Lecturer::find($id)->delete();
+        
+        $lecturer    = Lecturer::select('id_card')->where('id', $id)->first();
 
+        $file = public_path('data_ktp_dosen/' . $lecturer->id_card);
+        $img = File::delete($file);
+
+        $lecturer = Lecturer::find($id)->delete();
+        
         return redirect()->route('admin.lecturers.index')
             ->with('success', 'Lecturer deleted successfully');
     }

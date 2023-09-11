@@ -40,7 +40,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    {{ Form::label('appointment_date') }}
+                    {{ Form::label('Tanggal Masuk') }}
                     <input class="form-control {{ $errors->has('appointment_date') ? ' is-invalid' : '' }}"
                         type="date" name="appointment_date" value="{{ $lecturer->appointment_date }}" required>
                     {!! $errors->first('appointment_date', '<div class="invalid-feedback">:message</div>') !!}

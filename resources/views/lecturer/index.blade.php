@@ -50,9 +50,17 @@
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $lecturer->nidn }}</td>
                                             <td>{{ $lecturer->name }}</td>
-                                            <td>{{ $lecturer->homebase_id }}</td>
+                                            <td>{{ $lecturer->homebases->name }}</td>
                                             <td>{{ $lecturer->appointment_date }}</td>
-                                            <td>{{ $lecturer->status }}</td>
+                                            <td>
+                                                @if ($lecturer->status == 1)
+                                                    <i class="fa fa-check-circle text-success"></i>
+                                                    Aktif
+                                                @else
+                                                    <i class="fa fa-check-circle text-muted"></i>
+                                                    Non Aktif
+                                                @endif
+                                            </td>
                                             <td>
                                                 <form action="{{ route('admin.lecturers.destroy', $lecturer->id) }}"
                                                     method="POST">

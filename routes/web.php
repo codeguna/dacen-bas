@@ -63,4 +63,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/lecturer/inactive/', 'LecturerController@inactive')->name('lecturer.inactive');
     Route::post('/lecturer/setstatus/', 'LecturerController@setStatus')->name('lecturer.setstatus');
     //End Route Lecturer
+    //Route Lecturer Education
+    Route::resource('lecturer-educations', 'LecturerEducationController');
+    //End Route Lecturer Education
 });

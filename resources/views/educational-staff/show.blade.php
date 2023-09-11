@@ -150,7 +150,7 @@
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <span id="card_title">
                                     <a class="nav-link active" href="#timeline" data-toggle="tab">
-                                        <i class="fa fa-check-circle" aria-hidden="true"></i> Daftar Sertifikat</a>
+                                        <i class="fa fa-check-circle" aria-hidden="true"></i> Sertifikat</a>
                                 </span>
 
                                 <div class="float-right">
