@@ -23,13 +23,13 @@
                                 onclick="return confirm('Hapus data inpassing ini {{ $inpassing->inpassing->name }}?')">
                                 <i class="fa fa-minus" aria-hidden="true"></i>
                             </button>
-                            <a href="#">Golongan/Pangkat {{ $inpassing->inpassing->name }}</a>
+                            <a href="#">Golongan/Pangkat: {{ $inpassing->inpassing->name }}</a>
                         </form>
 
                     </h3>
                     <div class="timeline-body">
-                        <p>Tanggal Penetapan: {{ $inpassing->determination_date }}</p>
-                        <p>TMT: {{ $inpassing->tmt }}</p>
+                        <p>Tanggal Penetapan: {{ date('d F Y', strtotime($inpassing->determination_date)) }}</p>
+                        <p>TMT: {{ date('d F Y', strtotime($inpassing->tmt)) }}</p>
                     </div>
                     <div class="timeline-footer">
                         <a href="{{ url('/data_inpassing_dosen/' . $inpassing->inpassing_attachment) }}"

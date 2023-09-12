@@ -28,7 +28,9 @@
 
                     </h3>
                     <div class="timeline-body">
-                        {{ $positions->note }}
+                        <p>Tanggal Penetapan: {{ date('d F Y', strtotime($positions->determination_date)) }}</p>
+                        <p>TMT: {{ date('d F Y', strtotime($positions->tmt)) }}</p>
+                        <p>Angka Kredit: {{ $positions->credit_score }}</p>
                     </div>
                     <div class="timeline-footer">
                         <a href="{{ url('/data_jabfung_dosen/' . $positions->functional_position_attachment) }}"
