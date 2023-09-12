@@ -5,35 +5,35 @@
 
         <!-- /.timeline-label -->
         <!-- timeline item -->
-        @forelse ($lecturer->lecturerCertificates as $certificates)
+        @forelse ($lecturer->lecturerFunctionalPositions as $positions)
             <div class="time-label">
                 <span class="bg-warning">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
-                    {{ $certificates->created_at->format('m-d-Y') }}
+                    {{ $positions->created_at->format('m-d-Y') }}
                 </span>
             </div>
             <div id="certificate">
                 <i class="fa fa-user-check bg-primary" aria-hidden="true"></i>
                 <div class="timeline-item">
                     <h3 class="timeline-header">
-                        <form action="{{ route('admin.educational-staff-certificates.destroy', $certificates->id) }}"
+                        <form action="{{ route('admin.lecturer-functional-positions.destroy', $positions->id) }}"
                             method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-xs btn-danger mr-1"
-                                onclick="return confirm('Hapus data sertifikat {{ $certificates->certificateType->name }}?')">
+                                onclick="return confirm('Hapus data sertifikat {{ $positions->functionalPosition->name }}?')">
                                 <i class="fa fa-minus" aria-hidden="true"></i>
-                            </button><a href="#">{{ $certificates->certificateType->name }}</a>
+                            </button><a href="#">{{ $positions->functionalPosition->name }}</a>
                         </form>
 
                     </h3>
                     <div class="timeline-body">
-                        {{ $certificates->note }}
+                        {{ $positions->note }}
                     </div>
                     <div class="timeline-footer">
-                        <a href="{{ url('/data_sertifikat_tendik/' . $certificates->certificate_attachment) }}"
+                        <a href="{{ url('/data_jabfung_dosen/' . $positions->functional_position_attachment) }}"
                             class="text-cyan" target="_blank">
-                            <i class="fa fa-paperclip" aria-hidden="true"></i> Sertifikat
+                            <i class="fa fa-paperclip" aria-hidden="true"></i> Lampiran
                         </a>
                     </div>
                 </div>

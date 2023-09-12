@@ -34,7 +34,7 @@
                     <div class="timeline-footer">
                         <a href="{{ url('/data_inpassing_dosen/' . $inpassing->inpassing_attachment) }}"
                             class="text-cyan" target="_blank">
-                            <i class="fa fa-paperclip" aria-hidden="true"></i> Sertifikat
+                            <i class="fa fa-paperclip" aria-hidden="true"></i> Lampiran
                         </a>
                     </div>
                 </div>

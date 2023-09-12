@@ -16,7 +16,9 @@
                         <span class="card-title">{{ __('Update') }} Lecturer Functional Position</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('lecturer-functional-positions.update', $lecturerFunctionalPosition->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST"
+                            action="{{ route('admin.lecturer-functional-positions.update', $lecturerFunctionalPosition->id) }}"
+                            role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

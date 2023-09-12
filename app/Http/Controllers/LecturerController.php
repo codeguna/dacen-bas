@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CertificateType;
+use App\Models\FunctionalPosition;
 use App\Models\FunctionalRank;
 use App\Models\Homebase;
 use App\Models\Knowledge;
@@ -97,12 +98,13 @@ class LecturerController extends Controller
     public function show($id)
     {
         $lecturer = Lecturer::find($id);
-        $universities       = University::orderBy('name','ASC')->pluck('id','name');   
-        $levels             = Level::orderBy('name','ASC')->pluck('id','name');   
-        $studyPrograms      = StudyProgram::orderBy('name','ASC')->pluck('id','name');   
-        $knowledges         = Knowledge::orderBy('name','ASC')->pluck('id','name');   
-        $certificateTypes   = CertificateType::orderBy('name','ASC')->pluck('id','name');  
-        $functionalRanks    = FunctionalRank::orderBy('name','ASC')->pluck('id','name'); 
+        $universities           = University::orderBy('name','ASC')->pluck('id','name');   
+        $levels                 = Level::orderBy('name','ASC')->pluck('id','name');   
+        $studyPrograms          = StudyProgram::orderBy('name','ASC')->pluck('id','name');   
+        $knowledges             = Knowledge::orderBy('name','ASC')->pluck('id','name');   
+        $certificateTypes       = CertificateType::orderBy('name','ASC')->pluck('id','name');  
+        $functionalRanks        = FunctionalRank::orderBy('name','ASC')->pluck('id','name'); 
+        $functionalPositions    = FunctionalPosition::orderBy('name','ASC')->pluck('id','name'); 
 
         return view('lecturer.show', 
         compact(
@@ -112,7 +114,8 @@ class LecturerController extends Controller
             'studyPrograms',
             'knowledges',
             'certificateTypes',
-            'functionalRanks'
+            'functionalRanks',
+            'functionalPositions'
         ));
     }
 

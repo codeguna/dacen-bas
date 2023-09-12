@@ -48,7 +48,11 @@ class LecturerFunctionalPosition extends Model
      */
     public function lecturer()
     {
-        return $this->hasOne('App\Models\Lecturer', 'id', 'lecturer_id');
+        return $this->belongsTo('App\Models\Lecturer', 'id', 'lecturer_id');
+    }
+
+    public function functionalPosition(){
+      return $this->belongsTo('App\Models\FunctionalPosition', 'functional_position_id');
     }
     
 

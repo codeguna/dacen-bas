@@ -16,7 +16,8 @@
                         <span class="card-title">{{ __('Create') }} Lecturer Functional Position</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('lecturer-functional-positions.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.lecturer-functional-positions.store') }}" role="form"
+                            enctype="multipart/form-data">
                             @csrf
 
                             @include('lecturer-functional-position.form')

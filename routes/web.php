@@ -72,4 +72,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route Inpassings
     Route::resource('inpassings', 'InpassingController');
     //End Route Inpassings
+    //Route Lecturer Functional Position
+    Route::resource('lecturer-functional-positions', 'LecturerFunctionalPositionController');
+    //End Route Lecturer Functional Position
 });

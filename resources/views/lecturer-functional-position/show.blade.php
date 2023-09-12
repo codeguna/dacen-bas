@@ -14,12 +14,13 @@
                             <span class="card-title">{{ __('Show') }} Lecturer Functional Position</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('lecturer-functional-positions.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('admin.lecturer-functional-positions.index') }}">
+                                {{ __('Back') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
-                        
+
                         <div class="form-group">
                             <strong>Lecturer Id:</strong>
                             {{ $lecturerFunctionalPosition->lecturer_id }}
