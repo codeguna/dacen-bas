@@ -16,7 +16,9 @@
                         <span class="card-title">{{ __('Update') }} Lecturer Certificate</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('lecturer-certificates.update', $lecturerCertificate->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST"
+                            action="{{ route('admin.lecturer-certificates.update', $lecturerCertificate->id) }}"
+                            role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

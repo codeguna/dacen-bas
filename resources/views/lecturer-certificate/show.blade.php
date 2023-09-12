@@ -14,12 +14,13 @@
                             <span class="card-title">{{ __('Show') }} Lecturer Certificate</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('lecturer-certificates.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('admin.lecturer-certificates.index') }}">
+                                {{ __('Back') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
-                        
+
                         <div class="form-group">
                             <strong>Lecturer Id:</strong>
                             {{ $lecturerCertificate->lecturer_id }}

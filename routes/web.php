@@ -66,4 +66,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route Lecturer Education
     Route::resource('lecturer-educations', 'LecturerEducationController');
     //End Route Lecturer Education
+    //Route Lecturer Certificate
+    Route::resource('lecturer-certificates', 'LecturerCertificateController');
+    //End Route Lecturer Certificate
 });

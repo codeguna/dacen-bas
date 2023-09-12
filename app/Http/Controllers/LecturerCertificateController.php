@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LecturerCertificate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class LecturerCertificateController
@@ -44,11 +45,29 @@ class LecturerCertificateController extends Controller
     public function store(Request $request)
     {
         request()->validate(LecturerCertificate::$rules);
+        $certificate_attachment_file    = $request->file('certificate_attachment');
+        
+        $lecturer_id                    = $request->lecturer_id;
+        $certificate_types_id           = $request->certificate_types_id;
+        $certificate_date               = $request->certificate_date;
+        $note                           = $request->note;
+        
 
-        $lecturerCertificate = LecturerCertificate::create($request->all());
+        $name_file = time() . "_" . $certificate_attachment_file->getClientOriginalName();
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'data_sertifikat_dosen';
+        $certificate_attachment_file->move($tujuan_upload, $name_file);
 
-        return redirect()->route('lecturer-certificates.index')
-            ->with('success', 'LecturerCertificate created successfully.');
+        $lecturerCertificate            = LecturerCertificate::create([
+            'lecturer_id'               => $lecturer_id,
+            'certificate_types_id'      => $certificate_types_id,
+            'certificate_date'          => $certificate_date,
+            'note'                      => $note,
+            'certificate_attachment'    => $name_file,
+            'created_at'                => now()
+        ]);
+
+        return redirect()->back()->with('success', 'Berhasil menambahkan data Sertifikat baru.');
     }
 
     /**
@@ -90,7 +109,7 @@ class LecturerCertificateController extends Controller
 
         $lecturerCertificate->update($request->all());
 
-        return redirect()->route('lecturer-certificates.index')
+        return redirect()->route('admin.lecturer-certificates.index')
             ->with('success', 'LecturerCertificate updated successfully');
     }
 
@@ -101,9 +120,14 @@ class LecturerCertificateController extends Controller
      */
     public function destroy($id)
     {
-        $lecturerCertificate = LecturerCertificate::find($id)->delete();
+        $lecturerCertificate = LecturerCertificate::select('certificate_attachment')->where('id', $id)->first();
+        
+        $file                   = public_path('data_sertifikat_dosen/' . $lecturerCertificate->certificate_attachment);
 
-        return redirect()->route('lecturer-certificates.index')
-            ->with('success', 'LecturerCertificate deleted successfully');
+     $img                            = File::delete($file);
+
+        $lecturerCertificate    = LecturerCertificate::find($id)->delete();
+
+        return redirect()->back()->with('warning', 'Berhasil menghapus data Sertifikat.');
     }
 }

@@ -16,7 +16,8 @@
                         <span class="card-title">{{ __('Create') }} Lecturer Certificate</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('lecturer-certificates.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.lecturer-certificates.store') }}" role="form"
+                            enctype="multipart/form-data">
                             @csrf
 
                             @include('lecturer-certificate.form')

@@ -153,7 +153,7 @@
                                                 data-toggle="tab">Jabatan Fungsional</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#inpassing"
                                                 data-toggle="tab">Inpassing</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#certificate"
+                                        <li class="nav-item"><a class="nav-link" href="#certificateLecturer"
                                                 data-toggle="tab">Sertifikat</a></li>
                                     </ul>
                                 </span>
@@ -165,17 +165,17 @@
                                             <i class="fa fa-cog" aria-hidden="true"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a href="#" data-toggle="modal" data-target="#createEducation"
-                                                class="dropdown-item" type="button">
+                                            <a href="#" data-toggle="modal" data-target="#" class="dropdown-item"
+                                                type="button">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                                 JabFung
                                             </a>
-                                            <a href="#" data-toggle="modal" data-target="#createEducation"
-                                                class="dropdown-item" type="button">
+                                            <a href="#" data-toggle="modal" data-target="#" class="dropdown-item"
+                                                type="button">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                                 Inpassing
                                             </a>
-                                            <a href="#" data-toggle="modal" data-target="#createEducation"
+                                            <a href="#" data-toggle="modal" data-target="#createCertificate"
                                                 class="dropdown-item" type="button">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                                 Sertifikat
@@ -188,180 +188,9 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 <!-- /.tab-pane -->
-                                <div class="tab-pane active" id="functional">
-                                    <!-- The timeline -->
-                                    <div class="timeline timeline-inverse">
-                                        <!-- timeline time label -->
-
-                                        <!-- /.timeline-label -->
-                                        <!-- timeline item -->
-                                        @forelse ($lecturer->lecturerCertificates as $certificates)
-                                            <div class="time-label">
-                                                <span class="bg-warning">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                    {{ $certificates->created_at->format('m-d-Y') }}
-                                                </span>
-                                            </div>
-                                            <div id="certificate">
-                                                <i class="fa fa-certificate bg-primary" aria-hidden="true"></i>
-                                                <div class="timeline-item">
-                                                    <h3 class="timeline-header">
-                                                        <form
-                                                            action="{{ route('admin.educational-staff-certificates.destroy', $certificates->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-xs btn-danger mr-1"
-                                                                onclick="return confirm('Hapus data sertifikat {{ $certificates->certificateType->name }}?')">
-                                                                <i class="fa fa-minus" aria-hidden="true"></i>
-                                                            </button><a
-                                                                href="#">{{ $certificates->certificateType->name }}</a>
-                                                        </form>
-
-                                                    </h3>
-                                                    <div class="timeline-body">
-                                                        {{ $certificates->note }}
-                                                    </div>
-                                                    <div class="timeline-footer">
-                                                        <a href="{{ url('/data_sertifikat_tendik/' . $certificates->certificate_attachment) }}"
-                                                            class="text-cyan" target="_blank">
-                                                            <i class="fa fa-paperclip" aria-hidden="true"></i> Sertifikat
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @empty
-                                            <div id="certificate">
-                                                <i class="fa fa-times bg-warning" aria-hidden="true"></i>
-                                                <div class="timeline-item">
-                                                    <h3 class="timeline-header font-weight-bold">
-                                                        Belum ada data Jabatan Fungsional
-                                                    </h3>
-                                                    <div class="timeline-body">
-                                                        Silahkan tambahkan dengan klik tombol plus diatas
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforelse
-                                        <!-- END timeline item -->
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="inpassing">
-                                    <!-- The timeline -->
-                                    <div class="timeline timeline-inverse">
-                                        <!-- timeline time label -->
-
-                                        <!-- /.timeline-label -->
-                                        <!-- timeline item -->
-                                        @forelse ($lecturer->lecturerCertificates as $certificates)
-                                            <div class="time-label">
-                                                <span class="bg-warning">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                    {{ $certificates->created_at->format('m-d-Y') }}
-                                                </span>
-                                            </div>
-                                            <div id="certificate">
-                                                <i class="fa fa-certificate bg-primary" aria-hidden="true"></i>
-                                                <div class="timeline-item">
-                                                    <h3 class="timeline-header">
-                                                        <form
-                                                            action="{{ route('admin.educational-staff-certificates.destroy', $certificates->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-xs btn-danger mr-1"
-                                                                onclick="return confirm('Hapus data sertifikat {{ $certificates->certificateType->name }}?')">
-                                                                <i class="fa fa-minus" aria-hidden="true"></i>
-                                                            </button><a
-                                                                href="#">{{ $certificates->certificateType->name }}</a>
-                                                        </form>
-
-                                                    </h3>
-                                                    <div class="timeline-body">
-                                                        {{ $certificates->note }}
-                                                    </div>
-                                                    <div class="timeline-footer">
-                                                        <a href="{{ url('/data_sertifikat_tendik/' . $certificates->certificate_attachment) }}"
-                                                            class="text-cyan" target="_blank">
-                                                            <i class="fa fa-paperclip" aria-hidden="true"></i> Sertifikat
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @empty
-                                            <div id="certificate">
-                                                <i class="fa fa-times bg-warning" aria-hidden="true"></i>
-                                                <div class="timeline-item">
-                                                    <h3 class="timeline-header font-weight-bold">
-                                                        Belum ada data Inpassing
-                                                    </h3>
-                                                    <div class="timeline-body">
-                                                        Silahkan tambahkan dengan klik tombol plus diatas
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforelse
-                                        <!-- END timeline item -->
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="certificateLecturer">
-                                    <!-- The timeline -->
-                                    <div class="timeline timeline-inverse">
-                                        <!-- timeline time label -->
-
-                                        <!-- /.timeline-label -->
-                                        <!-- timeline item -->
-                                        @forelse ($lecturer->lecturerCertificates as $certificates)
-                                            <div class="time-label">
-                                                <span class="bg-warning">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                    {{ $certificates->created_at->format('m-d-Y') }}
-                                                </span>
-                                            </div>
-                                            <div id="certificate">
-                                                <i class="fa fa-certificate bg-primary" aria-hidden="true"></i>
-                                                <div class="timeline-item">
-                                                    <h3 class="timeline-header">
-                                                        <form
-                                                            action="{{ route('admin.educational-staff-certificates.destroy', $certificates->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-xs btn-danger mr-1"
-                                                                onclick="return confirm('Hapus data sertifikat {{ $certificates->certificateType->name }}?')">
-                                                                <i class="fa fa-minus" aria-hidden="true"></i>
-                                                            </button><a
-                                                                href="#">{{ $certificates->certificateType->name }}</a>
-                                                        </form>
-
-                                                    </h3>
-                                                    <div class="timeline-body">
-                                                        {{ $certificates->note }}
-                                                    </div>
-                                                    <div class="timeline-footer">
-                                                        <a href="{{ url('/data_sertifikat_tendik/' . $certificates->certificate_attachment) }}"
-                                                            class="text-cyan" target="_blank">
-                                                            <i class="fa fa-paperclip" aria-hidden="true"></i> Sertifikat
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @empty
-                                            <div id="certificate">
-                                                <i class="fa fa-times bg-warning" aria-hidden="true"></i>
-                                                <div class="timeline-item">
-                                                    <h3 class="timeline-header font-weight-bold">
-                                                        Belum ada data Sertifikat
-                                                    </h3>
-                                                    <div class="timeline-body">
-                                                        Silahkan tambahkan dengan klik tombol plus diatas
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforelse
-                                        <!-- END timeline item -->
-                                    </div>
-                                </div>
+                                @include('lecturer.tab.jabfung')
+                                @include('lecturer.tab.inpassing')
+                                @include('lecturer.tab.sertifikat')
                                 <!-- /.tab-pane -->
                             </div>
                             <!-- /.tab-content -->
@@ -374,7 +203,7 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
         @include('lecturer.modal.create-education')
-        {{-- @include('educational-staff.modal.create-certificate') --}}
+        @include('lecturer.modal.create-certificate')
     </section>
     <!-- /.content -->
 @endsection

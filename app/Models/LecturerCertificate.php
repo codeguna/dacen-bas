@@ -46,7 +46,12 @@ class LecturerCertificate extends Model
      */
     public function lecturer()
     {
-        return $this->hasOne('App\Models\Lecturer', 'id', 'lecturer_id');
+        return $this->belongsTo('App\Models\Lecturer', 'lecturer_id');
+    }
+
+    public function certificateType()
+    {
+        return $this->belongsTo('App\Models\CertificateType','certificate_types_id');
     }
     
 

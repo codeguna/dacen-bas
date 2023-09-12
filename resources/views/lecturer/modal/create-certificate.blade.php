@@ -1,8 +1,7 @@
 <div class="modal fade" id="createCertificate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form method="post" action="{{ route('admin.educational-staff-certificates.store') }}"
-            enctype="multipart/form-data">
+        <form method="post" action="{{ route('admin.lecturer-certificates.store') }}" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Tambah Sertifikat Baru</h5>
@@ -10,7 +9,7 @@
                 <div class="modal-body">
 
                     {{ csrf_field() }}
-                    <input type="hidden" name="educational_staff_id" value="{{ $educationalStaff->id }}">
+                    <input type="hidden" name="lecturer_id" value="{{ $lecturer->id }}">
                     <div class="row clearfix">
                         <div class="col-md-6">
                             <div class="form-group">
