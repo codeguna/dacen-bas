@@ -5,33 +5,34 @@
 
         <!-- /.timeline-label -->
         <!-- timeline item -->
-        @forelse ($lecturer->lecturerCertificates as $certificates)
+        @forelse ($lecturer->inpassings as $inpassing)
             <div class="time-label">
                 <span class="bg-warning">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
-                    {{ $certificates->created_at->format('m-d-Y') }}
+                    {{ $inpassing->created_at->format('m-d-Y') }}
                 </span>
             </div>
             <div id="certificate">
-                <i class="fa fa-certificate bg-primary" aria-hidden="true"></i>
+                <i class="fa fa-id-badge bg-primary" aria-hidden="true"></i>
                 <div class="timeline-item">
                     <h3 class="timeline-header">
-                        <form action="{{ route('admin.educational-staff-certificates.destroy', $certificates->id) }}"
-                            method="POST">
+                        <form action="{{ route('admin.inpassings.destroy', $inpassing->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-xs btn-danger mr-1"
-                                onclick="return confirm('Hapus data sertifikat {{ $certificates->certificateType->name }}?')">
+                                onclick="return confirm('Hapus data inpassing ini {{ $inpassing->inpassing->name }}?')">
                                 <i class="fa fa-minus" aria-hidden="true"></i>
-                            </button><a href="#">{{ $certificates->certificateType->name }}</a>
+                            </button>
+                            <a href="#">Golongan/Pangkat {{ $inpassing->inpassing->name }}</a>
                         </form>
 
                     </h3>
                     <div class="timeline-body">
-                        {{ $certificates->note }}
+                        <p>Tanggal Penetapan: {{ $inpassing->determination_date }}</p>
+                        <p>TMT: {{ $inpassing->tmt }}</p>
                     </div>
                     <div class="timeline-footer">
-                        <a href="{{ url('/data_sertifikat_tendik/' . $certificates->certificate_attachment) }}"
+                        <a href="{{ url('/data_inpassing_dosen/' . $inpassing->inpassing_attachment) }}"
                             class="text-cyan" target="_blank">
                             <i class="fa fa-paperclip" aria-hidden="true"></i> Sertifikat
                         </a>

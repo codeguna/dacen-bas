@@ -170,8 +170,8 @@
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                                 JabFung
                                             </a>
-                                            <a href="#" data-toggle="modal" data-target="#" class="dropdown-item"
-                                                type="button">
+                                            <a href="#" data-toggle="modal" data-target="#createInpassing"
+                                                class="dropdown-item" type="button">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                                 Inpassing
                                             </a>
@@ -204,6 +204,7 @@
         </div><!-- /.container-fluid -->
         @include('lecturer.modal.create-education')
         @include('lecturer.modal.create-certificate')
+        @include('lecturer.modal.create-inpassing')
     </section>
     <!-- /.content -->
 @endsection

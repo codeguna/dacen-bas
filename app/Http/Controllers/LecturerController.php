@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CertificateType;
+use App\Models\FunctionalRank;
 use App\Models\Homebase;
 use App\Models\Knowledge;
 use App\Models\Lecturer;
@@ -101,6 +102,7 @@ class LecturerController extends Controller
         $studyPrograms      = StudyProgram::orderBy('name','ASC')->pluck('id','name');   
         $knowledges         = Knowledge::orderBy('name','ASC')->pluck('id','name');   
         $certificateTypes   = CertificateType::orderBy('name','ASC')->pluck('id','name');  
+        $functionalRanks    = FunctionalRank::orderBy('name','ASC')->pluck('id','name'); 
 
         return view('lecturer.show', 
         compact(
@@ -109,7 +111,8 @@ class LecturerController extends Controller
             'levels',
             'studyPrograms',
             'knowledges',
-            'certificateTypes'
+            'certificateTypes',
+            'functionalRanks'
         ));
     }
 

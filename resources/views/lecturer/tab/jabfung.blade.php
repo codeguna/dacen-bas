@@ -13,7 +13,7 @@
                 </span>
             </div>
             <div id="certificate">
-                <i class="fa fa-certificate bg-primary" aria-hidden="true"></i>
+                <i class="fa fa-user-check bg-primary" aria-hidden="true"></i>
                 <div class="timeline-item">
                     <h3 class="timeline-header">
                         <form action="{{ route('admin.educational-staff-certificates.destroy', $certificates->id) }}"

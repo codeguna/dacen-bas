@@ -69,4 +69,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route Lecturer Certificate
     Route::resource('lecturer-certificates', 'LecturerCertificateController');
     //End Route Lecturer Certificate
+    //Route Inpassings
+    Route::resource('inpassings', 'InpassingController');
+    //End Route Inpassings
 });
