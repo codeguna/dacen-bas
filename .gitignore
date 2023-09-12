@@ -6,6 +6,7 @@
 /public/data_ktp_dosen
 /public/data_ijazah_dosen
 /public/data_sertifikat_dosen
+/public/data_jabfung_dosen
 /public/storage
 /storage/*.key
 /vendor
