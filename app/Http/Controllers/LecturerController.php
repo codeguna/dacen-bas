@@ -13,6 +13,7 @@ use App\Models\StudyProgram;
 use App\Models\University;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class LecturerController
@@ -61,8 +62,17 @@ class LecturerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        request()->validate(Lecturer::$rules);
+    {        
+        $validator = Validator::make($request->all(), Lecturer::$rules);
+        if ($validator->fails()) {
+            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
+        }
+        
         $id_card_file       = $request->file('id_card');        
         $nidn               = $request->nidn;        
         $name               = $request->name;        
@@ -128,8 +138,9 @@ class LecturerController extends Controller
     public function edit($id)
     {
         $lecturer = Lecturer::find($id);
+        $homebases  = Homebase::orderBy('name')->pluck('id','name');
 
-        return view('lecturer.edit', compact('lecturer'));
+        return view('lecturer.edit', compact('lecturer','homebases'));
     }
 
     /**
@@ -141,13 +152,42 @@ class LecturerController extends Controller
      */
     public function update(Request $request, Lecturer $lecturer)
     {
-        request()->validate(Lecturer::$rules);
+        $validator = Validator::make($request->all(), Lecturer::$rules);
+        if ($validator->fails()) {
+            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
+        }
 
-        $lecturer->update($request->all());
+        $id_card_file       = $request->file('id_card');
+        $nidn               = $request->nidn;
+        $name               = $request->name;
+        $homebase_id        = $request->homebase_id;
+        $appointment_date   = $request->appointment_date;
+        $status             = $request->status;
+
+        $name_file = time() . "_" . $id_card_file->getClientOriginalName();
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'data_ktp_dosen';
+        $id_card_file->move($tujuan_upload, $name_file);
+
+        if ($lecturer) {
+        $lecturer->update([
+            'nidn'              => $nidn,
+            'name'              => $name,
+            'homebase_id'       => $homebase_id,
+            'appointment_date'  => $appointment_date,
+            'status'            => $status,
+            'id_card'           => $name_file,
+        ]);
 
         return redirect()->route('admin.lecturers.index')
             ->with('success', 'Lecturer updated successfully');
     }
+}
 
     /**
      * @param int $id

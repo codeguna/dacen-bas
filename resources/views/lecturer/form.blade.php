@@ -5,8 +5,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('NIDN/NIDK') }}
-                    <input class="form-control {{ $errors->has('nidn') ? ' is-invalid' : '' }}" type="text"
-                        name="nidn" value="{{ $lecturer->nidn }}" required>
+                    <input class="form-control {{ $errors->has('nidn') ? ' is-invalid' : '' }}" type="number"
+                        name="nidn" value="{{ $lecturer->nidn }}" min="0" required>
                     {!! $errors->first('nidn', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>

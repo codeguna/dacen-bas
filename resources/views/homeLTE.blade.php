@@ -3,28 +3,131 @@
     Welcome
 @endsection
 @section('content')
-    <div class="container-fluid">
+    <div class="container-primary">
+        <h3>Dashboard</h3>
         <div class="row">
-            <!-- /.col-lg-12 -->
-            <div class="col-lg-12">
+            <div class="col-lg-6">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>{{ $totalDosen }}</h3>
 
-                <div class="card card-primary card-outline">
+                        <p>Jumlah Dosen</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                    </div>
+                    <a href="{{ route('admin.lecturers.index') }}" class="small-box-footer">Detail Data <i
+                            class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ $totalTendik }}</h3>
+
+                        <p>Jumlah TenDik</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-user-secret" aria-hidden="true"></i>
+                    </div>
+                    <a href="{{ route('admin.educational-staffs.index') }}" class="small-box-footer">Detail Data <i
+                            class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card card-primary">
                     <div class="card-header">
-                        <h5 class="m-0">Featured</h5>
+                        <h3 class="card-title">Dosen Aktif</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <h6 class="card-title">Special title treatment</h6>
-
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <canvas id="donutChartDosen"
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-widthv>: 100%;"></canvas>
                     </div>
                 </div>
             </div>
-            <!-- /.col-lg-12 -->
+            <div class="col-lg-6">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title">TenDik Aktif</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="donutChartTendik"
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-widthv>: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.row -->
-    </div><!-- /.container-fluid -->
+    </div>
 @endsection
 @section('scripts')
     @parent
+    <script>
+        var donutChartCanvas = $('#donutChartDosen').get(0).getContext('2d')
+        var activeCountDosen = {{ $countActiveDosen }}
+        var InActiveCountDosen = {{ $countInActiveDosen }}
+        var donutData = {
+            labels: [
+                'Active',
+                'In Active',
+            ],
+            datasets: [{
+                data: [activeCountDosen, InActiveCountDosen],
+                backgroundColor: ['#0099ff', '#3d3e42'],
+            }]
+        }
+        var donutOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(donutChartCanvas, {
+            type: 'doughnut',
+            data: donutData,
+            options: donutOptions
+        })
+
+        var donutChartCanvas = $('#donutChartTendik').get(0).getContext('2d')
+        var activeCountTendik = {{ $countActiveTendik }}
+        var InActiveCountTendik = {{ $countInActiveTendik }}
+        var donutData = {
+            labels: [
+                'Active',
+                'In Active',
+            ],
+            datasets: [{
+                data: [activeCountTendik, InActiveCountTendik],
+                backgroundColor: ['#0099ff', '#3d3e42'],
+            }]
+        }
+        var donutOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(donutChartCanvas, {
+            type: 'doughnut',
+            data: donutData,
+            options: donutOptions
+        })
+    </script>
 @endsection

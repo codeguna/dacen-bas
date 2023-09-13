@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Models\EducationalStaff;
+use App\Models\Lecturer;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,6 +26,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('homeLTE');
+        $countActiveDosen       = Lecturer::where('status',1)->count();
+        $countInActiveDosen     = Lecturer::where('status',0)->count();
+        $countActiveTendik      = EducationalStaff::where('status',1)->count();
+        $countInActiveTendik    = EducationalStaff::where('status',0)->count();
+        $totalDosen             = Lecturer::count();
+        $totalTendik            = EducationalStaff::count();
+
+        return view('homeLTE',compact(
+            'countActiveDosen',
+            'countInActiveDosen',
+            'countActiveTendik',
+            'countInActiveTendik',
+            'totalDosen',
+            'totalTendik'
+        ));
     }
 }

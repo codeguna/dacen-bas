@@ -27,6 +27,12 @@
                             </p>
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
+                                    <b>NIDN/NITK</b> <a class="float-right">
+                                        <i class="fa fa-hashtag" aria-hidden="true"></i>
+                                        {{ $lecturer->nidn }}
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
                                     <b>Tanggal Masuk</b> <a class="float-right">
                                         <i class="fa fa-calendar-check" aria-hidden="true"></i>
                                         {{ $lecturer->appointment_date }}

@@ -11,6 +11,7 @@ use App\Models\StudyProgram;
 use App\Models\University;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class EducationalStaffController
@@ -61,7 +62,16 @@ class EducationalStaffController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(EducationalStaff::$rules);
+        $validator = Validator::make($request->all(), EducationalStaff::$rules);
+        if ($validator->fails()) {
+            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
+        }
+        
         $id_card_file   = $request->file('id_card');
         $nip            = $request->nip;
         $name           = $request->name;
@@ -135,8 +145,16 @@ class EducationalStaffController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, EducationalStaff $educationalStaff)
-    {
-        request()->validate(EducationalStaff::$rules);
+    {        
+        $validator = Validator::make($request->all(), EducationalStaff::$rules);
+        if ($validator->fails()) {
+            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
+        }
 
         $id_card_file   = $request->file('id_card');
         $nip            = $request->nip;
