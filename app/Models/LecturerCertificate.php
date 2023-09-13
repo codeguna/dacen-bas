@@ -28,7 +28,7 @@ class LecturerCertificate extends Model
 		'certificate_types_id' => 'required',
 		'certificate_date' => 'required',
 		'note' => 'required',
-		'certificate_attachment' => 'required',
+		'certificate_attachment' => 'required|mimes:pdf,jpg,jpeg|max:2048',
     ];
 
     protected $perPage = 20;

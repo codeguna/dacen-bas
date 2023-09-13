@@ -30,7 +30,7 @@ class LecturerFunctionalPosition extends Model
 		'determination_date' => 'required',
 		'tmt' => 'required',
 		'credit_score' => 'required',
-		'functional_position_attachment' => 'required',
+		'functional_position_attachment' => 'required|mimes:pdf,jpg,jpeg|max:2048',
     ];
 
     protected $perPage = 20;

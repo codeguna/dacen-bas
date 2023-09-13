@@ -30,7 +30,7 @@ class LecturerEducation extends Model
 		'study_program_id' => 'required',
 		'university_id' => 'required',
 		'knowledge_id' => 'required',
-		'certificate' => 'required',
+		'certificate' => 'required|mimes:pdf,jpg,jpeg|max:2048',
     ];
 
     protected $perPage = 20;

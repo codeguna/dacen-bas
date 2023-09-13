@@ -28,7 +28,7 @@ class Inpassing extends Model
 		'rank_id' => 'required',
 		'determination_date' => 'required',
 		'tmt' => 'required',
-		'inpassing_attachment' => 'required',
+		'inpassing_attachment' => 'required|mimes:pdf,jpg,jpeg|max:2048',
     ];
 
     protected $perPage = 20;
