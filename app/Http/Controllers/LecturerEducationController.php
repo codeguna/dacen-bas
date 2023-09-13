@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LecturerEducation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class LecturerEducationController
@@ -43,8 +44,17 @@ class LecturerEducationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        request()->validate(LecturerEducation::$rules);
+    {        
+        $validator = Validator::make($request->all(), LecturerEducation::$rules);
+        if ($validator->fails()) {
+            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
+        }
+        
         $certificate_file       = $request->file('certificate');
         $lecturer_id            = $request->lecturer_id;
         $level_id               = $request->level_id;

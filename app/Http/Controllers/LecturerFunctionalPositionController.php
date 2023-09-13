@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LecturerFunctionalPosition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class LecturerFunctionalPositionController
@@ -44,7 +45,15 @@ class LecturerFunctionalPositionController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(LecturerFunctionalPosition::$rules);
+        $validator = Validator::make($request->all(), LecturerFunctionalPosition::$rules);
+        if ($validator->fails()) {
+            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
+        }
         $functional_position_attachment_file        = $request->file('functional_position_attachment');
         $lecturer_id                                = $request->lecturer_id;
         $functional_position_id                     = $request->functional_position_id;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Inpassing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class InpassingController
@@ -43,9 +44,17 @@ class InpassingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        request()->validate(Inpassing::$rules);
-
+    {        
+        $validator = Validator::make($request->all(), Inpassing::$rules);
+        if ($validator->fails()) {
+            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
+        }
+        
         $inpassing_attachment_file  = $request->file('inpassing_attachment');
         $lecturer_id                = $request->lecturer_id;
         $rank_id                    = $request->rank_id;

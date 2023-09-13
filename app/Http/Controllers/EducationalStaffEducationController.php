@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\EducationalStaffEducation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
+
 /**
  * Class EducationalStaffEducationController
  * @package App\Http\Controllers
@@ -43,7 +45,15 @@ class EducationalStaffEducationController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(EducationalStaffEducation::$rules);
+        $validator = Validator::make($request->all(), EducationalStaffEducation::$rules);
+        if ($validator->fails()) {
+            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
+        }
         $certificate_file       = $request->file('certificate');
         $educational_staff_id   = $request->educational_staff_id;
         $level_id               = $request->level_id;
