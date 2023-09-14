@@ -32,7 +32,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table id="dataTable1" class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -52,20 +52,26 @@
                                             <td>{{ $lecturer->name }}</td>
                                             <td>{{ $lecturer->homebase_id }}</td>
                                             <td>{{ $lecturer->appointment_date }}</td>
-                                            <td>{{ $lecturer->status }}</td>
+                                            <td>
+                                                @if ($lecturer->status == 1)
+                                                    <i class="fa fa-check-circle text-success"></i> Aktif
+                                                @else
+                                                    <i class="fa fa-times-circle text-danger"></i> Tidak Aktif
+                                                @endif
+                                            </td>
                                             <td>
                                                 <form action="{{ route('admin.lecturers.destroy', $lecturer->id) }}"
                                                     method="POST">
                                                     <a class="btn btn-sm btn-primary "
                                                         href="{{ route('admin.lecturers.show', $lecturer->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                            class="fa fa-fw fa-eye"></i></a>
                                                     <a class="btn btn-sm btn-success"
                                                         href="{{ route('admin.lecturers.edit', $lecturer->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                            class="fa fa-fw fa-edit"></i></a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                            class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -79,4 +85,16 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        $(function() {
+            $("#dataTable1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
 @endsection

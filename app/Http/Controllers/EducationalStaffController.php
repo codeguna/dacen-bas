@@ -26,7 +26,7 @@ class EducationalStaffController extends Controller
      */
     public function index()
     {
-        $educationalStaffs = EducationalStaff::where('status',1)->paginate();
+        $educationalStaffs = EducationalStaff::where('status',1)->orderBy('name','ASC')->paginate();
 
         return view('educational-staff.index', compact('educationalStaffs'))
             ->with('i', (request()->input('page', 1) - 1) * $educationalStaffs->perPage());

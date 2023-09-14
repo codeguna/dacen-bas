@@ -18,7 +18,7 @@ class StudyProgramController extends Controller
      */
     public function index()
     {
-        $studyPrograms = StudyProgram::paginate();
+        $studyPrograms = StudyProgram::orderBy('name','ASC')->paginate();
 
         return view('study-program.index', compact('studyPrograms'))
             ->with('i', (request()->input('page', 1) - 1) * $studyPrograms->perPage());

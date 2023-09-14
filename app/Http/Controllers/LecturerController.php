@@ -28,7 +28,7 @@ class LecturerController extends Controller
      */
     public function index()
     {
-        $lecturers = Lecturer::paginate();
+        $lecturers = Lecturer::where('status',1)->orderBy('name','ASC')->paginate();
 
         return view('lecturer.index', compact('lecturers'))
             ->with('i', (request()->input('page', 1) - 1) * $lecturers->perPage());

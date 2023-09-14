@@ -25,7 +25,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table id="dataTable1" class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -35,7 +35,6 @@
                                         <th>Departemen</th>
                                         <th>Tanggal Masuk</th>
                                         <th>Status</th>
-                                        <th>KTP</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -54,12 +53,6 @@
                                                 @else
                                                     <i class="fa fa-times-circle text-danger"></i> Tidak Aktif
                                                 @endif
-                                            </td>
-                                            <td>
-                                                <a href="{{ url('/data_ktp_tendik/' . $educationalStaff->id_card) }}"
-                                                    target="_blank">
-                                                    <i class="fa fa-paperclip"></i>
-                                                </a>
                                             </td>
 
                                             <td>
@@ -89,4 +82,16 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        $(function() {
+            $("#dataTable1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
 @endsection

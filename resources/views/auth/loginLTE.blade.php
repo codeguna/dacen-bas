@@ -44,12 +44,12 @@
                     <div class="input-block">
                         <label for="email" class="input-label">Email</label>
                         <input class="{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" name="email"
-                            id="email" placeholder="Email">
+                            id="email" autofocus value="{{ old('email') }}">
                     </div>
                     <div class="input-block">
                         <label for="password" class="input-label">Password</label>
                         <input class="{{ $errors->has('password') ? ' is-invalid' : '' }}" type="password"
-                            name="password" id="password" placeholder="Password">
+                            name="password" id="password">
                     </div>
                     <div class="modal-buttons">
                         <button class="input-button">Login</button>
