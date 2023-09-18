@@ -19,10 +19,12 @@
                         <form action="{{ route('admin.inpassings.destroy', $inpassing->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-xs btn-danger mr-1"
-                                onclick="return confirm('Hapus data inpassing ini {{ $inpassing->inpassing->name }}?')">
-                                <i class="fa fa-minus" aria-hidden="true"></i>
-                            </button>
+                            @can('delete_inpassing_dosen')
+                                <button type="submit" class="btn btn-xs btn-danger mr-1"
+                                    onclick="return confirm('Hapus data inpassing ini {{ $inpassing->inpassing->name }}?')">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </button>
+                            @endcan
                             <a href="#">Golongan/Pangkat: {{ $inpassing->inpassing->name }}</a>
                         </form>
 

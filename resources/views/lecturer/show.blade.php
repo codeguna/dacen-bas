@@ -47,8 +47,10 @@
                                                 <div class="form-group">
                                                     <div
                                                         class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                                        <input type="checkbox" class="custom-control-input" checked
-                                                            id="statusCheckbox">
+                                                        @can('set_status_dosen')
+                                                            <input type="checkbox" class="custom-control-input" checked
+                                                                id="statusCheckbox">
+                                                        @endcan
                                                         <label class="custom-control-label text-success"
                                                             for="statusCheckbox">Aktif</label>
                                                     </div>
@@ -58,8 +60,10 @@
                                                 <div class="form-group">
                                                     <div
                                                         class="custom-control custom-switch custom-switch-off-secondary custom-switch-on-success">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="statusCheckbox">
+                                                        @can('set_status_dosen')
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="statusCheckbox">
+                                                        @endcan
                                                         <label class="custom-control-label text-muted"
                                                             for="statusCheckbox">Non
                                                             Aktif</label>
@@ -90,10 +94,12 @@
                                 </span>
 
                                 <div class="float-right">
-                                    <a href="#" data-toggle="modal" data-target="#createEducation"
-                                        class="btn btn-success btn-sm float-right" data-placement="left">
-                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                    </a>
+                                    @can('add_education_dosen')
+                                        <a href="#" data-toggle="modal" data-target="#createEducation"
+                                            class="btn btn-success btn-sm float-right" data-placement="left">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        </a>
+                                    @endcan
                                 </div>
                             </div>
                         </div>
@@ -109,10 +115,13 @@
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-xs btn-danger mr-1"
-                                                        onclick="return confirm('Hapus data pendidikan {{ $education->university->name }}?')">
-                                                        <i class="fa fa-minus" aria-hidden="true"></i>
-                                                    </button><i class="fas fa-book"></i>
+                                                    @can('delete_education_dosen')
+                                                        <button type="submit" class="btn btn-xs btn-danger mr-1"
+                                                            onclick="return confirm('Hapus data pendidikan {{ $education->university->name }}?')">
+                                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                                        </button>
+                                                    @endcan
+                                                    <i class="fas fa-book"></i>
                                                     {{ $education->university->name }} -
                                                     {{ $education->level->name }}
                                                 </form>
@@ -120,7 +129,7 @@
                                             </strong>
                                             <p class="text-muted">
                                                 {{ $education->studyProgram->name }} -
-                                                {{ $education->studyProgram->name }}
+                                                {{ $education->knowledge->name }}
                                             </p>
                                             <a class="text-cyan"
                                                 href="{{ url('/data_ijazah_dosen/' . $education->certificate) }}"
@@ -170,21 +179,27 @@
                                             <i class="fa fa-cog" aria-hidden="true"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a href="#" data-toggle="modal" data-target="#createJabfung"
-                                                class="dropdown-item" type="button">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                                JabFung
-                                            </a>
-                                            <a href="#" data-toggle="modal" data-target="#createInpassing"
-                                                class="dropdown-item" type="button">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                                Inpassing
-                                            </a>
-                                            <a href="#" data-toggle="modal" data-target="#createCertificate"
-                                                class="dropdown-item" type="button">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                                Sertifikat
-                                            </a>
+                                            @can('add_jabfung_dosen')
+                                                <a href="#" data-toggle="modal" data-target="#createJabfung"
+                                                    class="dropdown-item" type="button">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    JabFung
+                                                </a>
+                                            @endcan
+                                            @can('add_inpassing_dosen')
+                                                <a href="#" data-toggle="modal" data-target="#createInpassing"
+                                                    class="dropdown-item" type="button">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    Inpassing
+                                                </a>
+                                            @endcan
+                                            @can('add_certificate_dosen')
+                                                <a href="#" data-toggle="modal" data-target="#createCertificate"
+                                                    class="dropdown-item" type="button">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    Sertifikat
+                                                </a>
+                                            @endcan
                                         </div>
                                     </div>
                                 </div>

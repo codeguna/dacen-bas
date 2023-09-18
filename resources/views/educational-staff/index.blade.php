@@ -75,7 +75,8 @@
                                                     @can('delete_tendik')
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Hapus data TenDik {{ $educationalStaff->name }}?')"><i
                                                                 class="fa fa-fw fa-trash"></i></button>
                                                     @endcan
                                                 </form>

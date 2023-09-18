@@ -72,7 +72,8 @@
                                                             class="fa fa-fw fa-edit"></i></a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Hapus data dosen {{ $lecturer->name }}?')"><i
                                                             class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </td>

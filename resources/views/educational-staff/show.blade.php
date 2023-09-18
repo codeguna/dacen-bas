@@ -93,10 +93,12 @@
                                 </span>
 
                                 <div class="float-right">
-                                    <a href="#" data-toggle="modal" data-target="#createEducation"
-                                        class="btn btn-success btn-sm float-right" data-placement="left">
-                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                    </a>
+                                    @can('add_education_tendik')
+                                        <a href="#" data-toggle="modal" data-target="#createEducation"
+                                            class="btn btn-success btn-sm float-right" data-placement="left">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        </a>
+                                    @endcan
                                 </div>
                             </div>
                         </div>
@@ -112,10 +114,13 @@
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-xs btn-danger mr-1"
-                                                        onclick="return confirm('Hapus data pendidikan {{ $education->university->name }}?')">
-                                                        <i class="fa fa-minus" aria-hidden="true"></i>
-                                                    </button><i class="fas fa-book"></i>
+                                                    @can('delete_education_tendik')
+                                                        <button type="submit" class="btn btn-xs btn-danger mr-1"
+                                                            onclick="return confirm('Hapus data pendidikan {{ $education->university->name }}?')">
+                                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                                        </button>
+                                                    @endcan
+                                                    <i class="fas fa-book"></i>
                                                     {{ $education->university->name }} -
                                                     {{ $education->level->name }}
                                                 </form>
@@ -160,10 +165,12 @@
                                 </span>
 
                                 <div class="float-right">
-                                    <a href="#" data-toggle="modal" data-target="#createCertificate"
-                                        class="btn btn-success btn-sm float-right" data-placement="left">
-                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                    </a>
+                                    @can('add_certificate_tendik')
+                                        <a href="#" data-toggle="modal" data-target="#createCertificate"
+                                            class="btn btn-success btn-sm float-right" data-placement="left">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        </a>
+                                    @endcan
                                 </div>
                             </div>
                         </div><!-- /.card-header -->
@@ -193,10 +200,13 @@
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-xs btn-danger mr-1"
-                                                                onclick="return confirm('Hapus data sertifikat {{ $certificates->certificateType->name }}?')">
-                                                                <i class="fa fa-minus" aria-hidden="true"></i>
-                                                            </button><a
+                                                            @can('delete_certificate_tendik')
+                                                                <button type="submit" class="btn btn-xs btn-danger mr-1"
+                                                                    onclick="return confirm('Hapus data sertifikat {{ $certificates->certificateType->name }}?')">
+                                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                                </button>
+                                                            @endcan
+                                                            <a
                                                                 href="#">{{ $certificates->certificateType->name }}</a>
                                                         </form>
 

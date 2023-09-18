@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title')
+@section('template_title')
     Edit Roles
 @endsection
 @section('content')

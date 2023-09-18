@@ -57,14 +57,18 @@
                                                     method="POST">
                                                     <a class="btn btn-sm btn-primary "
                                                         href="{{ route('admin.study-programs.show', $studyProgram->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                            class="fa fa-fw fa-eye"></i>
+                                                    </a>
                                                     <a class="btn btn-sm btn-success"
                                                         href="{{ route('admin.study-programs.edit', $studyProgram->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                            class="fa fa-fw fa-edit"></i>
+                                                    </a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    @can('users_manage')
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    @endcan
                                                 </form>
                                             </td>
                                         </tr>

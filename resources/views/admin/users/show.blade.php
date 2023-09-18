@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title')
+@section('template_title')
     Show Users
 @endsection
 @section('content')

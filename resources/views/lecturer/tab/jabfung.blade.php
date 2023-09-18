@@ -20,10 +20,13 @@
                             method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-xs btn-danger mr-1"
-                                onclick="return confirm('Hapus data sertifikat {{ $positions->functionalPosition->name }}?')">
-                                <i class="fa fa-minus" aria-hidden="true"></i>
-                            </button><a href="#">{{ $positions->functionalPosition->name }}</a>
+                            @can('delete_jabfung_dosen')
+                                <button type="submit" class="btn btn-xs btn-danger mr-1"
+                                    onclick="return confirm('Hapus data sertifikat {{ $positions->functionalPosition->name }}?')">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </button>
+                            @endcan
+                            <a href="#">{{ $positions->functionalPosition->name }}</a>
                         </form>
 
                     </h3>

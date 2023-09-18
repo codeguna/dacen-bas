@@ -20,10 +20,13 @@
                             method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-xs btn-danger mr-1"
-                                onclick="return confirm('Hapus data sertifikat {{ $certificates->certificateType->name }}?')">
-                                <i class="fa fa-minus" aria-hidden="true"></i>
-                            </button><a href="#">{{ $certificates->certificateType->name }}</a>
+                            @can('delete_certificate_dosen')
+                                <button type="submit" class="btn btn-xs btn-danger mr-1"
+                                    onclick="return confirm('Hapus data sertifikat {{ $certificates->certificateType->name }}?')">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </button>
+                            @endcan
+                            <a href="#">{{ $certificates->certificateType->name }}</a>
                         </form>
 
                     </h3>
