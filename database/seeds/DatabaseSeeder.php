@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\CertificateTypesSeeder;
 use Database\Seeders\DepartmensSeeder;
 use Database\Seeders\FunctionalPositionSeeder;
 use Database\Seeders\FunctionalRankSeeder;
@@ -22,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmensSeeder::class);
         $this->call(FunctionalPositionSeeder::class);
         $this->call(FunctionalRankSeeder::class);
+        $this->call(CertificateTypesSeeder::class);
     }
 }

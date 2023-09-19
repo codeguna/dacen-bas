@@ -2,26 +2,24 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-
+    <meta charset="utf-8" />
+    <meta name="description"
+        content="ArchiS - Institut Digital Ekonomi LPKIA. Archiving System Data Internal pada Departemen Biro Administrasi Sumberdaya">
+    <meta name="keywords" content="archive, system, lpkia, ide, institut, digital, ekonomi, bandung">
+    <meta name="author" content="Sistem Informasi Manajemen - IDE LPKIA">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="{{ asset('images/thumb.jpg') }}" />
     <script
         src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js">
     </script>
-
-
     <title>{{ ENV('APP_NAME') }} | Login</title>
-
     <link rel="canonical" href="https://codepen.io/knyttneve/pen/dgoWyE">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="{{ asset('adminLTE/dist/css/login.css') }}">
 
     <script>
         window.console = window.console || function(t) {};
     </script>
-
-
-
 </head>
 
 <body translate="no">
@@ -105,8 +103,6 @@
         };
         //# sourceURL=pen.js
     </script>
-
-
 </body>
 
 </html>
