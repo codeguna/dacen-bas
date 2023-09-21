@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="description"
-        content="ArchiS - Institut Digital Ekonomi LPKIA. Archiving System Data Internal pada Departemen Biro Administrasi Sumberdaya">
+        content="HERA (Human Employee Records Archive). Sistem Penyimpanan Arsip Dosen dan Tenaga Kependidikan pada Departemen Biro Administrasi Sumberdaya">
     <meta name="keywords" content="archive, system, lpkia, ide, institut, digital, ekonomi, bandung">
     <meta name="author" content="Sistem Informasi Manajemen - IDE LPKIA">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
