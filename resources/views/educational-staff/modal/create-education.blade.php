@@ -65,7 +65,7 @@
                                 <label>Bidang Ilmu</label>
                                 <select class="form-control" name="knowledge_id" required>
                                     <option disabled selected>== Pilih Bidang Ilmu ==</option>
-                                    @foreach ($studyPrograms as $value => $key)
+                                    @foreach ($knowledges as $value => $key)
                                         <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
