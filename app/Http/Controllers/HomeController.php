@@ -32,14 +32,19 @@ class HomeController extends Controller
         $countInActiveTendik    = EducationalStaff::where('status',0)->count();
         $totalDosen             = Lecturer::count();
         $totalTendik            = EducationalStaff::count();
-
+        $tendik                 = EducationalStaff::orderBy('name','ASC')->get();
+        $dosen                  = Lecturer::orderBy('name','ASC')->get();
+        $j                      = 0;
         return view('homeLTE',compact(
             'countActiveDosen',
             'countInActiveDosen',
             'countActiveTendik',
             'countInActiveTendik',
             'totalDosen',
-            'totalTendik'
-        ));
+            'totalTendik',
+            'tendik',
+            'dosen',
+            'j'
+        ))->with('i');
     }
 }

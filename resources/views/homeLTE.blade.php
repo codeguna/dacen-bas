@@ -74,6 +74,86 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6">
+                <div class="card card-cyan">
+                    <div class="card-header">
+                        <h3 class="card-title">Dosen Summary</h3>
+
+                        <div class="card-tools">
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Nama</th>
+                                        <th>Inpassing</th>
+                                        <th>JabFung</th>
+                                        <th>Sertifikasi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dosen as $ds)
+                                        <tr>
+                                            <td>{{ ++$i }}</td>
+                                            <td>
+                                                <a class="link-primary" href="{{ route('admin.lecturers.show', $ds->id) }}">
+                                                    {{ $ds->name }}
+                                                </a>
+                                            </td>
+                                            <td>{{ $ds->inpassings->count() }}</td>
+                                            <td>{{ $ds->lecturerFunctionalPositions->count() }}</td>
+                                            <td>{{ $ds->lecturerCertificates->count() }}</td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card card-teal">
+                    <div class="card-header">
+                        <h3 class="card-title">TenDik Summary</h3>
+
+                        <div class="card-tools">
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Nama</th>
+                                        <th>Sertifikasi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($tendik as $td)
+                                        <tr>
+                                            <td>{{ ++$j }}</td>
+                                            <td>
+                                                <a class="link-primary"
+                                                    href="{{ route('admin.educational-staffs.show', $ds->id) }}">
+                                                    {{ $td->name }}
+                                                </a>
+                                            </td>
+                                            <td>{{ $td->educationalStaffCertificates->count() }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
