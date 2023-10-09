@@ -141,7 +141,7 @@
                                             <td>{{ ++$j }}</td>
                                             <td>
                                                 <a class="link-primary"
-                                                    href="{{ route('admin.educational-staffs.show', $ds->id) }}">
+                                                    href="{{ route('admin.educational-staffs.show', $td->id) }}">
                                                     {{ $td->name }}
                                                 </a>
                                             </td>
