@@ -37,43 +37,45 @@
                                         {{ $lecturer->appointment_date }}
                                     </a>
                                 </li>
-                                <li class="list-group-item">
-                                    <b>Status</b> <a class="float-right">
-                                        <form id="statusForm" action="{{ route('admin.lecturer.setstatus') }}"
-                                            method="POST">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $lecturer->id }}">
-                                            @if ($lecturer->status == 1)
-                                                <div class="form-group">
-                                                    <div
-                                                        class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                                        @can('set_status_dosen')
-                                                            <input type="checkbox" class="custom-control-input" checked
-                                                                id="statusCheckbox">
-                                                        @endcan
-                                                        <label class="custom-control-label text-success"
-                                                            for="statusCheckbox">Aktif</label>
+                                @can('set_status_dosen')
+                                    <li class="list-group-item">
+                                        <b>Status</b> <a class="float-right">
+                                            <form id="statusForm" action="{{ route('admin.lecturer.setstatus') }}"
+                                                method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $lecturer->id }}">
+                                                @if ($lecturer->status == 1)
+                                                    <div class="form-group">
+                                                        <div
+                                                            class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                            @can('set_status_dosen')
+                                                                <input type="checkbox" class="custom-control-input" checked
+                                                                    id="statusCheckbox">
+                                                            @endcan
+                                                            <label class="custom-control-label text-success"
+                                                                for="statusCheckbox">Aktif</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <input type="hidden" name="status" value="0">
-                                            @else
-                                                <div class="form-group">
-                                                    <div
-                                                        class="custom-control custom-switch custom-switch-off-secondary custom-switch-on-success">
-                                                        @can('set_status_dosen')
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="statusCheckbox">
-                                                        @endcan
-                                                        <label class="custom-control-label text-muted"
-                                                            for="statusCheckbox">Non
-                                                            Aktif</label>
+                                                    <input type="hidden" name="status" value="0">
+                                                @else
+                                                    <div class="form-group">
+                                                        <div
+                                                            class="custom-control custom-switch custom-switch-off-secondary custom-switch-on-success">
+                                                            @can('set_status_dosen')
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="statusCheckbox">
+                                                            @endcan
+                                                            <label class="custom-control-label text-muted"
+                                                                for="statusCheckbox">Non
+                                                                Aktif</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <input type="hidden" name="status" value="1">
-                                            @endif
-                                        </form>
-                                    </a>
-                                </li>
+                                                    <input type="hidden" name="status" value="1">
+                                                @endif
+                                            </form>
+                                        </a>
+                                    </li>
+                                @endcan
                             </ul>
 
                             <a href="{{ url('/data_ktp_dosen/' . $lecturer->id_card) }}" class="btn btn-primary btn-block"

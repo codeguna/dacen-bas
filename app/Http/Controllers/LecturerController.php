@@ -13,6 +13,7 @@ use App\Models\StudyProgram;
 use App\Models\University;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -28,6 +29,9 @@ class LecturerController extends Controller
      */
     public function index()
     {
+        if (Gate::allows('view_profile')) {
+            return abort(403);
+        }
         $lecturers = Lecturer::where('status',1)->orderBy('name','ASC')->paginate();
 
         return view('lecturer.index', compact('lecturers'))

@@ -50,7 +50,13 @@
                             name="password" id="password">
                     </div>
                     <div class="modal-buttons">
-                        <button class="input-button">Login</button>
+                        <button class="input-button">
+                            Login
+                        </button>
+                        <a href="{{ url('auth/google') }}" style="text-decoration: none;color: white"
+                            class="input-button">
+                            Login Dosen/Tendik
+                        </a>
                     </div>
         </form>
     </div>

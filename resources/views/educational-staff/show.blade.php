@@ -40,39 +40,42 @@
                                         {{ $educationalStaff->date_of_entry }}
                                     </a>
                                 </li>
-                                <li class="list-group-item">
-                                    <b>Status</b> <a class="float-right">
-                                        <form id="statusForm" action="{{ route('admin.educational-staff.setstatus') }}"
-                                            method="POST">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $educationalStaff->id }}">
-                                            @if ($educationalStaff->status == 1)
-                                                <div class="form-group">
-                                                    <div
-                                                        class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                                        <input type="checkbox" class="custom-control-input" checked
-                                                            id="statusCheckbox">
-                                                        <label class="custom-control-label text-success"
-                                                            for="statusCheckbox">Aktif</label>
+                                @can('set_status_tendik')
+                                    <li class="list-group-item">
+                                        <b>Status</b> <a class="float-right">
+                                            <form id="statusForm" action="{{ route('admin.educational-staff.setstatus') }}"
+                                                method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $educationalStaff->id }}">
+                                                @if ($educationalStaff->status == 1)
+                                                    <div class="form-group">
+                                                        <div
+                                                            class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                            <input type="checkbox" class="custom-control-input" checked
+                                                                id="statusCheckbox">
+                                                            <label class="custom-control-label text-success"
+                                                                for="statusCheckbox">Aktif</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <input type="hidden" name="status" value="0">
-                                            @else
-                                                <div class="form-group">
-                                                    <div
-                                                        class="custom-control custom-switch custom-switch-off-secondary custom-switch-on-success">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="statusCheckbox">
-                                                        <label class="custom-control-label text-muted"
-                                                            for="statusCheckbox">Non
-                                                            Aktif</label>
+                                                    <input type="hidden" name="status" value="0">
+                                                @else
+                                                    <div class="form-group">
+                                                        <div
+                                                            class="custom-control custom-switch custom-switch-off-secondary custom-switch-on-success">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="statusCheckbox">
+                                                            <label class="custom-control-label text-muted"
+                                                                for="statusCheckbox">Non
+                                                                Aktif</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <input type="hidden" name="status" value="1">
-                                            @endif
-                                        </form>
-                                    </a>
-                                </li>
+                                                    <input type="hidden" name="status" value="1">
+                                                @endif
+                                            </form>
+                                        </a>
+                                    </li>
+                                @endcan
+
                             </ul>
 
                             <a href="{{ url('/data_ktp_tendik/' . $educationalStaff->id_card) }}"

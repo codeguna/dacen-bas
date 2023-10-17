@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\HomebaseController;
+use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'admin/home');
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 Auth::routes(['register' => false]);
 
@@ -14,6 +17,10 @@ Route::patch('change_password', 'Auth\ChangePasswordController@changePassword')-
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/myprofile', 'HomeController@myProfile')->name('myprofile');
+    Route::get('/updateprofile', 'HomeController@updateProfile')->name('updateprofile');
+    Route::post('/saveprofile', 'HomeController@saveProfile')->name('saveprofile');
+
     Route::resource('permissions', 'Admin\PermissionsController');
     Route::delete('permissions_mass_destroy', 'Admin\PermissionsController@massDestroy')->name('permissions.mass_destroy');
     Route::resource('roles', 'Admin\RolesController');
