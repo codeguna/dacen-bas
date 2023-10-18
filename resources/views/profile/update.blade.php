@@ -16,6 +16,13 @@
                         </small>
                     </div>
                     <div class="card-body">
+                        {!! $errors->first(
+                            'nomor_induk',
+                            '<div class="alert alert-warning" role="alert">
+                                                                                <i class="fa fa-info-circle" aria-hidden="true"></i> 
+                                                                                <strong>NIP/NIDN sudah digunakan oleh pengguna lain.</strong>
+                                                                                                </div>',
+                        ) !!}
                         <form action="{{ route('admin.saveprofile') }}" method="POST">
                             @csrf
                             <div class="row">

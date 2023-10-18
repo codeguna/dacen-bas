@@ -130,7 +130,11 @@ class HomeController extends Controller
     }
 
     public function saveProfile(Request $request){
-
+        $request->validate([
+            'position' => 'required',
+            'nomor_induk' => 'required|unique:users,nomor_induk,' . Auth::user()->id,
+        ]);
+        
         $position           = $request->position;
         $nomor_induk        = $request->nomor_induk;
 

@@ -16,6 +16,7 @@
     <link rel="canonical" href="https://codepen.io/knyttneve/pen/dgoWyE">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="{{ asset('adminLTE/dist/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminLTE/plugins/fontawesome-free/css/all.min.css') }}">
 
     <script>
         window.console = window.console || function(t) {};
@@ -51,11 +52,11 @@
                     </div>
                     <div class="modal-buttons">
                         <button class="input-button">
-                            Login
+                            <i class="fa fa-lock" aria-hidden="true"></i> Login
                         </button>
                         <a href="{{ url('auth/google') }}" style="text-decoration: none;color: white"
                             class="input-button">
-                            Login Dosen/Tendik
+                            <i class="fa fa-users" aria-hidden="true"></i> Login Dosen/Tendik
                         </a>
                     </div>
         </form>
