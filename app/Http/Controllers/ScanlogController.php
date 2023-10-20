@@ -150,10 +150,7 @@ class ScanlogController extends Controller
             $scans = json_decode($response, true);
 
             if ($start_date === $end_date) {
-                foreach ($scans['data'] as $key => $value) {
-                    $scan = strtotime($value['scan_date']);
-                    $date = date('Y-m-d', $scan);
-                    $time = date('H:i:s', $scan);
+                foreach ($scans['data'] as $value) {
 
                     $scans = ScanLog::where('pin', $value['pin'])->where('scan', $value['scan_date'])->get();
 
@@ -168,7 +165,7 @@ class ScanlogController extends Controller
                     if ($scans->count() === 0) {
                         $a += 1;
                         $attlogData = [
-                            'pin' => $value['pin'],
+                            'pin' => $realPin,
                             'scan' => $value['scan_date'],
                             'verify' => $value['verify'],
                             'status_scan' => $value['status_scan'],
