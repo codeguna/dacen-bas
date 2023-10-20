@@ -15,14 +15,17 @@ class ScanlogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+{
+    $today = now()->format('Y-m-d'); // Get today's date in 'Y-m-d' format
+    $scanLogs = ScanLog::whereDate('scan', $today)->orderBy('scan', 'ASC')->paginate();
 
-        $scanLogs = ScanLog::whereDate('scan', '2023-10-11')->orderBy('scan', 'ASC')->paginate();
-        // return $scanLogs;
+    return view('scan-log.index', compact('scanLogs'))
+        ->with('i', (request()->input('page', 1) - 1) * $scanLogs->perPage());
+}
 
-        return view('scan-log.index', compact('scanLogs'))
-            ->with('i', (request()->input('page', 1) - 1) * $scanLogs->perPage());
-    }
+public function result(){
+    
+}
 
     /**
      * Show the form for creating a new resource.

@@ -16,7 +16,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
+                                    with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -280,6 +280,12 @@
                             class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
                             <i class="far fas fa-user nav-icon"></i>
                             <p>Users</p>
+                        </a>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.users.index') }}"
+                            class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
+                            <i class="fa fa-calculator nav-icon" aria-hidden="true"></i>
+                            <p>Set Users PIN</p>
                         </a>
                     </li>
                 </ul>
