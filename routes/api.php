@@ -7,5 +7,5 @@ Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], funct
 
 // routes/api.php
 
-Route::get('webhook', 'WebhookController@fingerspotHandler');
+Route::get('webhook', 'webhookController@fingerspotHandler');
 Route::post('scanlog', 'ScanlogController@synchronize');

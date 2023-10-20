@@ -10,7 +10,6 @@ class WebhookController extends Controller
     public function fingerspotHandler(Request $request)
     {
         $data = $request->all();
-        return $data;
 
         $type = $data['type'];
         $cloudId = $data['cloud_id'];
