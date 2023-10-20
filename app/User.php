@@ -21,7 +21,7 @@ class User extends Authenticatable
     use Notifiable;
     use HasRoles;
 
-    protected $fillable = ['name', 'email', 'password', 'remember_token','google_id','nomor_induk','position'];
+    protected $fillable = ['name', 'email', 'password', 'remember_token', 'google_id', 'nomor_induk', 'position'];
 
 
     /**
@@ -38,5 +38,10 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+    public function scanLogs()
+    {
+        return $this->hasMany(ScanLog::class, 'pin', 'pin');
     }
 }
