@@ -37,7 +37,7 @@
 
                 // Aktifkan tombol pada Senin hingga Sabtu antara jam 11:00 - 12:00 dan 13:00 - 14:00
                 const isButtonEnabled = dayOfWeek >= 1 && dayOfWeek <= 6 &&
-                    ((hour >= 8 && hour < 12) || (hour >= 13 && hour < 14));
+                    ((hour >= 11 && hour < 12) || (hour >= 13 && hour < 14));
 
                 return isButtonEnabled;
             }

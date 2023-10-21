@@ -70,6 +70,10 @@ class ScanlogController extends Controller
             return redirect()->back()->with('error', 'Anda sudah melakukan scan pada jam ' . $jam_sekarang);
         }
 
+        if (!$pin_pengguna) {
+            return redirect()->back()->with('error', 'Anda Tidak memiliki PIN ');
+        }
+
         $allowedIPs = ['118.99.87.119']; // Daftar alamat IP yang diperbolehkan
 
         $userIP = request()->ip(); // Mendapatkan alamat IP pengguna
