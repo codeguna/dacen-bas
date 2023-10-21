@@ -23,8 +23,15 @@ class ScanlogController extends Controller
         ->with('i', (request()->input('page', 1) - 1) * $scanLogs->perPage());
 }
 
-public function result(){
+public function filterDate(Request $request){
+    $start_date = $request->start_date;
+    $end_date = $request->end_date;
     
+    $scanLogs = ScanLog::whereBetween('scan', [$start_date, $end_date])
+                    ->orderBy('scan', 'ASC')
+                    ->paginate();
+
+    return view('scan-log.index', compact('scanLogs'));
 }
 
     /**

@@ -22,54 +22,61 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-
-                    <div class="card-body">
-
-                        <div class="row">
-
-                            <h4>Filter Tanggal</h4>
-                            <div class="col-md-12">
-                                <div class="input-group">
-                                    <input type="date" name="start_date" class="form-control" required>
-                                    <input type="date" name="end_date" class="form-control" required>
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-primary rounded">
-                                            <button type="submit" class="btn btn-primary btn-xs">
-                                                <i class="fa fa-search" aria-hidden="true"></i>
-                                            </button>
-                                        </span>
+                    <form action="{{ route('admin.scanlogs.search') }}" method="GET">
+                        @csrf
+                        <div class="card-body">
+                            <div class="row">
+                                <h4>
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    Filter Tanggal
+                                </h4>
+                                <div class="col-md-12">
+                                    <h5 class="text-center">{{ request('start_date') }} {{ request('end_date') }}</h5>
+                                    <div class="input-group">
+                                        <input type="date" name="start_date" class="form-control" required>
+                                        <input type="date" name="end_date" class="form-control" required>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-primary rounded">
+                                                <button type="submit" class="btn btn-primary btn-xs">
+                                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                                </button>
+                                                <a href="{{ route('admin.scan-logs.index') }}"
+                                                    class="btn btn-success btn-xs">
+                                                    <i class="fas fa-sync"></i>
+                                                </a>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table id="dataTable1" class="table table-striped table-hover">
+                            <thead class="thead">
+                                <tr>
+                                    <th>No</th>
 
-                        <div class="table-responsive">
-                            <table id="dataTable1" class="table table-striped table-hover">
-                                <thead class="thead">
+                                    <th>PIN</th>
+                                    <th>Scan</th>
+                                    <th>Nama</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($scanLogs as $scanLog)
                                     <tr>
-                                        <th>No</th>
-
-                                        <th>PIN</th>
-                                        <th>Scan</th>
-                                        <th>Nama</th>
+                                        <td>{{ ++$i }}</td>
+                                        <td>{{ $scanLog->pin }}</td>
+                                        <td>{{ $scanLog->scan }}</td>
+                                        <td>{{ $scanLog->user->name ?? '' }}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($scanLogs as $scanLog)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            <td>{{ $scanLog->pin }}</td>
-                                            <td>{{ $scanLog->scan }}</td>
-                                            <td>{{ $scanLog->user->name ?? '' }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
 @section('scripts')
