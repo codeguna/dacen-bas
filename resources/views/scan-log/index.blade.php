@@ -26,12 +26,16 @@
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <h4>
-                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                    Filter Tanggal
-                                </h4>
                                 <div class="col-md-12">
-                                    <h5 class="text-center">{{ request('start_date') }} {{ request('end_date') }}</h5>
+                                    <h4>
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        Filter Tanggal
+                                    </h4>
+                                    <hr style="width:100%;text-align:left;margin-left:0">
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h5 class="text-center">{{ request('start_date') }} | {{ request('end_date') }}</h5>
                                     <div class="input-group">
                                         <input type="date" name="start_date" class="form-control" required>
                                         <input type="date" name="end_date" class="form-control" required>

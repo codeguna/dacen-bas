@@ -20,10 +20,10 @@ class ScanlogController extends Controller
     public function index()
     {
         $today = now()->format('Y-m-d'); // Get today's date in 'Y-m-d' format
-        $scanLogs = ScanLog::whereDate('scan', $today)->orderBy('scan', 'ASC')->paginate();
+        $scanLogs = ScanLog::whereDate('scan', $today)->orderBy('scan', 'DESC')->get();
 
         return view('scan-log.index', compact('scanLogs'))
-            ->with('i', (request()->input('page', 1) - 1) * $scanLogs->perPage());
+            ->with('i');
     }
 
     public function filterDate(Request $request)
@@ -31,12 +31,13 @@ class ScanlogController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
-        $scanLogs = ScanLog::whereBetween('scan', [$start_date, $end_date])
+        $scanLogs = ScanLog::whereDate('scan', '>=', $start_date)
+            ->whereDate('scan', '<=', $end_date)
             ->orderBy('scan', 'ASC')
-            ->paginate();
+            ->get();
 
         return view('scan-log.index', compact('scanLogs'))
-            ->with('i', (request()->input('page', 1) - 1) * $scanLogs->perPage());
+            ->with('i');
     }
 
     /**

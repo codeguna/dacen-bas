@@ -11,7 +11,6 @@ class ScanLog extends Model
     use HasFactory;
 
     protected $table = 'scan_logs';
-    protected $perPage = 20;
     protected $fillable = ['pin', 'scan', 'verify', 'status_scan', 'ip_scan'];
 
     public function user()
