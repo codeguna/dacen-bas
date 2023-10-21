@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('users', 'Admin\UsersController');
     Route::delete('users_mass_destroy', 'Admin\UsersController@massDestroy')->name('users.mass_destroy');
     Route::resource('scan-logs', 'ScanlogController');
+    Route::get('/scan-log/filter/', 'ScanlogController@filterDate')->name('scanlogs.search');
     Route::get('/presensi','ScanlogController@presensi')->name('presensi');
     //Route homebases
     Route::resource('homebases', 'HomebaseController');
