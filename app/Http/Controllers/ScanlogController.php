@@ -65,12 +65,21 @@ class ScanlogController extends Controller
         $tanggal_hari_ini = Carbon::now()->toDateString();
         // $jam_sekarang = Carbon::now()->format('H:i:s');
 
-        // print $scan_logs;
         // Mendefinisikan rentang waktu untuk jam 11:00 sampai 12:00
         $startTime_11 = '11:00:00';
         $endTime_12 = '12:00:00';
         $startTime_13 = '13:00:00';
         $endTime_14 = '14:00:00';
+
+        $now = Carbon::now();
+        $startTime1 = Carbon::today()->setHour(11);
+        $endTime1 = Carbon::today()->setHour(12);
+        $startTime2 = Carbon::today()->setHour(13);
+        $endTime2 = Carbon::today()->setHour(14);
+
+        if (!($now->between($startTime1, $endTime1) || $now->between($startTime2, $endTime2))) {
+            return redirect()->back()->with('error', 'Presensi hanya diperbolehkan antara jam 11:00 - 12:00 atau jam 13:00 - 14:00.');
+        }
 
         // Menggunakan Eloquent Query Builder untuk mencari data
         $scanLogs_11 = ScanLog::where('pin', $pin_pengguna)->whereDate('scan', $tanggal_hari_ini)
@@ -100,6 +109,7 @@ class ScanlogController extends Controller
         $data = $response->json();
 
         $org = $data['org'];
+        // $org = 'BIZNET';
 
         if (stristr($org, 'BIZNET') !== false) {
             ScanLog::create([
