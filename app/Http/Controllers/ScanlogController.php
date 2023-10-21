@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use GeoIP;
+use Illuminate\Support\Facades\Http;
 
 class ScanlogController extends Controller
 {
@@ -24,14 +26,15 @@ class ScanlogController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * $scanLogs->perPage());
     }
 
-    public function filterDate(Request $request){
+    public function filterDate(Request $request)
+    {
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-        
+
         $scanLogs = ScanLog::whereBetween('scan', [$start_date, $end_date])
-                        ->orderBy('scan', 'ASC')
-                        ->paginate();
-    
+            ->orderBy('scan', 'ASC')
+            ->paginate();
+
         return view('scan-log.index', compact('scanLogs'));
     }
 
@@ -42,6 +45,14 @@ class ScanlogController extends Controller
      */
     public function create()
     {
+        $userIP = '182.253.158.143';
+        $response = Http::get("https://ipinfo.io/{$userIP}/json");
+        $data = $response->json();
+
+        $isp = $data['org'];
+
+        return $isp;
+
         $pin_pengguna = auth()->user()->pin;
         $tanggal_hari_ini = Carbon::now()->toDateString();
 
@@ -56,6 +67,7 @@ class ScanlogController extends Controller
 
     public function presensi()
     {
+
         $pin_pengguna = auth()->user()->pin;
         $tanggal_hari_ini = Carbon::now()->toDateString();
         $jam_sekarang = Carbon::now()->format('H:i:s');
@@ -81,13 +93,14 @@ class ScanlogController extends Controller
             return redirect()->back()->with('error', 'Anda Tidak memiliki PIN ');
         }
 
-        $allowedIPs = ['118.99.87.119']; // Daftar alamat IP yang diperbolehkan
 
-        $userIP = request()->ip(); // Mendapatkan alamat IP pengguna
+        $userIP = request()->ip(); // Mendapatkan alamat IP 
+        $response = Http::get("https://ipinfo.io/{$userIP}/json");
+        $data = $response->json();
 
-        // Periksa apakah alamat IP pengguna ada dalam daftar yang diperbolehkan
-        if (in_array($userIP, $allowedIPs)) {
-            // Lakukan proses presensi
+        $org = $data['org'];
+
+        if (stristr($org, 'BIZNET') !== false) {
             ScanLog::create([
                 'pin' => auth()->user()->pin, // Ganti dengan cara yang sesuai untuk mendapatkan PIN pengguna yang login
                 'scan' => now(), // Tanggal dan waktu saat ini
