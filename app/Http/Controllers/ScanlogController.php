@@ -32,7 +32,8 @@ class ScanlogController extends Controller
                         ->orderBy('scan', 'ASC')
                         ->paginate();
     
-        return view('scan-log.index', compact('scanLogs'));
+        return view('scan-log.index', compact('scanLogs'))
+        ->with('i', (request()->input('page', 1) - 1) * $scanLogs->perPage());
     }
 
     /**
