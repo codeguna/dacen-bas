@@ -76,6 +76,7 @@ class ScanlogController extends Controller
         $endTime1 = Carbon::today()->setHour(12);
         $startTime2 = Carbon::today()->setHour(13);
         $endTime2 = Carbon::today()->setHour(14);
+        $hour = $now->hour;
 
         if (!($now->between($startTime1, $endTime1) || $now->between($startTime2, $endTime2))) {
             return redirect()->back()->with('error', 'Presensi hanya diperbolehkan antara jam 11:00 - 12:00 atau jam 13:00 - 14:00.');
@@ -92,12 +93,14 @@ class ScanlogController extends Controller
             ->whereTime('scan', '<=', $endTime_14)
             ->first();
 
-        if ($scanLogs_11) {
-            return redirect()->back()->with('error', 'Anda sudah melakukan scan pada periode ' . $scanLogs_11->scan);
-        }
-
-        if ($scanLogs_13) {
-            return redirect()->back()->with('error', 'Anda sudah melakukan scan pada periode ' . $scanLogs_13->scan);
+        if ($hour <= 12) {
+            if ($scanLogs_11) {
+                return redirect()->back()->with('error', 'Anda sudah melakukan scan pada periode ' . $scanLogs_11->scan);
+            }
+        } elseif ($hour > 12 || $hour < 14) {
+            if ($scanLogs_13) {
+                return redirect()->back()->with('error', 'Anda sudah melakukan scan pada periode ' . $scanLogs_13->scan);
+            }
         }
 
         if (!$pin_pengguna) {
