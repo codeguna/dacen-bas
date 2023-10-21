@@ -22,7 +22,7 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-                    <form action="{{ route('admin.scanlogs.search') }}" method="GET">
+                    <form id="searchForm" action="{{ route('admin.scanlogs.search') }}" method="GET">
                         @csrf
                         <div class="card-body">
                             <div class="row">
@@ -37,8 +37,9 @@
                                 <div class="col-md-12">
                                     <h5 class="text-center">{{ request('start_date') }} | {{ request('end_date') }}</h5>
                                     <div class="input-group">
-                                        <input type="date" name="start_date" class="form-control" required>
-                                        <input type="date" name="end_date" class="form-control" required>
+                                        <input type="date" name="start_date" id="start_date" class="form-control"
+                                            required>
+                                        <input type="date" name="end_date" id="end_date" class="form-control" required>
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-primary rounded">
                                                 <button type="submit" class="btn btn-primary btn-xs">
@@ -92,6 +93,16 @@
                 "autoWidth": false,
                 // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            var startDate = new Date(document.getElementById('start_date').value);
+            var endDate = new Date(document.getElementById('end_date').value);
+
+            if (startDate > endDate) {
+                alert('Tanggal Akhir tidak bisa lebih kecil daripada Tanggal Mulai!');
+                event.preventDefault(); // Prevent form submission
+            }
         });
     </script>
 @endsection
