@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ScanLog;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,7 +18,7 @@ class ScanlogController extends Controller
     public function index()
     {
 
-        $scanLogs = ScanLog::whereDate('scan', '2023-10-11')->orderBy('scan', 'ASC')->paginate();
+        $scanLogs = ScanLog::whereDate('scan', '2023-10-10')->orderBy('scan', 'ASC')->paginate();
         // return $scanLogs;
 
         return view('scan-log.index', compact('scanLogs'))
@@ -31,8 +32,62 @@ class ScanlogController extends Controller
      */
     public function create()
     {
-        //
+        $pin_pengguna = auth()->user()->pin;
+        $tanggal_hari_ini = Carbon::now()->toDateString();
+
+        // Menggunakan Eloquent untuk mengambil data scan_logs
+        $scan_logs = ScanLog::where('pin', $pin_pengguna)
+            ->whereDate('scan', $tanggal_hari_ini)
+            ->get();
+        // return $scan_logs;
+        return view('scan-log.presensiUser', compact('scan_logs'));
     }
+
+
+    public function presensi()
+    {
+        $pin_pengguna = auth()->user()->pin;
+        $tanggal_hari_ini = Carbon::now()->toDateString();
+        $jam_sekarang = Carbon::now()->format('H:i:s');
+
+        // Menggunakan Eloquent untuk mengambil data scan_logs
+        $scan_logs = ScanLog::where('pin', $pin_pengguna)
+            ->whereDate('scan', $tanggal_hari_ini)
+            ->get();
+
+        // Cek apakah ada data scan dengan waktu 11:00 - 12:00 atau 13:00 - 14:00
+        $isDuplicateScan = $scan_logs->some(function ($log) use ($jam_sekarang) {
+            $logTime = Carbon::parse($log->scan)->format('H:i:s');
+            return $logTime === $jam_sekarang ||
+                ($logTime >= '11:00:00' && $logTime <= '12:00:00') ||
+                ($logTime >= '13:00:00' && $logTime <= '14:00:00');
+        });
+
+        if ($isDuplicateScan) {
+            return redirect()->back()->with('error', 'Anda sudah melakukan scan pada jam ' . $jam_sekarang);
+        }
+
+        $allowedIPs = ['118.99.87.119']; // Daftar alamat IP yang diperbolehkan
+
+        $userIP = request()->ip(); // Mendapatkan alamat IP pengguna
+
+        // Periksa apakah alamat IP pengguna ada dalam daftar yang diperbolehkan
+        if (in_array($userIP, $allowedIPs)) {
+            // Lakukan proses presensi
+            ScanLog::create([
+                'pin' => auth()->user()->pin, // Ganti dengan cara yang sesuai untuk mendapatkan PIN pengguna yang login
+                'scan' => now(), // Tanggal dan waktu saat ini
+                'verify' => true, // Contoh nilai verifikasi
+                'status_scan' => true, // Contoh status scan
+                'ip_scan' => $userIP, // Alamat IP pengguna yang melakukan presensi
+            ]);
+            return redirect()->back()->with('success', 'Presensi berhasil.');
+        } else {
+            return redirect()->back()->with('error', 'Anda tidak diizinkan untuk melakukan presensi dari alamat IP ini.');
+        }
+    }
+
+
 
     /**
      * Store a newly created resource in storage.
