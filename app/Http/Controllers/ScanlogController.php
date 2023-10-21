@@ -61,32 +61,39 @@ class ScanlogController extends Controller
 
     public function presensi()
     {
-
         $pin_pengguna = auth()->user()->pin;
         $tanggal_hari_ini = Carbon::now()->toDateString();
-        $jam_sekarang = Carbon::now()->format('H:i:s');
+        // $jam_sekarang = Carbon::now()->format('H:i:s');
 
-        // Menggunakan Eloquent untuk mengambil data scan_logs
-        $scan_logs = ScanLog::where('pin', $pin_pengguna)
-            ->whereDate('scan', $tanggal_hari_ini)
-            ->get();
+        // print $scan_logs;
+        // Mendefinisikan rentang waktu untuk jam 11:00 sampai 12:00
+        $startTime_11 = '11:00:00';
+        $endTime_12 = '12:00:00';
+        $startTime_13 = '13:00:00';
+        $endTime_14 = '14:00:00';
 
-        // Cek apakah ada data scan dengan waktu 11:00 - 12:00 atau 13:00 - 14:00
-        $isDuplicateScan = $scan_logs->some(function ($log) use ($jam_sekarang) {
-            $logTime = Carbon::parse($log->scan)->format('H:i:s');
-            return $logTime === $jam_sekarang ||
-                ($logTime >= '11:00:00' && $logTime <= '12:00:00') ||
-                ($logTime >= '13:00:00' && $logTime <= '14:00:00');
-        });
+        // Menggunakan Eloquent Query Builder untuk mencari data
+        $scanLogs_11 = ScanLog::where('pin', $pin_pengguna)->whereDate('scan', $tanggal_hari_ini)
+            ->whereTime('scan', '>=', $startTime_11)
+            ->whereTime('scan', '<=', $endTime_12)
+            ->first();
 
-        if ($isDuplicateScan) {
-            return redirect()->back()->with('error', 'Anda sudah melakukan scan pada jam ' . $jam_sekarang);
+        $scanLogs_13 = ScanLog::where('pin', $pin_pengguna)->whereDate('scan', $tanggal_hari_ini)
+            ->whereTime('scan', '>=', $startTime_13)
+            ->whereTime('scan', '<=', $endTime_14)
+            ->first();
+
+        if ($scanLogs_11) {
+            return redirect()->back()->with('error', 'Anda sudah melakukan scan pada periode ' . $scanLogs_11->scan);
+        }
+
+        if ($scanLogs_13) {
+            return redirect()->back()->with('error', 'Anda sudah melakukan scan pada periode ' . $scanLogs_13->scan);
         }
 
         if (!$pin_pengguna) {
             return redirect()->back()->with('error', 'Anda Tidak memiliki PIN ');
         }
-
 
         $userIP = request()->ip(); // Mendapatkan alamat IP 
         $response = Http::get("https://ipinfo.io/{$userIP}/json");
@@ -107,7 +114,6 @@ class ScanlogController extends Controller
             return redirect()->back()->with('error', 'Anda tidak diizinkan untuk melakukan presensi dari alamat IP ini.');
         }
     }
-
 
 
     /**
