@@ -141,4 +141,9 @@ class UsersController extends Controller
         return response()->noContent();
     }
 
+    public function usersPin(){
+        
+        return view('admin.users.view-users-pin');
+    }
+
 }

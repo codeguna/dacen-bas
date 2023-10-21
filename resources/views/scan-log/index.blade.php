@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    Tenaga Kependidikan - Aktif
+    Scan Logs
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                <i class="fa fa-check-circle" aria-hidden="true"></i> Tenaga Kependidikan
+                                <i class="fa fa-check-circle" aria-hidden="true"></i> Scan Logs
                             </span>
                         </div>
                     </div>
@@ -24,6 +24,25 @@
                     @endif
 
                     <div class="card-body">
+
+                        <div class="row">
+
+                            <h4>Filter Tanggal</h4>
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <input type="date" name="start_date" class="form-control" required>
+                                    <input type="date" name="end_date" class="form-control" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-primary rounded">
+                                            <button type="submit" class="btn btn-primary btn-xs">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table id="dataTable1" class="table table-striped table-hover">
                                 <thead class="thead">

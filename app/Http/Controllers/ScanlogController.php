@@ -17,12 +17,15 @@ class ScanlogController extends Controller
      */
     public function index()
     {
-
-        $scanLogs = ScanLog::whereDate('scan', '2023-10-10')->orderBy('scan', 'ASC')->paginate();
-        // return $scanLogs;
+        $today = now()->format('Y-m-d'); // Get today's date in 'Y-m-d' format
+        $scanLogs = ScanLog::whereDate('scan', $today)->orderBy('scan', 'ASC')->paginate();
 
         return view('scan-log.index', compact('scanLogs'))
             ->with('i', (request()->input('page', 1) - 1) * $scanLogs->perPage());
+    }
+
+    public function result()
+    {
     }
 
     /**
