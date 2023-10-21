@@ -46,14 +46,6 @@ class ScanlogController extends Controller
      */
     public function create()
     {
-        $userIP = '182.253.158.143';
-        $response = Http::get("https://ipinfo.io/{$userIP}/json");
-        $data = $response->json();
-
-        $isp = $data['org'];
-
-        return $isp;
-
         $pin_pengguna = auth()->user()->pin;
         $tanggal_hari_ini = Carbon::now()->toDateString();
 
