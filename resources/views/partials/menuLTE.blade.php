@@ -1,6 +1,28 @@
 <nav class="mt-2">
 
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        @can('create_attendances')
+            <li class="nav-item">
+                <a href="{{ route('admin.scan-logs.create') }}"
+                    class="nav-link {{ request()->is('admin/scan-logs/create') || request()->is('admin/scan-logs/create/*') ? 'active' : '' }}">
+                    <i class="fas fa-check-circle nav-icon"></i>
+                    <p>
+                        Lakukan Presensi
+                    </p>
+                </a>
+            </li>
+        @endcan
+        @can('view_attendances')
+            <li class="nav-item">
+                <a href="{{ route('admin.scan-log.my-attendances') }}"
+                    class="nav-link {{ request()->is('admin/scan-log/myattendances') || request()->is('admin/scan-log/myattendances/*') ? 'active' : '' }}">
+                    <i class="fas fa-eye nav-icon"></i>
+                    <p>
+                        Lihat Presensi
+                    </p>
+                </a>
+            </li>
+        @endcan
         @can('view_profile')
             <li class="nav-item">
                 <a href="{{ url('admin/myprofile') }}"
@@ -16,7 +38,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                with font-awesome or any other icon font library -->
+                                                                                                                with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">

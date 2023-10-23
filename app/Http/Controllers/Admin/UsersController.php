@@ -169,5 +169,4 @@ class UsersController extends Controller
         ]);
         return redirect()->route('admin.user.pin')->with('success', 'Berhasil memperbarui PIN Pengguna.');
     }
-
 }

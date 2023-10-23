@@ -44,5 +44,13 @@ class PermissionSeed extends Seeder
         Permission::create(['name' => 'delete_education_tendik']);
         Permission::create(['name' => 'delete_certificate_tendik']);
 
+        //ADD GUEST
+        Permission::create(['name' => '	view_attendances']);
+        Permission::create(['name' => '	create_attendances']);
+        Permission::create(['name' => 'view_profile']);
+
+        //BAS
+        Permission::create(['name' => 'bas_menu']);
+
     }
 }

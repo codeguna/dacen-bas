@@ -32,7 +32,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('/user/update_users_pin/{user}','Admin\UsersController@updatePIN')->name('user.update-pin');
     Route::resource('scan-logs', 'ScanlogController');
     Route::get('/scan-log/filter/', 'ScanlogController@filterDate')->name('scanlogs.search');
-    Route::get('/presensi','ScanlogController@presensi')->name('presensi');
+    Route::get('/presensi','ScanlogController@presensi')->name('presensi');   
+    Route::get('/scan-log/myattendances','ScanlogController@myAttendances')->name('scan-log.my-attendances');
     //Route homebases
     Route::resource('homebases', 'HomebaseController');
     //End Route homebases

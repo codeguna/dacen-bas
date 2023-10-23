@@ -36,6 +36,7 @@ class RoleSeed extends Seeder
         $role->givePermissionTo('add_certificate_tendik');
         $role->givePermissionTo('delete_education_tendik');
         $role->givePermissionTo('delete_certificate_tendik');
+        $role->givePermissionTo('bas_menu');
 
         $role = Role::create(['name' => 'bas']);
         $role->givePermissionTo('create_tendik');
@@ -58,6 +59,12 @@ class RoleSeed extends Seeder
         $role->givePermissionTo('add_certificate_tendik');
         $role->givePermissionTo('delete_education_tendik');
         $role->givePermissionTo('delete_certificate_tendik');
+        $role->givePermissionTo('bas_menu');
+
+        $role = Role::create(['name' => 'GUEST']);
+        $role->givePermissionTo('view_profile');
+        $role->givePermissionTo('view_attendances');
+        $role->givePermissionTo('create_attendances');
         
     }
 }
