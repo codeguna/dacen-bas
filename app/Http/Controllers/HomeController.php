@@ -37,7 +37,7 @@ class HomeController extends Controller
     public function index()
     {
         if (Gate::allows('view_profile')) {
-            return abort(403);
+            return redirect()->route('admin.myprofile');
         }
         $countActiveDosen       = Lecturer::where('status',1)->count();
         $countInActiveDosen     = Lecturer::where('status',0)->count();
