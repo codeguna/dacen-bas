@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Ui\Presets\React;
 
 class UsersController extends Controller
 {
@@ -142,8 +144,30 @@ class UsersController extends Controller
     }
 
     public function usersPin(){
-        
-        return view('admin.users.view-users-pin');
+        $users  = User::orderBy('name','ASC')->get();
+
+        return view('admin.users.view-users-pin',compact('users'))->with('i');
+    }
+    public function setPin($id){
+
+        $user = User::find($id);
+
+        return view('admin.users.set-users-pin', compact('user'));
+    }
+
+    public function updatePIN(Request $request, $id)
+    {
+        $pin                = $request->pin;
+
+        $request->validate([
+            'pin' => 'required|unique:users,pin,',
+        ]);
+
+        $users              = User::find($id);
+        $users->update([
+                'pin'       => $pin,
+        ]);
+        return redirect()->route('admin.user.pin')->with('success', 'Berhasil memperbarui PIN Pengguna.');
     }
 
 }

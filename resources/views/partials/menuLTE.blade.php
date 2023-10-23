@@ -16,7 +16,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                            with font-awesome or any other icon font library -->
+                                                                                                with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -261,7 +261,11 @@
                 request()->is('admin/permissions') ||
                 request()->is('admin/permissions/*') ||
                 request()->is('admin/users') ||
-                request()->is('admin/users/*')
+                request()->is('admin/users/*') ||
+                request()->is('admin/user/view_users_pin') ||
+                request()->is('admin/user/view_users_pin/*') ||
+                request()->is('admin/user/set_users_pin') ||
+                request()->is('admin/user/set_users_pin/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -270,7 +274,11 @@
                     request()->is('admin/permissions') ||
                     request()->is('admin/permissions/*') ||
                     request()->is('admin/users') ||
-                    request()->is('admin/users/*')
+                    request()->is('admin/users/*') ||
+                    request()->is('admin/user/view_users_pin') ||
+                    request()->is('admin/user/view_users_pin/*') ||
+                    request()->is('admin/user/set_users_pin') ||
+                    request()->is('admin/user/set_users_pin/*')
                         ? 'active'
                         : '' }}">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -301,8 +309,8 @@
                             <p>Users</p>
                         </a>
                     <li class="nav-item">
-                        <a href="{{ route('admin.users.index') }}"
-                            class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.user.pin') }}"
+                            class="nav-link {{ request()->is('admin/user/view_users_pin') || request()->is('admin/user/view_users_pin/*') || request()->is('admin/user/set_users_pin/*') || request()->is('admin/user/set_users_pin/*') ? 'active' : '' }}">
                             <i class="fa fa-calculator nav-icon" aria-hidden="true"></i>
                             <p>Set Users PIN</p>
                         </a>

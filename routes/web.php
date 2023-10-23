@@ -27,6 +27,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::delete('roles_mass_destroy', 'Admin\RolesController@massDestroy')->name('roles.mass_destroy');
     Route::resource('users', 'Admin\UsersController');
     Route::delete('users_mass_destroy', 'Admin\UsersController@massDestroy')->name('users.mass_destroy');
+    Route::get('/user/view_users_pin','Admin\UsersController@usersPin')->name('user.pin');
+    Route::get('/user/set_users_pin/{user}','Admin\UsersController@setPIN')->name('user.set-pin');
+    Route::post('/user/update_users_pin/{user}','Admin\UsersController@updatePIN')->name('user.update-pin');
     Route::resource('scan-logs', 'ScanlogController');
     Route::get('/scan-log/filter/', 'ScanlogController@filterDate')->name('scanlogs.search');
     Route::get('/presensi','ScanlogController@presensi')->name('presensi');
