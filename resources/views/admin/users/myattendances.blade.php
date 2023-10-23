@@ -10,7 +10,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h2><i class="fas fa-user-clock"></i> Presensi Saya</h2>
+                        <h2><i class="fas fa-user-clock"></i> Presensi Hari Ini</h2>
                     </div>
                     <div class="card-body">
                         <div class="responsive-table">
@@ -68,7 +68,7 @@
                                         </td>
                                         <td>
                                             <i class="fas fa-clock text-warning"></i>
-                                            @php
+                                            {{-- @php
                                                 $total_hour = 0;
                                                 $scans = [$scan1, $scan2, $scan3, $scan4];
 
@@ -87,7 +87,7 @@
                                                 }
 
                                                 echo number_format($total_hour, 1) . ' jam';
-                                            @endphp
+                                            @endphp --}}
                                         </td>
                                     </tr>
                                 </tbody>
