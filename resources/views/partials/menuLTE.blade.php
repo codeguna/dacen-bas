@@ -15,7 +15,7 @@
         @can('view_attendances')
             <li class="nav-item">
                 <a href="{{ route('admin.scan-log.my-attendances') }}"
-                    class="nav-link {{ request()->is('admin/scan-log/myattendances') || request()->is('admin/scan-log/myattendances/*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/scan-log/myattendances') || request()->is('admin/scan-log/myattendances/*') || request()->is('admin/scan-log/myattendancesfilter') ? 'active' : '' }}">
                     <i class="fas fa-eye nav-icon"></i>
                     <p>
                         Lihat Presensi
@@ -38,7 +38,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                with font-awesome or any other icon font library -->
+                                                                                                                    with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">

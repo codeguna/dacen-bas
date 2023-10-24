@@ -47,10 +47,13 @@ class ScanlogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {       
         $pin_pengguna = auth()->user()->pin;
         $tanggal_hari_ini = Carbon::now()->toDateString();
-
+        
+        if ($pin_pengguna === null) {
+            return redirect()->route('admin.myprofile')->with('warning','Silahkan hubungi Admin/BAS untuk melakukan input PIN');
+        }
         // Menggunakan Eloquent untuk mengambil data scan_logs
         $scan_logs = ScanLog::where('pin', $pin_pengguna)
             ->whereDate('scan', $tanggal_hari_ini)
@@ -282,6 +285,14 @@ class ScanlogController extends Controller
         $startDate  = Carbon::now()->startOfMonth();
         $endDate    = Carbon::now()->endOfMonth();
         //$today  = '2023/10/21';
+
+        $user = Auth::user(); // Assuming you are using Laravel's built-in authentication
+        $id = $user->pin;
+
+        if ($user->pin === null) {
+            return redirect()->route('admin.myprofile')->with('warning','Silahkan hubungi Admin/BAS untuk melakukan input PIN');
+        }
+
         $scan1 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
             ->whereTime('scan', '>=', '05:00:00')

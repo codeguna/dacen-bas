@@ -19,9 +19,9 @@
                         {!! $errors->first(
                             'nomor_induk',
                             '<div class="alert alert-warning" role="alert">
-                                                                                <i class="fa fa-info-circle" aria-hidden="true"></i> 
-                                                                                <strong>NIP/NIDN sudah digunakan oleh pengguna lain.</strong>
-                                                                                                </div>',
+                                                                                                        <i class="fa fa-info-circle" aria-hidden="true"></i> 
+                                                                                                        <strong>NIP/NIDN sudah digunakan oleh pengguna lain.</strong>
+                                                                                                                        </div>',
                         ) !!}
                         <form action="{{ route('admin.saveprofile') }}" method="POST">
                             @csrf
@@ -33,7 +33,7 @@
                                             <input type="radio" name="position" value="Dosen"> Dosen
                                         </label>
                                         <label class="btn btn-success btn-xs">
-                                            <input type="radio" name="position" value="Tendik"> Tendik
+                                            <input type="radio" name="position" value="Tendik"> Tendik/Non Dosen
                                         </label>
                                     </div>
                                 </div>
@@ -42,7 +42,7 @@
                                         <label>Nomor Induk (NIP/NIDN)</label>
                                         <input type="text" class="form-control" name="nomor_induk"
                                             oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-                                        <small class="text-danger">NIP: untuk Tendik</small> |
+                                        <small class="text-danger">NIP: untuk Tendik/Non Dosen</small> |
                                         <small class="text-danger">NIDN: untuk Dosen</small>
                                     </div>
                                 </div>
