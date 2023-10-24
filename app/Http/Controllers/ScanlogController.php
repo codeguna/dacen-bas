@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use GeoIP;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 
 class ScanlogController extends Controller
@@ -20,6 +21,9 @@ class ScanlogController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('bas_menu')) {
+            return abort(401);
+        }
         $today = now()->format('Y-m-d'); // Get today's date in 'Y-m-d' format
         $scanLogs = ScanLog::whereDate('scan', $today)->orderBy('scan', 'DESC')->get();
 
@@ -50,7 +54,7 @@ class ScanlogController extends Controller
     {       
         $pin_pengguna = auth()->user()->pin;
         $tanggal_hari_ini = Carbon::now()->toDateString();
-        
+
         if ($pin_pengguna === null) {
             return redirect()->route('admin.myprofile')->with('warning','Silahkan hubungi Admin/BAS untuk melakukan input PIN');
         }
