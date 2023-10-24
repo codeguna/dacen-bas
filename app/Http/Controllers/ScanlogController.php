@@ -279,6 +279,8 @@ class ScanlogController extends Controller
     public function myAttendances(){
 
         $pin = Auth::user()->pin;
+        $startDate  = Carbon::now()->startOfMonth();
+        $endDate    = Carbon::now()->endOfMonth();
         //$today  = '2023/10/21';
         $scan1 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
@@ -300,11 +302,55 @@ class ScanlogController extends Controller
 
         $scan4 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
-            ->whereTime('scan', '>=', '14:01:00')
+            ->whereTime('scan', '>=', '14:00:00')
             ->whereTime('scan', '<=', '23:00:00')
             ->latest('scan')
             ->first();
 
-        return view('admin.users.myattendances', compact('scan1','scan2','scan3','scan4'))->with('i');
+        $scan_logs = ScanLog::where('pin', $pin)
+            ->whereBetween('scan', [$startDate, $endDate])
+            ->orderBy('scan','ASC')
+            ->get();
+
+        return view('admin.users.myattendances', compact('scan1','scan2','scan3','scan4','scan_logs'))->with('i');
+    }
+
+    public function myAttendancesFilter(Request $request){
+        $pin = Auth::user()->pin;
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        //$today  = '2023/10/21';
+        $scan1 = ScanLog::where('pin', $pin)
+            ->whereDate('scan', today())
+            ->whereTime('scan', '>=', '05:00:00')
+            ->whereTime('scan', '<=', '10:59:59')
+            ->first();
+
+        $scan2 = ScanLog::where('pin', $pin)
+            ->whereDate('scan', today())
+            ->whereTime('scan', '>=', '11:00:00')
+            ->whereTime('scan', '<=', '12:59:59')
+            ->first();
+
+        $scan3 = ScanLog::where('pin', $pin)
+            ->whereDate('scan', today())
+            ->whereTime('scan', '>=', '13:00:00')
+            ->whereTime('scan', '<=', '13:59:59')
+            ->first();
+
+        $scan4 = ScanLog::where('pin', $pin)
+            ->whereDate('scan', today())
+            ->whereTime('scan', '>=', '14:00:00')
+            ->whereTime('scan', '<=', '23:00:00')
+            ->latest('scan')
+            ->first();
+
+        $scan_logs = ScanLog::where('pin', $pin)
+        ->whereDate('scan', '>=', $start_date)
+        ->whereDate('scan', '<=', $end_date)
+            ->orderBy('scan','ASC')
+            ->get();
+
+        return view('admin.users.myattendances', compact('scan1','scan2','scan3','scan4','scan_logs'))->with('i');
     }
 }

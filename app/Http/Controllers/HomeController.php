@@ -37,7 +37,7 @@ class HomeController extends Controller
     public function index()
     {
         if (Gate::allows('view_profile')) {
-            return redirect()->route('admin.myprofile');
+            return redirect()->route('admin.scan-log.my-attendances');
         }
         $countActiveDosen       = Lecturer::where('status',1)->count();
         $countInActiveDosen     = Lecturer::where('status',0)->count();
