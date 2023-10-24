@@ -106,3 +106,15 @@ table.dataTable thead .sorting_desc {
   padding-left: 0px;
   padding-right: 0px;
 }
+
+.avatar {
+  width: 35px;
+  height: 35px;
+  background-color: #007bff; /* Background color (you can change this) */
+  border-radius: 50%; /* To create a circular avatar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff; /* Text color (you can change this) */
+  font-size: 24px; /* Font size of the initial */
+}

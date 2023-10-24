@@ -67,9 +67,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    @php
+                        function getInitials($fullName)
+                        {
+                            $words = explode(' ', $fullName);
+                            $initials = '';
+
+                            foreach ($words as $word) {
+                                $initials .= strtoupper($word[0]);
+                                if (strlen($initials) == 2) {
+                                    break; // Stop after getting the first two initials
+                                }
+                            }
+
+                            return $initials;
+                        }
+
+                        $fullName = Auth::user()->name;
+                        $initials = getInitials($fullName);
+                    @endphp
                     <div class="image">
-                        <img src="{{ asset('adminLTE/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                            alt="User Image">
+                        <div class="avatar">{{ $initials }}</div>
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">{{ Auth::User()->name }}</a>
