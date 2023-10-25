@@ -35,18 +35,19 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <h5 class="text-center">{{ request('start_date') }} | {{ request('end_date') }}</h5>
+                                    <h3 class="text-center">Tanggal Awal/Tanggal Akhir</h3>
                                     <div class="input-group">
                                         <input type="date" name="start_date" id="start_date" class="form-control"
-                                            required>
-                                        <input type="date" name="end_date" id="end_date" class="form-control" required>
+                                            value="{{ request('start_date') }}" required>
+                                        <input type="date" name="end_date" id="end_date" class="form-control"
+                                            value="{{ request('end_date') }}" required>
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text bg-primary rounded">
+                                            <span class="input-group-text bg-light rounded">
                                                 <button type="submit" class="btn btn-primary btn-xs">
                                                     <i class="fa fa-search" aria-hidden="true"></i>
                                                 </button>
                                                 <a href="{{ route('admin.scan-logs.index') }}"
-                                                    class="btn btn-success btn-xs">
+                                                    class="btn btn-warning btn-xs">
                                                     <i class="fas fa-sync"></i>
                                                 </a>
                                             </span>
@@ -55,6 +56,7 @@
                                 </div>
                             </div>
                     </form>
+                    <hr>
                     <div class="table-responsive">
                         <table id="dataTable1" class="table table-striped table-hover">
                             <thead class="thead">

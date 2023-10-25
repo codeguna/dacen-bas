@@ -38,7 +38,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                    with font-awesome or any other icon font library -->
+                                                                                                                                            with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -142,9 +142,9 @@
                 </ul>
             </li>
             <li
-                class="nav-item {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') ? 'menu-open' : '' }}">
+                class="nav-item {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') ? 'menu-open' : '' }}">
                 <a href="#"
-                    class="nav-link {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') ? 'active' : '' }}">
                     <i class="nav-icon fa fa-history" aria-hidden="true"></i>
                     <p>
                         Scan Logs
@@ -154,7 +154,7 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{ route('admin.scan-logs.index') }}"
-                            class="nav-link {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') ? 'active' : '' }}">
+                            class="nav-link {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-archive" aria-hidden="true"></i>
                             <p>Semua Data</p>
                         </a>

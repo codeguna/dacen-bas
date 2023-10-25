@@ -109,8 +109,9 @@
                                     </h4>
                                     <div class="input-group">
                                         <input class="form-control" type="date" name="start_date" id="start_date"
-                                            required>
-                                        <input class="form-control" type="date" name="end_date" id="end_date" required>
+                                            value="{{ request('start_date') }}" required>
+                                        <input class="form-control" type="date" name="end_date" id="end_date"
+                                            value="{{ request('end_date') }}" required>
                                         <p id="date_error" style="color: red;"></p>
                                         <span class="input-group-btn">
                                             <a href="{{ route('admin.scan-log.my-attendances') }}" class="btn btn-success">
@@ -124,7 +125,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 mt-3">
-                                    <h4 class="text-center">{{ request('start_date') }} | {{ request('end_date') }}</h4>
                                     <div class="table-responsive">
                                         <table class="table table-hover">
                                             <thead>
