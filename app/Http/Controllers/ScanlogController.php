@@ -286,9 +286,8 @@ class ScanlogController extends Controller
     public function myAttendances(){
 
         $pin = Auth::user()->pin;
-        $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
-
-// Membuat $endDate
+        $startDate = Carbon::now()->startOfMonth()->addDays(25);
+        // Membuat $endDate
         $endDate = Carbon::now()->addMonth()->startOfMonth()->addDays(24);
         //$today  = '2023/10/21';
         $user = Auth::user(); // Assuming you are using Laravel's built-in authentication
