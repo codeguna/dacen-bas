@@ -39,7 +39,7 @@
             <div class="modal-container">
                 <div class="modal-left">
                     <h1 class="modal-title">Welcome!</h1>
-                    <p class="modal-desc">Fill username and password to Enter.</p>
+                    <p class="modal-desc">Isi Email dan Password untuk masuk Admin Panel.</p>
                     <div class="input-block">
                         <label for="email" class="input-label">Email</label>
                         <input class="{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" name="email"
@@ -51,12 +51,24 @@
                             name="password" id="password">
                     </div>
                     <div class="modal-buttons">
-                        <button class="input-button">
+                        <button class="input-button" style="width: 100%">
                             <i class="fa fa-lock" aria-hidden="true"></i> Login
                         </button>
-                        <a href="{{ url('auth/google') }}" style="text-decoration: none;color: white"
+                    </div>
+                    <center>
+                        <small>
+                            Klik tombol dibawah ini untuk Dosen/Tendik (Non Dosen)
+                        </small>
+                    </center>
+
+                    <div class="modal-buttons" style="margin-top: 0.5em">
+                        <a href="{{ url('auth/google') }}" style="text-decoration: none;color: white;width: 100%"
                             class="input-button">
-                            <i class="fa fa-users" aria-hidden="true"></i> Login Dosen/Tendik
+                            <center>
+                                <i class="fas fa-external-link-alt    "></i>
+                                Dosen/Tendik (Non Dosen)
+                            </center>
+
                         </a>
                     </div>
         </form>
