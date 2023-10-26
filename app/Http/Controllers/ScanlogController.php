@@ -130,7 +130,7 @@ class ScanlogController extends Controller
                 'status_scan' => true, // Contoh status scan
                 'ip_scan' => $userIP, // Alamat IP pengguna yang melakukan presensi
             ]);
-            return redirect()->back()->with('success', 'Presensi berhasil.');
+            return redirect()->route('admin.scan-log.my-attendances')->with('success', 'Presensi berhasil.');
         } else {
             return redirect()->back()->with('error', 'Anda tidak diizinkan untuk melakukan presensi dari alamat IP ini.');
         }
