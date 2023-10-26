@@ -65,8 +65,8 @@
                         <a href="{{ url('auth/google') }}" style="text-decoration: none;color: white;width: 100%"
                             class="input-button">
                             <center>
-                                <i class="fas fa-external-link-alt    "></i>
-                                Dosen/Tendik (Non Dosen)
+                                <i class="fas fa-external-link-alt"></i>
+                                Login Dosen/Tendik
                             </center>
 
                         </a>

@@ -20,7 +20,9 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Nama</th>
+                                    <th>Posisi</th>
                                     <th>PIN</th>
+                                    <th>NIDN/NIP</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -34,10 +36,24 @@
                                             {{ $user->name }}
                                         </td>
                                         <td>
+                                            @if ($user->position == null)
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i> Posisi belum di set!
+                                            @else
+                                                {{ $user->position }}
+                                            @endif
+                                        </td>
+                                        <td>
                                             @if ($user->pin == null)
                                                 <i class="fa fa-info-circle" aria-hidden="true"></i> PIN belum di set!
                                             @else
                                                 {{ $user->pin }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($user->nomor_induk == null)
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i> NIP belum di set!
+                                            @else
+                                                {{ $user->nomor_induk }}
                                             @endif
                                         </td>
                                         <td>
@@ -54,7 +70,9 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Nama</th>
+                                    <th>Posisi</th>
                                     <th>PIN</th>
+                                    <th>NIDN/NIP</th>
                                     <th></th>
                                 </tr>
                             </tfoot>
