@@ -368,4 +368,9 @@ class ScanlogController extends Controller
 
         return view('admin.users.myattendances', compact('scan1','scan2','scan3','scan4','scan_logs'))->with('i');
     }
+
+    public function requestAttendances()
+    {
+        return view('scan-log.requestAttendances');
+    }
 }
