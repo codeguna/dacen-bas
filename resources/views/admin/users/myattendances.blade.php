@@ -135,41 +135,40 @@
                                             </thead>
                                             <tbody>
                                                 @php
-                                                    $totalHours = 0; // Inisialisasi total jam
-                                                    $previousScanTime = null; // Inisialisasi waktu scan sebelumnya
+                                                    $totalHours = 0; // Initialize total hours
+                                                    $previousDate = null; // Initialize previous date
                                                 @endphp
 
                                                 @foreach ($scan_logs as $scanlog)
+                                                    @php
+                                                        $scanTime = new \DateTime($scanlog->scan);
+                                                        $date = $scanTime->format('Y-m-d');
+
+                                                        if ($previousDate !== $date) {
+                                                            // Display the date as a separator for a new group
+                                                            echo '<tr><td></td><td><strong>' . $date . '</strong></td><td></td></tr>';
+                                                        }
+
+                                                        // Calculate total hours for each date
+                                                        if ($previousDate !== null) {
+                                                            $interval = $scanTime->diff($previousScanTime);
+                                                            $totalHours += $interval->h;
+                                                        }
+
+                                                        $previousScanTime = $scanTime;
+                                                        $previousDate = $date;
+                                                    @endphp
                                                     <tr>
-                                                        <td>
-                                                            {{ $loop->iteration }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $scanlog->scan }}
-                                                            @php
-                                                                if ($previousScanTime !== null) {
-                                                                    // Menghitung selisih waktu antara rekaman sekarang dan rekaman sebelumnya
-                                                                    $currentScanTime = new \DateTime($scanlog->scan);
-                                                                    $interval = $currentScanTime->diff($previousScanTime);
-
-                                                                    // Menambahkan selisih waktu dalam jam ke total jam
-                                                                    $totalHours += $interval->h;
-                                                                }
-
-                                                                // Mengatur waktu scan sebelumnya ke waktu scan sekarang
-                                                                $previousScanTime = new \DateTime($scanlog->scan);
-                                                            @endphp
-                                                        </td>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $scanlog->scan }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <td></td>
-                                                    <td>
-                                                        <i class="fas fa-clock"></i> <strong>Total Jam:
-                                                            {{ $totalHours }}</strong>
-                                                    </td>
+                                                    <td><i class="fas fa-clock"></i> <strong>Total Hours:
+                                                            {{ $totalHours }}</strong></td>
                                                 </tr>
                                             </tfoot>
                                         </table>
