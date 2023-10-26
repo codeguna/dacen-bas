@@ -10,22 +10,35 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h1><i class="fas fa-user-clock"></i> Presensi</h1>
+                        <h1><i class="fas fa-user-clock text-primary"></i> Presensi</h1>
+                        <div class="alert alert-primary" role="alert">
+                            <i class="fa fa-info-circle"></i>
+                            Harap gunakan jaringan internet di LPKIA, tidak boleh gunakan <strong>VPN!</strong>
+                        </div>
                         <div class="alert alert-warning" role="alert">
-                            <strong><i class="fa fa-info-circle" aria-hidden="true"></i> Tombol Presensi aktif di jam:
+                            <strong>
+                                <i class="fa fa-info-circle" aria-hidden="true"></i> Tombol Presensi aktif di jam:
                             </strong>
                             <ul>
                                 <li>
                                     11:00 - 12:00
                                 </li>
-                                <li>13:00 -
-                                    14:00</li>
+                                <li>
+                                    13:00 -
+                                    14:00
+                                </li>
                             </ul>
+                            <hr>
+
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            Presensi di mesin fingerprint masih dapat di lakukan, presensi disini bersifat
+                            <strong>opsional</strong>.
+
                         </div>
                     </div>
                     <div class="card-body">
                         <button id="presensiButton" class="btn btn-lg btn-success w-100">
-                            <i class="fa fa-check-circle" aria-hidden="true"></i> Lakukan Presensi
+                            <i class="fa fa-check-circle" aria-hidden="true"></i> Presensi
                         </button>
                     </div>
                 </div>
