@@ -33,13 +33,17 @@
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                             Presensi di mesin fingerprint masih dapat di lakukan, presensi disini bersifat
                             <strong>opsional</strong>.
-
                         </div>
                     </div>
                     <div class="card-body">
                         <button id="presensiButton" class="btn btn-lg btn-success w-100">
                             <i class="fa fa-check-circle" aria-hidden="true"></i> Presensi
                         </button>
+                    </div>
+                    <div class="card-footer">
+                        <small>
+                            <i class="fas fa-clock"></i> Waktu Server: <span id="clock"></span>
+                        </small>
                     </div>
                 </div>
             </div>
@@ -60,6 +64,24 @@
 @endsection
 
 @section('scripts')
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const currentTime = `${hours}:${minutes}:${seconds}`;
+
+            // Update the element with the new time
+            document.getElementById('clock').innerHTML = currentTime;
+        }
+
+        // Update the clock every second
+        setInterval(updateClock, 1000);
+
+        // Run the function once to initialize the clock
+        updateClock();
+    </script>
     <script>
         function isButtonActive() {
             const now = new Date();
