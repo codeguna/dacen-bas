@@ -286,10 +286,11 @@ class ScanlogController extends Controller
     public function myAttendances(){
 
         $pin = Auth::user()->pin;
-        $startDate  = Carbon::now()->startOfMonth();
-        $endDate    = Carbon::now()->endOfMonth();
-        //$today  = '2023/10/21';
+        $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
 
+// Membuat $endDate
+        $endDate = Carbon::now()->addMonth()->startOfMonth()->addDays(24);
+        //$today  = '2023/10/21';
         $user = Auth::user(); // Assuming you are using Laravel's built-in authentication
         $id = $user->pin;
 
@@ -322,9 +323,9 @@ class ScanlogController extends Controller
             ->latest('scan')
             ->first();
 
-        $scan_logs = ScanLog::where('pin', $pin)
+            $scan_logs = ScanLog::where('pin', $pin)
             ->whereBetween('scan', [$startDate, $endDate])
-            ->orderBy('scan','ASC')
+            ->orderBy('scan', 'ASC')
             ->get();
 
         return view('admin.users.myattendances', compact('scan1','scan2','scan3','scan4','scan_logs'))->with('i');
