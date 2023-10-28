@@ -17,7 +17,7 @@
                     class="nav-link {{ request()->is('admin/scan-log/request_attendances') || request()->is('admin/scan-log/request_attendances/*') ? 'active' : '' }}">
                     <i class="nav-icon fa fa-home" aria-hidden="true"></i>
                     <p>
-                        Presensi Luar Kantor
+                        Presensi Luar
                     </p>
                 </a>
             </li>
@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                with font-awesome or any other icon font library -->
+                                                                                                                                                                                                with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -188,7 +188,9 @@
                 request()->is('admin/functional-ranks/*') ||
                 request()->is('admin/functional-ranks') ||
                 request()->is('admin/certificate-types/*') ||
-                request()->is('admin/certificate-types')
+                request()->is('admin/certificate-types') ||
+                request()->is('admin/activities') ||
+                request()->is('admin/activities/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -210,7 +212,9 @@
         request()->is('admin/functional-ranks/*') ||
         request()->is('admin/functional-ranks') ||
         request()->is('admin/certificate-types/*') ||
-        request()->is('admin/certificate-types')
+        request()->is('admin/certificate-types') ||
+        request()->is('admin/activities') ||
+        request()->is('admin/activities/*')
             ? 'active'
             : '' }}">
                     <i class="nav-icon fa fa-cogs"></i>
@@ -220,6 +224,13 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.activities.index') }}"
+                            class="nav-link {{ request()->is('admin/activities') || request()->is('admin/activities/*') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-hashtag" aria-hidden="true"></i>
+                            <p>Aktivitas</p>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.knowledges.index') }}"
                             class="nav-link {{ request()->is('admin/knowledges') || request()->is('admin/knowledges/*') ? 'active' : '' }}">

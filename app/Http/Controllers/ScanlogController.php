@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
+use App\Models\AttendancesRequest;
 use App\Models\ScanLog;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -371,6 +373,47 @@ class ScanlogController extends Controller
 
     public function requestAttendances()
     {
-        return view('scan-log.requestAttendances');
+        $user                   = Auth::user()->id;
+        $request_attendances    = AttendancesRequest::where('user_id',$user)->orderBy('created_at','ASC')->get();
+        $activities             = Activity::pluck('id','name');
+
+        return view('scan-log.requestAttendances',compact('request_attendances','activities'))->with('i');
+    }
+
+    public function requestAttendanceStore(Request $request)
+    {
+        // $validator = Validator::make($request->all(), AttendancesRequest::$rules);
+        // if ($validator->fails()) {
+        //     // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
+        //     return redirect()
+        //         ->back()
+        //         ->withErrors($validator)
+        //         ->withInput()
+        //         ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 1MB');
+        // }
+
+        $id             = Auth::user()->id;
+        $photo_file     = $request->file('photo');
+        $activity_id    = $request->activity_id;
+        $keterangan     = $request->keterangan;
+        $status         = 0;
+        $user_id        = $id;
+        
+        $name_file = time() . "_" . $photo_file->getClientOriginalName();
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'data_photo_pengajuan';
+        $photo_file->move($tujuan_upload, $name_file);
+
+        $attendances_request  = AttendancesRequest::create([
+            'user_id'       => $user_id,
+            'activity_id'   => $activity_id,
+            'keterangan'    => $keterangan,
+            'status'        => $status,
+            'photo'         => $name_file,
+            'created_at'    => now()
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Berhasil menambahkan data Pengajuan, silahkan menunggu untuk persetujuan dari BAS.');
     }
 }
