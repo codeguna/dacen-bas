@@ -416,4 +416,10 @@ class ScanlogController extends Controller
         return redirect()->back()
             ->with('success', 'Berhasil menambahkan data Pengajuan, silahkan menunggu untuk persetujuan dari BAS.');
     }
+
+    public function viewRequestAttendances(){
+        $request_attendances    = AttendancesRequest::orderBy('status','ASC')->latest()->get();
+
+        return view('scan-log.viewRequestAttendances',compact('request_attendances'))->with('i');
+    }
 }

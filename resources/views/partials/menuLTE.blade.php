@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -152,9 +152,9 @@
                 </ul>
             </li>
             <li
-                class="nav-item {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') ? 'menu-open' : '' }}">
+                class="nav-item {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') || request()->is('admin/scan-log/view_request_attendances') || request()->is('admin/scan-log/view_request_attendances/*') ? 'menu-open' : '' }}">
                 <a href="#"
-                    class="nav-link {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') || request()->is('admin/scan-log/view_request_attendances') || request()->is('admin/scan-log/view_request_attendances/*') ? 'active' : '' }}">
                     <i class="nav-icon fa fa-history" aria-hidden="true"></i>
                     <p>
                         Scan Logs
@@ -162,6 +162,13 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.scan-log.view-request-attendances') }}"
+                            class="nav-link {{ request()->is('admin/scan-log/view_request_attendances') || request()->is('admin/scan-logs/view_request_attendances/*') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-hourglass-start" aria-hidden="true"></i>
+                            <p>Pengajuan Presensi</p>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.scan-logs.index') }}"
                             class="nav-link {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') ? 'active' : '' }}">
