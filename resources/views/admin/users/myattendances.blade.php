@@ -167,8 +167,8 @@
                                                 <tr>
                                                     <td></td>
                                                     <td>
-                                                        <i class="fas fa-clock"></i> <strong>Total Jam:
-                                                            {{ $totalHours }}</strong>
+                                                        {{-- <i class="fas fa-clock"></i> <strong>Total Jam:
+                                                            {{ $totalHours }}</strong> --}}
                                                     </td>
                                                 </tr>
                                             </tfoot>
