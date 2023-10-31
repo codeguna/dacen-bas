@@ -45,24 +45,24 @@
                                     <td>
                                         <a href="{{ url('/data_photo_pengajuan/' . $scan->photo) }}" class="link"
                                             target="_blank">
-                                            <i class="fas fa-file-image"></i> Foto
+                                            <i class="fas fa-file-image"></i>
                                         </a>
                                     </td>
                                     <td>
                                         @if ($scan->status == 1)
                                             <span class="badge bg-success">
                                                 <i class="fa fa-check-circle" aria-hidden="true"></i>
-                                                Sudah disetujui
+                                                Disetujui
                                             </span>
                                         @elseif ($scan->status == 2)
-                                            <span class="badge bg-success">
+                                            <span class="badge bg-danger">
                                                 <i class="fa fa-times-circle" aria-hidden="true"></i>
-                                                Pengajuan ditolak
+                                                Ditolak
                                             </span>
                                         @else
                                             <span class="badge bg-warning">
                                                 <i class="fas fa-sync-alt    "></i>
-                                                Proses Pengajuan
+                                                Butuh Persetujuan
                                             </span>
                                         @endif
                                     </td>

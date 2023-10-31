@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\AttendancesRequest;
 use App\Models\ScanLog;
+use App\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -382,15 +383,15 @@ class ScanlogController extends Controller
 
     public function requestAttendanceStore(Request $request)
     {
-        // $validator = Validator::make($request->all(), AttendancesRequest::$rules);
-        // if ($validator->fails()) {
-        //     // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
-        //     return redirect()
-        //         ->back()
-        //         ->withErrors($validator)
-        //         ->withInput()
-        //         ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 1MB');
-        // }
+        $validator = Validator::make($request->all(), AttendancesRequest::$rules);
+        if ($validator->fails()) {
+            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 1MB');
+        }
 
         $id             = Auth::user()->id;
         $photo_file     = $request->file('photo');
@@ -418,8 +419,76 @@ class ScanlogController extends Controller
     }
 
     public function viewRequestAttendances(){
-        $request_attendances    = AttendancesRequest::orderBy('status','ASC')->latest()->get();
+        $request_attendances    = AttendancesRequest::orderBy('status','ASC')->orderBy('created_at','ASC')->get();
 
         return view('scan-log.viewRequestAttendances',compact('request_attendances'))->with('i');
+    }
+    public function filterRequestAttendances(Request $request){
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        $request_attendances    = AttendancesRequest::whereDate('created_at', '>=', $start_date)
+        ->whereDate('created_at', '<=', $end_date)
+        ->orderBy('status','ASC')
+        ->orderBy('created_at','ASC')
+        ->latest()
+        ->get();
+
+        return view('scan-log.viewRequestAttendances',compact('request_attendances'))->with('i');
+    }
+
+    public function processRequest(Request $request, $id)
+{
+    $attendances_request    = AttendancesRequest::find($id);
+    $getId                  = $attendances_request->user_id;
+    $status                 = $request->status;
+    $scan                   = $request->scan;
+    $getPin                 = User::find($getId);
+    $pin                    = $getPin->pin;
+    $userIP                 = request()->ip();
+
+    $scanTime               = Carbon::parse($scan);
+    $time                   = $scanTime->format('H:i:s');
+    $cutoffTime             = '15:59:00';
+
+    if ($time <= $cutoffTime) {
+        $scan_log = ScanLog::create([
+            'pin' => $pin,
+            'scan' => $scan,
+            'verify' => 1,
+            'status_scan' => 0,
+            'ip_scan' => $userIP,
+            'created_at' => now(),
+        ]);
+        $attendances_request->update([
+            'status' => $status,
+        ]); 
+    }
+        else{
+            $attendances_request->update([
+                'status' => $status,
+            ]); 
+        }
+
+    return redirect()->back()->with('success', 'Berhasil memperbarui Status Pengajuan');
+}
+
+    public function rejectRequest(Request $request, $id)
+    {
+        $attendances_request = AttendancesRequest::find($id); 
+        $getId  = $attendances_request->user_id; 
+        $status = $request->status;
+        $scan   = $request->scan;
+        $getPin = User::find($getId);
+        $pin    = $getPin->pin;
+
+        $attendances_request->update([
+                'status' => $status,
+        ]);
+        if (strtotime($scan) <= strtotime('15:59')) {
+        $scan_logs  = ScanLog::where('pin',$pin)->where('scan',$scan)->delete();
+        }
+
+        return redirect()->back()->with('warning','Berhasil memperbarui Status Pengajuan');
     }
 }

@@ -105,5 +105,5 @@ class AttendancesRequestController extends Controller
 
         return redirect()->route('attendances-requests.index')
             ->with('success', 'AttendancesRequest deleted successfully');
-    }
+    }    
 }

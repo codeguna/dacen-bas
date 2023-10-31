@@ -35,8 +35,11 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/presensi','ScanlogController@presensi')->name('presensi');   
     Route::get('/scan-log/myattendances','ScanlogController@myAttendances')->name('scan-log.my-attendances');
     Route::get('/scan-log/myattendancesfilter/','ScanlogController@myAttendancesFilter')->name('scan-log.my-attendances-filter');
+    Route::get('/scan-log/view_request_attendances_filter/','ScanlogController@filterRequestAttendances')->name('scan-log.request-attendances-filter');
     Route::get('scan-log/request_attendances/','ScanlogController@requestAttendances')->name('scan-log.request-attendances');
     Route::post('scan-log/request_attendances_store/','ScanlogController@requestAttendanceStore')->name('scan-log.request-attendances-store');
+    Route::post('/scan-log/request_attendances_process/{request}','ScanlogController@processRequest')->name('scan-log.request-attendances-process');
+    Route::post('/scan-log/request_attendances_reject/{request}','ScanlogController@rejectRequest')->name('scan-log.request-attendances-reject');
     Route::get('/scan-log/view_request_attendances/','ScanlogController@viewRequestAttendances')->name('scan-log.view-request-attendances');
     //Route activities
     Route::resource('activities', 'ActivityController');
