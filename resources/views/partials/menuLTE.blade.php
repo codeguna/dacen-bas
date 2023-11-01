@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                    with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -185,8 +185,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.scan-logs.index') }}"
-                            class="nav-link {{ request()->is('admin/scan-log/detail') || request()->is('admin/scan-logs/detail/*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.scanlogs.detail') }}"
+                            class="nav-link {{ request()->is('admin/scan-log/detail') || request()->is('admin/scan-log/detail/*') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-book" aria-hidden="true"></i>
                             <p>Detail Data</p>
                         </a>

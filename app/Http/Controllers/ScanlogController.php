@@ -511,4 +511,18 @@ class ScanlogController extends Controller
 
         return redirect()->back()->with('warning','Berhasil memperbarui Status Pengajuan');
     }
+
+    public function detailData()
+    {
+        if (! Gate::allows('bas_menu')) {
+            return abort(401);
+        }
+        $scanLogs = ScanLog::join('users', 'scan_logs.pin', '=', 'users.pin')
+            ->whereDate('scan', today())
+            ->orderBy('users.name', 'ASC')
+            ->orderBy('scan', 'ASC')  // You can change 'ASC' to 'DESC' if you want descending order
+            ->get();
+            $groupedScanLogs = $scanLogs->groupBy('user.name');
+        return view('scan-log.detail',compact('scanLogs','groupedScanLogs'))->with('i');
+    }
 }
