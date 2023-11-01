@@ -5,6 +5,9 @@
 @endsection
 
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -39,41 +42,79 @@
                             </div>
                         </form>
                         <div class="table-responsive">
-                            <table id="dataTable1" class="table">
+                            <table id="dataTable1" class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>No.</th>
-                                        <th>Nama</th>
-                                        <th>Scan</th>
-                                        <th>Jumlah Jam</th>
+                                        <th>No</th>
+                                        <th>Nama Pengguna</th>
+                                        <th>Scan 1</th>
+                                        <th>Scan 2</th>
+                                        <th>Scan 3</th>
+                                        <th>Scan 4</th>
+                                        <th>Total (Jam)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php
-                                        $i = 0;
+                                        $i = 1;
+                                        function isWithinTimeRange($time, $startTime, $endTime)
+                                        {
+                                            $scanTime = date('H:i', strtotime($time));
+                                            return $scanTime >= $startTime && $scanTime <= $endTime;
+                                        }
                                     @endphp
-                                    @foreach ($groupedScanLogs as $nama => $scans)
+                                    @foreach ($groupedScanLogs as $user => $logs)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
-                                            <td>{{ $nama }}</td>
+                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $user }}</td>
                                             <td>
-                                                @php
-                                                    $totalJam = 0;
-                                                @endphp
-                                                @foreach ($scans as $scan)
-                                                    @if ($loop->first)
-                                                        {{ \Carbon\Carbon::parse($scan->scan)->format('H:i') }}
-                                                    @else
-                                                        @php
-                                                            $selisih = \Carbon\Carbon::parse($scan->scan)->diffInHours(\Carbon\Carbon::parse($scans[$loop->index - 1]->scan));
-                                                            $totalJam += $selisih;
-                                                        @endphp
-                                                        <br>
-                                                        {{ \Carbon\Carbon::parse($scan->scan)->format('H:i') }}
+                                                @foreach ($logs as $log)
+                                                    @if (isWithinTimeRange($log->scan, '04:00', '10:59'))
+                                                        {{ \Carbon\Carbon::parse($log->scan)->format('H:i') }}
                                                     @endif
                                                 @endforeach
                                             </td>
-                                            <td>{{ $totalJam }} Jam</td>
+                                            <td>
+                                                @foreach ($logs as $log)
+                                                    @if (isWithinTimeRange($log->scan, '11:00', '12:00'))
+                                                        {{ \Carbon\Carbon::parse($log->scan)->format('H:i') }}
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach ($logs as $log)
+                                                    @if (isWithinTimeRange($log->scan, '13:00', '14:00'))
+                                                        {{ \Carbon\Carbon::parse($log->scan)->format('H:i') }}
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $lastScan = null;
+                                                @endphp
+                                                @foreach ($logs as $log)
+                                                    @if (isWithinTimeRange($log->scan, '16:00', '23:00'))
+                                                        @php
+                                                            $lastScan = $log;
+                                                        @endphp
+                                                    @endif
+                                                @endforeach
+                                                @if ($lastScan)
+                                                    {{ \Carbon\Carbon::parse($lastScan->scan)->format('H:i') }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($lastScan)
+                                                    @php
+                                                        $scan1Time = \Carbon\Carbon::parse($logs[0]->scan);
+                                                        $scan4Time = \Carbon\Carbon::parse($lastScan->scan);
+                                                        $difference = $scan4Time->diffInHours($scan1Time);
+                                                    @endphp
+                                                    {{ $difference }}
+                                                @else
+                                                    Presensi tidak lengkap
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
