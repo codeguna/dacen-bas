@@ -48,14 +48,13 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                    with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                         Dashboard
-                        <span class="right badge badge-danger">+1</span>
                     </p>
                 </a>
             </li>
@@ -152,13 +151,19 @@
                 </ul>
             </li>
             <li
-                class="nav-item {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') || request()->is('admin/scan-log/view_request_attendances') || request()->is('admin/scan-log/view_request_attendances/*') ? 'menu-open' : '' }}">
+                class="nav-item {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') || request()->is('admin/scan-log/view_request_attendances') || request()->is('admin/scan-log/view_request_attendances/*') || request()->is('admin/scan-log/detail') || request()->is('admin/scan-logs/detail/*') || request()->is('admin/scan-logs-extras') || request()->is('admin/scan-logs-extras/*') || request()->is('admin/scan-log-extra/filter') || request()->is('admin/scan-log-extra/filter/*') ? 'menu-open' : '' }}">
                 <a href="#"
-                    class="nav-link {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') || request()->is('admin/scan-log/view_request_attendances') || request()->is('admin/scan-log/view_request_attendances/*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') || request()->is('admin/scan-log/view_request_attendances') || request()->is('admin/scan-log/view_request_attendances/*') || request()->is('admin/scan-log/detail') || request()->is('admin/scan-logs/detail/*') || request()->is('admin/scan-logs-extras') || request()->is('admin/scan-logs-extras/*') || request()->is('admin/scan-log-extra/filter') || request()->is('admin/scan-log-extra/filter/*') ? 'active' : '' }}">
                     <i class="nav-icon fa fa-history" aria-hidden="true"></i>
+                    @php
+                        $cekPengajuanPresensi = \App\Models\AttendancesRequest::where('status', 0)->count();
+                    @endphp
                     <p>
                         Scan Logs
                         <i class="right fas fa-angle-left"></i>
+                        @if ($cekPengajuanPresensi > 0)
+                            <span class="right badge badge-danger">+{{ $cekPengajuanPresensi }}</span>
+                        @endif
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
@@ -167,6 +172,23 @@
                             class="nav-link {{ request()->is('admin/scan-log/view_request_attendances') || request()->is('admin/scan-logs/view_request_attendances/*') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-hourglass-start" aria-hidden="true"></i>
                             <p>Pengajuan Presensi</p>
+                            @if ($cekPengajuanPresensi > 0)
+                                <span class="right badge badge-danger">+{{ $cekPengajuanPresensi }}</span>
+                            @endif
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.scan-logs-extras.index') }}"
+                            class="nav-link {{ request()->is('admin/scan-logs-extras') || request()->is('admin/scan-logs-extras/*') ? 'active' : '' }}">
+                            <i class="fas fa-user-clock nav-icon"></i>
+                            <p>Report Presensi Luar</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.scan-logs.index') }}"
+                            class="nav-link {{ request()->is('admin/scan-log/detail') || request()->is('admin/scan-logs/detail/*') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-book" aria-hidden="true"></i>
+                            <p>Detail Data</p>
                         </a>
                     </li>
                     <li class="nav-item">

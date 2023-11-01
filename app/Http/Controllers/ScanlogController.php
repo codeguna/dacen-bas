@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\AttendancesRequest;
 use App\Models\ScanLog;
+use App\Models\ScanLogsExtra;
 use App\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -399,6 +400,7 @@ class ScanlogController extends Controller
         $keterangan     = $request->keterangan;
         $status         = 0;
         $user_id        = $id;
+        $userIP         = request()->ip();
         
         $name_file = time() . "_" . $photo_file->getClientOriginalName();
         // isi dengan nama folder tempat kemana file diupload
@@ -411,6 +413,7 @@ class ScanlogController extends Controller
             'keterangan'    => $keterangan,
             'status'        => $status,
             'photo'         => $name_file,
+            'ip_scan'       => $userIP,
             'created_at'    => now()
         ]);
 
@@ -445,7 +448,7 @@ class ScanlogController extends Controller
     $scan                   = $request->scan;
     $getPin                 = User::find($getId);
     $pin                    = $getPin->pin;
-    $userIP                 = request()->ip();
+    $userIP                 = $attendances_request->ip_scan;
 
     $scanTime               = Carbon::parse($scan);
     $time                   = $scanTime->format('H:i:s');
@@ -465,6 +468,16 @@ class ScanlogController extends Controller
         ]); 
     }
         else{
+
+            $scan_log_extra = ScanLogsExtra::create([
+                'pin' => $pin,
+                'scan' => $scan,
+                'verify' => 1,
+                'status_scan' => 0,
+                'ip_scan' => $userIP,
+                'created_at' => now(),
+            ]);
+
             $attendances_request->update([
                 'status' => $status,
             ]); 
@@ -482,11 +495,18 @@ class ScanlogController extends Controller
         $getPin = User::find($getId);
         $pin    = $getPin->pin;
 
+        $scanTime               = Carbon::parse($scan);
+        $time                   = $scanTime->format('H:i:s');
+        $cutoffTime             = '15:59:00';
+
         $attendances_request->update([
                 'status' => $status,
         ]);
-        if (strtotime($scan) <= strtotime('15:59')) {
+        if ($time <= $cutoffTime) {
         $scan_logs  = ScanLog::where('pin',$pin)->where('scan',$scan)->delete();
+        }
+        else{
+            $scan_logs_extra  = ScanLogsExtra::where('pin',$pin)->where('scan',$scan)->delete();
         }
 
         return redirect()->back()->with('warning','Berhasil memperbarui Status Pengajuan');

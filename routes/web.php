@@ -99,4 +99,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route Lecturer Functional Position
     Route::resource('lecturer-functional-positions', 'LecturerFunctionalPositionController');
     //End Route Lecturer Functional Position
+    //Route Scan Logs Extra
+    Route::resource('scan-logs-extras','ScanLogsExtraController');
+    Route::get('/scan-log-extra/filter/','ScanLogsExtraController@filter')->name('scan-log-extra.filter');
 });

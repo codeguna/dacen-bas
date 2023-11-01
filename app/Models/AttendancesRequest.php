@@ -25,7 +25,7 @@ class AttendancesRequest extends Model
     static $rules = [
 		'photo' => 'required|mimes:jpg,jpeg|max:1024',
 		'keterangan' => 'required',
-    'activity_id' => 'required'
+        'activity_id' => 'required'
     ];
 
     protected $perPage = 20;
@@ -35,7 +35,7 @@ class AttendancesRequest extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id','photo','keterangan','status','activity_id'];
+    protected $fillable = ['user_id','photo','keterangan','status','activity_id','ip_scan'];
 
     public function activity()
     {

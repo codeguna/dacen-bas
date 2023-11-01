@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                <i class="fa fa-check-circle" aria-hidden="true"></i> Scan Logs
+                                <i class="fa fa-check-circle text-primary" aria-hidden="true"></i> Scan Logs
                             </span>
                         </div>
                     </div>
