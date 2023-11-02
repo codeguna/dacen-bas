@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                    with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -163,7 +163,9 @@
                 request()->is('admin/scan-log-extra/filter') ||
                 request()->is('admin/scan-log-extra/filter/*') ||
                 request()->is('admin/scan-log/detail/filter') ||
-                request()->is('admin/scan-log/detail/filter/*')
+                request()->is('admin/scan-log/detail/filter/*') ||
+                request()->is('admin/scan-log/print') ||
+                request()->is('admin/scan-log/print/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -179,7 +181,9 @@
                     request()->is('admin/scan-log-extra/filter') ||
                     request()->is('admin/scan-log-extra/filter/*') ||
                     request()->is('admin/scan-log/detail/filter') ||
-                    request()->is('admin/scan-log/detail/filter/*')
+                    request()->is('admin/scan-log/detail/filter/*') ||
+                    request()->is('admin/scan-log/print') ||
+                    request()->is('admin/scan-log/print/*')
                         ? 'active'
                         : '' }}">
                     <i class="nav-icon fa fa-history" aria-hidden="true"></i>
@@ -229,6 +233,13 @@
                             class="nav-link {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-archive" aria-hidden="true"></i>
                             <p>Semua Data</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.scanlogs.print') }}"
+                            class="nav-link {{ request()->is('admin/scan-log/print') || request()->is('admin/scan-log/print/*') || request()->is('admin/scan-log/filter') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-csv"></i>
+                            <p>Export Data</p>
                         </a>
                     </li>
                 </ul>

@@ -290,9 +290,11 @@ class ScanlogController extends Controller
     public function myAttendances(){
 
         $pin = Auth::user()->pin;
-        $startDate = Carbon::now()->startOfMonth()->addDays(25);
-        // Membuat $endDate
-        $endDate = Carbon::now()->addMonth()->startOfMonth()->addDays(24);
+       // Hitung startDate (bulan lalu dengan tanggal 26)
+       $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
+
+       // Hitung endDate (bulan ini dengan tanggal 25)
+       $endDate = Carbon::now()->startOfMonth()->addDays(24);
         //$today  = '2023/10/21';
         $user = Auth::user(); // Assuming you are using Laravel's built-in authentication
         $id = $user->pin;
@@ -539,5 +541,39 @@ class ScanlogController extends Controller
             ->get();
             $groupedScanLogs = $scanLogs->groupBy('user.name');
         return view('scan-log.detail',compact('scanLogs','groupedScanLogs'))->with('i');
+    }
+
+    public function print()
+    {
+        if (! Gate::allows('bas_menu')) {
+            return abort(401);
+        }
+        // Hitung startDate (bulan lalu dengan tanggal 26)
+        $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
+
+        // Hitung endDate (bulan ini dengan tanggal 25)
+        $endDate = Carbon::now()->startOfMonth()->addDays(24);
+
+        $scanLogs = ScanLog::whereBetween('scan', [$startDate, $endDate])
+        ->orderBy('scan', 'ASC')
+        ->get();
+
+        return view('scan-log.print',compact('scanLogs'));
+    }
+
+    public function printResult(Request $request)
+    {
+        if (! Gate::allows('bas_menu')) {
+            return abort(401);
+        }
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        $scanLogs = ScanLog::whereDate('scan', '>=', $start_date)
+        ->whereDate('scan', '<=', $end_date)
+        ->orderBy('scan', 'ASC')
+        ->get();
+
+        return view('scan-log.print',compact('scanLogs'));
     }
 }

@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('scan-logs', 'ScanlogController');
     Route::get('/scan-log/detail/', 'ScanlogController@detailData')->name('scanlogs.detail');
     Route::get('/scan-log/detail/filter', 'ScanlogController@detailDataFilter')->name('scanlogs.detail.filter');
+    Route::get('/scan-log/print', 'ScanlogController@print')->name('scanlogs.print');
+    Route::get('/scan-log/print/result', 'ScanlogController@printResult')->name('scanlogs.print.result');
     Route::get('/scan-log/filter/', 'ScanlogController@filterDate')->name('scanlogs.search');
     Route::get('/presensi','ScanlogController@presensi')->name('presensi');   
     Route::get('/scan-log/myattendances','ScanlogController@myAttendances')->name('scan-log.my-attendances');
