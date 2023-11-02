@@ -84,7 +84,7 @@
                                                     $foundScan2 = false;
                                                 @endphp
                                                 @foreach ($logs as $log)
-                                                    @if (isWithinTimeRange($log->scan, '11:00', '12:00') && !$foundScan2)
+                                                    @if (isWithinTimeRange($log->scan, '11:00', '12:59') && !$foundScan2)
                                                         {{ \Carbon\Carbon::parse($log->scan)->format('H:i') }}
                                                         @php
                                                             $foundScan2 = true;
