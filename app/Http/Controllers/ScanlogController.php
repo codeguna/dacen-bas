@@ -525,4 +525,19 @@ class ScanlogController extends Controller
             $groupedScanLogs = $scanLogs->groupBy('user.name');
         return view('scan-log.detail',compact('scanLogs','groupedScanLogs'))->with('i');
     }
+    public function detailDataFilter(Request $request)
+    {
+        $date = $request->date;
+
+        if (! Gate::allows('bas_menu')) {
+            return abort(401);
+        }
+        $scanLogs = ScanLog::join('users', 'scan_logs.pin', '=', 'users.pin')
+            ->whereDate('scan', $date)
+            ->orderBy('users.name', 'ASC')
+            ->orderBy('scan', 'ASC')  // You can change 'ASC' to 'DESC' if you want descending order
+            ->get();
+            $groupedScanLogs = $scanLogs->groupBy('user.name');
+        return view('scan-log.detail',compact('scanLogs','groupedScanLogs'))->with('i');
+    }
 }

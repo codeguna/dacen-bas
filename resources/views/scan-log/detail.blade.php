@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form id="searchForm" action="{{ route('admin.scan-log-extra.filter') }}" method="GET">
+                        <form id="searchForm" action="{{ route('admin.scanlogs.detail.filter') }}" method="GET">
                             @csrf
                             <div class="card-header">
                                 <h3 class="text-center">Tanggal</h3>
@@ -51,7 +51,7 @@
                                         <th>Scan 2</th>
                                         <th>Scan 3</th>
                                         <th>Scan 4</th>
-                                        <th>Total (Jam)</th>
+                                        <th>Total Jam</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -104,16 +104,12 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @if ($lastScan)
-                                                    @php
-                                                        $scan1Time = \Carbon\Carbon::parse($logs[0]->scan);
-                                                        $scan4Time = \Carbon\Carbon::parse($lastScan->scan);
-                                                        $difference = $scan4Time->diffInHours($scan1Time);
-                                                    @endphp
-                                                    {{ $difference }}
-                                                @else
-                                                    Presensi tidak lengkap
-                                                @endif
+                                                @php
+                                                    $scan1Time = \Carbon\Carbon::parse($logs[0]->scan);
+                                                    $scan4Time = $lastScan ? \Carbon\Carbon::parse($lastScan->scan) : \Carbon\Carbon::parse($logs[count($logs) - 1]->scan);
+                                                    $difference = $scan4Time->diffInHours($scan1Time);
+                                                @endphp
+                                                {{ $difference }} jam
                                             </td>
                                         </tr>
                                     @endforeach

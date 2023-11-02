@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -151,9 +151,37 @@
                 </ul>
             </li>
             <li
-                class="nav-item {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') || request()->is('admin/scan-log/view_request_attendances') || request()->is('admin/scan-log/view_request_attendances/*') || request()->is('admin/scan-log/detail') || request()->is('admin/scan-logs/detail/*') || request()->is('admin/scan-logs-extras') || request()->is('admin/scan-logs-extras/*') || request()->is('admin/scan-log-extra/filter') || request()->is('admin/scan-log-extra/filter/*') ? 'menu-open' : '' }}">
+                class="nav-item {{ request()->is('admin/scan-logs') ||
+                request()->is('admin/scan-logs/*') ||
+                request()->is('admin/scan-log/filter') ||
+                request()->is('admin/scan-log/view_request_attendances') ||
+                request()->is('admin/scan-log/view_request_attendances/*') ||
+                request()->is('admin/scan-log/detail') ||
+                request()->is('admin/scan-logs/detail/*') ||
+                request()->is('admin/scan-logs-extras') ||
+                request()->is('admin/scan-logs-extras/*') ||
+                request()->is('admin/scan-log-extra/filter') ||
+                request()->is('admin/scan-log-extra/filter/*') ||
+                request()->is('admin/scan-log/detail/filter') ||
+                request()->is('admin/scan-log/detail/filter/*')
+                    ? 'menu-open'
+                    : '' }}">
                 <a href="#"
-                    class="nav-link {{ request()->is('admin/scan-logs') || request()->is('admin/scan-logs/*') || request()->is('admin/scan-log/filter') || request()->is('admin/scan-log/view_request_attendances') || request()->is('admin/scan-log/view_request_attendances/*') || request()->is('admin/scan-log/detail') || request()->is('admin/scan-logs/detail/*') || request()->is('admin/scan-logs-extras') || request()->is('admin/scan-logs-extras/*') || request()->is('admin/scan-log-extra/filter') || request()->is('admin/scan-log-extra/filter/*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/scan-logs') ||
+                    request()->is('admin/scan-logs/*') ||
+                    request()->is('admin/scan-log/filter') ||
+                    request()->is('admin/scan-log/view_request_attendances') ||
+                    request()->is('admin/scan-log/view_request_attendances/*') ||
+                    request()->is('admin/scan-log/detail') ||
+                    request()->is('admin/scan-logs/detail/*') ||
+                    request()->is('admin/scan-logs-extras') ||
+                    request()->is('admin/scan-logs-extras/*') ||
+                    request()->is('admin/scan-log-extra/filter') ||
+                    request()->is('admin/scan-log-extra/filter/*') ||
+                    request()->is('admin/scan-log/detail/filter') ||
+                    request()->is('admin/scan-log/detail/filter/*')
+                        ? 'active'
+                        : '' }}">
                     <i class="nav-icon fa fa-history" aria-hidden="true"></i>
                     @php
                         $cekPengajuanPresensi = \App\Models\AttendancesRequest::where('status', 0)->count();
@@ -186,7 +214,12 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.scanlogs.detail') }}"
-                            class="nav-link {{ request()->is('admin/scan-log/detail') || request()->is('admin/scan-log/detail/*') ? 'active' : '' }}">
+                            class="nav-link {{ request()->is('admin/scan-log/detail') ||
+                            request()->is('admin/scan-log/detail/*') ||
+                            request()->is('admin/scan-log/detail/filter') ||
+                            request()->is('admin/scan-log/detail/filter/*')
+                                ? 'active'
+                                : '' }}">
                             <i class="nav-icon fa fa-book" aria-hidden="true"></i>
                             <p>Detail Data</p>
                         </a>
