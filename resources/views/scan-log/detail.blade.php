@@ -67,23 +67,41 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $user }}</td>
                                             <td>
+                                                @php
+                                                    $foundScan1 = false;
+                                                @endphp
                                                 @foreach ($logs as $log)
-                                                    @if (isWithinTimeRange($log->scan, '04:00', '10:59'))
+                                                    @if (isWithinTimeRange($log->scan, '04:00', '10:59') && !$foundScan1)
                                                         {{ \Carbon\Carbon::parse($log->scan)->format('H:i') }}
+                                                        @php
+                                                            $foundScan1 = true;
+                                                        @endphp
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
+                                                @php
+                                                    $foundScan2 = false;
+                                                @endphp
                                                 @foreach ($logs as $log)
-                                                    @if (isWithinTimeRange($log->scan, '11:00', '12:00'))
+                                                    @if (isWithinTimeRange($log->scan, '11:00', '12:00') && !$foundScan2)
                                                         {{ \Carbon\Carbon::parse($log->scan)->format('H:i') }}
+                                                        @php
+                                                            $foundScan2 = true;
+                                                        @endphp
                                                     @endif
                                                 @endforeach
                                             </td>
                                             <td>
+                                                @php
+                                                    $foundScan3 = false;
+                                                @endphp
                                                 @foreach ($logs as $log)
-                                                    @if (isWithinTimeRange($log->scan, '13:00', '14:00'))
+                                                    @if (isWithinTimeRange($log->scan, '13:00', '14:00') && !$foundScan3)
                                                         {{ \Carbon\Carbon::parse($log->scan)->format('H:i') }}
+                                                        @php
+                                                            $foundScan3 = true;
+                                                        @endphp
                                                     @endif
                                                 @endforeach
                                             </td>
