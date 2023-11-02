@@ -76,7 +76,7 @@
                                         <td>{{ \Carbon\Carbon::parse($scanLog->scan)->format('Y-m-d') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($scanLog->scan)->format('H:i') }}</td>
                                         <td>{{ $scanLog->pin }}</td>
-                                        <td>{{ $scanLog->user->nomor_induk }}</td>
+                                        <td>{{ $scanLog->user->nomor_induk ?? '' }}</td>
                                         <td>{{ $scanLog->user->name ?? '' }}</td>
                                     </tr>
                                 @endforeach
