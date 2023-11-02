@@ -32,8 +32,7 @@
                                             <button type="submit" class="btn btn-primary btn-xs">
                                                 <i class="fa fa-search" aria-hidden="true"></i>
                                             </button>
-                                            <a href="{{ route('admin.scan-logs-extras.index') }}"
-                                                class="btn btn-warning btn-xs">
+                                            <a href="{{ route('admin.scanlogs.detail') }}" class="btn btn-warning btn-xs">
                                                 <i class="fas fa-sync"></i>
                                             </a>
                                         </span>
