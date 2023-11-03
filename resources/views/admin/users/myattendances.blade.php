@@ -136,6 +136,7 @@
                                             </thead>
                                             <tbody>
                                                 @php
+                                                    $y = 1; // Inisialisasi nomor dengan 1
                                                     $previousDate = null; // Inisialisasi tanggal sebelumnya
                                                     $scanTimes = []; // Inisialisasi array untuk menyimpan waktu scan pada tanggal tertentu
                                                 @endphp
@@ -148,10 +149,11 @@
                                                         if ($previousDate !== null && $previousDate != $currentDate) {
                                                             // Menampilkan data untuk tanggal sebelumnya
                                                             echo '<tr>';
-                                                            echo '<td></td>';
+                                                            echo '<td>' . $y . '</td>';
                                                             echo '<td>' . $previousDate . '</td>';
                                                             echo '<td>' . implode(' | ', $scanTimes) . '</td>';
                                                             echo '</tr>';
+                                                            $y++; // Tambahkan nomor
 
                                                             // Reset array waktu scan untuk tanggal baru
                                                             $scanTimes = [];
@@ -164,7 +166,7 @@
                                                 @if (!empty($previousDate))
                                                     <!-- Menampilkan data untuk tanggal terakhir -->
                                                     <tr>
-                                                        <td></td>
+                                                        <td>{{ $y }}</td>
                                                         <td>{{ $previousDate }}</td>
                                                         <td>{{ implode(' | ', $scanTimes) }}</td>
                                                     </tr>
