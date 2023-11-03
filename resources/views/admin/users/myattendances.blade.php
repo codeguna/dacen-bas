@@ -130,48 +130,46 @@
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
-                                                    <th>Scan Time</th>
+                                                    <th>Date</th>
+                                                    <th>Scan Times</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @php
-                                                    $totalHours = 0; // Inisialisasi total jam
-                                                    $previousScanTime = null; // Inisialisasi waktu scan sebelumnya
+                                                    $previousDate = null; // Inisialisasi tanggal sebelumnya
+                                                    $scanTimes = []; // Inisialisasi array untuk menyimpan waktu scan pada tanggal tertentu
                                                 @endphp
 
                                                 @foreach ($scan_logs as $scanlog)
-                                                    <tr>
-                                                        <td>
-                                                            {{ $loop->iteration }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $scanlog->scan }}
-                                                            @php
-                                                                if ($previousScanTime !== null) {
-                                                                    // Menghitung selisih waktu antara rekaman sekarang dan rekaman sebelumnya
-                                                                    $currentScanTime = new \DateTime($scanlog->scan);
-                                                                    $interval = $currentScanTime->diff($previousScanTime);
+                                                    @php
+                                                        $currentDate = date('Y-m-d', strtotime($scanlog->scan));
+                                                        $scanTime = date('H:i:s', strtotime($scanlog->scan));
 
-                                                                    // Menambahkan selisih waktu dalam jam ke total jam
-                                                                    $totalHours += $interval->h;
-                                                                }
+                                                        if ($previousDate !== null && $previousDate != $currentDate) {
+                                                            // Menampilkan data untuk tanggal sebelumnya
+                                                            echo '<tr>';
+                                                            echo '<td></td>';
+                                                            echo '<td>' . $previousDate . '</td>';
+                                                            echo '<td>' . implode(' | ', $scanTimes) . '</td>';
+                                                            echo '</tr>';
 
-                                                                // Mengatur waktu scan sebelumnya ke waktu scan sekarang
-                                                                $previousScanTime = new \DateTime($scanlog->scan);
-                                                            @endphp
-                                                        </td>
-                                                    </tr>
+                                                            // Reset array waktu scan untuk tanggal baru
+                                                            $scanTimes = [];
+                                                        }
+                                                        $previousDate = $currentDate;
+                                                        $scanTimes[] = $scanTime;
+                                                    @endphp
                                                 @endforeach
+
+                                                @if (!empty($previousDate))
+                                                    <!-- Menampilkan data untuk tanggal terakhir -->
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>{{ $previousDate }}</td>
+                                                        <td>{{ implode(' | ', $scanTimes) }}</td>
+                                                    </tr>
+                                                @endif
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>
-                                                        {{-- <i class="fas fa-clock"></i> <strong>Total Jam:
-                                                            {{ $totalHours }}</strong> --}}
-                                                    </td>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
