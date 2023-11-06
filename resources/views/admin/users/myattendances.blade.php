@@ -33,7 +33,7 @@
                                         <td>
                                             @if ($scan1)
                                                 <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
-                                                {{ $scan1->scan }}
+                                                {{ \Carbon\Carbon::parse($scan1->scan)->format('H:i') }}
                                             @else
                                                 <i class="fa fa-times-circle text-danger" aria-hidden="true"></i> Belum
                                                 Presensi
@@ -42,7 +42,7 @@
                                         <td>
                                             @if ($scan2)
                                                 <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
-                                                {{ $scan2->scan }}
+                                                {{ \Carbon\Carbon::parse($scan2->scan)->format('H:i') }}
                                             @else
                                                 <i class="fa fa-times-circle text-danger" aria-hidden="true"></i> Belum
                                                 Presensi
@@ -51,7 +51,7 @@
                                         <td>
                                             @if ($scan3)
                                                 <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
-                                                {{ $scan3->scan }}
+                                                {{ \Carbon\Carbon::parse($scan3->scan)->format('H:i') }}
                                             @else
                                                 <i class="fa fa-times-circle text-danger" aria-hidden="true"></i> Belum
                                                 Presensi
@@ -60,7 +60,7 @@
                                         <td>
                                             @if ($scan4)
                                                 <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
-                                                {{ $scan4->scan }}
+                                                {{ \Carbon\Carbon::parse($scan4->scan)->format('H:i') }}
                                             @else
                                                 <i class="fa fa-times-circle text-danger" aria-hidden="true"></i> Belum
                                                 Presensi
@@ -79,8 +79,24 @@
                                                 <i class="fas fa-clock text-warning"></i>
                                                 {{ $hours }} jam {{ $minutes }} menit
                                             @else
-                                                <!-- Tampilkan pesan jika ada yang belum presensi -->
-                                                <i class="fas fa-clock text-warning"></i> Belum ada data presensi lengkap
+                                                @php
+                                                    $totalDiff = 0;
+                                                    $hours = 0;
+                                                    $minutes = 0;
+                                                    if ($scan1) {
+                                                        $totalDiff = strtotime(now()) - strtotime($scan1->scan);
+                                                        $hours = floor($totalDiff / 3600);
+                                                        $minutes = floor(($totalDiff % 3600) / 60);
+                                                    }
+                                                @endphp
+                                                @if ($hours > 0 || $minutes > 0)
+                                                    <i class="fas fa-clock text-warning"></i>
+                                                    {{ $hours }} jam {{ $minutes }} menit
+                                                @else
+                                                    <!-- Tampilkan pesan jika ada yang belum presensi -->
+                                                    <i class="fas fa-clock text-warning"></i> Belum ada data presensi
+                                                    lengkap
+                                                @endif
                                             @endif
                                         </td>
                                     </tr>
@@ -132,6 +148,7 @@
                                                     <th>No.</th>
                                                     <th>Date</th>
                                                     <th>Scan Times</th>
+                                                    <th>Total Hours</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -139,6 +156,7 @@
                                                     $y = 1; // Inisialisasi nomor dengan 1
                                                     $previousDate = null; // Inisialisasi tanggal sebelumnya
                                                     $scanTimes = []; // Inisialisasi array untuk menyimpan waktu scan pada tanggal tertentu
+                                                    $totalHours = 0; // Inisialisasi total jam kerja
                                                 @endphp
 
                                                 @foreach ($scan_logs as $scanlog)
@@ -152,6 +170,7 @@
                                                             echo '<td>' . $y . '</td>';
                                                             echo '<td>' . $previousDate . '</td>';
                                                             echo '<td>' . implode(' | ', $scanTimes) . '</td>';
+                                                            echo '<td>' . calculateTotalHours($scanTimes) . '</td>';
                                                             echo '</tr>';
                                                             $y++; // Tambahkan nomor
 
@@ -169,10 +188,30 @@
                                                         <td>{{ $y }}</td>
                                                         <td>{{ $previousDate }}</td>
                                                         <td>{{ implode(' | ', $scanTimes) }}</td>
+                                                        <td>{{ calculateTotalHours($scanTimes) }}</td>
                                                     </tr>
                                                 @endif
                                             </tbody>
                                         </table>
+
+                                        @php
+                                            // Fungsi untuk menghitung total jam kerja dari array waktu scan
+                                            function calculateTotalHours($times)
+                                            {
+                                                if (count($times) < 2) {
+                                                    return '0';
+                                                }
+                                                $firstTime = strtotime($times[0]);
+                                                $lastTime = strtotime(end($times));
+                                                $totalSeconds = $lastTime - $firstTime;
+                                                $totalHours = $totalSeconds / 3600;
+
+                                                // Ubah format jam kerja menjadi hh:mm
+                                                $hours = floor($totalHours);
+                                                $minutes = round(($totalHours - $hours) * 60);
+                                                return sprintf('%02d:%02d', $hours, $minutes);
+                                            }
+                                        @endphp
                                     </div>
                                 </div>
                             </div>
