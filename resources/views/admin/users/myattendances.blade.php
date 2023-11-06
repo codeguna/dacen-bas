@@ -67,37 +67,22 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($scan1 && $scan2 && $scan3 && $scan4)
-                                                @php
-                                                    $diff1 = strtotime($scan2->scan) - strtotime($scan1->scan);
-                                                    $diff2 = strtotime($scan3->scan) - strtotime($scan2->scan);
-                                                    $diff3 = strtotime($scan4->scan) - strtotime($scan3->scan);
-                                                    $totalDiff = $diff1 + $diff2 + $diff3;
-                                                    $hours = floor($totalDiff / 3600);
-                                                    $minutes = floor(($totalDiff % 3600) / 60);
-                                                @endphp
-                                                <i class="fas fa-clock text-warning"></i>
-                                                {{ $hours }} jam {{ $minutes }} menit
-                                            @else
-                                                @php
-                                                    $totalDiff = 0;
-                                                    $hours = 0;
-                                                    $minutes = 0;
-                                                    if ($scan1) {
-                                                        $totalDiff = strtotime(now()) - strtotime($scan1->scan);
-                                                        $hours = floor($totalDiff / 3600);
-                                                        $minutes = floor(($totalDiff % 3600) / 60);
-                                                    }
-                                                @endphp
-                                                @if ($hours > 0 || $minutes > 0)
-                                                    <i class="fas fa-clock text-warning"></i>
-                                                    {{ $hours }} jam {{ $minutes }} menit
-                                                @else
-                                                    <!-- Tampilkan pesan jika ada yang belum presensi -->
-                                                    <i class="fas fa-clock text-warning"></i> Belum ada data presensi
-                                                    lengkap
-                                                @endif
-                                            @endif
+                                            @php
+                                                $totalDiff = 0;
+                                                if ($scan1 && $scan2) {
+                                                    $totalDiff += strtotime($scan2->scan) - strtotime($scan1->scan);
+                                                }
+                                                if ($scan2 && $scan3) {
+                                                    $totalDiff += strtotime($scan3->scan) - strtotime($scan2->scan);
+                                                }
+                                                if ($scan3 && $scan4) {
+                                                    $totalDiff += strtotime($scan4->scan) - strtotime($scan3->scan);
+                                                }
+                                                $hours = floor($totalDiff / 3600);
+                                                $minutes = floor(($totalDiff % 3600) / 60);
+                                            @endphp
+                                            <i class="fas fa-clock text-warning"></i>
+                                            {{ $hours }} jam {{ $minutes }} menit
                                         </td>
                                     </tr>
                                 </tbody>
