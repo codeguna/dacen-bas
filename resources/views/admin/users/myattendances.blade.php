@@ -33,7 +33,7 @@
                                         <td>
                                             @if ($scan1)
                                                 <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
-                                                {{ \Carbon\Carbon::parse($scan1->scan)->format('H:i') }}
+                                                {{ \Carbon\Carbon::parse($scan1->scan)->format('H:i:s') }}
                                             @else
                                                 <i class="fa fa-times-circle text-danger" aria-hidden="true"></i> Belum
                                                 Presensi
@@ -42,7 +42,7 @@
                                         <td>
                                             @if ($scan2)
                                                 <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
-                                                {{ \Carbon\Carbon::parse($scan2->scan)->format('H:i') }}
+                                                {{ \Carbon\Carbon::parse($scan2->scan)->format('H:i:s') }}
                                             @else
                                                 <i class="fa fa-times-circle text-danger" aria-hidden="true"></i> Belum
                                                 Presensi
@@ -51,7 +51,7 @@
                                         <td>
                                             @if ($scan3)
                                                 <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
-                                                {{ \Carbon\Carbon::parse($scan3->scan)->format('H:i') }}
+                                                {{ \Carbon\Carbon::parse($scan3->scan)->format('H:i:s') }}
                                             @else
                                                 <i class="fa fa-times-circle text-danger" aria-hidden="true"></i> Belum
                                                 Presensi
@@ -60,7 +60,7 @@
                                         <td>
                                             @if ($scan4)
                                                 <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
-                                                {{ \Carbon\Carbon::parse($scan4->scan)->format('H:i') }}
+                                                {{ \Carbon\Carbon::parse($scan4->scan)->format('H:i:s') }}
                                             @else
                                                 <i class="fa fa-times-circle text-danger" aria-hidden="true"></i> Belum
                                                 Presensi
