@@ -22,7 +22,6 @@
                                         <th>Scan 2</th>
                                         <th>Scan 3</th>
                                         <th>Scan 4</th>
-                                        <th>Total Jam</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,24 +64,6 @@
                                                 <i class="fa fa-times-circle text-danger" aria-hidden="true"></i> Belum
                                                 Presensi
                                             @endif
-                                        </td>
-                                        <td>
-                                            @php
-                                                $totalDiff = 0;
-                                                if ($scan1 && $scan2) {
-                                                    $totalDiff += strtotime($scan2->scan) - strtotime($scan1->scan);
-                                                }
-                                                if ($scan2 && $scan3) {
-                                                    $totalDiff += strtotime($scan3->scan) - strtotime($scan2->scan);
-                                                }
-                                                if ($scan3 && $scan4) {
-                                                    $totalDiff += strtotime($scan4->scan) - strtotime($scan3->scan);
-                                                }
-                                                $hours = floor($totalDiff / 3600);
-                                                $minutes = floor(($totalDiff % 3600) / 60);
-                                            @endphp
-                                            <i class="fas fa-clock text-warning"></i>
-                                            {{ $hours }} jam {{ $minutes }} menit
                                         </td>
                                     </tr>
                                 </tbody>
