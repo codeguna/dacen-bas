@@ -86,7 +86,6 @@
                         </div>
                     </div>
                 </div>
-                {!! $educationalStaffs->links() !!}
             </div>
         </div>
     </div>

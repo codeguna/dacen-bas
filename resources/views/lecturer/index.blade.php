@@ -84,7 +84,6 @@
                         </div>
                     </div>
                 </div>
-                {!! $lecturers->links() !!}
             </div>
         </div>
     </div>
