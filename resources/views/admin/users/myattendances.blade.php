@@ -10,7 +10,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fas fa-user-clock"></i> Presensi Hari Ini</h3>
+                        <h3><i class="fas fa-user-clock text-warning"></i> Presensi Hari Ini</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -78,7 +78,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3>
-                            <i class="fas fa-calendar-check    "></i> Akumulasi Kehadiran
+                            <i class="fas fa-calendar-check text-primary"></i> Akumulasi Kehadiran
                         </h3>
                     </div>
                     <div class="card-body">
@@ -96,7 +96,8 @@
                                             value="{{ request('end_date') }}" required>
                                         <p id="date_error" style="color: red;"></p>
                                         <span class="input-group-btn">
-                                            <a href="{{ route('admin.scan-log.my-attendances') }}" class="btn btn-success">
+                                            <a href="{{ route('admin.scan-log.my-attendances') }}"
+                                                class="btn btn-success ml-1">
                                                 <i class="fas fa-sync"></i>
                                             </a>
                                             <button type="submit" class="btn btn-warning" type="button"
@@ -136,9 +137,12 @@
                                                             echo '<td>' . $y . '</td>';
                                                             echo '<td>' . $previousDate . '</td>';
                                                             echo '<td>' . implode(' | ', $scanTimes) . '</td>';
-                                                            echo '<td>' . calculateTotalHours($scanTimes) . '</td>';
+                                                            echo '<td>' . intval(calculateTotalHours($scanTimes)) . ' Jam</td>';
                                                             echo '</tr>';
                                                             $y++; // Tambahkan nomor
+
+                                                            // Tambahkan total jam kerja untuk tanggal sebelumnya
+                                                            $totalHours += calculateTotalHoursInSeconds($scanTimes);
 
                                                             // Reset array waktu scan untuk tanggal baru
                                                             $scanTimes = [];
@@ -154,11 +158,46 @@
                                                         <td>{{ $y }}</td>
                                                         <td>{{ $previousDate }}</td>
                                                         <td>{{ implode(' | ', $scanTimes) }}</td>
-                                                        <td>{{ calculateTotalHours($scanTimes) }}</td>
+                                                        <td>{{ intval(calculateTotalHours($scanTimes)) }} Jam</td>
                                                     </tr>
+                                                    <!-- Tambahkan total jam kerja untuk tanggal terakhir -->
+                                                    @php
+                                                        $totalHours += calculateTotalHoursInSeconds($scanTimes);
+                                                    @endphp
                                                 @endif
                                             </tbody>
+                                            <tfoot>
+                                                <th>No.</th>
+                                                <th>Date</th>
+                                                <th>Scan Times</th>
+                                                <th>Total Hours</th>
+                                            </tfoot>
                                         </table>
+                                        <hr>
+                                        @php
+                                            // Tampilkan total jam kerja di bagian bawah tabel
+                                            echo '<p>Total Hours: <strong><i class="fas fa-clock text-primary"></i> ' . formatTotalHours($totalHours) . '</strong></p>';
+
+                                            // Fungsi untuk menghitung total jam kerja dari array waktu scan dalam detik
+                                            function calculateTotalHoursInSeconds($times)
+                                            {
+                                                if (count($times) < 2) {
+                                                    return 0;
+                                                }
+                                                $firstTime = strtotime($times[0]);
+                                                $lastTime = strtotime(end($times));
+                                                return $lastTime - $firstTime;
+                                            }
+
+                                            // Fungsi untuk memformat total jam kerja dari detik menjadi format hh:mm
+                                            function formatTotalHours($totalSeconds)
+                                            {
+                                                $totalHours = $totalSeconds / 3600;
+                                                $hours = floor($totalHours);
+                                                $minutes = round(($totalHours - $hours) * 60);
+                                                return sprintf('%02d:%02d', $hours, $minutes);
+                                            }
+                                        @endphp
 
                                         @php
                                             // Fungsi untuk menghitung total jam kerja dari array waktu scan
