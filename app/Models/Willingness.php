@@ -48,6 +48,10 @@ class Willingness extends Model
      */
     protected $fillable = ['user_id','valid_start','valid_end','type','monday','tuesday','wednesday','thursday','friday','saturday'];
 
+	public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
 }

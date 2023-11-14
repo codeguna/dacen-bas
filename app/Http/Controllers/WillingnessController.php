@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Willingness;
+use App\User;
 use Illuminate\Http\Request;
 
 /**
@@ -18,10 +19,10 @@ class WillingnessController extends Controller
      */
     public function index()
     {
-        $willingnesses = Willingness::paginate();
+        $users = User::whereNotNull('pin')->get();
 
-        return view('willingness.index', compact('willingnesses'))
-            ->with('i', (request()->input('page', 1) - 1) * $willingnesses->perPage());
+        return view('willingness.index', compact('users'))
+            ->with('i');
     }
 
     /**

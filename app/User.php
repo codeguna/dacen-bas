@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Willingness;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -43,5 +44,10 @@ class User extends Authenticatable
     public function scanLogs()
     {
         return $this->hasMany(ScanLog::class, 'pin', 'pin');
+    }
+
+    public function willingness()
+    {
+        return $this->hasMany(Willingness::class);
     }
 }

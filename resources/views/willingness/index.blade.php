@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    Willingness
+    Kesediaan Karyawan
 @endsection
 
 @section('content')
@@ -13,15 +13,9 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Willingness') }}
-                            </span>
 
-                            <div class="float-right">
-                                <a href="{{ route('admin.willingnesses.create') }}" class="btn btn-primary btn-sm float-right"
-                                    data-placement="left">
-                                    {{ __('Create New') }}
-                                </a>
-                            </div>
+                                <h3><i class="fas fa-check-double text-primary"></i> Kesediaan Karyawan</h3>
+                            </span>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -32,55 +26,42 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table id="dataTable1" class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-
-                                        <th>User Id</th>
-                                        <th>Valid Start</th>
-                                        <th>Valid End</th>
-                                        <th>Type</th>
-                                        <th>Monday</th>
-                                        <th>Tuesday</th>
-                                        <th>Wednesday</th>
-                                        <th>Thursday</th>
-                                        <th>Friday</th>
-                                        <th>Saturday</th>
-
-                                        <th></th>
+                                        <th>Nama</th>
+                                        <th>Kesediaan</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($willingnesses as $willingness)
+                                    @foreach ($users as $user)
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-                                            <td>{{ $willingness->user_id }}</td>
-                                            <td>{{ $willingness->valid_start }}</td>
-                                            <td>{{ $willingness->valid_end }}</td>
-                                            <td>{{ $willingness->type }}</td>
-                                            <td>{{ $willingness->monday }}</td>
-                                            <td>{{ $willingness->tuesday }}</td>
-                                            <td>{{ $willingness->wednesday }}</td>
-                                            <td>{{ $willingness->thursday }}</td>
-                                            <td>{{ $willingness->friday }}</td>
-                                            <td>{{ $willingness->saturday }}</td>
-
                                             <td>
-                                                <form action="{{ route('admin.willingnesses.destroy', $willingness->id) }}"
-                                                    method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('admin.willingnesses.show', $willingness->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('admin.willingnesses.edit', $willingness->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
-                                                </form>
+                                                {{ $user->name }}
+                                            </td>
+                                            <td>
+                                                @if ($user->willingness->count() == 0)
+                                                    <i class="fa fa-times-circle text-danger" aria-hidden="true"></i>
+                                                @else
+                                                    <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($user->willingness->count() == 0)
+                                                    <a href="{{ route('admin.willingnesses.create', $user->id) }}"
+                                                        class="btn btn-primary btn-xs">
+                                                        <i class="fas fa-clock"></i> Set Kesediaan
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('admin.willingnesses.edit', $user->id) }}"
+                                                        class="btn btn-warning btn-xs">
+                                                        <i class="fas fa-pencil-alt"></i> Update Kesediaan
+                                                    </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -89,8 +70,19 @@
                         </div>
                     </div>
                 </div>
-                {!! $willingnesses->links() !!}
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        $(function() {
+            $("#dataTable1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
 @endsection
