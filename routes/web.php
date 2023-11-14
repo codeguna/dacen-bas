@@ -106,4 +106,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route Scan Logs Extra
     Route::resource('scan-logs-extras','ScanLogsExtraController');
     Route::get('/scan-log-extra/filter/','ScanLogsExtraController@filter')->name('scan-log-extra.filter');
+    //End route Scan Logs Extra
+    //Route Willingness
+    Route::resource('willingnesses','WillingnessController');
+    //End Route Willingness
 });

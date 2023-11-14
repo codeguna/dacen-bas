@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                    with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -263,7 +263,9 @@
                 request()->is('admin/certificate-types/*') ||
                 request()->is('admin/certificate-types') ||
                 request()->is('admin/activities') ||
-                request()->is('admin/activities/*')
+                request()->is('admin/activities/*') ||
+                request()->is('admin/willingnesses') ||
+                request()->is('admin/willingnesses/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -287,7 +289,9 @@
         request()->is('admin/certificate-types/*') ||
         request()->is('admin/certificate-types') ||
         request()->is('admin/activities') ||
-        request()->is('admin/activities/*')
+        request()->is('admin/activities/*') ||
+        request()->is('admin/willingnesses') ||
+        request()->is('admin/willingnesses/*')
             ? 'active'
             : '' }}">
                     <i class="nav-icon fa fa-cogs"></i>
@@ -351,6 +355,13 @@
                             class="nav-link {{ request()->is('admin/levels') || request()->is('admin/levels/*') ? 'active' : '' }}">
                             <i class="fas fa-sort nav-icon"></i>
                             <p>Jenjang Pendidikan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.willingnesses.index') }}"
+                            class="nav-link {{ request()->is('admin/willingnesses') || request()->is('admin/willingnesses/*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-user-clock"></i>
+                            <p>Kesediaan</p>
                         </a>
                     </li>
                     <li class="nav-item">
