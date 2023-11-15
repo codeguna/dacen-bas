@@ -107,4 +107,39 @@ class WillingnessController extends Controller
         return redirect()->route('admin.willingnesses.index')
             ->with('success', 'Willingness deleted successfully');
     }
+
+    public function setTime($id)
+    {
+        $user_id = $id;
+        return view('willingness.create', compact('user_id'));
+    }
+
+    public function storeTime(Request $request)
+    {            
+        request()->validate(Willingness::$rules); 
+
+        // Extract data from the request      
+        $types = $request->type;
+        $daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        
+        // Create Willingness instances based on the number of types
+        foreach ($types as $index => $type) {
+            $willingnessData = [
+                'user_id' => $request->user_id,
+                'valid_start' => $request->valid_start,
+                'valid_end' => $request->valid_end,
+                'type' => $type,
+            ];
+            
+        // Assign each day of the week for the Willingness instance
+            foreach ($daysOfWeek as $day) {
+                $willingnessData[$day] = $request->$day[$index];
+            }
+        
+            Willingness::create($willingnessData);
+        }
+
+        return redirect()->route('admin.willingnesses.index')
+            ->with('success', 'Willingness created successfully.'); 
+    }
 }

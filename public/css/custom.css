@@ -118,3 +118,9 @@ table.dataTable thead .sorting_desc {
   color: #ffffff; /* Text color (you can change this) */
   font-size: 24px; /* Font size of the initial */
 }
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}

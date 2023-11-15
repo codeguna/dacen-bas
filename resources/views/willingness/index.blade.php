@@ -52,7 +52,7 @@
                                             </td>
                                             <td>
                                                 @if ($user->willingness->count() == 0)
-                                                    <a href="{{ route('admin.willingnesses.create', $user->id) }}"
+                                                    <a href="{{ route('admin.willingness.setTime', $user->id) }}"
                                                         class="btn btn-primary btn-xs">
                                                         <i class="fas fa-clock"></i> Set Kesediaan
                                                     </a>
