@@ -110,6 +110,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route Willingness
     Route::resource('willingnesses','WillingnessController');
     Route::get('/willingness/set_time/{user}','WillingnessController@setTime')->name('willingness.setTime');
+    Route::get('/willingness/get_time/{user}','WillingnessController@getTime')->name('willingness.getTime');
     Route::post('/willingness/store_time/','WillingnessController@storeTime')->name('willingness.storeTime');
+    Route::post('/willingness/update_time/','WillingnessController@updateTime')->name('willingness.updateTime');
     //End Route Willingness
 });

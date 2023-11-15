@@ -54,13 +54,27 @@
                                                 @if ($user->willingness->count() == 0)
                                                     <a href="{{ route('admin.willingness.setTime', $user->id) }}"
                                                         class="btn btn-primary btn-xs">
-                                                        <i class="fas fa-clock"></i> Set Kesediaan
+                                                        <i class="fas fa-clock"></i>
                                                     </a>
                                                 @else
-                                                    <a href="{{ route('admin.willingnesses.edit', $user->id) }}"
-                                                        class="btn btn-warning btn-xs">
-                                                        <i class="fas fa-pencil-alt"></i> Update Kesediaan
-                                                    </a>
+                                                    <form action="{{ route('admin.willingnesses.destroy', $user->id) }}"
+                                                        method="POST">
+                                                        <div class="input-group">
+                                                            <span class="input-group-btn">
+                                                                <a href="{{ route('admin.willingness.getTime', $user->id) }}"
+                                                                    class="btn btn-warning btn-xs">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </a>
+
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger btn-xs"
+                                                                    onclick="return confirm('Hapus data Kesediaan {{ $user->name }}?')"><i
+                                                                        class="fa fa-fw fa-trash"></i></button>
+
+                                                            </span>
+                                                        </div>
+                                                    </form>
                                                 @endif
                                             </td>
                                         </tr>

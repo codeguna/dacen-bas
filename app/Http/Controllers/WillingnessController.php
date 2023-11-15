@@ -102,7 +102,7 @@ class WillingnessController extends Controller
      */
     public function destroy($id)
     {
-        $willingness = Willingness::find($id)->delete();
+        $willingness = Willingness::where('user_id',$id)->delete();
 
         return redirect()->route('admin.willingnesses.index')
             ->with('success', 'Willingness deleted successfully');
@@ -112,6 +112,14 @@ class WillingnessController extends Controller
     {
         $user_id = $id;
         return view('willingness.create', compact('user_id'));
+    }
+    public function getTime($id)
+    {
+        $user_id = $id;
+        $willingnessIn = Willingness::where('type',0)->where('user_id',$id)->first();
+        $willingnessOut = Willingness::where('type',1)->where('user_id',$id)->first();
+
+        return view('willingness.edit', compact('user_id','willingnessIn','willingnessOut'));
     }
 
     public function storeTime(Request $request)
@@ -130,7 +138,7 @@ class WillingnessController extends Controller
                 'valid_end' => $request->valid_end,
                 'type' => $type,
             ];
-            
+
         // Assign each day of the week for the Willingness instance
             foreach ($daysOfWeek as $day) {
                 $willingnessData[$day] = $request->$day[$index];
@@ -138,6 +146,36 @@ class WillingnessController extends Controller
         
             Willingness::create($willingnessData);
         }
+
+        return redirect()->route('admin.willingnesses.index')
+            ->with('success', 'Willingness created successfully.'); 
+    }
+    public function updateTime(Request $request)
+    {     
+        // Validate the request
+    $request->validate(Willingness::$rules);
+
+    // Extract data from the request      
+    $types = $request->type;
+    $daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    $userId = $request->user_id;
+    // Update existing Willingness instances based on the number of types
+    foreach ($types as $index) {
+        $willingnessData = [
+            'valid_start' => $request->valid_start,
+            'valid_end' => $request->valid_end,
+        ];
+
+        // Assign each day of the week for the Willingness instance
+        foreach ($daysOfWeek as $day) {
+            $willingnessData[$day] = $request->$day[$index];
+        }
+
+        // Find the Willingness instance by ID and update its data
+        $id = $request->willingness_id[$index]; // Assuming you have an array of existing Willingness IDs
+        $willingness = Willingness::findOrFail($id);
+        $willingness->update($willingnessData);
+    }
 
         return redirect()->route('admin.willingnesses.index')
             ->with('success', 'Willingness created successfully.'); 
