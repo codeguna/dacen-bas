@@ -113,8 +113,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
-                                                    <th>Date</th>
                                                     <th>Day</th>
+                                                    <th>Date</th>
                                                     <th>Scan Times</th>
                                                     <th>Total Hours</th>
                                                 </tr>
@@ -136,8 +136,8 @@
                                                             // Menampilkan data untuk tanggal sebelumnya
                                                             echo '<tr>';
                                                             echo '<td>' . $y . '</td>';
-                                                            echo '<td>' . $previousDate . '</td>';
                                                             echo '<td>' . date('l', strtotime($previousDate)) . '</td>';
+                                                            echo '<td>' . $previousDate . '</td>';
                                                             echo '<td>' . implode(' | ', $scanTimes) . '</td>';
                                                             echo '<td>' . intval(calculateTotalHours($scanTimes)) . ' Jam</td>';
                                                             echo '</tr>';
@@ -158,8 +158,8 @@
                                                     <!-- Menampilkan data untuk tanggal terakhir -->
                                                     <tr>
                                                         <td>{{ $y }}</td>
-                                                        <td>{{ $previousDate }}</td>
                                                         <td>{{ date('l', strtotime($previousDate)) }}</td>
+                                                        <td>{{ $previousDate }}</td>
                                                         <td>{{ implode(' | ', $scanTimes) }}</td>
                                                         <td>{{ intval(calculateTotalHours($scanTimes)) }} Jam</td>
                                                     </tr>
@@ -171,8 +171,8 @@
                                             </tbody>
                                             <tfoot>
                                                 <th>No.</th>
-                                                <th>Date</th>
                                                 <th>Day</th>
+                                                <th>Date</th>
                                                 <th>Scan Times</th>
                                                 <th>Total Hours</th>
                                             </tfoot>
