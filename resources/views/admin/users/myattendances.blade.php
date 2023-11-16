@@ -114,6 +114,7 @@
                                                 <tr>
                                                     <th>No.</th>
                                                     <th>Date</th>
+                                                    <th>Day</th>
                                                     <th>Scan Times</th>
                                                     <th>Total Hours</th>
                                                 </tr>
@@ -136,6 +137,7 @@
                                                             echo '<tr>';
                                                             echo '<td>' . $y . '</td>';
                                                             echo '<td>' . $previousDate . '</td>';
+                                                            echo '<td>' . date('l', strtotime($previousDate)) . '</td>';
                                                             echo '<td>' . implode(' | ', $scanTimes) . '</td>';
                                                             echo '<td>' . intval(calculateTotalHours($scanTimes)) . ' Jam</td>';
                                                             echo '</tr>';
@@ -157,6 +159,7 @@
                                                     <tr>
                                                         <td>{{ $y }}</td>
                                                         <td>{{ $previousDate }}</td>
+                                                        <td>{{ date('l', strtotime($previousDate)) }}</td>
                                                         <td>{{ implode(' | ', $scanTimes) }}</td>
                                                         <td>{{ intval(calculateTotalHours($scanTimes)) }} Jam</td>
                                                     </tr>
@@ -169,6 +172,7 @@
                                             <tfoot>
                                                 <th>No.</th>
                                                 <th>Date</th>
+                                                <th>Day</th>
                                                 <th>Scan Times</th>
                                                 <th>Total Hours</th>
                                             </tfoot>
