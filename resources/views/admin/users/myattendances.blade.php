@@ -132,6 +132,7 @@
                                                     @php
                                                         $currentDate = date('Y-m-d', strtotime($scanlog->scan));
                                                         $scanTime = date('H:i:s', strtotime($scanlog->scan));
+                                                        $daysOfWeek = date('l', strtotime($previousDate));
 
                                                         if ($previousDate !== null && $previousDate != $currentDate) {
                                                             // Menampilkan data untuk tanggal sebelumnya
@@ -141,13 +142,44 @@
                                                             echo '<td>' . $previousDate . '</td>';
                                                             echo '<td>' . implode(' | ', $scanTimes) . '</td>';
                                                             echo '<td>' . intval(calculateTotalHours($scanTimes)) . ' Jam</td>';
-                                                            if (date('l', strtotime($previousDate)) == 'Monday') {
+                                                            if ($daysOfWeek == 'Monday') {
                                                                 if ($scanTimes[0] >= $hasilSenin) {
-                                                                    echo '<td>' . 'Telat' . '</td>';
+                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
                                                                 } else {
-                                                                    echo '<td>' . '' . '</td>';
+                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
+                                                                }
+                                                            } elseif ($daysOfWeek == 'Tuesday') {
+                                                                if ($scanTimes[0] >= $hasilSelasa) {
+                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
+                                                                } else {
+                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
+                                                                }
+                                                            } elseif ($daysOfWeek == 'Wednesday') {
+                                                                if ($scanTimes[0] >= $hasilRabu) {
+                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
+                                                                } else {
+                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
+                                                                }
+                                                            } elseif ($daysOfWeek == 'Thursday') {
+                                                                if ($scanTimes[0] >= $hasilKamis) {
+                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
+                                                                } else {
+                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
+                                                                }
+                                                            } elseif ($daysOfWeek == 'Friday') {
+                                                                if ($scanTimes[0] >= $hasilJumat) {
+                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
+                                                                } else {
+                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
+                                                                }
+                                                            } elseif ($daysOfWeek == 'Saturday') {
+                                                                if ($scanTimes[0] >= $hasilSabtu) {
+                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
+                                                                } else {
+                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
                                                                 }
                                                             }
+
                                                             echo '</tr>';
                                                             $y++; // Tambahkan nomor
 
@@ -170,14 +202,71 @@
                                                         <td>{{ $previousDate }}</td>
                                                         <td>{{ implode(' | ', $scanTimes) }}</td>
                                                         <td>{{ intval(calculateTotalHours($scanTimes)) }} Jam</td>
-                                                        @if (date('l', strtotime($previousDate)) == 'Monday')
+                                                        @if ($daysOfWeek == 'Monday')
                                                             {
                                                             @if ($scanTimes[0] >= $hasilSenin)
                                                                 {
-                                                                <td>Telat</td>
+                                                                <td>
+                                                                    <i class="fas fa-info-circle text-danger"></i> Terlambat
+                                                                </td>
                                                                 }
                                                             @else
-                                                                <td></td>
+                                                                <td><i class="fas fa-check-circle text-success"></td>
+                                                            @endif
+                                                            }
+                                                        @elseif ($daysOfWeek == 'Tuesday')
+                                                            {
+                                                            @if ($scanTimes[0] >= $hasilSelasa)
+                                                                {
+                                                                <td><i class="fas fa-info-circle text-danger"></i> Terlambat
+                                                                </td>
+                                                                }
+                                                            @else
+                                                                <td><i class="fas fa-check-circle text-success"></i></td>
+                                                            @endif
+                                                            }
+                                                        @elseif ($daysOfWeek == 'Wednesday')
+                                                            {
+                                                            @if ($scanTimes[0] >= $hasilRabu)
+                                                                {
+                                                                <td><i class="fas fa-info-circle text-danger"></i> Terlambat
+                                                                </td>
+                                                                }
+                                                            @else
+                                                                <td><i class="fas fa-check-circle text-success"></i></td>
+                                                            @endif
+                                                            }
+                                                        @elseif ($daysOfWeek == 'Thursday')
+                                                            {
+                                                            @if ($scanTimes[0] >= $hasilKamis)
+                                                                {
+                                                                <td><i class="fas fa-info-circle text-danger"></i> Terlambat
+                                                                </td>
+                                                                }
+                                                            @else
+                                                                <td><i class="fas fa-check-circle text-success"></i></td>
+                                                            @endif
+                                                            }
+                                                        @elseif ($daysOfWeek == 'Friday')
+                                                            {
+                                                            @if ($scanTimes[0] >= $hasilJumat)
+                                                                {
+                                                                <td><i class="fas fa-info-circle text-danger"></i> Terlambat
+                                                                </td>
+                                                                }
+                                                            @else
+                                                                <td><i class="fas fa-check-circle text-success"></i></td>
+                                                            @endif
+                                                            }
+                                                        @elseif ($daysOfWeek == 'Saturday')
+                                                            {
+                                                            @if ($scanTimes[0] >= $hasilSabtu)
+                                                                {
+                                                                <td><i class="fas fa-info-circle text-danger"></i> Terlambat
+                                                                </td>
+                                                                }
+                                                            @else
+                                                                <td><i class="fas fa-check-circle text-success"></i></td>
                                                             @endif
                                                             }
                                                         @endif
