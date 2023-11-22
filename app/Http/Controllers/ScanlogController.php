@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\AttendancesRequest;
 use App\Models\ScanLog;
 use App\Models\ScanLogsExtra;
+use App\Models\Willingness;
 use App\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -302,7 +303,37 @@ class ScanlogController extends Controller
         if ($user->pin === null) {
             return redirect()->route('admin.myprofile')->with('warning','Silahkan hubungi Admin/BAS untuk melakukan input PIN');
         }
+        //Kesediaan
+        $getWillingness     = Willingness::where('user_id',$user->id)->where('type',0)->first();
 
+        $kesediaanSenin     = $getWillingness->monday;
+        $kesediaanSelasa    = $getWillingness->tuesday;
+        $kesediaanRabu      = $getWillingness->wednesday;
+        $kesediaanKamis     = $getWillingness->thursday;
+        $kesediaanJumat     = $getWillingness->friday;
+        $kesediaanSabtu     = $getWillingness->saturday;
+
+        $waktuSenin         = Carbon::createFromFormat('H:i:s', $kesediaanSenin);
+        $waktuSelasa        = Carbon::createFromFormat('H:i:s', $kesediaanSelasa);
+        $waktuRabu          = Carbon::createFromFormat('H:i:s', $kesediaanRabu);
+        $waktuKamis         = Carbon::createFromFormat('H:i:s', $kesediaanKamis);
+        $waktuJumat         = Carbon::createFromFormat('H:i:s', $kesediaanJumat);
+        $waktuSabtu         = Carbon::createFromFormat('H:i:s', $kesediaanSabtu);
+
+        $waktuSenin->addMinutes(11);
+        $waktuSelasa->addMinutes(11);
+        $waktuRabu->addMinutes(11);
+        $waktuKamis->addMinutes(11);
+        $waktuJumat->addMinutes(11);
+        $waktuSabtu->addMinutes(11);
+
+        $hasilSenin     = $waktuSenin->format('H:i:s');
+        $hasilSelasa    = $waktuSelasa->format('H:i:s');
+        $hasilRabu      = $waktuRabu->format('H:i:s');
+        $hasilKamis     = $waktuKamis->format('H:i:s');
+        $hasilJumat     = $waktuJumat->format('H:i:s');
+        $hasilSabtu     = $waktuSabtu->format('H:i:s');         
+        //End Kesediaan
         $scan1 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
             ->whereTime('scan', '>=', '05:00:00')
@@ -333,7 +364,21 @@ class ScanlogController extends Controller
             ->orderBy('scan', 'ASC')
             ->get();
 
-        return view('admin.users.myattendances', compact('scan1','scan2','scan3','scan4','scan_logs'))->with('i');
+        return view('admin.users.myattendances', 
+        compact(
+        'scan1',
+        'scan2',
+        'scan3',
+        'scan4',
+        'scan_logs',
+        'hasilSenin',
+        'hasilSelasa',
+        'hasilRabu',
+        'hasilKamis',
+        'hasilJumat',
+        'hasilSabtu'
+        ))
+        ->with('i');
     }
 
     public function myAttendancesFilter(Request $request){

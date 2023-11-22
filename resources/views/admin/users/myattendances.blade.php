@@ -117,6 +117,7 @@
                                                     <th>Date</th>
                                                     <th>Scan Times</th>
                                                     <th>Total Hours</th>
+                                                    <th>Note</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -140,6 +141,13 @@
                                                             echo '<td>' . $previousDate . '</td>';
                                                             echo '<td>' . implode(' | ', $scanTimes) . '</td>';
                                                             echo '<td>' . intval(calculateTotalHours($scanTimes)) . ' Jam</td>';
+                                                            if (date('l', strtotime($previousDate)) == 'Monday') {
+                                                                if ($scanTimes[0] >= $hasilSenin) {
+                                                                    echo '<td>' . 'Telat' . '</td>';
+                                                                } else {
+                                                                    echo '<td>' . '' . '</td>';
+                                                                }
+                                                            }
                                                             echo '</tr>';
                                                             $y++; // Tambahkan nomor
 
@@ -162,6 +170,17 @@
                                                         <td>{{ $previousDate }}</td>
                                                         <td>{{ implode(' | ', $scanTimes) }}</td>
                                                         <td>{{ intval(calculateTotalHours($scanTimes)) }} Jam</td>
+                                                        @if (date('l', strtotime($previousDate)) == 'Monday')
+                                                            {
+                                                            @if ($scanTimes[0] >= $hasilSenin)
+                                                                {
+                                                                <td>Telat</td>
+                                                                }
+                                                            @else
+                                                                <td></td>
+                                                            @endif
+                                                            }
+                                                        @endif
                                                     </tr>
                                                     <!-- Tambahkan total jam kerja untuk tanggal terakhir -->
                                                     @php
@@ -175,6 +194,7 @@
                                                 <th>Date</th>
                                                 <th>Scan Times</th>
                                                 <th>Total Hours</th>
+                                                <th>Note</th>
                                             </tfoot>
                                         </table>
                                         <hr>
