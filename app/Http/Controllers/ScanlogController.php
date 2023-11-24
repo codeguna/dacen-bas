@@ -304,35 +304,38 @@ class ScanlogController extends Controller
             return redirect()->route('admin.myprofile')->with('warning','Silahkan hubungi Admin/BAS untuk melakukan input PIN');
         }
         //Kesediaan
-        $getWillingness     = Willingness::where('user_id',$user->id)->where('type',0)->first();
+        // $getWillingness     = Willingness::where('user_id',$user->id)->where('type',0)->first();
+        
+        // if($getWillingness == null){
+        //     return redirect()->route('admin.scan-logs.create')->with('warning','Hubungi BAS, jam kesediaan masih kosong');
+        // }
+        // $kesediaanSenin     = $getWillingness->monday;
+        // $kesediaanSelasa    = $getWillingness->tuesday;
+        // $kesediaanRabu      = $getWillingness->wednesday;
+        // $kesediaanKamis     = $getWillingness->thursday;
+        // $kesediaanJumat     = $getWillingness->friday;
+        // $kesediaanSabtu     = $getWillingness->saturday;
 
-        $kesediaanSenin     = $getWillingness->monday;
-        $kesediaanSelasa    = $getWillingness->tuesday;
-        $kesediaanRabu      = $getWillingness->wednesday;
-        $kesediaanKamis     = $getWillingness->thursday;
-        $kesediaanJumat     = $getWillingness->friday;
-        $kesediaanSabtu     = $getWillingness->saturday;
+        // $waktuSenin         = Carbon::createFromFormat('H:i:s', $kesediaanSenin);
+        // $waktuSelasa        = Carbon::createFromFormat('H:i:s', $kesediaanSelasa);
+        // $waktuRabu          = Carbon::createFromFormat('H:i:s', $kesediaanRabu);
+        // $waktuKamis         = Carbon::createFromFormat('H:i:s', $kesediaanKamis);
+        // $waktuJumat         = Carbon::createFromFormat('H:i:s', $kesediaanJumat);
+        // $waktuSabtu         = Carbon::createFromFormat('H:i:s', $kesediaanSabtu);
 
-        $waktuSenin         = Carbon::createFromFormat('H:i:s', $kesediaanSenin);
-        $waktuSelasa        = Carbon::createFromFormat('H:i:s', $kesediaanSelasa);
-        $waktuRabu          = Carbon::createFromFormat('H:i:s', $kesediaanRabu);
-        $waktuKamis         = Carbon::createFromFormat('H:i:s', $kesediaanKamis);
-        $waktuJumat         = Carbon::createFromFormat('H:i:s', $kesediaanJumat);
-        $waktuSabtu         = Carbon::createFromFormat('H:i:s', $kesediaanSabtu);
+        // $waktuSenin->addMinutes(11);
+        // $waktuSelasa->addMinutes(11);
+        // $waktuRabu->addMinutes(11);
+        // $waktuKamis->addMinutes(11);
+        // $waktuJumat->addMinutes(11);
+        // $waktuSabtu->addMinutes(11);
 
-        $waktuSenin->addMinutes(11);
-        $waktuSelasa->addMinutes(11);
-        $waktuRabu->addMinutes(11);
-        $waktuKamis->addMinutes(11);
-        $waktuJumat->addMinutes(11);
-        $waktuSabtu->addMinutes(11);
-
-        $hasilSenin     = $waktuSenin->format('H:i:s');
-        $hasilSelasa    = $waktuSelasa->format('H:i:s');
-        $hasilRabu      = $waktuRabu->format('H:i:s');
-        $hasilKamis     = $waktuKamis->format('H:i:s');
-        $hasilJumat     = $waktuJumat->format('H:i:s');
-        $hasilSabtu     = $waktuSabtu->format('H:i:s');         
+        // $hasilSenin     = $waktuSenin->format('H:i:s');
+        // $hasilSelasa    = $waktuSelasa->format('H:i:s');
+        // $hasilRabu      = $waktuRabu->format('H:i:s');
+        // $hasilKamis     = $waktuKamis->format('H:i:s');
+        // $hasilJumat     = $waktuJumat->format('H:i:s');
+        // $hasilSabtu     = $waktuSabtu->format('H:i:s');         
         //End Kesediaan
         $scan1 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
@@ -359,7 +362,7 @@ class ScanlogController extends Controller
             ->latest('scan')
             ->first();
 
-            $scan_logs = ScanLog::where('pin', $pin)
+        $scan_logs = ScanLog::where('pin', $pin)
             ->whereBetween('scan', [$startDate, $endDate])
             ->orderBy('scan', 'ASC')
             ->get();
@@ -370,13 +373,14 @@ class ScanlogController extends Controller
         'scan2',
         'scan3',
         'scan4',
-        'scan_logs',
-        'hasilSenin',
-        'hasilSelasa',
-        'hasilRabu',
-        'hasilKamis',
-        'hasilJumat',
-        'hasilSabtu'
+        'scan_logs'
+        // 'hasilSenin',
+        // 'hasilSelasa',
+        // 'hasilRabu',
+        // 'hasilKamis',
+        // 'hasilJumat',
+        // 'hasilSabtu',
+        // 'getWillingness'
         ))
         ->with('i');
     }
@@ -620,5 +624,23 @@ class ScanlogController extends Controller
         ->get();
 
         return view('scan-log.print',compact('scanLogs'));
+    }
+
+    public function checkAttendance()
+    {
+        if (! Gate::allows('bas_menu')) {
+            return abort(401);
+        }
+        // Hitung startDate (bulan lalu dengan tanggal 26)
+        $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
+
+        // Hitung endDate (bulan ini dengan tanggal 25)
+        $endDate = Carbon::now()->startOfMonth()->addDays(24);
+
+        $scanLogs = ScanLog::whereBetween('scan', [$startDate, $endDate])
+        ->orderBy('scan', 'ASC')
+        ->get();
+
+        return view('scan-log.check-attendances',compact('scanLogs'));
     }
 }

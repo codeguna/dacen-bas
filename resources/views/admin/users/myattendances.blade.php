@@ -117,7 +117,7 @@
                                                     <th>Date</th>
                                                     <th>Scan Times</th>
                                                     <th>Total Hours</th>
-                                                    <th>Note</th>
+                                                    {{-- <th>Notes</th> --}}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -142,43 +142,43 @@
                                                             echo '<td>' . $previousDate . '</td>';
                                                             echo '<td>' . implode(' | ', $scanTimes) . '</td>';
                                                             echo '<td>' . intval(calculateTotalHours($scanTimes)) . ' Jam</td>';
-                                                            if ($daysOfWeek == 'Monday') {
-                                                                if ($scanTimes[0] >= $hasilSenin) {
-                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                                } else {
-                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                                }
-                                                            } elseif ($daysOfWeek == 'Tuesday') {
-                                                                if ($scanTimes[0] >= $hasilSelasa) {
-                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                                } else {
-                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                                }
-                                                            } elseif ($daysOfWeek == 'Wednesday') {
-                                                                if ($scanTimes[0] >= $hasilRabu) {
-                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                                } else {
-                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                                }
-                                                            } elseif ($daysOfWeek == 'Thursday') {
-                                                                if ($scanTimes[0] >= $hasilKamis) {
-                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                                } else {
-                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                                }
-                                                            } elseif ($daysOfWeek == 'Friday') {
-                                                                if ($scanTimes[0] >= $hasilJumat) {
-                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                                } else {
-                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                                }
-                                                            } elseif ($daysOfWeek == 'Saturday') {
-                                                                if ($scanTimes[0] >= $hasilSabtu) {
-                                                                    echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                                } else {
-                                                                    echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                                }
-                                                            }
+                                                            // if ($daysOfWeek == 'Monday') {
+                                                            //     if ($scanTimes[0] >= $hasilSenin) {
+                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
+                                                            //     } else {
+                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
+                                                            //     }
+                                                            // } elseif ($daysOfWeek == 'Tuesday') {
+                                                            //     if ($scanTimes[0] >= $hasilSelasa) {
+                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
+                                                            //     } else {
+                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
+                                                            //     }
+                                                            // } elseif ($daysOfWeek == 'Wednesday') {
+                                                            //     if ($scanTimes[0] >= $hasilRabu) {
+                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
+                                                            //     } else {
+                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
+                                                            //     }
+                                                            // } elseif ($daysOfWeek == 'Thursday') {
+                                                            //     if ($scanTimes[0] >= $hasilKamis) {
+                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
+                                                            //     } else {
+                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
+                                                            //     }
+                                                            // } elseif ($daysOfWeek == 'Friday') {
+                                                            //     if ($scanTimes[0] >= $hasilJumat) {
+                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
+                                                            //     } else {
+                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
+                                                            //     }
+                                                            // } elseif ($daysOfWeek == 'Saturday') {
+                                                            //     if ($scanTimes[0] >= $hasilSabtu) {
+                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
+                                                            //     } else {
+                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
+                                                            //     }
+                                                            // }
 
                                                             echo '</tr>';
                                                             $y++; // Tambahkan nomor
@@ -202,7 +202,7 @@
                                                         <td>{{ $previousDate }}</td>
                                                         <td>{{ implode(' | ', $scanTimes) }}</td>
                                                         <td>{{ intval(calculateTotalHours($scanTimes)) }} Jam</td>
-                                                        @if ($daysOfWeek == 'Monday')
+                                                        {{-- @if ($daysOfWeek == 'Monday')
                                                             {
                                                             @if ($scanTimes[0] >= $hasilSenin)
                                                                 {
@@ -269,7 +269,7 @@
                                                                 <td><i class="fas fa-check-circle text-success"></i></td>
                                                             @endif
                                                             }
-                                                        @endif
+                                                        @endif --}}
                                                     </tr>
                                                     <!-- Tambahkan total jam kerja untuk tanggal terakhir -->
                                                     @php
@@ -283,7 +283,7 @@
                                                 <th>Date</th>
                                                 <th>Scan Times</th>
                                                 <th>Total Hours</th>
-                                                <th>Note</th>
+                                                {{-- <th>Notes</th> --}}
                                             </tfoot>
                                         </table>
                                         <hr>

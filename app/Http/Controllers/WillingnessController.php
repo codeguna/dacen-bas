@@ -19,7 +19,7 @@ class WillingnessController extends Controller
      */
     public function index()
     {
-        $users = User::whereNotNull('pin')->get();
+        $users = User::whereNotNull('pin')->orderBy('name','ASC')->get();
 
         return view('willingness.index', compact('users'))
             ->with('i');
