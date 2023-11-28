@@ -277,7 +277,7 @@ class ScanlogController extends Controller
                             'scan' => $value['scan_date'],
                             'verify' => $value['verify'],
                             'status_scan' => $value['status_scan'],
-                            'ip_scan' => $request->ip() ?? '-',
+                            'ip_scan' => '3.1.174.198',
                         ];
                         ScanLog::create($attlogData);
                     }
@@ -649,10 +649,12 @@ class ScanlogController extends Controller
         // Hitung endDate (bulan ini dengan tanggal 25)
         $endDate = Carbon::now()->startOfMonth()->addDays(24);
 
-        $scanLogs = ScanLog::whereBetween('scan', [$startDate, $endDate])
+        $scanLogs = ScanLog::join('users', 'scan_logs.pin', '=', 'users.pin')
+        ->where('ip_scan','3.1.174.198')->whereBetween('scan', [$startDate, $endDate])        
+        ->orderBy('users.name', 'ASC')
         ->orderBy('scan', 'ASC')
         ->get();
 
-        return view('scan-log.check-attendances',compact('scanLogs'));
+        return view('scan-log.check-attendances',compact('scanLogs'))->with('i');
     }
 }
