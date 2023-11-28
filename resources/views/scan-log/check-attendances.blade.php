@@ -27,22 +27,32 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($scanLogs as $scan)
-                                        <tr>
-                                            <td>
-                                                {{ ++$i }}
-                                            </td>
-                                            <td>
-                                                {{ $scan->user->name ?? '' }}
-                                            </td>
-                                            <td>
-                                                {{ $scan->scan }}
-                                            </td>
-                                            <td>
-                                                {{ $scan->scan }}
-                                            </td>
-                                            <td></td>
-                                        </tr>
+                                    @php
+                                        $previousDate = null;
+                                    @endphp
+                                    @foreach ($scanLogs as $entry)
+                                        @php
+                                            $currentDate = \Carbon\Carbon::parse($entry->scan)->format('d/m/Y');
+                                        @endphp
+                                        @if ($previousDate != $currentDate)
+                                            <tr>
+                                                <td>{{ ++$i }}</td>
+                                                <td>
+                                                    {{ $entry->user->name }} <br>
+                                                    <small
+                                                        class="text-success">{{ \Carbon\Carbon::parse($entry->scan)->format('d/m/Y') }}</small>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                            @php
+                                                $previousDate = $currentDate;
+                                            @endphp
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>

@@ -16,6 +16,7 @@ use GeoIP;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
+use Intervention\Image\Facades\Image;
 
 class ScanlogController extends Controller
 {
@@ -446,43 +447,49 @@ class ScanlogController extends Controller
     }
 
     public function requestAttendanceStore(Request $request)
-    {
-        $validator = Validator::make($request->all(), AttendancesRequest::$rules);
-        if ($validator->fails()) {
-            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 1MB');
-        }
-
-        $id             = Auth::user()->id;
-        $photo_file     = $request->file('photo');
-        $activity_id    = $request->activity_id;
-        $keterangan     = $request->keterangan;
-        $status         = 0;
-        $user_id        = $id;
-        $userIP         = request()->ip();
-        
-        $name_file = time() . "_" . $photo_file->getClientOriginalName();
-        // isi dengan nama folder tempat kemana file diupload
-        $tujuan_upload = 'data_photo_pengajuan';
-        $photo_file->move($tujuan_upload, $name_file);
-
-        $attendances_request  = AttendancesRequest::create([
-            'user_id'       => $user_id,
-            'activity_id'   => $activity_id,
-            'keterangan'    => $keterangan,
-            'status'        => $status,
-            'photo'         => $name_file,
-            'ip_scan'       => $userIP,
-            'created_at'    => now()
-        ]);
-
-        return redirect()->back()
-            ->with('success', 'Berhasil menambahkan data Pengajuan, silahkan menunggu untuk persetujuan dari BAS.');
+{
+    $validator = Validator::make($request->all(), AttendancesRequest::$rules);
+    if ($validator->fails()) {
+        return redirect()
+            ->back()
+            ->withErrors($validator)
+            ->withInput()
+            ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 1MB');
     }
+
+    $id             = Auth::user()->id;
+    $photo_file     = $request->file('photo');
+    $activity_id    = $request->activity_id;
+    $keterangan     = $request->keterangan;
+    $status         = 0;
+    $user_id        = $id;
+    $userIP         = request()->ip();
+    
+    // Compress the image
+    $compressedImage = Image::make($photo_file)
+        ->encode('jpg', 75) // Change the format and quality as needed
+        ->resize(800, null, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
+
+    $name_file = time() . "_" . $photo_file->getClientOriginalName();
+    $tujuan_upload = 'data_photo_pengajuan';
+    $compressedImage->save(public_path($tujuan_upload . '/' . $name_file)); // Save the compressed image
+
+    $attendances_request = AttendancesRequest::create([
+        'user_id'       => $user_id,
+        'activity_id'   => $activity_id,
+        'keterangan'    => $keterangan,
+        'status'        => $status,
+        'photo'         => $name_file,
+        'ip_scan'       => $userIP,
+        'created_at'    => now()
+    ]);
+
+    return redirect()->back()
+        ->with('success', 'Berhasil menambahkan data Pengajuan, silahkan menunggu untuk persetujuan dari BAS.');
+}
 
     public function viewRequestAttendances(){
         $request_attendances    = AttendancesRequest::orderBy('status','ASC')->orderBy('created_at','ASC')->get();
