@@ -23,7 +23,7 @@ class AttendancesRequest extends Model
 {
     
     static $rules = [
-		'photo' => 'required|mimes:jpg,jpeg',
+		'photo' => 'required|mimes:jpg,jpeg|max:2048',
 		'keterangan' => 'required',
         'activity_id' => 'required'
     ];

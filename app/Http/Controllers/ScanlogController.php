@@ -454,7 +454,7 @@ class ScanlogController extends Controller
             ->back()
             ->withErrors($validator)
             ->withInput()
-            ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 1MB');
+            ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
     }
 
     $id             = Auth::user()->id;
