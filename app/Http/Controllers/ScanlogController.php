@@ -294,8 +294,6 @@ class ScanlogController extends Controller
         $pin = Auth::user()->pin;
         // Hitung startDate (tanggal 26 bulan lalu)
         $today = Carbon::now();
-        $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
-
         // Peroleh tanggal 26 bulan lalu
         $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
 
@@ -650,11 +648,17 @@ class ScanlogController extends Controller
         if (! Gate::allows('bas_menu')) {
             return abort(401);
         }
-        // Hitung startDate (bulan lalu dengan tanggal 26)
-        $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
+         // Peroleh tanggal 26 bulan lalu
+         $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
 
-        // Hitung endDate (bulan ini dengan tanggal 25)
-        $endDate = Carbon::now()->startOfMonth()->addDays(24);
+         // Peroleh tanggal 25 bulan ini jika bulan ini memiliki kurang dari 25 hari, jika tidak gunakan hari terakhir dari bulan ini
+         $currentDay = Carbon::now()->day;
+         $endDateDay = $currentDay >= 26 ? 25 : min($currentDay, 25);
+ 
+         // Periksa apakah bulan lalu memiliki 31 hari
+         $lastMonthDays = Carbon::now()->subMonth()->endOfMonth()->day;
+         $endDateDay = $lastMonthDays == 31 ? 26 : $endDateDay;
+         $endDate = Carbon::now()->startOfMonth()->addDays($endDateDay - 1);
 
         $scanLogs = ScanLog::join('users', 'scan_logs.pin', '=', 'users.pin')
         ->where('ip_scan','3.1.174.198')->whereBetween('scan', [$startDate, $endDate])        

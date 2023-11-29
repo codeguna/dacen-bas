@@ -52,51 +52,55 @@
 
                                         @endphp
                                         @if ($previousDate != $currentDate)
-                                            <tr>
-                                                <td>{{ ++$i }}</td>
-                                                <td>
-                                                    {{ $entry->user->name }} <br>
-                                                    <small
-                                                        class="text-success">{{ \Carbon\Carbon::parse($entry->scan)->format('d/m/Y') }}</small>
-                                                </td>
-                                                <td align="center">
-                                                    @php
+                                            @php
 
-                                                        $pin = $entry->pin;
-                                                        $created_at = $entry->created_at;
-                                                        $time = \Carbon\Carbon::parse($entry->scan);
-                                                        $firstScan = \App\Models\ScanLog::select('scan')
-                                                            ->where('pin', $pin)
-                                                            ->where('ip_scan', '3.1.174.198')
-                                                            ->whereDate('scan', $time)
-                                                            ->where(function ($query) {
-                                                                $query->whereTime('scan', '<=', Carbon::parse('12:00:00'));
-                                                            })
-                                                            ->orderBy('scan', 'ASC')
-                                                            ->first();
-                                                        $lastScan = \App\Models\ScanLog::select('scan')
-                                                            ->where('pin', $pin)
-                                                            ->where('ip_scan', '3.1.174.198')
-                                                            ->whereDate('scan', $time)
-                                                            ->where(function ($query) {
-                                                                $query->whereTime('scan', '>=', Carbon::parse('12:01:00'));
-                                                            })
-                                                            ->orderBy('scan', 'DESC')
-                                                            ->first();
-                                                    @endphp
-                                                    {{ $firstScan->scan ?? 'X' }}
-                                                </td>
-                                                <td align="center">
-                                                    {{ $lastScan->scan ?? 'X' }}
-                                                </td>
-                                                <td>
-                                                    @if (!empty($firstScan->scan) && !empty($lastScan->scan))
-                                                        <p>Presensi Lengkap</p>
-                                                    @else
-                                                        <p>Presensi Tidak Lengkap</p>
-                                                    @endif
-                                                </td>
-                                            </tr>
+                                                $pin = $entry->pin;
+                                                $created_at = $entry->created_at;
+                                                $time = \Carbon\Carbon::parse($entry->scan);
+                                                $firstScan = \App\Models\ScanLog::select('scan')
+                                                    ->where('pin', $pin)
+                                                    ->where('ip_scan', '3.1.174.198')
+                                                    ->whereDate('scan', $time)
+                                                    ->where(function ($query) {
+                                                        $query->whereTime('scan', '<=', Carbon::parse('12:00:00'));
+                                                    })
+                                                    ->orderBy('scan', 'ASC')
+                                                    ->first();
+                                                $lastScan = \App\Models\ScanLog::select('scan')
+                                                    ->where('pin', $pin)
+                                                    ->where('ip_scan', '3.1.174.198')
+                                                    ->whereDate('scan', $time)
+                                                    ->where(function ($query) {
+                                                        $query->whereTime('scan', '>=', Carbon::parse('12:01:00'));
+                                                    })
+                                                    ->orderBy('scan', 'DESC')
+                                                    ->first();
+                                            @endphp
+                                            @if (!empty($firstScan->scan) && !empty($lastScan->scan))
+                                            @else
+                                                <tr>
+                                                    <td>{{ ++$i }}</td>
+                                                    <td>
+                                                        {{ $entry->user->name }} <br>
+                                                        <small
+                                                            class="text-success">{{ \Carbon\Carbon::parse($entry->scan)->format('d/m/Y') }}</small>
+                                                    </td>
+                                                    <td align="center">
+                                                        {{ $firstScan->scan ?? 'X' }}
+                                                    </td>
+                                                    <td align="center">
+                                                        {{ $lastScan->scan ?? 'X' }}
+                                                    </td>
+                                                    <td>
+                                                        @if (!empty($firstScan->scan) && !empty($lastScan->scan))
+                                                            <p>Presensi Lengkap</p>
+                                                        @else
+                                                            <p>Presensi Tidak Lengkap</p>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endif
+
                                             @php
                                                 $previousDate = $currentDate;
                                             @endphp
@@ -131,7 +135,6 @@
                 "responsive": true,
             });
         });
-
         document.getElementById('searchForm').addEventListener('submit', function(event) {
             var startDate = new Date(document.getElementById('start_date').value);
             var endDate = new Date(document.getElementById('end_date').value);
