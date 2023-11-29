@@ -664,4 +664,23 @@ class ScanlogController extends Controller
 
         return view('scan-log.check-attendances',compact('scanLogs'))->with('i');
     }
+    public function checkAttendanceFilter(Request $request)
+    {
+        if (! Gate::allows('bas_menu')) {
+            return abort(401);
+        }
+
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+        // whereDate('scan', '>=', $start_date)
+        //     ->whereDate('scan', '<=', $end_date)
+
+        $scanLogs = ScanLog::join('users', 'scan_logs.pin', '=', 'users.pin')
+        ->where('ip_scan','3.1.174.198')->whereBetween('scan', [$startDate, $endDate])        
+        ->orderBy('users.name', 'ASC')
+        ->orderBy('scan', 'ASC')
+        ->get();
+
+        return view('scan-log.check-attendances',compact('scanLogs'))->with('i');
+    }
 }
