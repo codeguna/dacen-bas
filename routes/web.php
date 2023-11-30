@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('/scan-log/request_attendances_reject/{request}','ScanlogController@rejectRequest')->name('scan-log.request-attendances-reject');
     Route::get('/scan-log/view_request_attendances/','ScanlogController@viewRequestAttendances')->name('scan-log.view-request-attendances');
     Route::get('/scan-log/check_attendances/','ScanlogController@checkAttendance')->name('scan-log.check-attendances');
+    Route::get('/scan-log/check_attendances_filter/','ScanlogController@checkAttendanceFilter')->name('scan-log.check-attendances-filter');
 
     //Route activities
     Route::resource('activities', 'ActivityController');
