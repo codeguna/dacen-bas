@@ -19,7 +19,7 @@
             <label>Foto</label>
             <input type="file" class="form-control-file" name="photo" required>
             <small class="text-danger">
-                Maksimal ukuran photo adalah 2MB, disarankan resize dahulu sebelum upload!
+                Maksimal ukuran photo adalah 5MB, disarankan resize dahulu sebelum upload!
             </small>
         </div>
         <div class="form-group">
