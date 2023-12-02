@@ -546,6 +546,15 @@ class ScanlogController extends Controller
                 'created_at' => now(),
             ]);
 
+            $scan_log = ScanLog::create([
+                'pin' => $pin,
+                'scan' => $scan,
+                'verify' => 1,
+                'status_scan' => 0,
+                'ip_scan' => $userIP,
+                'created_at' => now(),
+            ]);
+
             $attendances_request->update([
                 'status' => $status,
             ]); 
@@ -575,6 +584,7 @@ class ScanlogController extends Controller
         }
         else{
             $scan_logs_extra  = ScanLogsExtra::where('pin',$pin)->where('scan',$scan)->delete();
+            $scan_logs  = ScanLog::where('pin',$pin)->where('scan',$scan)->delete();
         }
 
         return redirect()->back()->with('warning','Berhasil memperbarui Status Pengajuan');
