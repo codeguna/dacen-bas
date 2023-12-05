@@ -48,6 +48,6 @@ class User extends Authenticatable
 
     public function willingness()
     {
-        return $this->hasMany(Willingness::class);
+        return $this->hasMany(Willingness::class, 'pin', 'pin');
     }
 }

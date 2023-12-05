@@ -22,44 +22,28 @@
                     <div class="card-body">
 
                         <div class="form-group">
-                            <strong>User Id:</strong>
-                            {{ $willingness->user_id }}
+                            <strong>Pin:</strong>
+                            {{ $willingness->pin }}
                         </div>
                         <div class="form-group">
-                            <strong>Valid Start:</strong>
-                            {{ $willingness->valid_start }}
+                            <strong>Start Date:</strong>
+                            {{ $willingness->start_date }}
                         </div>
                         <div class="form-group">
-                            <strong>Valid End:</strong>
-                            {{ $willingness->valid_end }}
+                            <strong>End Date:</strong>
+                            {{ $willingness->end_date }}
                         </div>
                         <div class="form-group">
-                            <strong>Type:</strong>
-                            {{ $willingness->type }}
+                            <strong>Day Code:</strong>
+                            {{ $willingness->day_code }}
                         </div>
                         <div class="form-group">
-                            <strong>Monday:</strong>
-                            {{ $willingness->monday }}
+                            <strong>Time Of Entry:</strong>
+                            {{ $willingness->time_of_entry }}
                         </div>
                         <div class="form-group">
-                            <strong>Tuesday:</strong>
-                            {{ $willingness->tuesday }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Wednesday:</strong>
-                            {{ $willingness->wednesday }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Thursday:</strong>
-                            {{ $willingness->thursday }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Friday:</strong>
-                            {{ $willingness->friday }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Saturday:</strong>
-                            {{ $willingness->saturday }}
+                            <strong>Time Of Return:</strong>
+                            {{ $willingness->time_of_return }}
                         </div>
 
                     </div>

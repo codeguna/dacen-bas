@@ -15,16 +15,12 @@ class CreateWillingnessTable extends Migration
     {
         Schema::create('willingness', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->date('valid_start');
-            $table->date('valid_end');
-            $table->boolean('type');
-            $table->time('monday');
-            $table->time('tuesday');
-            $table->time('wednesday');
-            $table->time('thursday');
-            $table->time('friday');
-            $table->time('saturday');
+            $table->string('pin');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->tinyInteger('day_code');
+            $table->time('time_of_entry');
+            $table->time('time_of_return');
             $table->timestamps();
         });
     }

@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    Kesediaan Karyawan
+    Willingness
 @endsection
 
 @section('content')
@@ -13,9 +13,15 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-
-                                <h3><i class="fas fa-check-double text-primary"></i> Kesediaan Karyawan</h3>
+                                {{ __('Willingness') }}
                             </span>
+
+                            <div class="float-right">
+                                <a href="{{ route('admin.willingnesses.create') }}" class="btn btn-primary btn-sm float-right"
+                                    data-placement="left">
+                                    {{ __('Create New') }}
+                                </a>
+                            </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -23,68 +29,50 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="callout callout-info">
-                                    <h6><i class="fas fa-info-circle"></i> Set kesediaan untuk penyesuaian jam
-                                        presensi</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="dataTable1" class="table table-striped table-hover">
+                            <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama</th>
-                                        <th>Kesediaan</th>
-                                        <th>Aksi</th>
+
+                                        <th>Pin</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Day Code</th>
+                                        <th>Time Of Entry</th>
+                                        <th>Time Of Return</th>
+
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
+                                    @foreach ($willingnesses as $willingness)
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-                                            <td>
-                                                {{ $user->name }}
-                                            </td>
-                                            <td>
-                                                @if ($user->willingness->count() == 0)
-                                                    <i class="fa fa-times-circle text-danger text-" aria-hidden="true"></i>
-                                                @else
-                                                    <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($user->willingness->count() == 0)
-                                                    <a href="{{ route('admin.willingness.setTime', $user->id) }}"
-                                                        class="btn btn-primary" title="Set Kesediaan">
-                                                        <i class="fas fa-clock"></i>
-                                                    </a>
-                                                @else
-                                                    <form action="{{ route('admin.willingnesses.destroy', $user->id) }}"
-                                                        method="POST">
-                                                        <div class="input-group">
-                                                            <span class="input-group-btn">
-                                                                <a href="{{ route('admin.willingness.getTime', $user->id) }}"
-                                                                    class="btn btn-warning" title="Update/Lihat Kesediaan">
-                                                                    <i class="fas fa-pencil-alt"></i>
-                                                                </a>
+                                            <td>{{ $willingness->pin }}</td>
+                                            <td>{{ $willingness->start_date }}</td>
+                                            <td>{{ $willingness->end_date }}</td>
+                                            <td>{{ $willingness->day_code }}</td>
+                                            <td>{{ $willingness->time_of_entry }}</td>
+                                            <td>{{ $willingness->time_of_return }}</td>
 
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger"
-                                                                    onclick="return confirm('Hapus data Kesediaan {{ $user->name }}?')"><i
-                                                                        class="fa fa-fw fa-trash"></i></button>
-
-                                                            </span>
-                                                        </div>
-                                                    </form>
-                                                @endif
+                                            <td>
+                                                <form action="{{ route('admin.willingnesses.destroy', $willingness->id) }}"
+                                                    method="POST">
+                                                    <a class="btn btn-sm btn-primary "
+                                                        href="{{ route('admin.willingnesses.show', $willingness->id) }}"><i
+                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <a class="btn btn-sm btn-success"
+                                                        href="{{ route('admin.willingnesses.edit', $willingness->id) }}"><i
+                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -93,19 +81,8 @@
                         </div>
                     </div>
                 </div>
+                {!! $willingnesses->links() !!}
             </div>
         </div>
     </div>
-@endsection
-@section('scripts')
-    <script>
-        $(function() {
-            $("#dataTable1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
-    </script>
 @endsection

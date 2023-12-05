@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    Update Kesediaan
+    {{ __('Update') }} Willingness
 @endsection
 
 @section('content')
@@ -13,25 +13,18 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">
-                            <h3><i class="fas fa-pencil-alt text-warning"></i>
-                                Update Kesediaan
-                            </h3>
-                        </span>
+                        <span class="card-title">{{ __('Update') }} Willingness</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.willingness.updateTime') }}" role="form"
-                            enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.willingnesses.update', $willingness->id) }}"
+                            role="form" enctype="multipart/form-data">
+                            {{ method_field('PATCH') }}
                             @csrf
 
-                            @include('willingness.form-update')
+                            @include('willingness.form')
+
+                        </form>
                     </div>
-                    <div class="card-footer">
-                        <button class="btn btn-success" type="submit">
-                            <i class="fas fa-check"></i> Submit
-                        </button>
-                    </div>
-                    </form>
                 </div>
             </div>
         </div>
