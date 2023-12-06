@@ -13,15 +13,9 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Willingness') }}
+                                <h4><i class="fas fa-user-clock text-primary"></i> Kesediaan Karyawan</h4>
                             </span>
 
-                            <div class="float-right">
-                                <a href="{{ route('admin.willingnesses.create') }}" class="btn btn-primary btn-sm float-right"
-                                    data-placement="left">
-                                    {{ __('Create New') }}
-                                </a>
-                            </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -31,48 +25,70 @@
                     @endif
 
                     <div class="card-body">
+                        <div class="alert alert-primary" role="alert">
+                            <i class="fas fa-info-circle"></i> Import kesediaan dengan format/template dibawah ini, pilih
+                            File lalu tekan tombol Import untuk
+                            memulai Import data kesediaan TenDik/Dosen
+                            <hr>
+                            <form action="{{ route('admin.willingness.import') }}" method="POST"
+                                enctype="multipart/form-data">
+
+                                @csrf
+                                <div class="input-group mb-3">
+                                    <input type="file" name="file" class="form-control-file m-1">
+                                    <br>
+                                    <button type="submit" class="btn btn-warning btn-sm m-1">
+                                        <i class="fas fa-check-circle"></i> Import
+                                    </button>
+                                    <a href="https://drive.google.com/file/d/1FCkwmBlAb9H6smmv9oAXOnfKfSYDFXtD/view?usp=sharing"
+                                        class="btn btn-success btn-sm m-1" data-placement="left" target="_blank"
+                                        style="text-decoration: none">
+                                        <i class="fas fa-file-excel"></i> Template
+                                    </a>
+                                </div>
+
+
+                            </form>
+                        </div>
+
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table id="dataTable1" class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-
-                                        <th>Pin</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Day Code</th>
-                                        <th>Time Of Entry</th>
-                                        <th>Time Of Return</th>
-
+                                        <th>Nama</th>
+                                        <th>Kesediaan</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($willingnesses as $willingness)
+                                    @foreach ($users as $user)
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-                                            <td>{{ $willingness->pin }}</td>
-                                            <td>{{ $willingness->start_date }}</td>
-                                            <td>{{ $willingness->end_date }}</td>
-                                            <td>{{ $willingness->day_code }}</td>
-                                            <td>{{ $willingness->time_of_entry }}</td>
-                                            <td>{{ $willingness->time_of_return }}</td>
-
+                                            <td>{{ $user->name }}</td>
                                             <td>
-                                                <form action="{{ route('admin.willingnesses.destroy', $willingness->id) }}"
-                                                    method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('admin.willingnesses.show', $willingness->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('admin.willingnesses.edit', $willingness->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
-                                                </form>
+                                                {{-- @forelse ($user->willingness as $willingness)
+                                                    <button class="btn btn-primary">
+                                                        Notifications <span
+                                                            class="badge bg-primary">{{ $willingness->count() }}</span>
+                                                    </button>
+                                                @empty
+                                                    <i class="fas fa-info-circle text-danger"></i> Belum set Kesediaan
+                                                @endforelse --}}
+                                                @if ($user->willingness->count() < 1)
+                                                    <i class="fas fa-info-circle text-danger"></i> Belum set Kesediaan
+                                                @else
+                                                    <a href="{{ route('admin.willingnesses.show', $user->pin) }}"
+                                                        class="btn btn-primary btn-sm w-100" style="text-decoration: none">
+                                                        <i class="fas fa-user-clock"></i> Cek Kesediaan
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="#" target="_blank" class="btn btn-warning" type="button">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -81,8 +97,18 @@
                         </div>
                     </div>
                 </div>
-                {!! $willingnesses->links() !!}
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        $(function() {
+            $("#dataTable1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+            }).buttons().container().appendTo('#dataTable1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
 @endsection

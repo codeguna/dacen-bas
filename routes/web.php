@@ -116,5 +116,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/willingness/get_time/{user}','WillingnessController@getTime')->name('willingness.getTime');
     Route::post('/willingness/store_time/','WillingnessController@storeTime')->name('willingness.storeTime');
     Route::post('/willingness/update_time/','WillingnessController@updateTime')->name('willingness.updateTime');
+    Route::post('/willingness/import/','ImportExcelController@importWillingness')->name('willingness.import');
     //End Route Willingness
 });

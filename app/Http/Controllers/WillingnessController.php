@@ -19,11 +19,11 @@ class WillingnessController extends Controller
      */
     public function index()
     {
-        $willingnesses  = Willingness::paginate();
+        
         $users          = User::where('pin', '<>', null)->orderBy('name','ASC')->get();
-        return $users;
-        return view('willingness.index', compact('willingnesses'))
-            ->with('i', (request()->input('page', 1) - 1) * $willingnesses->perPage());
+
+        return view('willingness.index', compact('users'))
+            ->with('i');
     }
 
     /**
@@ -59,9 +59,9 @@ class WillingnessController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($pin)
     {
-        $willingness = Willingness::find($id);
+        $willingness = Willingness::where('pin',$pin)->first();
 
         return view('willingness.show', compact('willingness'));
     }
