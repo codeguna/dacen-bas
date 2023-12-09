@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Models\AttendancesRequest;
 use App\Models\CertificateType;
 use App\Models\EducationalStaff;
 use App\Models\FunctionalPosition;
@@ -39,6 +40,13 @@ class HomeController extends Controller
         if (Gate::allows('view_profile')) {
             return redirect()->route('admin.scan-log.my-attendances');
         }
+        $currentYear = date('Y');
+        $pendingAttendanceRequest = AttendancesRequest::where('status',0)
+                                    ->whereYear('created_at', $currentYear)
+                                    ->count();
+        $acceptedAttendanceRequest = AttendancesRequest::where('status',1)
+                                    ->whereYear('created_at', $currentYear)
+                                    ->count();
         $countActiveDosen       = Lecturer::where('status',1)->count();
         $countInActiveDosen     = Lecturer::where('status',0)->count();
         $countActiveTendik      = EducationalStaff::where('status',1)->count();
@@ -50,6 +58,8 @@ class HomeController extends Controller
         $j                      = 0;
 
         return view('homeLTE',compact(
+            'pendingAttendanceRequest',
+            'acceptedAttendanceRequest',
             'countActiveDosen',
             'countInActiveDosen',
             'countActiveTendik',
