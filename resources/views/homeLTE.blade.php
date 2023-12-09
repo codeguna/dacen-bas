@@ -27,8 +27,8 @@
                             <div class="icon">
                                 <i class="fas fa-info-circle"></i>
                             </div>
-                            <a href="{{ route('admin.lecturers.index') }}" class="small-box-footer">Detail Data <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('admin.scan-log.view-request-attendances') }}" class="small-box-footer">Detail
+                                Data <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -41,8 +41,8 @@
                             <div class="icon">
                                 <i class="fas fa-thumbs-up"></i>
                             </div>
-                            <a href="{{ route('admin.lecturers.index') }}" class="small-box-footer">Detail Data <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('admin.scan-log.view-request-attendances') }}" class="small-box-footer">Detail
+                                Data <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <div class="col-md-12">
