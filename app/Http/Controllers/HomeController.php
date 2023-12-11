@@ -11,11 +11,14 @@ use App\Models\FunctionalRank;
 use App\Models\Knowledge;
 use App\Models\Lecturer;
 use App\Models\Level;
+use App\Models\ScanLog;
 use App\Models\StudyProgram;
 use App\Models\University;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class HomeController extends Controller
@@ -41,12 +44,17 @@ class HomeController extends Controller
             return redirect()->route('admin.scan-log.my-attendances');
         }
         $currentYear = date('Y');
-        $pendingAttendanceRequest = AttendancesRequest::where('status',0)
-                                    ->whereYear('created_at', $currentYear)
+        $pendingAttendanceRequest   = AttendancesRequest::where('status',0)
                                     ->count();
-        $acceptedAttendanceRequest = AttendancesRequest::where('status',1)
-                                    ->whereYear('created_at', $currentYear)
+        $acceptedAttendanceRequest  = AttendancesRequest::where('status',1)
                                     ->count();
+        $users                  = User::where('pin', '<>', null)->count();                            
+        $todayScanLogs          = ScanLog::select('pin')
+                                    ->groupBy('pin')
+                                    ->where('ip_scan', '3.1.174.198')
+                                    ->whereTime('scan', '<=', '13:00:00')
+                                    ->whereDate('scan', Carbon::today())                                    
+                                    ->get();
         $countActiveDosen       = Lecturer::where('status',1)->count();
         $countInActiveDosen     = Lecturer::where('status',0)->count();
         $countActiveTendik      = EducationalStaff::where('status',1)->count();
@@ -58,6 +66,8 @@ class HomeController extends Controller
         $j                      = 0;
 
         return view('homeLTE',compact(
+            'todayScanLogs',
+            'users',
             'pendingAttendanceRequest',
             'acceptedAttendanceRequest',
             'countActiveDosen',

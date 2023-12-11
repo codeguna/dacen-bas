@@ -13,6 +13,25 @@
                     <div class="col-md-12">
                         <center>
                             <h2>
+                                Karyawan Presensi
+                            </h2>
+                        </center>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="small-box bg-red">
+                            <div class="inner">
+                                <h3>{{ $todayScanLogs->count() }} / {{ $users }}</h3>
+
+                                <p>Karyawan Masuk</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-fingerprint"></i>
+                            </div>
+                            <a href="{{ route('admin.scanlogs.detail') }}" class="small-box-footer">*Presensi dengan mesin
+                                finger & karyawan aktif menggunakan Hera <i class="fas fa-arrow-circle-right"></i></a>
+                        </div <div class="col-md-12">
+                        <center>
+                            <h2>
                                 Pengajuan Presensi Luar
                             </h2>
                         </center>
