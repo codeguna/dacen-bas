@@ -631,6 +631,7 @@ class ScanlogController extends Controller
         $endDate = Carbon::now()->startOfMonth()->addDays(24);
 
         $scanLogs = ScanLog::whereBetween('scan', [$startDate, $endDate])
+        ->where('ip_scan','3.1.174.198')
         ->orderBy('scan', 'ASC')
         ->get();
 
