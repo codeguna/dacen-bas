@@ -70,7 +70,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($scanLogs as $scanLog)
+                                @foreach ($filteredLogs as $scanLog)
                                     <tr>
                                         <td>{{ $scanLog->scan }}</td>
                                         <td>{{ \Carbon\Carbon::parse($scanLog->scan)->format('Y-m-d') }}</td>

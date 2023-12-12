@@ -15,8 +15,7 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle"
-                                    src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=740&t=st=1694070041~exp=1694070641~hmac=1c5be28279274e89b0764b1f392787abfdff355ee07b80f59ea73d3608b23e0e"
-                                    alt="User profile picture">
+                                    src="https://www.w3schools.com/howto/img_avatar.png" alt="User profile picture">
                             </div>
                             <h3 class="profile-username text-center">
                                 {{ $lecturer->name }}
@@ -124,7 +123,8 @@
                                                         </button>
                                                     @endcan
                                                     <i class="fas fa-book"></i>
-                                                    {{ $education->university->name }} -
+                                                    {{ $education->university->name ?? 'Data Universitas tidak ditemukan' }}
+                                                    -
                                                     {{ $education->level->name }}
                                                 </form>
 

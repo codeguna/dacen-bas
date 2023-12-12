@@ -620,22 +620,38 @@ class ScanlogController extends Controller
     }
 
     public function print()
-    {
-        if (! Gate::allows('bas_menu')) {
-            return abort(401);
-        }
-        // Hitung startDate (bulan lalu dengan tanggal 26)
-        $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
+{
+    if (!Gate::allows('bas_menu')) {
+        return abort(401);
+    }
 
-        // Hitung endDate (bulan ini dengan tanggal 25)
-        $endDate = Carbon::now()->startOfMonth()->addDays(24);
+    // Hitung startDate (bulan lalu dengan tanggal 26)
+    $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
 
-        $scanLogs = ScanLog::whereBetween('scan', [$startDate, $endDate])
+    // Hitung endDate (bulan ini dengan tanggal 25)
+    $endDate = Carbon::now()->startOfMonth()->addDays(24);
+
+    // Retrieve records within the date range
+    $scanLogs = ScanLog::whereBetween('scan', [$startDate, $endDate])
         ->orderBy('scan', 'ASC')
         ->get();
 
-        return view('scan-log.print',compact('scanLogs'));
+    // Filter first and last records for each day
+    $filteredLogs = [];
+    $prevDate = null;
+    foreach ($scanLogs as $log) {
+        $logDate = Carbon::parse($log->scan)->toDateString();
+        if ($logDate !== $prevDate) {
+            // If it's a new date, add the first record
+            $filteredLogs[] = $log;
+            $prevDate = $logDate;
+        }
+        // Update the last record for the current date
+        $filteredLogs[$logDate] = $log;
     }
+
+    return view('scan-log.print', compact('filteredLogs'));
+}
 
     public function printResult(Request $request)
     {
