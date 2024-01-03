@@ -62,8 +62,9 @@ class WillingnessController extends Controller
     public function show($pin)
     {
         $willingnesses = Willingness::where('pin',$pin)->get();
+        $willingnessID = Willingness::select('pin')->where('pin',$pin)->first();
 
-        return view('willingness.show', compact('willingnesses'))->with('i');
+        return view('willingness.show', compact('willingnesses','willingnessID'))->with('i');
     }
 
     /**
@@ -88,11 +89,11 @@ class WillingnessController extends Controller
      */
     public function update(Request $request, Willingness $willingness)
     {
-        request()->validate(Willingness::$rules);
+       //request()->validate(Willingness::$rules);
 
         $willingness->update($request->all());
 
-        return redirect()->route('admin.willingnesses.index')
+        return redirect()->back()
             ->with('success', 'Willingness updated successfully');
     }
 
@@ -101,9 +102,9 @@ class WillingnessController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($pin)
     {
-        $willingness = Willingness::find($id)->delete();
+        $willingness = Willingness::where('pin',$pin)->delete();
 
         return redirect()->route('admin.willingnesses.index')
             ->with('success', 'Willingness deleted successfully');

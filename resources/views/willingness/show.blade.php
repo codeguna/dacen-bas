@@ -25,8 +25,23 @@
                     <div class="col-md-12">
                         <h3>Tabel Kesediaan</h3>
                         <div class="alert alert-info" role="alert">
-                            <strong>primary</strong>
+                            <strong><i class="fas fa-question-circle"></i> Cara perbaharui data</strong> <br>
+                            <p>
+                                Pilih data mana yang akan di update, lalu tekan <strong>ENTER</strong> atau tekan tombol
+                                Submit yang ada disamping kanan tabel
+                            </p>
+
+                            <form action="{{ route('admin.willingnesses.destroy', $willingnessID->pin) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger btn-xs m-1"
+                                    onclick="return confirm('Hapus semua data kesediaan? Semua data akan kesediaan akan terhapus.')">
+                                    <i class="fas fa-trash"></i> Hapus Semua Data?
+                                </button>
+                            </form>
+
                         </div>
+
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -77,8 +92,11 @@
                                             @endswitch
                                         </td>
                                         <td>
-                                            <input class="form-control" type="time" name="time_of_entry"
-                                                value="{{ $willingness->time_of_entry }}">
+                                            <form method="POST"
+                                                action="{{ route('admin.willingnesses.update', $willingness->id) }}"
+                                                role="form" enctype="multipart/form-data">
+                                                <input class="form-control" type="time" name="time_of_entry"
+                                                    value="{{ $willingness->time_of_entry }}">
                                         <td>
                                             <input class="form-control" type="time" name="time_of_return"
                                                 value="{{ $willingness->time_of_return }}">
@@ -88,13 +106,16 @@
                                                 value="{{ $willingness->start_date }}">
                                         </td>
                                         <td>
-                                            <input class="form-control" type="date" name="start_date"
+                                            <input class="form-control" type="date" name="end_date"
                                                 value="{{ $willingness->end_date }}">
                                         </td>
                                         <td>
+                                            {{ method_field('PATCH') }}
+                                            @csrf
                                             <button class="btn btn-warning">
                                                 <i class="fa fa-check-circle" aria-hidden="true"></i>
                                             </button>
+                                            </form>
                                         </td>
                                     </tr>
                             @endforeach
