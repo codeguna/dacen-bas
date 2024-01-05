@@ -347,11 +347,11 @@
                         </h3>
                     </div>
                     <div class="card-body">
-                        <table class="table table-hover table-sm">
+                        <table class="table table-hover table-sm" id="late">
                             <thead>
                                 <tr>
-                                    <th>Tanggal</th>
-                                    <th>Jam</th>
+                                    <th><i class="fas fa-calendar"></i> Tanggal</th>
+                                    <th><i class="fas fa-clock"></i> Jam</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -375,27 +375,52 @@
                                         }
                                         $pin = Auth::user()->pin;
                                         $now = \Carbon\Carbon::parse($late->scan)->format('Y-m-d');
-
+                                        //Willingness Logic
                                         $lateTime = \App\Models\Willingness::where('pin', $pin)
                                             ->where('day_code', $dayCode)
                                             ->where(function ($query) use ($now) {
                                                 $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
                                             })
                                             ->first();
-                                        $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s', $lateTime->time_of_entry)
-                                            ->addMinutes(11)
-                                            ->format('H:i:s');
+                                        if (!empty($lateTime)) {
+                                            $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s', $lateTime->time_of_entry)
+                                                ->addMinutes(11)
+                                                ->format('H:i:s');
+                                        } else {
+                                            $resultLateTime = null;
+                                        }
+
+                                        //End of Willingess Logic
+
                                     @endphp
                                     <tr>
-                                        @if ($times >= $resultLateTime)
-                                            <td>
-                                                {{ $times }} <i class="fas fa-sad-cry text-danger"></i>
+                                        @if ($resultLateTime == null)
+                                        @else
+                                            @if ($times >= $resultLateTime)
+                                                <td>
+                                                    {{ $days }} |
+                                                    {{ $dates }}
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-danger">
+                                                        {{ $times }}
+                                                    </span>
+                                                </td>
                                             @else
+                                            @endif
                                         @endif
                                     </tr>
                                 @endforeach
+                            <tfoot>
+                                <tr>
+                                    <th><i class="fas fa-calendar"></i> Tanggal</th>
+                                    <th><i class="fas fa-clock"></i> Jam</th>
+                                </tr>
+                            </tfoot>
                             </tbody>
                         </table>
+                        <hr>
+                        <strong>Jumlah Telat: </strong>
                     </div>
                 </div>
             </div>
