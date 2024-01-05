@@ -23,7 +23,6 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>Tabel Kesediaan</h3>
                         <div class="alert alert-info" role="alert">
                             <strong><i class="fas fa-question-circle"></i> Cara perbaharui data</strong> <br>
                             <p>
@@ -41,7 +40,10 @@
                             </form>
 
                         </div>
-
+                        <hr>
+                        <center>
+                            <h3>Tabel Kesediaan</h3>
+                        </center>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -126,5 +128,6 @@
                 </div>
             </div>
         </div>
+        {!! $willingnesses->links() !!}
     </section>
 @endsection

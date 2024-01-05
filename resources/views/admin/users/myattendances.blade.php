@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="col-md-12 mt-3">
                                     <div class="table-responsive">
-                                        <table class="table table-hover">
+                                        <table class="table table-hover table-sm">
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
@@ -334,6 +334,68 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-info-circle text-danger"></i> Akumulasi Terlambat
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Jam</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($scan_logs_late as $late)
+                                    @php
+                                        $dates = \Carbon\Carbon::parse($late->scan)->format('d-m-Y');
+                                        $times = \Carbon\Carbon::parse($late->scan)->format('H:i:s');
+                                        $days = \Carbon\Carbon::parse($late->scan)->format('l');
+                                        if ($days == 'Monday') {
+                                            $dayCode = 1;
+                                        } elseif ($days == 'Tuesday') {
+                                            $dayCode = 2;
+                                        } elseif ($days == 'Wednesday') {
+                                            $dayCode = 3;
+                                        } elseif ($days == 'Thursday') {
+                                            $dayCode = 4;
+                                        } elseif ($days == 'Friday') {
+                                            $dayCode = 5;
+                                        } elseif ($days == 'Saturday') {
+                                            $dayCode = 6;
+                                        }
+                                        $pin = Auth::user()->pin;
+                                        $now = \Carbon\Carbon::parse($late->scan)->format('Y-m-d');
+
+                                        $lateTime = \App\Models\Willingness::where('pin', $pin)
+                                            ->where('day_code', $dayCode)
+                                            ->where(function ($query) use ($now) {
+                                                $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
+                                            })
+                                            ->first();
+                                        $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s', $lateTime->time_of_entry)
+                                            ->addMinutes(11)
+                                            ->format('H:i:s');
+                                    @endphp
+                                    <tr>
+                                        @if ($times >= $resultLateTime)
+                                            <td>
+                                                {{ $times }} <i class="fas fa-sad-cry text-danger"></i>
+                                            @else
+                                        @endif
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

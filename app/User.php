@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\ScanLog;
 use App\Models\Willingness;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;

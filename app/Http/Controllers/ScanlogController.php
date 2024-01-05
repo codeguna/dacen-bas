@@ -310,9 +310,10 @@ class ScanlogController extends Controller
         //$today  = '2023/10/21';
         $user = Auth::user(); // Assuming you are using Laravel's built-in authentication
         $id = $user->pin;
+        $checkWillingness = Willingness::where('pin',$id)->first();
 
-        if ($user->pin === null) {
-            return redirect()->route('admin.myprofile')->with('warning','Silahkan hubungi Admin/BAS untuk melakukan input PIN');
+        if ($user->pin === null || empty($checkWillingness)) {
+            return redirect()->route('admin.myprofile')->with('warning','Silahkan hubungi Admin/BAS untuk melakukan input PIN atau Set Jam Kesediaan');
         }
         //Kesediaan
         // $getWillingness     = Willingness::where('user_id',$user->id)->where('type',0)->first();
@@ -378,13 +379,21 @@ class ScanlogController extends Controller
             ->orderBy('scan', 'ASC')
             ->get();
 
+        $scan_logs_late = ScanLog::where('pin', $pin)
+            ->whereBetween('scan', [$startDate, $endDate])
+            ->where('ip_scan','3.1.174.198')
+            ->whereTime('scan', '<=', Carbon::parse('13:20:00'))
+            ->orderBy('scan', 'ASC')
+            ->get();
+        
         return view('admin.users.myattendances', 
         compact(
         'scan1',
         'scan2',
         'scan3',
         'scan4',
-        'scan_logs'
+        'scan_logs',
+        'scan_logs_late'
         // 'hasilSenin',
         // 'hasilSelasa',
         // 'hasilRabu',

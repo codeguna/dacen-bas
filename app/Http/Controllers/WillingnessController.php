@@ -61,7 +61,7 @@ class WillingnessController extends Controller
      */
     public function show($pin)
     {
-        $willingnesses = Willingness::where('pin',$pin)->get();
+        $willingnesses = Willingness::where('pin',$pin)->paginate(6);
         $willingnessID = Willingness::select('pin')->where('pin',$pin)->first();
 
         return view('willingness.show', compact('willingnesses','willingnessID'))->with('i');
