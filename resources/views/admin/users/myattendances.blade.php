@@ -419,8 +419,8 @@
                             </tfoot>
                             </tbody>
                         </table>
-                        <hr>
-                        <strong>Jumlah Telat: </strong>
+                        {{-- <hr>
+                        <strong>Jumlah Telat: </strong> --}}
                     </div>
                 </div>
             </div>
