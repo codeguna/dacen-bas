@@ -379,13 +379,20 @@ class ScanlogController extends Controller
             ->orderBy('scan', 'ASC')
             ->get();
 
-        $scan_logs_late = ScanLog::where('pin', $pin)
-            ->whereBetween('scan', [$startDate, $endDate])
-            ->where('ip_scan','3.1.174.198')
-            ->whereTime('scan', '<=', Carbon::parse('13:20:00'))
-            ->orderBy('scan', 'ASC')
+        // $scan_logs_late = ScanLog::where('pin', $pin)
+        //     ->whereBetween('scan', [$startDate, $endDate])
+        //     ->where('ip_scan','3.1.174.198')
+        //     ->whereTime('scan', '<=', Carbon::parse('13:20:00'))
+        //     ->orderBy('scan', 'ASC')
+        //     ->groupBy('date')
+        //     ->get();
+
+            $scan_logs_late = ScanLog::selectRaw('DATE(scan) as date')->where('pin', $pin)
+            ->whereBetween('scan', [$startDate, $endDate])            
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
             ->get();
-        
+            
         return view('admin.users.myattendances', 
         compact(
         'scan1',
@@ -706,5 +713,24 @@ class ScanlogController extends Controller
         ->get();
 
         return view('scan-log.check-attendances',compact('scanLogs'))->with('i');
+    }
+
+    public function selectPeriodLate()
+    {
+        return view('scan-log.select-late-period');
+    }
+
+    public function resultLate(Request $request){
+        $start_date = Carbon::parse($request->start_date)->format('Y-m-d');
+        $end_date = Carbon::parse($request->end_date)->format('Y-m-d');
+
+        $users    = User::select('pin','position','name','nomor_induk')->where('pin', '<>', null)
+        ->orderBy('name','ASC')->get();
+
+        return view('scan-log.result-late',
+        compact('users',
+        'start_date',
+        'end_date'))
+        ->with('i');
     }
 }

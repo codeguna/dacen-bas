@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                            with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                    with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -169,7 +169,11 @@
                 request()->is('admin/scan-log/check_attendances') ||
                 request()->is('admin/scan-log/check_attendances/*') ||
                 request()->is('admin/scan-log/check_attendances_filter') ||
-                request()->is('admin/scan-log/check_attendances_filter/*')
+                request()->is('admin/scan-log/check_attendances_filter/*') ||
+                request()->is('admin/scan-log/check-late') ||
+                request()->is('admin/scan-log/check-late/*') ||
+                request()->is('admin/scan-log/result-late') ||
+                request()->is('admin/scan-log/result-late/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -191,7 +195,11 @@
                     request()->is('admin/scan-log/check_attendances') ||
                     request()->is('admin/scan-log/check_attendances/*') ||
                     request()->is('admin/scan-log/check_attendances_filter') ||
-                    request()->is('admin/scan-log/check_attendances_filter/*')
+                    request()->is('admin/scan-log/check_attendances_filter/*') ||
+                    request()->is('admin/scan-log/check-late') ||
+                    request()->is('admin/scan-log/check-late/*') ||
+                    request()->is('admin/scan-log/result-late') ||
+                    request()->is('admin/scan-log/result-late/*')
                         ? 'active'
                         : '' }}">
                     <i class="nav-icon fa fa-history" aria-hidden="true"></i>
@@ -255,6 +263,13 @@
                             class="nav-link {{ request()->is('admin/scan-log/check_attendances') || request()->is('admin/scan-log/check_attendances/*') || request()->is('admin/scan-log/check_attendances_filter') || request()->is('admin/scan-log/check_attendances_filter/*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-puzzle-piece"></i>
                             <p>Kelengkapan Presensi</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.scan-log.selectLate') }}"
+                            class="nav-link {{ request()->is('admin/scan-log/check-late') || request()->is('admin/scan-log/check-late/*') || request()->is('admin/scan-log/result-late/*') || request()->is('admin/scan-log/result-late') ? 'active' : '' }}">
+                            <i class="fa fa-user-times nav-icon" aria-hidden="true"></i>
+                            <p>Presensi Terlambat</p>
                         </a>
                     </li>
                 </ul>

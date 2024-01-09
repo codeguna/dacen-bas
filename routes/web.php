@@ -118,4 +118,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('/willingness/update_time/','WillingnessController@updateTime')->name('willingness.updateTime');
     Route::post('/willingness/import/','ImportExcelController@importWillingness')->name('willingness.import');
     //End Route Willingness
+    //Route Check Late
+    Route::get('/scan-log/check-late','ScanlogController@selectPeriodLate')->name('scan-log.selectLate');
+    Route::get('/scan-log/result-late','ScanlogController@resultLate')->name('scan-log.resultLate');
+    //End Route Check Late
 });
