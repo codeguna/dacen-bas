@@ -456,11 +456,13 @@
                                         }
                                     @endphp
                                     <tr>
-                                        @if ($times >= $resultLateTime)
+                                        @if ($resultLateTime == null)
+                                        @elseif ($times >= $resultLateTime)
                                             <td>
                                                 {{ $late->date }}
                                             </td>
                                             <td>
+                                                <i class="fa fa-times text-danger" aria-hidden="true"></i>
                                                 {{ $times }}
                                             </td>
                                         @else
