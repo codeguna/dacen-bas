@@ -98,6 +98,7 @@
                                                         ->where(function ($query) use ($date) {
                                                             $query->whereDate('scan', '=', $date);
                                                         })
+                                                        ->orderBy('scan', 'ASC')
                                                         ->first();
                                                     $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
                                                     $days = \Carbon\Carbon::parse($firstScan->scan)->format('l');

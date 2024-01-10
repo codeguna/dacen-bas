@@ -338,7 +338,7 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="row">
+        <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -363,6 +363,7 @@
                                             ->where(function ($query) use ($dates) {
                                                 $query->whereDate('scan', '=', $dates);
                                             })
+                                            ->orderBy('scan', 'ASC')
                                             ->first();
                                         $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
                                         $days = \Carbon\Carbon::parse($firstScan->scan)->format('l');
@@ -423,7 +424,7 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
     </div>
 @endsection
 @section('scripts')
