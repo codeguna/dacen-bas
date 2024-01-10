@@ -53,7 +53,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Nama - NIP/NIDN</th>
-                                    <th>Divisi</th>
+                                    <th>Departemen</th>
                                     <th>Waktu Terlambat</th>
                                 </tr>
                             </thead>
@@ -143,7 +143,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Nama</th>
-                                    <th>Divisi</th>
+                                    <th>Departemen</th>
                                     <th>Waktu Terlambat</th>
                                 </tr>
                             </tfoot>
