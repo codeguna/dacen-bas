@@ -356,67 +356,6 @@
                             </thead>
                             <tbody>
                                 @foreach ($scan_logs_late as $late)
-                                    {{-- @php
-                                        $dates = \Carbon\Carbon::parse($late->date)->format('d-m-Y');
-
-                                        $firstScan = \App\Models\ScanLog::where('pin', '153')
-                                            ->where(function ($query) use ($dates) {
-                                                $query->whereDate('scan', '=', $dates);
-                                            })
-                                            ->first();
-
-                                        $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
-                                        $days = \Carbon\Carbon::parse($late->date)->format('l');
-                                        if ($days == 'Monday') {
-                                            $dayCode = 1;
-                                        } elseif ($days == 'Tuesday') {
-                                            $dayCode = 2;
-                                        } elseif ($days == 'Wednesday') {
-                                            $dayCode = 3;
-                                        } elseif ($days == 'Thursday') {
-                                            $dayCode = 4;
-                                        } elseif ($days == 'Friday') {
-                                            $dayCode = 5;
-                                        } elseif ($days == 'Saturday') {
-                                            $dayCode = 6;
-                                        }
-                                        $pin = Auth::user()->pin;
-                                        $now = \Carbon\Carbon::parse($late->date)->format('Y-m-d');
-                                        //Willingness Logic
-                                        $lateTime = \App\Models\Willingness::where('pin', $pin)
-                                            ->where('day_code', $dayCode)
-                                            ->where(function ($query) use ($now) {
-                                                $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
-                                            })
-                                            ->first();
-                                        if (!empty($lateTime)) {
-                                            $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s', $lateTime->time_of_entry)
-                                                ->addMinutes(11)
-                                                ->format('H:i:s');
-                                        } else {
-                                            $resultLateTime = null;
-                                        }
-
-                                        //End of Willingess Logic
-
-                                    @endphp
-                                    <tr>
-                                        @if ($resultLateTime == null)
-                                        @else
-                                            @if ($times >= $resultLateTime)
-                                                <td>
-                                                    {{ $days }} |
-                                                    {{ $dates }}
-                                                </td>
-                                                <td>
-                                                    <span class="badge bg-danger">
-                                                        {{ $times }}
-                                                    </span>
-                                                </td>
-                                            @else
-                                            @endif
-                                        @endif
-                                    </tr> --}}
                                     @php
                                         $pin = Auth::user()->pin;
                                         $dates = \Carbon\Carbon::parse($late->date);
@@ -462,8 +401,8 @@
                                                 {{ $late->date }}
                                             </td>
                                             <td>
-                                                <i class="fa fa-times text-danger" aria-hidden="true"></i>
-                                                {{ $times }}
+                                                <span><i class="fa fa-times text-danger" aria-hidden="true"></i>
+                                                    {{ $times }}</span>
                                             </td>
                                         @else
                                         @endif
@@ -477,8 +416,10 @@
                             </tfoot>
                             </tbody>
                         </table>
-                        {{-- <hr>
-                        <strong>Jumlah Telat: </strong> --}}
+                        <hr>
+                        <strong>
+                            <p id="count"></p>
+                        </strong>
                     </div>
                 </div>
             </div>
@@ -500,5 +441,14 @@
                 this.submit(); // Kirim formulir jika valid
             }
         });
+        const lateTable = document.getElementById('late');
+        const span = lateTable.getElementsByTagName('span');
+
+        // Hitung jumlah elemen <i>
+        const iconCount = span.length;
+
+        // Tampilkan jumlahnya dalam sebuah paragraf HTML
+        const countParagraph = document.getElementById('count');
+        countParagraph.textContent = `Jumlah Terlambat: ${iconCount}`;
     </script>
 @endsection
