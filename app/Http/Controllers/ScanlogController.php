@@ -724,7 +724,7 @@ class ScanlogController extends Controller
         $start_date = Carbon::parse($request->start_date)->format('Y-m-d');
         $end_date = Carbon::parse($request->end_date)->format('Y-m-d');
 
-        $users    = User::select('pin','position','name','nomor_induk')->where('pin', '<>', null)
+        $users    = User::select('pin','position','name','nomor_induk')->where('pin', '<>', null)->where('pin', '<>',50)->where('pin', '<>', 38)
         ->orderBy('name','ASC')->get();
 
         return view('scan-log.result-late',

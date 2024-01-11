@@ -90,6 +90,7 @@
                                                     })
                                                     ->groupBy('date')
                                                     ->get();
+                                                $increments = 0;
                                             @endphp
                                             @foreach ($scanlogs as $log)
                                                 @php
@@ -132,7 +133,13 @@
                                                 @endphp
 
                                                 @if ($times >= $resultLateTime)
-                                                    {{ $days }} | {{ $log->date }} | {{ $times }}<br>
+                                                    @php
+                                                        $increments++;
+                                                    @endphp
+
+                                                    <span>{{ $increments }}. {{ $days }} - {{ $log->date }}
+                                                        |
+                                                        {{ $times }}</span> <br>
                                                 @else
                                                 @endif
                                             @endforeach

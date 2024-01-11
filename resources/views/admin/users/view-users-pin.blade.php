@@ -57,10 +57,18 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a class="btn btn-xs btn-warning w-100 text-bold"
-                                                href="{{ route('admin.user.set-pin', $user->id) }}">
-                                                <i class="fa fa-cogs" aria-hidden="true"></i> Atur PIN
-                                            </a>
+                                            <div class="btn-toolbar" role="toolbar">
+                                                <div class="btn-group" role="group">
+                                                    <a class="btn btn-xs btn-warning w-100 text-bold"
+                                                        href="{{ route('admin.user.set-pin', $user->id) }}">
+                                                        <i class="fa fa-cogs" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="btn btn-xs btn-danger w-100 text-bold"
+                                                        href="{{ route('admin.user.set-pin', $user->id) }}">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
