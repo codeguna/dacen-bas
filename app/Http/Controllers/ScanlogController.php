@@ -288,7 +288,6 @@ class ScanlogController extends Controller
 
         return response()->json(['status' => 'success', 'data' => 'data berhasil di simpan : ' . $a]);
     }
-
     public function myAttendances(){
 
         $pin = Auth::user()->pin;
@@ -307,7 +306,7 @@ class ScanlogController extends Controller
 
         $endDate = Carbon::now()->startOfMonth()->addDays($endDateDay - 1);
         
-        //$today  = '2023/10/21';
+        
         $user = Auth::user(); // Assuming you are using Laravel's built-in authentication
         $id = $user->pin;
         $checkWillingness = Willingness::where('pin',$id)->first();
@@ -315,62 +314,71 @@ class ScanlogController extends Controller
         if ($user->pin === null || empty($checkWillingness)) {
             return redirect()->route('admin.myprofile')->with('warning','Silahkan hubungi Admin/BAS untuk melakukan input PIN atau Set Jam Kesediaan');
         }
-        //Kesediaan
-        // $getWillingness     = Willingness::where('user_id',$user->id)->where('type',0)->first();
+        //Get Willingness
+        $today          = date('Y-m-d');
+        $dayName        = date('l');
+        if ($dayName == 'Monday') {
+            $dayCode = 1;
+        } elseif ($dayName == 'Tuesday') {
+            $dayCode = 2;
+        } elseif ($dayName == 'Wednesday') {
+            $dayCode = 3;
+        } elseif ($dayName == 'Thursday') {
+            $dayCode = 4;
+        } elseif ($dayName == 'Friday') {
+            $dayCode = 5;
+        } elseif ($dayName == 'Saturday') {
+            $dayCode = 6;
+        }
+
+        $getWillingnessTime = Willingness::select('time_of_entry','time_of_return')
+                            ->where('pin', $id)
+                            ->where('day_code', $dayCode)
+                            ->where('start_date','<=',$today)
+                            ->where('end_date','>=',$today)
+                            ->first();
+
+        $goHomeTime          = $getWillingnessTime->time_of_return;
+        $end_time            = '22:00:00';
+        $firstScanStart      = Carbon::parse($getWillingnessTime->time_of_entry)->format('H:i:s');
+        $firstScanEnd        = Carbon::parse($getWillingnessTime->time_of_entry)->addMinutes(180)->format('H:i:s');
+
+        $secondScanStart     = Carbon::parse($firstScanEnd)->format('H:i:s');
+        $secondScanEnd       = Carbon::parse($secondScanStart)->addMinutes(60)->format('H:i:s');
+
+        $thirdScanStart      = Carbon::parse($secondScanEnd)->addMinutes(60)->format('H:i:s');
+        $thirdScanEnd        = Carbon::parse($thirdScanStart)->addMinutes(60)->format('H:i:s');
+
+        $fourthScanStart     = Carbon::parse($thirdScanEnd)->format('H:i:s');
         
-        // if($getWillingness == null){
-        //     return redirect()->route('admin.scan-logs.create')->with('warning','Hubungi BAS, jam kesediaan masih kosong');
-        // }
-        // $kesediaanSenin     = $getWillingness->monday;
-        // $kesediaanSelasa    = $getWillingness->tuesday;
-        // $kesediaanRabu      = $getWillingness->wednesday;
-        // $kesediaanKamis     = $getWillingness->thursday;
-        // $kesediaanJumat     = $getWillingness->friday;
-        // $kesediaanSabtu     = $getWillingness->saturday;
-
-        // $waktuSenin         = Carbon::createFromFormat('H:i:s', $kesediaanSenin);
-        // $waktuSelasa        = Carbon::createFromFormat('H:i:s', $kesediaanSelasa);
-        // $waktuRabu          = Carbon::createFromFormat('H:i:s', $kesediaanRabu);
-        // $waktuKamis         = Carbon::createFromFormat('H:i:s', $kesediaanKamis);
-        // $waktuJumat         = Carbon::createFromFormat('H:i:s', $kesediaanJumat);
-        // $waktuSabtu         = Carbon::createFromFormat('H:i:s', $kesediaanSabtu);
-
-        // $waktuSenin->addMinutes(11);
-        // $waktuSelasa->addMinutes(11);
-        // $waktuRabu->addMinutes(11);
-        // $waktuKamis->addMinutes(11);
-        // $waktuJumat->addMinutes(11);
-        // $waktuSabtu->addMinutes(11);
-
-        // $hasilSenin     = $waktuSenin->format('H:i:s');
-        // $hasilSelasa    = $waktuSelasa->format('H:i:s');
-        // $hasilRabu      = $waktuRabu->format('H:i:s');
-        // $hasilKamis     = $waktuKamis->format('H:i:s');
-        // $hasilJumat     = $waktuJumat->format('H:i:s');
-        // $hasilSabtu     = $waktuSabtu->format('H:i:s');         
-        //End Kesediaan
+        $firstPhase          = $firstScanStart .' - '. $firstScanEnd;
+        $secondPhase         = $secondScanStart .' - '. $secondScanEnd;
+        $thirdPhase          = $thirdScanStart .' - '. $thirdScanEnd;
+        $fourthPhase         = $goHomeTime .' - '. 'Selesai';        
+        
+        //End of Willingness
         $scan1 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
-            ->whereTime('scan', '>=', '05:00:00')
-            ->whereTime('scan', '<=', '10:59:59')
+            ->whereTime('scan', '>=', $firstScanStart)
+            ->whereTime('scan', '<=', $firstScanEnd)
             ->first();
 
         $scan2 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
-            ->whereTime('scan', '>=', '11:00:00')
-            ->whereTime('scan', '<=', '12:59:59')
+            ->whereTime('scan', '>=',  $secondScanStart)
+            ->whereTime('scan', '<=', $secondScanEnd )
             ->first();
 
         $scan3 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
-            ->whereTime('scan', '>=', '13:00:00')
-            ->whereTime('scan', '<=', '13:59:59')
+            ->whereTime('scan', '>=', $thirdScanStart)
+            ->whereTime('scan', '<=', $thirdScanEnd  )
             ->first();
 
         $scan4 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
-            ->whereTime('scan', '>=', '14:00:00')
-            ->whereTime('scan', '<=', '23:00:00')
+            ->whereTime('scan', '>=', $fourthScanStart)
+            ->whereTime('scan', '<=', $end_time)
             ->latest('scan')
             ->first();
 
@@ -400,14 +408,11 @@ class ScanlogController extends Controller
         'scan3',
         'scan4',
         'scan_logs',
-        'scan_logs_late'
-        // 'hasilSenin',
-        // 'hasilSelasa',
-        // 'hasilRabu',
-        // 'hasilKamis',
-        // 'hasilJumat',
-        // 'hasilSabtu',
-        // 'getWillingness'
+        'scan_logs_late',
+        'firstPhase',
+        'secondPhase',
+        'thirdPhase',
+        'fourthPhase'
         ))
         ->with('i');
     }

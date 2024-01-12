@@ -18,10 +18,11 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Scan 1</th>
-                                        <th>Scan 2</th>
-                                        <th>Scan 3</th>
-                                        <th>Scan 4</th>
+                                        <th>
+                                            Scan 1 <br> <small>({{ $firstPhase }})</small> </th>
+                                        <th>Scan 2 <br> <small>({{ $secondPhase }})</small> </th>
+                                        <th>Scan 3 <br> <small>({{ $thirdPhase }})</small> </th>
+                                        <th>Scan 4 <br> <small>({{ $fourthPhase }})</small> </th>
                                     </tr>
                                 </thead>
                                 <tbody>
