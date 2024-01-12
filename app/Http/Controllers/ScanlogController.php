@@ -359,7 +359,7 @@ class ScanlogController extends Controller
         //End of Willingness
         $scan1 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
-            ->whereTime('scan', '>=', $firstScanStart)
+            ->whereTime('scan', '>=', '05:00:00')
             ->whereTime('scan', '<=', $firstScanEnd)
             ->first();
 
