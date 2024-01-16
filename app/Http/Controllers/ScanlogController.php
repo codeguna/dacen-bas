@@ -69,7 +69,45 @@ class ScanlogController extends Controller
             ->whereDate('scan', $tanggal_hari_ini)
             ->get();
         // return $scan_logs;
-        return view('scan-log.presensiUser', compact('scan_logs'));
+
+        //get willingness
+        $today          = date('Y-m-d');
+        $dayName        = date('l');
+
+        if ($dayName == 'Monday') {
+            $dayCode = 1;
+        } elseif ($dayName == 'Tuesday') {
+            $dayCode = 2;
+        } elseif ($dayName == 'Wednesday') {
+            $dayCode = 3;
+        } elseif ($dayName == 'Thursday') {
+            $dayCode = 4;
+        } elseif ($dayName == 'Friday') {
+            $dayCode = 5;
+        } elseif ($dayName == 'Saturday') {
+            $dayCode = 6;
+        }
+
+        $getWillingnessTime = Willingness::select('time_of_entry','time_of_return')
+                            ->where('pin', $pin_pengguna)
+                            ->where('day_code', $dayCode)
+                            ->where('start_date','<=',$today)
+                            ->where('end_date','>=',$today)
+                            ->first();
+        $getScan            = Carbon::parse($getWillingnessTime->time_of_entry)->format('H:i:s');
+        $scanMinute         = Carbon::parse($getWillingnessTime->time_of_entry)->format('i');
+        $scan2              = Carbon::parse($getScan)->addMinutes(180)->format('H');
+        $scan2End           = Carbon::parse($getScan)->addMinutes(240)->format('H');
+        $scan3              = Carbon::parse($getScan)->addMinutes(300)->format('H');
+        $scan3End           = Carbon::parse($getScan)->addMinutes(360)->format('H');               
+        //end get willingness
+        return view('scan-log.presensiUser', compact('scan_logs',
+        'scanMinute',
+        'scan2',
+        'scan2End',
+        'scan3',
+        'scan3End'
+));
     }
 
 
@@ -341,13 +379,18 @@ class ScanlogController extends Controller
         $goHomeTime          = $getWillingnessTime->time_of_return;
         $end_time            = '22:00:00';
         $firstScanStart      = Carbon::parse($getWillingnessTime->time_of_entry)->format('H:i:s');
-        $firstScanEnd        = Carbon::parse($getWillingnessTime->time_of_entry)->addMinutes(180)->format('H:i:s');
+        // $firstScanEnd        = Carbon::parse($getWillingnessTime->time_of_entry)->addMinutes(180)->format('H:i:s');
+        $firstScanEnd        = '10:59:59';
 
-        $secondScanStart     = Carbon::parse($firstScanEnd)->format('H:i:s');
-        $secondScanEnd       = Carbon::parse($secondScanStart)->addMinutes(60)->format('H:i:s');
+        $secondScanStart     = '11:00:00';
+        $secondScanEnd       = '11:59:59';
+        // $secondScanStart     = Carbon::parse($firstScanEnd)->format('H:i:s');
+        // $secondScanEnd       = Carbon::parse($secondScanStart)->addMinutes(60)->format('H:i:s');
 
-        $thirdScanStart      = Carbon::parse($secondScanEnd)->addMinutes(60)->format('H:i:s');
-        $thirdScanEnd        = Carbon::parse($thirdScanStart)->addMinutes(60)->format('H:i:s');
+        $thirdScanStart      = '13:00:00';
+        $thirdScanEnd        = '13:59:59';
+        // $thirdScanStart      = Carbon::parse($secondScanEnd)->addMinutes(60)->format('H:i:s');
+        // $thirdScanEnd        = Carbon::parse($thirdScanStart)->addMinutes(60)->format('H:i:s');
 
         $fourthScanStart     = Carbon::parse($thirdScanEnd)->format('H:i:s');
         

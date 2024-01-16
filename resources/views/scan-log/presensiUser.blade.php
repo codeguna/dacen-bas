@@ -20,6 +20,12 @@
                                 <i class="fa fa-info-circle" aria-hidden="true"></i> Tombol Presensi aktif di jam:
                             </strong>
                             <ul>
+                                {{-- <li>
+                                    {{ $scan2 }}:{{ $scanMinute }} - {{ $scan2End }}:{{ $scanMinute }}
+                                </li>
+                                <li>
+                                    {{ $scan3 }}:{{ $scanMinute }} - {{ $scan3End }}:{{ $scanMinute }}
+                                </li> --}}
                                 <li>
                                     11:00 - 12:00
                                 </li>
@@ -94,6 +100,24 @@
 
             return isButtonEnabled;
         }
+
+        // function isButtonActive() {
+        //     const now = new Date();
+        //     const dayOfWeek = now.getDay(); // Hari dalam format 0 (Minggu) hingga 6 (Sabtu)
+        //     const hour = now.getHours();
+        //     const minutes = now.getMinutes();
+
+        //     // Aktifkan tombol pada Senin hingga Sabtu antara jam 11:30 - 12:45
+        //     const isButtonEnabled = dayOfWeek >= 1 && dayOfWeek <= 6 &&
+        //         (hour === {{ $scan2 }} && minutes >= {{ $scanMinute }}) || (hour === {{ $scan2End }} &&
+        //             minutes <= {{ $scanMinute }}) || (hour === {{ $scan3 }} && minutes >=
+        //             {{ $scanMinute }}) &&
+        //         (
+        //             hour === {{ $scan3End }} &&
+        //             minutes <= {{ $scanMinute }});
+
+        //     return isButtonEnabled;
+        // }
 
         function updateButtonStatus() {
             const button = document.getElementById('presensiButton');

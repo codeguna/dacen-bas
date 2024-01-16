@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:image" content="{{ asset('images/thumb.jpg') }}" />
     <title>{{ ENV('APP_NAME') }} | Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -46,14 +47,16 @@
                                         type="password" name="password" id="password" placeholder="********">
                                 </div>
                                 <button name="login" id="login" class="btn btn-block login-btn mb-4"
-                                    type="submit">Login</button>
+                                    type="submit"><i class="fa fa-lock" aria-hidden="true"></i> Login</button>
                             </form>
-                            <p class="login-card-footer-text">Mulai Presensi? <a href="{{ url('auth/google') }}"
-                                    class="text-reset">
-                                    <b>Klik/Tap Disini!</b> </a>
+                            <p class="login-card-footer-text">
+                                Mulai
+                                Presensi? <a href="{{ url('auth/google') }}" class="text-reset">
+                                    <b><img src="https://cdn-icons-png.flaticon.com/512/300/300221.png"
+                                            style="height: 20px"> Klik/Tap Disini!</b> </a>
                             </p>
                             <nav class="login-card-footer-nav">
-                                <a href="#!"> Copyright</a>
+                                <a href="#!">Copyright</a>
                                 <a href="https://www.linkedin.com/in/gunadhip/">
                                     <strong>
                                         MIS LPKIA © {{ date('Y') }}</strong>
