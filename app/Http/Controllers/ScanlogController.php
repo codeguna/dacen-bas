@@ -27,7 +27,7 @@ class ScanlogController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('bas_menu')) {
+        if (!Gate::allows('bas_menu')) {
             return abort(401);
         }
         $today = now()->format('Y-m-d'); // Get today's date in 'Y-m-d' format
@@ -57,12 +57,12 @@ class ScanlogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {       
+    {
         $pin_pengguna = auth()->user()->pin;
         $tanggal_hari_ini = Carbon::now()->toDateString();
 
         if ($pin_pengguna === null) {
-            return redirect()->route('admin.myprofile')->with('warning','Silahkan hubungi Admin/BAS untuk melakukan input PIN');
+            return redirect()->route('admin.myprofile')->with('warning', 'Silahkan hubungi Admin/BAS untuk melakukan input PIN');
         }
         // Menggunakan Eloquent untuk mengambil data scan_logs
         $scan_logs = ScanLog::where('pin', $pin_pengguna)
@@ -88,26 +88,27 @@ class ScanlogController extends Controller
             $dayCode = 6;
         }
 
-        $getWillingnessTime = Willingness::select('time_of_entry','time_of_return')
-                            ->where('pin', $pin_pengguna)
-                            ->where('day_code', $dayCode)
-                            ->where('start_date','<=',$today)
-                            ->where('end_date','>=',$today)
-                            ->first();
+        $getWillingnessTime = Willingness::select('time_of_entry', 'time_of_return')
+            ->where('pin', $pin_pengguna)
+            ->where('day_code', $dayCode)
+            ->where('start_date', '<=', $today)
+            ->where('end_date', '>=', $today)
+            ->first();
         $getScan            = Carbon::parse($getWillingnessTime->time_of_entry)->format('H:i:s');
         $scanMinute         = Carbon::parse($getWillingnessTime->time_of_entry)->format('i');
         $scan2              = Carbon::parse($getScan)->addMinutes(180)->format('H');
         $scan2End           = Carbon::parse($getScan)->addMinutes(240)->format('H');
         $scan3              = Carbon::parse($getScan)->addMinutes(300)->format('H');
-        $scan3End           = Carbon::parse($getScan)->addMinutes(360)->format('H');               
+        $scan3End           = Carbon::parse($getScan)->addMinutes(360)->format('H');
         //end get willingness
-        return view('scan-log.presensiUser', compact('scan_logs',
-        'scanMinute',
-        'scan2',
-        'scan2End',
-        'scan3',
-        'scan3End'
-));
+        return view('scan-log.presensiUser', compact(
+            'scan_logs',
+            'scanMinute',
+            'scan2',
+            'scan2End',
+            'scan3',
+            'scan3End'
+        ));
     }
 
 
@@ -326,7 +327,8 @@ class ScanlogController extends Controller
 
         return response()->json(['status' => 'success', 'data' => 'data berhasil di simpan : ' . $a]);
     }
-    public function myAttendances(){
+    public function myAttendances()
+    {
 
         $pin = Auth::user()->pin;
         // Hitung startDate (tanggal 26 bulan lalu)
@@ -343,14 +345,14 @@ class ScanlogController extends Controller
         $endDateDay = $lastMonthDays == 31 ? 26 : $endDateDay;
 
         $endDate = Carbon::now()->startOfMonth()->addDays($endDateDay - 1);
-        
-        
+
+
         $user = Auth::user(); // Assuming you are using Laravel's built-in authentication
         $id = $user->pin;
-        $checkWillingness = Willingness::where('pin',$id)->first();
+        $checkWillingness = Willingness::where('pin', $id)->first();
 
         if ($user->pin === null || empty($checkWillingness)) {
-            return redirect()->route('admin.myprofile')->with('warning','Silahkan hubungi Admin/BAS untuk melakukan input PIN atau Set Jam Kesediaan');
+            return redirect()->route('admin.myprofile')->with('warning', 'Silahkan hubungi Admin/BAS untuk melakukan input PIN atau Set Jam Kesediaan');
         }
         //Get Willingness
         $today          = date('Y-m-d');
@@ -369,12 +371,12 @@ class ScanlogController extends Controller
             $dayCode = 6;
         }
 
-        $getWillingnessTime = Willingness::select('time_of_entry','time_of_return')
-                            ->where('pin', $id)
-                            ->where('day_code', $dayCode)
-                            ->where('start_date','<=',$today)
-                            ->where('end_date','>=',$today)
-                            ->first();
+        $getWillingnessTime = Willingness::select('time_of_entry', 'time_of_return')
+            ->where('pin', $id)
+            ->where('day_code', $dayCode)
+            ->where('start_date', '<=', $today)
+            ->where('end_date', '>=', $today)
+            ->first();
 
         $goHomeTime          = $getWillingnessTime->time_of_return;
         $end_time            = '22:00:00';
@@ -393,12 +395,12 @@ class ScanlogController extends Controller
         // $thirdScanEnd        = Carbon::parse($thirdScanStart)->addMinutes(60)->format('H:i:s');
 
         $fourthScanStart     = Carbon::parse($thirdScanEnd)->format('H:i:s');
-        
-        $firstPhase          = $firstScanStart .' - '. $firstScanEnd;
-        $secondPhase         = $secondScanStart .' - '. $secondScanEnd;
-        $thirdPhase          = $thirdScanStart .' - '. $thirdScanEnd;
-        $fourthPhase         = $goHomeTime .' - '. 'Selesai';        
-        
+
+        $firstPhase          = $firstScanStart . ' - ' . $firstScanEnd;
+        $secondPhase         = $secondScanStart . ' - ' . $secondScanEnd;
+        $thirdPhase          = $thirdScanStart . ' - ' . $thirdScanEnd;
+        $fourthPhase         = $goHomeTime . ' - ' . 'Selesai';
+
         //End of Willingness
         $scan1 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
@@ -409,13 +411,13 @@ class ScanlogController extends Controller
         $scan2 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
             ->whereTime('scan', '>=',  $secondScanStart)
-            ->whereTime('scan', '<=', $secondScanEnd )
+            ->whereTime('scan', '<=', $secondScanEnd)
             ->first();
 
         $scan3 = ScanLog::where('pin', $pin)
             ->whereDate('scan', today())
             ->whereTime('scan', '>=', $thirdScanStart)
-            ->whereTime('scan', '<=', $thirdScanEnd  )
+            ->whereTime('scan', '<=', $thirdScanEnd)
             ->first();
 
         $scan4 = ScanLog::where('pin', $pin)
@@ -438,29 +440,32 @@ class ScanlogController extends Controller
         //     ->groupBy('date')
         //     ->get();
 
-            $scan_logs_late = ScanLog::selectRaw('DATE(scan) as date')->where('pin', $pin)
-            ->whereBetween('scan', [$startDate, $endDate])            
+        $scan_logs_late = ScanLog::selectRaw('DATE(scan) as date')->where('pin', $pin)
+            ->whereBetween('scan', [$startDate, $endDate])
             ->groupBy('date')
             ->orderBy('date', 'ASC')
             ->get();
-            
-        return view('admin.users.myattendances', 
-        compact(
-        'scan1',
-        'scan2',
-        'scan3',
-        'scan4',
-        'scan_logs',
-        'scan_logs_late',
-        'firstPhase',
-        'secondPhase',
-        'thirdPhase',
-        'fourthPhase'
-        ))
-        ->with('i');
+
+        return view(
+            'admin.users.myattendances',
+            compact(
+                'scan1',
+                'scan2',
+                'scan3',
+                'scan4',
+                'scan_logs',
+                'scan_logs_late',
+                'firstPhase',
+                'secondPhase',
+                'thirdPhase',
+                'fourthPhase'
+            )
+        )
+            ->with('i');
     }
 
-    public function myAttendancesFilter(Request $request){
+    public function myAttendancesFilter(Request $request)
+    {
         $pin = Auth::user()->pin;
         $start_date = $request->start_date;
         $end_date = $request->end_date;
@@ -491,115 +496,116 @@ class ScanlogController extends Controller
             ->first();
 
         $scan_logs = ScanLog::where('pin', $pin)
-        ->whereDate('scan', '>=', $start_date)
-        ->whereDate('scan', '<=', $end_date)
-            ->orderBy('scan','ASC')
+            ->whereDate('scan', '>=', $start_date)
+            ->whereDate('scan', '<=', $end_date)
+            ->orderBy('scan', 'ASC')
             ->get();
 
-        return view('admin.users.myattendances', compact('scan1','scan2','scan3','scan4','scan_logs'))->with('i');
+        return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs'))->with('i');
     }
 
     public function requestAttendances()
     {
         $user                   = Auth::user()->id;
-        $request_attendances    = AttendancesRequest::where('user_id',$user)->orderBy('created_at','ASC')->get();
-        $activities             = Activity::pluck('id','name');
+        $request_attendances    = AttendancesRequest::where('user_id', $user)->orderBy('created_at', 'ASC')->get();
+        $activities             = Activity::pluck('id', 'name');
 
-        return view('scan-log.requestAttendances',compact('request_attendances','activities'))->with('i');
+        return view('scan-log.requestAttendances', compact('request_attendances', 'activities'))->with('i');
     }
 
     public function requestAttendanceStore(Request $request)
-{
-    $validator = Validator::make($request->all(), AttendancesRequest::$rules);
-    if ($validator->fails()) {
-        return redirect()
-            ->back()
-            ->withErrors($validator)
-            ->withInput()
-            ->with('error', 'Periksa kembali format file anda (.png, .jpg, .jpeg) dan pastikan file tidak melebihi 3MB');
+    {
+        $validator = Validator::make($request->all(), AttendancesRequest::$rules);
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali format file anda (.png, .jpg, .jpeg) dan pastikan file tidak melebihi 3MB');
+        }
+
+        $id             = Auth::user()->id;
+        $photo_file     = $request->file('photo');
+        $activity_id    = $request->activity_id;
+        $keterangan     = $request->keterangan;
+        $status         = 0;
+        $user_id        = $id;
+        $userIP         = request()->ip();
+
+        // Compress the image
+        $compressedImage = Image::make($photo_file)
+            ->encode('jpg', 75) // Change the format and quality as needed
+            ->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+
+        $name_file = time() . "_" . $photo_file->getClientOriginalName();
+        $tujuan_upload = 'data_photo_pengajuan';
+        $compressedImage->save(public_path($tujuan_upload . '/' . $name_file)); // Save the compressed image
+
+        $attendances_request = AttendancesRequest::create([
+            'user_id'       => $user_id,
+            'activity_id'   => $activity_id,
+            'keterangan'    => $keterangan,
+            'status'        => $status,
+            'photo'         => $name_file,
+            'ip_scan'       => $userIP,
+            'created_at'    => now()
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Berhasil menambahkan data Pengajuan, silahkan menunggu untuk persetujuan dari BAS.');
     }
 
-    $id             = Auth::user()->id;
-    $photo_file     = $request->file('photo');
-    $activity_id    = $request->activity_id;
-    $keterangan     = $request->keterangan;
-    $status         = 0;
-    $user_id        = $id;
-    $userIP         = request()->ip();
-    
-    // Compress the image
-    $compressedImage = Image::make($photo_file)
-        ->encode('jpg', 75) // Change the format and quality as needed
-        ->resize(800, null, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
+    public function viewRequestAttendances()
+    {
+        $request_attendances    = AttendancesRequest::orderBy('status', 'ASC')->orderBy('created_at', 'ASC')->get();
 
-    $name_file = time() . "_" . $photo_file->getClientOriginalName();
-    $tujuan_upload = 'data_photo_pengajuan';
-    $compressedImage->save(public_path($tujuan_upload . '/' . $name_file)); // Save the compressed image
-
-    $attendances_request = AttendancesRequest::create([
-        'user_id'       => $user_id,
-        'activity_id'   => $activity_id,
-        'keterangan'    => $keterangan,
-        'status'        => $status,
-        'photo'         => $name_file,
-        'ip_scan'       => $userIP,
-        'created_at'    => now()
-    ]);
-
-    return redirect()->back()
-        ->with('success', 'Berhasil menambahkan data Pengajuan, silahkan menunggu untuk persetujuan dari BAS.');
-}
-
-    public function viewRequestAttendances(){
-        $request_attendances    = AttendancesRequest::orderBy('status','ASC')->orderBy('created_at','ASC')->get();
-
-        return view('scan-log.viewRequestAttendances',compact('request_attendances'))->with('i');
+        return view('scan-log.viewRequestAttendances', compact('request_attendances'))->with('i');
     }
-    public function filterRequestAttendances(Request $request){
+    public function filterRequestAttendances(Request $request)
+    {
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
         $request_attendances    = AttendancesRequest::whereDate('created_at', '>=', $start_date)
-        ->whereDate('created_at', '<=', $end_date)
-        ->orderBy('status','ASC')
-        ->orderBy('created_at','ASC')
-        ->latest()
-        ->get();
+            ->whereDate('created_at', '<=', $end_date)
+            ->orderBy('status', 'ASC')
+            ->orderBy('created_at', 'ASC')
+            ->latest()
+            ->get();
 
-        return view('scan-log.viewRequestAttendances',compact('request_attendances'))->with('i');
+        return view('scan-log.viewRequestAttendances', compact('request_attendances'))->with('i');
     }
 
     public function processRequest(Request $request, $id)
-{
-    $attendances_request    = AttendancesRequest::find($id);
-    $getId                  = $attendances_request->user_id;
-    $status                 = $request->status;
-    $scan                   = $request->scan;
-    $getPin                 = User::find($getId);
-    $pin                    = $getPin->pin;
-    $userIP                 = $attendances_request->ip_scan;
+    {
+        $attendances_request    = AttendancesRequest::find($id);
+        $getId                  = $attendances_request->user_id;
+        $status                 = $request->status;
+        $scan                   = $request->scan;
+        $getPin                 = User::find($getId);
+        $pin                    = $getPin->pin;
+        $userIP                 = $attendances_request->ip_scan;
 
-    $scanTime               = Carbon::parse($scan);
-    $time                   = $scanTime->format('H:i:s');
-    $cutoffTime             = '15:59:00';
+        $scanTime               = Carbon::parse($scan);
+        $time                   = $scanTime->format('H:i:s');
+        $cutoffTime             = '15:59:00';
 
-    if ($time <= $cutoffTime) {
-        $scan_log = ScanLog::create([
-            'pin' => $pin,
-            'scan' => $scan,
-            'verify' => 1,
-            'status_scan' => 0,
-            'ip_scan' => $userIP,
-            'created_at' => now(),
-        ]);
-        $attendances_request->update([
-            'status' => $status,
-        ]); 
-    }
-        else{
+        if ($time <= $cutoffTime) {
+            $scan_log = ScanLog::create([
+                'pin' => $pin,
+                'scan' => $scan,
+                'verify' => 1,
+                'status_scan' => 0,
+                'ip_scan' => $userIP,
+                'created_at' => now(),
+            ]);
+            $attendances_request->update([
+                'status' => $status,
+            ]);
+        } else {
 
             $scan_log_extra = ScanLogsExtra::create([
                 'pin' => $pin,
@@ -621,16 +627,16 @@ class ScanlogController extends Controller
 
             $attendances_request->update([
                 'status' => $status,
-            ]); 
+            ]);
         }
 
-    return redirect()->back()->with('success', 'Berhasil memperbarui Status Pengajuan');
-}
+        return redirect()->back()->with('success', 'Berhasil memperbarui Status Pengajuan');
+    }
 
     public function rejectRequest(Request $request, $id)
     {
-        $attendances_request = AttendancesRequest::find($id); 
-        $getId  = $attendances_request->user_id; 
+        $attendances_request = AttendancesRequest::find($id);
+        $getId  = $attendances_request->user_id;
         $status = $request->status;
         $scan   = $request->scan;
         $getPin = User::find($getId);
@@ -641,22 +647,21 @@ class ScanlogController extends Controller
         $cutoffTime             = '15:59:00';
 
         $attendances_request->update([
-                'status' => $status,
+            'status' => $status,
         ]);
         if ($time <= $cutoffTime) {
-        $scan_logs  = ScanLog::where('pin',$pin)->where('scan',$scan)->delete();
-        }
-        else{
-            $scan_logs_extra  = ScanLogsExtra::where('pin',$pin)->where('scan',$scan)->delete();
-            $scan_logs  = ScanLog::where('pin',$pin)->where('scan',$scan)->delete();
+            $scan_logs  = ScanLog::where('pin', $pin)->where('scan', $scan)->delete();
+        } else {
+            $scan_logs_extra  = ScanLogsExtra::where('pin', $pin)->where('scan', $scan)->delete();
+            $scan_logs  = ScanLog::where('pin', $pin)->where('scan', $scan)->delete();
         }
 
-        return redirect()->back()->with('warning','Berhasil memperbarui Status Pengajuan');
+        return redirect()->back()->with('warning', 'Berhasil memperbarui Status Pengajuan');
     }
 
     public function detailData()
     {
-        if (! Gate::allows('bas_menu')) {
+        if (!Gate::allows('bas_menu')) {
             return abort(401);
         }
         $scanLogs = ScanLog::join('users', 'scan_logs.pin', '=', 'users.pin')
@@ -664,14 +669,14 @@ class ScanlogController extends Controller
             ->orderBy('users.name', 'ASC')
             ->orderBy('scan', 'ASC')  // You can change 'ASC' to 'DESC' if you want descending order
             ->get();
-            $groupedScanLogs = $scanLogs->groupBy('user.name');
-        return view('scan-log.detail',compact('scanLogs','groupedScanLogs'))->with('i');
+        $groupedScanLogs = $scanLogs->groupBy('user.name');
+        return view('scan-log.detail', compact('scanLogs', 'groupedScanLogs'))->with('i');
     }
     public function detailDataFilter(Request $request)
     {
         $date = $request->date;
 
-        if (! Gate::allows('bas_menu')) {
+        if (!Gate::allows('bas_menu')) {
             return abort(401);
         }
         $scanLogs = ScanLog::join('users', 'scan_logs.pin', '=', 'users.pin')
@@ -679,13 +684,13 @@ class ScanlogController extends Controller
             ->orderBy('users.name', 'ASC')
             ->orderBy('scan', 'ASC')  // You can change 'ASC' to 'DESC' if you want descending order
             ->get();
-            $groupedScanLogs = $scanLogs->groupBy('user.name');
-        return view('scan-log.detail',compact('scanLogs','groupedScanLogs'))->with('i');
+        $groupedScanLogs = $scanLogs->groupBy('user.name');
+        return view('scan-log.detail', compact('scanLogs', 'groupedScanLogs'))->with('i');
     }
 
     public function print()
     {
-        if (! Gate::allows('bas_menu')) {
+        if (!Gate::allows('bas_menu')) {
             return abort(401);
         }
         // Hitung startDate (bulan lalu dengan tanggal 26)
@@ -695,57 +700,57 @@ class ScanlogController extends Controller
         $endDate = Carbon::now()->startOfMonth()->addDays(24);
 
         $scanLogs = ScanLog::whereBetween('scan', [$startDate, $endDate])
-        ->where('ip_scan','3.1.174.198')
-        ->orderBy('scan', 'ASC')
-        ->get();
+            ->where('ip_scan', '3.1.174.198')
+            ->orderBy('scan', 'ASC')
+            ->get();
 
-        return view('scan-log.print',compact('scanLogs'));
+        return view('scan-log.print', compact('scanLogs'));
     }
 
     public function printResult(Request $request)
     {
-        if (! Gate::allows('bas_menu')) {
+        if (!Gate::allows('bas_menu')) {
             return abort(401);
         }
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
         $scanLogs = ScanLog::whereDate('scan', '>=', $start_date)
-        ->whereDate('scan', '<=', $end_date)
-        ->orderBy('scan', 'ASC')
-        ->get();
+            ->whereDate('scan', '<=', $end_date)
+            ->orderBy('scan', 'ASC')
+            ->get();
 
-        return view('scan-log.print',compact('scanLogs'));
+        return view('scan-log.print', compact('scanLogs'));
     }
 
     public function checkAttendance()
     {
-        if (! Gate::allows('bas_menu')) {
+        if (!Gate::allows('bas_menu')) {
             return abort(401);
         }
-         // Peroleh tanggal 26 bulan lalu
-         $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
+        // Peroleh tanggal 26 bulan lalu
+        $startDate = Carbon::now()->subMonth()->startOfMonth()->addDays(25);
 
-         // Peroleh tanggal 25 bulan ini jika bulan ini memiliki kurang dari 25 hari, jika tidak gunakan hari terakhir dari bulan ini
-         $currentDay = Carbon::now()->day;
-         $endDateDay = $currentDay >= 26 ? 25 : min($currentDay, 25);
- 
-         // Periksa apakah bulan lalu memiliki 31 hari
-         $lastMonthDays = Carbon::now()->subMonth()->endOfMonth()->day;
-         $endDateDay = $lastMonthDays == 31 ? 26 : $endDateDay;
-         $endDate = Carbon::now()->startOfMonth()->addDays($endDateDay - 1);
+        // Peroleh tanggal 25 bulan ini jika bulan ini memiliki kurang dari 25 hari, jika tidak gunakan hari terakhir dari bulan ini
+        $currentDay = Carbon::now()->day;
+        $endDateDay = $currentDay >= 26 ? 25 : min($currentDay, 25);
+
+        // Periksa apakah bulan lalu memiliki 31 hari
+        $lastMonthDays = Carbon::now()->subMonth()->endOfMonth()->day;
+        $endDateDay = $lastMonthDays == 31 ? 26 : $endDateDay;
+        $endDate = Carbon::now()->startOfMonth()->addDays($endDateDay - 1);
 
         $scanLogs = ScanLog::join('users', 'scan_logs.pin', '=', 'users.pin')
-        ->where('ip_scan','3.1.174.198')->whereBetween('scan', [$startDate, $endDate])        
-        ->orderBy('users.name', 'ASC')
-        ->orderBy('scan', 'ASC')
-        ->get();
+            ->where('ip_scan', '3.1.174.198')->whereBetween('scan', [$startDate, $endDate])
+            ->orderBy('users.name', 'ASC')
+            ->orderBy('scan', 'ASC')
+            ->get();
 
-        return view('scan-log.check-attendances',compact('scanLogs'))->with('i');
+        return view('scan-log.check-attendances', compact('scanLogs'))->with('i');
     }
     public function checkAttendanceFilter(Request $request)
     {
-        if (! Gate::allows('bas_menu')) {
+        if (!Gate::allows('bas_menu')) {
             return abort(401);
         }
 
@@ -755,12 +760,12 @@ class ScanlogController extends Controller
         //     ->whereDate('scan', '<=', $end_date)
 
         $scanLogs = ScanLog::join('users', 'scan_logs.pin', '=', 'users.pin')
-        ->where('ip_scan','3.1.174.198')->whereBetween('scan', [$startDate, $endDate])        
-        ->orderBy('users.name', 'ASC')
-        ->orderBy('scan', 'ASC')
-        ->get();
+            ->where('ip_scan', '3.1.174.198')->whereBetween('scan', [$startDate, $endDate])
+            ->orderBy('users.name', 'ASC')
+            ->orderBy('scan', 'ASC')
+            ->get();
 
-        return view('scan-log.check-attendances',compact('scanLogs'))->with('i');
+        return view('scan-log.check-attendances', compact('scanLogs'))->with('i');
     }
 
     public function selectPeriodLate()
@@ -768,17 +773,22 @@ class ScanlogController extends Controller
         return view('scan-log.select-late-period');
     }
 
-    public function resultLate(Request $request){
+    public function resultLate(Request $request)
+    {
         $start_date = Carbon::parse($request->start_date)->format('Y-m-d');
         $end_date = Carbon::parse($request->end_date)->format('Y-m-d');
 
-        $users    = User::select('pin','position','name','nomor_induk')->where('pin', '<>', null)->where('pin', '<>',50)->where('pin', '<>', 38)
-        ->orderBy('name','ASC')->get();
+        $users    = User::select('pin', 'position', 'name', 'nomor_induk')->where('pin', '<>', null)->where('pin', '<>', 50)->where('pin', '<>', 38)
+            ->orderBy('name', 'ASC')->get();
 
-        return view('scan-log.result-late',
-        compact('users',
-        'start_date',
-        'end_date'))
-        ->with('i');
+        return view(
+            'scan-log.result-late',
+            compact(
+                'users',
+                'start_date',
+                'end_date'
+            )
+        )
+            ->with('i');
     }
 }
