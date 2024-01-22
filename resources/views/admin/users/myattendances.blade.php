@@ -423,7 +423,7 @@
                                                     @if ($resultLateTime == null)
                                                     @elseif ($times >= $resultLateTime)
                                                         <td>
-                                                            {{ $late->date }}
+                                                         {{  $days }} | {{ $late->date }}
                                                         </td>
                                                         <td>
                                                             <span><i class="fa fa-times text-danger" aria-hidden="true"></i>
@@ -450,7 +450,7 @@
                             </div>
                             <div class="tab-pane fade" id="pulang-cepat" role="tabpanel">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-sm">
+                                    <table class="table table-hover table-sm" id="fast">
                                         <thead>
                                             <tr>
                                                 <th><i class="fas fa-calendar"></i> Tanggal</th>
@@ -458,13 +458,59 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ( $scan_logs_late as $fast)
+                                            @foreach ($scan_logs_late as $late)
+                                            @php
+                                                $pin = Auth::user()->pin;
+                                                $dates = \Carbon\Carbon::parse($late->date);
+                                                $firstScan = \App\Models\ScanLog::where('pin', $pin)
+                                                    ->where(function ($query) use ($dates) {
+                                                        $query->whereDate('scan', '=', $dates);
+                                                    })
+                                                    ->orderBy('scan', 'DESC')
+                                                    ->first();
+                                                $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
+                                                $days = \Carbon\Carbon::parse($firstScan->scan)->format('l');
+                                                if ($days == 'Monday') {
+                                                    $dayCode = 1;
+                                                } elseif ($days == 'Tuesday') {
+                                                    $dayCode = 2;
+                                                } elseif ($days == 'Wednesday') {
+                                                    $dayCode = 3;
+                                                } elseif ($days == 'Thursday') {
+                                                    $dayCode = 4;
+                                                } elseif ($days == 'Friday') {
+                                                    $dayCode = 5;
+                                                } elseif ($days == 'Saturday') {
+                                                    $dayCode = 6;
+                                                }
+                                                $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
+                                                $lateTime = \App\Models\Willingness::where('pin', $pin)
+                                                    ->where('day_code', $dayCode)
+                                                    ->where(function ($query) use ($now) {
+                                                        $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
+                                                    })
+                                                    ->first();
+                                                if (!empty($lateTime)) {
+                                                    $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s', $lateTime->time_of_return)
+                                                        ->format('H:i:s');
+                                                } else {
+                                                    $resultLateTime = null;
+                                                }
+                                            @endphp
                                             <tr>
-                                                <td>
-                                                    {{ $fast->date }}
-                                                </td>
+                                                @if ($resultLateTime == null)
+                                                @elseif ($times <= $resultLateTime)
+                                                    <td>
+                                                     {{  $days }} | {{ $late->date }}
+                                                    </td>
+                                                    <td>
+                                                        <span><i class="fa fa-info-circle text-warning" aria-hidden="true"></i>
+                                                            {{ $times }}</span>
+                                                    </td>
+                                                @else
+                                                @endif
                                             </tr>
-                                            @endforeach
+                                        @endforeach
                                             
                                         </tbody>
                                         <tfoot>
@@ -472,6 +518,10 @@
                                                 <th><i class="fas fa-clock"></i> Jam</th>
                                         </tfoot>
                                     </table>
+                                    <hr>
+                                    <strong>
+                                        <p id="countfast"></p>
+                                    </strong>
                                 </div>
                             </div>                           
                           </div>      
@@ -497,13 +547,19 @@
             }
         });
         const lateTable = document.getElementById('late');
+        const fastTable = document.getElementById('fast');
         const span = lateTable.getElementsByTagName('span');
+        const spanFast = fastTable.getElementsByTagName('span');
 
         // Hitung jumlah elemen <i>
         const iconCount = span.length;
+        const iconCountFast = spanFast.length;
 
         // Tampilkan jumlahnya dalam sebuah paragraf HTML
         const countParagraph = document.getElementById('count');
+        const countParagraphFast = document.getElementById('countfast');
         countParagraph.textContent = `Jumlah Terlambat: ${iconCount}`;
+        countParagraphFast.textContent = `Jumlah Pulang Cepat: ${iconCountFast}`;
+       
     </script>
 @endsection
