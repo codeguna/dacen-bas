@@ -121,8 +121,9 @@
                                                     <th>Day</th>
                                                     <th>Date</th>
                                                     <th>Scan Times</th>
-                                                    <th>Total Hours</th>
-                                                    {{-- <th>Notes</th> --}}
+                                                    <th>
+                                                        Total Hours  
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -146,44 +147,7 @@
                                                             echo '<td>' . date('l', strtotime($previousDate)) . '</td>';
                                                             echo '<td>' . $previousDate . '</td>';
                                                             echo '<td>' . implode(' | ', $scanTimes) . '</td>';
-                                                            echo '<td>' . intval(calculateTotalHours($scanTimes)) . ' Jam</td>';
-                                                            // if ($daysOfWeek == 'Monday') {
-                                                            //     if ($scanTimes[0] >= $hasilSenin) {
-                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                            //     } else {
-                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                            //     }
-                                                            // } elseif ($daysOfWeek == 'Tuesday') {
-                                                            //     if ($scanTimes[0] >= $hasilSelasa) {
-                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                            //     } else {
-                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                            //     }
-                                                            // } elseif ($daysOfWeek == 'Wednesday') {
-                                                            //     if ($scanTimes[0] >= $hasilRabu) {
-                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                            //     } else {
-                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                            //     }
-                                                            // } elseif ($daysOfWeek == 'Thursday') {
-                                                            //     if ($scanTimes[0] >= $hasilKamis) {
-                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                            //     } else {
-                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                            //     }
-                                                            // } elseif ($daysOfWeek == 'Friday') {
-                                                            //     if ($scanTimes[0] >= $hasilJumat) {
-                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                            //     } else {
-                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                            //     }
-                                                            // } elseif ($daysOfWeek == 'Saturday') {
-                                                            //     if ($scanTimes[0] >= $hasilSabtu) {
-                                                            //         echo '<td>' . '<i class="fas fa-info-circle text-danger"></i> Terlambat' . '</td>';
-                                                            //     } else {
-                                                            //         echo '<td>' . '<i class="fas fa-check-circle text-success"></i>' . '</td>';
-                                                            //     }
-                                                            // }
+                                                            echo '<td>' . formatTotalTimeInSeconds(calculateTotalHoursInSeconds($scanTimes)) . '</td>';
 
                                                             echo '</tr>';
                                                             $y++; // Tambahkan nomor
@@ -206,75 +170,7 @@
                                                         <td>{{ date('l', strtotime($previousDate)) }}</td>
                                                         <td>{{ $previousDate }}</td>
                                                         <td>{{ implode(' | ', $scanTimes) }}</td>
-                                                        <td>{{ intval(calculateTotalHours($scanTimes)) }} Jam</td>
-                                                        {{-- @if ($daysOfWeek == 'Monday')
-                                                            {
-                                                            @if ($scanTimes[0] >= $hasilSenin)
-                                                                {
-                                                                <td>
-                                                                    <i class="fas fa-info-circle text-danger"></i> Terlambat
-                                                                </td>
-                                                                }
-                                                            @else
-                                                                <td><i class="fas fa-check-circle text-success"></td>
-                                                            @endif
-                                                            }
-                                                        @elseif ($daysOfWeek == 'Tuesday')
-                                                            {
-                                                            @if ($scanTimes[0] >= $hasilSelasa)
-                                                                {
-                                                                <td><i class="fas fa-info-circle text-danger"></i> Terlambat
-                                                                </td>
-                                                                }
-                                                            @else
-                                                                <td><i class="fas fa-check-circle text-success"></i></td>
-                                                            @endif
-                                                            }
-                                                        @elseif ($daysOfWeek == 'Wednesday')
-                                                            {
-                                                            @if ($scanTimes[0] >= $hasilRabu)
-                                                                {
-                                                                <td><i class="fas fa-info-circle text-danger"></i> Terlambat
-                                                                </td>
-                                                                }
-                                                            @else
-                                                                <td><i class="fas fa-check-circle text-success"></i></td>
-                                                            @endif
-                                                            }
-                                                        @elseif ($daysOfWeek == 'Thursday')
-                                                            {
-                                                            @if ($scanTimes[0] >= $hasilKamis)
-                                                                {
-                                                                <td><i class="fas fa-info-circle text-danger"></i> Terlambat
-                                                                </td>
-                                                                }
-                                                            @else
-                                                                <td><i class="fas fa-check-circle text-success"></i></td>
-                                                            @endif
-                                                            }
-                                                        @elseif ($daysOfWeek == 'Friday')
-                                                            {
-                                                            @if ($scanTimes[0] >= $hasilJumat)
-                                                                {
-                                                                <td><i class="fas fa-info-circle text-danger"></i> Terlambat
-                                                                </td>
-                                                                }
-                                                            @else
-                                                                <td><i class="fas fa-check-circle text-success"></i></td>
-                                                            @endif
-                                                            }
-                                                        @elseif ($daysOfWeek == 'Saturday')
-                                                            {
-                                                            @if ($scanTimes[0] >= $hasilSabtu)
-                                                                {
-                                                                <td><i class="fas fa-info-circle text-danger"></i> Terlambat
-                                                                </td>
-                                                                }
-                                                            @else
-                                                                <td><i class="fas fa-check-circle text-success"></i></td>
-                                                            @endif
-                                                            }
-                                                        @endif --}}
+                                                        <td>{{ formatTotalTimeInSeconds(calculateTotalHoursInSeconds($scanTimes)) }}</td>                                                      
                                                     </tr>
                                                     <!-- Tambahkan total jam kerja untuk tanggal terakhir -->
                                                     @php
@@ -287,7 +183,9 @@
                                                 <th>Day</th>
                                                 <th>Date</th>
                                                 <th>Scan Times</th>
-                                                <th>Total Hours</th>
+                                                <th>
+                                                    Total Hours
+                                                </th>
                                                 {{-- <th>Notes</th> --}}
                                             </tfoot>
                                         </table>
@@ -334,6 +232,17 @@
                                                 $minutes = round(($totalHours - $hours) * 60);
                                                 return sprintf('%02d:%02d', $hours, $minutes);
                                             }
+                                            function formatTotalTimeInSeconds($totalSeconds)
+    {
+        $totalMinutes = $totalSeconds / 60;
+
+        // Ambil bagian jam dan menit
+        $hours = floor($totalMinutes / 60);
+        $minutes = round($totalMinutes % 60);
+
+        // Kembalikan format waktu
+        return sprintf('%02d:%02d', $hours, $minutes);
+    }
                                         @endphp
                                     </div>
                                 </div>
@@ -449,6 +358,11 @@
 
                             </div>
                             <div class="tab-pane fade" id="pulang-cepat" role="tabpanel">
+                                <div class="alert alert-info" role="alert">
+                                    <strong>
+                                        <i class="fas fa-clock"></i> Pulang sebelum dari waktu kesediaan
+                                    </strong>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-hover table-sm" id="fast">
                                         <thead>
@@ -500,13 +414,17 @@
                                             <tr>
                                                 @if ($resultLateTime == null)
                                                 @elseif ($times <= $resultLateTime)
+                                                @if ($now == date('Y-m-d'))
+                                                    @else
                                                     <td>
-                                                     {{  $days }} | {{ $late->date }}
-                                                    </td>
-                                                    <td>
-                                                        <span><i class="fa fa-info-circle text-warning" aria-hidden="true"></i>
-                                                            {{ $times }}</span>
-                                                    </td>
+                                                        {{  $days }} | {{ $late->date }}
+                                                       </td>
+                                                       <td>
+                                                           <span><i class="fa fa-info-circle text-warning" aria-hidden="true"></i>
+                                                               {{ $times }}</span>
+                                                       </td>
+                                                @endif
+                                                    
                                                 @else
                                                 @endif
                                             </tr>
