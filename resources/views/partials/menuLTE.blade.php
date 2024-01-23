@@ -269,7 +269,7 @@
                         <a href="{{ route('admin.scan-log.selectLate') }}"
                             class="nav-link {{ request()->is('admin/scan-log/check-late') || request()->is('admin/scan-log/check-late/*') || request()->is('admin/scan-log/result-late/*') || request()->is('admin/scan-log/result-late') ? 'active' : '' }}">
                             <i class="fa fa-user-times nav-icon" aria-hidden="true"></i>
-                            <p>Presensi Terlambat</p>
+                            <p>Presensi Terlambat/Pulang Cepat</p>
                         </a>
                     </li>
                 </ul>

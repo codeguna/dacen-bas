@@ -48,6 +48,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="alert alert-primary" role="alert">
+                            <strong>Penting!</strong> Jika terdapat data yang tidak lazim/lengkap. Kemungkinan yang bersangkutan terlewatkan prsen
+                        </div>
                         <table id="dataTable1" class="table table-sm">
                             <thead>
                                 <tr>
@@ -55,6 +58,7 @@
                                     <th>Nama - NIP/NIDN</th>
                                     <th>Departemen</th>
                                     <th>Waktu Terlambat</th>
+                                    <th>Pulang Cepat</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -91,6 +95,7 @@
                                                     ->groupBy('date')
                                                     ->get();
                                                 $increments = 0;
+                                                $incrementsB = 0;
                                             @endphp
                                             @foreach ($scanlogs as $log)
                                                 @php
@@ -142,6 +147,58 @@
                                                         {{ $times }}</span> <br>
                                                 @else
                                                 @endif
+                                            @endforeach                                            
+                                        </td>
+                                        <td>
+                                            @foreach ($scanlogs as $cepat)
+                                                @php
+                                                    $date = $cepat->date;
+                                                    $firstScan = \App\Models\ScanLog::where('pin', $user->pin)
+                                                        ->where(function ($query) use ($date) {
+                                                            $query->whereDate('scan', '=', $date);
+                                                        })
+                                                        ->latest()
+                                                        ->first();
+                                                    $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
+                                                    $days = \Carbon\Carbon::parse($firstScan->scan)->format('l');
+                                                    if ($days == 'Monday') {
+                                                        $dayCode = 1;
+                                                    } elseif ($days == 'Tuesday') {
+                                                        $dayCode = 2;
+                                                    } elseif ($days == 'Wednesday') {
+                                                        $dayCode = 3;
+                                                    } elseif ($days == 'Thursday') {
+                                                        $dayCode = 4;
+                                                    } elseif ($days == 'Friday') {
+                                                        $dayCode = 5;
+                                                    } elseif ($days == 'Saturday') {
+                                                        $dayCode = 6;
+                                                    }
+                                                    $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
+                                                    $lateTime = \App\Models\Willingness::where('pin', $pin)
+                                                        ->where('day_code', $dayCode)
+                                                        ->where(function ($query) use ($now) {
+                                                            $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
+                                                        })
+                                                        ->first();
+                                                    if (!empty($lateTime)) {
+                                                        $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s', $lateTime->time_of_return)
+                                                            ->format('H:i:s');
+                                                    } else {
+                                                        $resultLateTime = null;
+                                                    }
+                                                @endphp
+
+                                                @if ($times <= $resultLateTime)
+                                                    @php
+                                                        $incrementsB++;
+                                                    @endphp
+
+                                                    <span>{{ $incrementsB }}. {{ $days }} - {{ $cepat->date }}
+                                                        |
+                                                        {{ $times }}</span> <br>
+                                                @else
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
@@ -153,6 +210,7 @@
                                     <th>Nama</th>
                                     <th>Departemen</th>
                                     <th>Waktu Terlambat</th>
+                                    <th>Pulang Cepat</th>
                                 </tr>
                             </tfoot>
                         </table>
