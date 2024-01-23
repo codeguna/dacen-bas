@@ -49,7 +49,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="alert alert-primary" role="alert">
-                            <strong>Penting!</strong> Jika terdapat data yang tidak lazim/lengkap. Kemungkinan yang bersangkutan terlewatkan prsen
+                            <strong><i class="fa fa-info-circle" aria-hidden="true"></i> Penting!</strong> Jika terdapat data yang tidak lazim/lengkap. Kemungkinan yang bersangkutan terlewatkan presensinya.
                         </div>
                         <table id="dataTable1" class="table table-sm">
                             <thead>
