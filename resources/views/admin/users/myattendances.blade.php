@@ -3,7 +3,6 @@
 @section('template_title')
 Presensi Saya
 @endsection
-
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -249,7 +248,7 @@ Presensi Saya
                         <div class="tab-pane fade show active" id="terlambat" role="tabpanel">
                             <div class="alert alert-warning" role="alert">
                                 <strong>
-                                    <i class="fas fa-clock"></i> Batas toleransi terlambat > 10 menit
+                                    <i class="fas fa-clock"></i> Toleransi terlambat 10 menit
                                 </strong>
                             </div>
                             <div class="table-responsive">
