@@ -500,8 +500,13 @@ class ScanlogController extends Controller
             ->whereDate('scan', '<=', $end_date)
             ->orderBy('scan', 'ASC')
             ->get();
+            $scan_logs_late = ScanLog::selectRaw('DATE(scan) as date')->where('pin', $pin)
+            ->whereBetween('scan', [$start_date, $end_date])
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get();
 
-        return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs'))->with('i');
+        return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs','scan_logs_late'))->with('i');
     }
 
     public function requestAttendances()
