@@ -5,6 +5,11 @@ Presensi Saya
 @endsection
 @section('content')
 <div class="container-fluid">
+    @include('admin.users.willingness')
+    <a href="#" class="float btn-primary" data-toggle="modal" data-target="#kesediaanModal"
+        title="Jam Kesediaan Bekerja">
+       <i class="fas fa-calendar-check my-float"></i>
+    </a>
     <div class="row">
         <div class="col-md-12">
             <div class="card card-widget widget-user">
@@ -130,7 +135,7 @@ Presensi Saya
                                             @php
                                             $y = 1; // Inisialisasi nomor dengan 1
                                             $previousDate = null; // Inisialisasi tanggal sebelumnya
-                                            $scanTimes = []; // Inisialisasi array untuk menyimpan waktu scan pada tanggal tertentu
+                                            $scanTimes = []; // Inisialisasi array untuk menyimpan waktu scan pada
                                             $totalHours = 0; // Inisialisasi total jam kerja
                                             @endphp
 
@@ -209,12 +214,12 @@ Presensi Saya
                                         sprintf('%02d:%02d', $hours, $minutes); } @endphp @php function
                                         calculateTotalHours($times) { if (count($times) < 2) { return '0' ; }
                                         $firstTime=strtotime($times[0]); $lastTime=strtotime(end($times));
-                                        $totalSeconds=$lastTime - $firstTime; $totalHours=$totalSeconds / 3600;$hours=floor($totalHours);
-                                        $minutes=round(($totalHours - $hours) * 60); return sprintf('%02d:%02d', $hours,
-                                        $minutes); } function formatTotalTimeInSeconds($totalSeconds) {
-                                        $totalMinutes=$totalSeconds / 60;
-                                        $hours=floor($totalMinutes / 60); $minutes=round($totalMinutes % 60); return sprintf('%02d:%02d', $hours, $minutes); } @endphp
-                                        </div>
+                                        $totalSeconds=$lastTime - $firstTime; $totalHours=$totalSeconds /
+                                        3600;$hours=floor($totalHours); $minutes=round(($totalHours - $hours) * 60);
+                                        return sprintf('%02d:%02d', $hours, $minutes); } function
+                                        formatTotalTimeInSeconds($totalSeconds) { $totalMinutes=$totalSeconds / 60;
+                                        $hours=floor($totalMinutes / 60); $minutes=round($totalMinutes % 60); return
+                                        sprintf('%02d:%02d', $hours, $minutes); } @endphp </div>
                                 </div>
                             </div>
                     </form>

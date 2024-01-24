@@ -378,6 +378,17 @@ class ScanlogController extends Controller
             ->where('end_date', '>=', $today)
             ->first();
 
+        $myWillingness = Willingness::select('time_of_entry', 'time_of_return', 'day_code')
+            ->where('pin', $id)
+            ->where('start_date', '<=', $startDate)
+            ->where('end_date', '>=', $endDate)
+            ->get();
+        $expDate = Willingness::select('start_date', 'end_date')
+            ->where('pin', $id)
+            ->where('start_date', '<=', $startDate)
+            ->where('end_date', '>=', $endDate)
+            ->first();
+
         $goHomeTime          = $getWillingnessTime->time_of_return;
         $end_time            = '22:00:00';
         $firstScanStart      = Carbon::parse($getWillingnessTime->time_of_entry)->format('H:i:s');
@@ -458,7 +469,9 @@ class ScanlogController extends Controller
                 'firstPhase',
                 'secondPhase',
                 'thirdPhase',
-                'fourthPhase'
+                'fourthPhase',
+                'myWillingness',
+                'expDate'
             )
         )
             ->with('i');
@@ -494,19 +507,28 @@ class ScanlogController extends Controller
             ->whereTime('scan', '<=', '23:00:00')
             ->latest('scan')
             ->first();
-
+        $myWillingness = Willingness::select('time_of_entry', 'time_of_return', 'day_code')
+            ->where('pin', $pin)
+            ->where('start_date', '<=', $start_date)
+            ->where('end_date', '>=', $end_date)
+            ->get();
+        $expDate = Willingness::select('start_date', 'end_date')
+            ->where('pin', $pin)
+            ->where('start_date', '<=', $start_date)
+            ->where('end_date', '>=', $end_date)
+            ->first();
         $scan_logs = ScanLog::where('pin', $pin)
             ->whereDate('scan', '>=', $start_date)
             ->whereDate('scan', '<=', $end_date)
             ->orderBy('scan', 'ASC')
             ->get();
-            $scan_logs_late = ScanLog::selectRaw('DATE(scan) as date')->where('pin', $pin)
+        $scan_logs_late = ScanLog::selectRaw('DATE(scan) as date')->where('pin', $pin)
             ->whereBetween('scan', [$start_date, $end_date])
             ->groupBy('date')
             ->orderBy('date', 'ASC')
             ->get();
 
-        return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs','scan_logs_late'))->with('i');
+        return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs', 'scan_logs_late', 'myWillingness','expDate'))->with('i');
     }
 
     public function requestAttendances()
