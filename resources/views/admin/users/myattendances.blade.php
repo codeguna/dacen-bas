@@ -93,7 +93,7 @@ Presensi Saya
                     <small>
                         <ol>
                             @forelse ($holidays as $holiday)
-                            <li>{{ \Carbon\Carbon::parse($holiday->date)->format('j F Y') }} - {{ $holiday->name }}</li>
+                            <li>{{ \Carbon\Carbon::parse($holiday->date)->format('j F') }} - {{ $holiday->name }}</li>
                             @empty
                             <i class="fas fa-info-circle"></i> Tidak ada libur bulan ini
                             @endforelse
