@@ -30,6 +30,8 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-12">
+                                    <label>Tanggal Lahir</label> <br>
+                                    <input class="form-control" type="date" name="birthday" required>
                                     <label>Posisi</label> <br>
                                     <div class="btn-group w-100" data-toggle="buttons">
                                         <label class="btn btn-warning">

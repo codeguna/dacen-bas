@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\AttendancesRequest;
+use App\Models\Holiday;
 use App\Models\ScanLog;
 use App\Models\ScanLogsExtra;
 use App\Models\Willingness;
@@ -60,7 +61,11 @@ class ScanlogController extends Controller
     {
         $pin_pengguna = auth()->user()->pin;
         $tanggal_hari_ini = Carbon::now()->toDateString();
+        $birthday_pengguna = auth()->user()->birthday;
 
+        if ($birthday_pengguna === null) {
+            return redirect()->route('admin.user.set-birthday')->with('warning', 'Silahkan lengkapi data tanggal lahir anda!');
+        }
         if ($pin_pengguna === null) {
             return redirect()->route('admin.myprofile')->with('warning', 'Silahkan hubungi Admin/BAS untuk melakukan input PIN');
         }
@@ -331,6 +336,11 @@ class ScanlogController extends Controller
     {
 
         $pin = Auth::user()->pin;
+        $birthday_pengguna = auth()->user()->birthday;
+
+        if ($birthday_pengguna === null) {
+            return redirect()->route('admin.user.set-birthday')->with('warning', 'Silahkan lengkapi data tanggal lahir anda!');
+        }
         // Hitung startDate (tanggal 26 bulan lalu)
         $today = Carbon::now();
         // Peroleh tanggal 26 bulan lalu
@@ -443,14 +453,14 @@ class ScanlogController extends Controller
             ->orderBy('scan', 'ASC')
             ->get();
 
-        // $scan_logs_late = ScanLog::where('pin', $pin)
-        //     ->whereBetween('scan', [$startDate, $endDate])
-        //     ->where('ip_scan','3.1.174.198')
-        //     ->whereTime('scan', '<=', Carbon::parse('13:20:00'))
-        //     ->orderBy('scan', 'ASC')
-        //     ->groupBy('date')
-        //     ->get();
-
+        // Get the current month's start and end dates
+        $startHoliday = date('Y-m-01'); // First day of the current month
+        $endHoliday = date('Y-m-t');    // Last day of the current month
+        $holidays = Holiday::select('date', 'name')
+            ->whereBetween('date', [$startHoliday, $endHoliday])
+            ->orderBy('date', 'ASC')
+            ->get();
+            
         $scan_logs_late = ScanLog::selectRaw('DATE(scan) as date')->where('pin', $pin)
             ->whereBetween('scan', [$startDate, $endDate])
             ->groupBy('date')
@@ -471,7 +481,8 @@ class ScanlogController extends Controller
                 'thirdPhase',
                 'fourthPhase',
                 'myWillingness',
-                'expDate'
+                'expDate',
+                'holidays'
             )
         )
             ->with('i');
@@ -528,7 +539,7 @@ class ScanlogController extends Controller
             ->orderBy('date', 'ASC')
             ->get();
 
-        return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs', 'scan_logs_late', 'myWillingness','expDate'))->with('i');
+        return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs', 'scan_logs_late', 'myWillingness', 'expDate'))->with('i');
     }
 
     public function requestAttendances()

@@ -8,12 +8,11 @@ Presensi Saya
     @include('admin.users.willingness')
     <a href="#" class="float btn-primary" data-toggle="modal" data-target="#kesediaanModal"
         title="Jam Kesediaan Bekerja">
-       <i class="fas fa-calendar-check my-float"></i>
+        <i class="fas fa-calendar-check my-float"></i>
     </a>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="card card-widget widget-user">
-
                 <div class="widget-user-header text-white"
                     style="background: url('https://images.pexels.com/photos/8250880/pexels-photo-8250880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center center;">
                     <h2 class="widget-user-desc text-right">
@@ -84,7 +83,28 @@ Presensi Saya
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="card bg-gradient-dark">
+                <div class="card-header">
+                    <h2><i class="fas fa-calendar"></i> {{ date('j F Y') }}</h2>
+                </div>
+                <div class="card-body">
+                    <h5><i class="fas fa-check-circle text-success"></i> Libur Bulan ini:</h5>
+                    <small>
+                        <ol>
+                            @forelse ($holidays as $holiday)
+                            <li>{{ \Carbon\Carbon::parse($holiday->date)->format('j F Y') }} - {{ $holiday->name }}</li>
+                            @empty
+                            <i class="fas fa-info-circle"></i> Tidak ada libur bulan ini
+                            @endforelse
+                        </ol>
+                    </small>
+
+                </div>
+            </div>
+        </div>
     </div>
+    <br>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -198,12 +218,7 @@ Presensi Saya
                                             {{-- <th>Notes</th> --}}
                                         </tfoot>
                                     </table>
-                                    <hr>
                                     @php
-                                    // Tampilkan total jam kerja di bagian bawah tabel
-                                    echo '<p>Total Hours: <strong><i class="fas fa-clock text-primary"></i> ' .
-                                            formatTotalHours($totalHours) . '</strong></p>';
-
                                     // Fungsi untuk menghitung total jam kerja dari array waktu scan dalam detik
                                     function calculateTotalHoursInSeconds($times)
                                     {
@@ -226,204 +241,20 @@ Presensi Saya
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3>
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="terlambat-tab" data-toggle="tab"
-                                    data-target="#terlambat" type="button" role="tab">
-                                    <small><i class="fa fa-times text-danger"></i> Datang Terlambat</small>
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pulang-cepat-tab" data-toggle="tab"
-                                    data-target="#pulang-cepat" type="button" role="tab">
-                                    <small><i class="fa fa-bolt text-warning"></i> Pulang Cepat</small>
-                                </button>
-                            </li>
-                        </ul>
-                    </h3>
+            <div class="small-box bg-primary">
+                <div class="inner">
+                    <p>Total jam kerja</p>
+                    <h3>{{ formatTotalHours($totalHours) }}</h3>
                 </div>
-                <div class="card-body">
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="terlambat" role="tabpanel">
-                            <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <i class="fas fa-clock"></i> Toleransi terlambat 10 menit
-                                </strong>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-sm" id="late">
-                                    <thead>
-                                        <tr>
-                                            <th><i class="fas fa-calendar"></i> Tanggal</th>
-                                            <th><i class="fas fa-clock"></i> Jam</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($scan_logs_late as $late)
-                                        @php
-                                        $pin = Auth::user()->pin;
-                                        $dates = \Carbon\Carbon::parse($late->date);
-                                        $firstScan = \App\Models\ScanLog::where('pin', $pin)
-                                        ->where(function ($query) use ($dates) {
-                                        $query->whereDate('scan', '=', $dates);
-                                        })
-                                        ->orderBy('scan', 'ASC')
-                                        ->first();
-                                        $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
-                                        $days = \Carbon\Carbon::parse($firstScan->scan)->format('l');
-                                        if ($days == 'Monday') {
-                                        $dayCode = 1;
-                                        } elseif ($days == 'Tuesday') {
-                                        $dayCode = 2;
-                                        } elseif ($days == 'Wednesday') {
-                                        $dayCode = 3;
-                                        } elseif ($days == 'Thursday') {
-                                        $dayCode = 4;
-                                        } elseif ($days == 'Friday') {
-                                        $dayCode = 5;
-                                        } elseif ($days == 'Saturday') {
-                                        $dayCode = 6;
-                                        }
-                                        $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
-                                        $lateTime = \App\Models\Willingness::where('pin', $pin)
-                                        ->where('day_code', $dayCode)
-                                        ->where(function ($query) use ($now) {
-                                        $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
-                                            })
-                                            ->first();
-                                            if (!empty($lateTime)) {
-                                            $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s',
-                                            $lateTime->time_of_entry)
-                                            ->addMinutes(10)
-                                            ->format('H:i:s');
-                                            } else {
-                                            $resultLateTime = null;
-                                            }
-                                            @endphp
-                                            <tr>
-                                                @if ($resultLateTime == null)
-                                                @elseif ($times >= $resultLateTime)
-                                                <td>
-                                                    {{ $days }} | {{ $late->date }}
-                                                </td>
-                                                <td>
-                                                    <span><i class="fa fa-times text-danger" aria-hidden="true"></i>
-                                                        {{ $times }}</span>
-                                                </td>
-                                                @else
-                                                @endif
-                                            </tr>
-                                            @endforeach
-                                    <tfoot>
-                                        <tr>
-                                            <th><i class="fas fa-calendar"></i> Tanggal</th>
-                                            <th><i class="fas fa-clock"></i> Jam</th>
-                                        </tr>
-                                    </tfoot>
-                                    </tbody>
-                                </table>
-                                <hr>
-                                <strong>
-                                    <p id="count"></p>
-                                </strong>
-                            </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="pulang-cepat" role="tabpanel">
-                            <div class="alert alert-info" role="alert">
-                                <strong>
-                                    <i class="fas fa-clock"></i> Pulang sebelum dari waktu kesediaan
-                                </strong>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-sm" id="fast">
-                                    <thead>
-                                        <tr>
-                                            <th><i class="fas fa-calendar"></i> Tanggal</th>
-                                            <th><i class="fas fa-clock"></i> Jam</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($scan_logs_late as $late)
-                                        @php
-                                        $pin = Auth::user()->pin;
-                                        $dates = \Carbon\Carbon::parse($late->date);
-                                        $firstScan = \App\Models\ScanLog::where('pin', $pin)
-                                        ->where(function ($query) use ($dates) {
-                                        $query->whereDate('scan', '=', $dates);
-                                        })
-                                        ->orderBy('scan', 'DESC')
-                                        ->first();
-                                        $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
-                                        $days = \Carbon\Carbon::parse($firstScan->scan)->format('l');
-                                        if ($days == 'Monday') {
-                                        $dayCode = 1;
-                                        } elseif ($days == 'Tuesday') {
-                                        $dayCode = 2;
-                                        } elseif ($days == 'Wednesday') {
-                                        $dayCode = 3;
-                                        } elseif ($days == 'Thursday') {
-                                        $dayCode = 4;
-                                        } elseif ($days == 'Friday') {
-                                        $dayCode = 5;
-                                        } elseif ($days == 'Saturday') {
-                                        $dayCode = 6;
-                                        }
-                                        $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
-                                        $lateTime = \App\Models\Willingness::where('pin', $pin)
-                                        ->where('day_code', $dayCode)
-                                        ->where(function ($query) use ($now) {
-                                        $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
-                                            })
-                                            ->first();
-                                            if (!empty($lateTime)) {
-                                            $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s',
-                                            $lateTime->time_of_return)
-                                            ->format('H:i:s');
-                                            } else {
-                                            $resultLateTime = null;
-                                            }
-                                            @endphp
-                                            <tr>
-                                                @if ($resultLateTime == null)
-                                                @elseif ($times <= $resultLateTime) @if ($now==date('Y-m-d')) @else <td>
-                                                    {{ $days }} | {{ $late->date }}
-                                                    </td>
-                                                    <td>
-                                                        <span><i class="fa fa-info-circle text-warning"
-                                                                aria-hidden="true"></i>
-                                                            {{ $times }}</span>
-                                                    </td>
-                                                    @endif
-
-                                                    @else
-                                                    @endif
-                                            </tr>
-                                            @endforeach
-
-                                    </tbody>
-                                    <tfoot>
-                                        <th><i class="fas fa-calendar"></i> Tanggal</th>
-                                        <th><i class="fas fa-clock"></i> Jam</th>
-                                    </tfoot>
-                                </table>
-                                <hr>
-                                <strong>
-                                    <p id="countfast"></p>
-                                </strong>
-                            </div>
-                        </div>
-                    </div>
+                <div class="icon">
+                    <i class="fas fa-clock    "></i>
                 </div>
+                <a href="#" class="small-box-footer">Detail data <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
+    @include('admin.users.addtional-table')
 </div>
 @endsection
 @section('scripts')

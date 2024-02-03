@@ -11,7 +11,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>{{ env('APP_NAME') }} - @yield('template_title')</title>
     <!-- DataTable -->
     <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('adminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2/css/select2.min.css') }}">
@@ -37,14 +38,47 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
-                            class="fas fa-bars"></i></a>
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
             </ul>
 
             <!-- Right navbar links -->
+            @php
+            $now = now();
+            $birthdayCount = \App\User::select('birthday', 'name')
+            ->whereMonth('birthday', $now->month)
+            ->whereDay('birthday', $now->day)
+            ->orderBy('birthday', 'ASC')
+            ->count();
+            $birthdayGet = \App\User::select('birthday', 'name')
+            ->whereMonth('birthday', $now->month)
+            ->whereDay('birthday', $now->day)
+            ->orderBy('birthday', 'ASC')
+            ->get();
+            @endphp
             <ul class="navbar-nav ml-auto">
-
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fas fa-birthday-cake text-pink"></i>
+                        <span class="badge badge-warning navbar-badge">{{ $birthdayCount }}</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">{{ $birthdayCount }} orang Ulang Tahun</span>
+                        @forelse ($birthdayGet as $birthday)
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-birthday-cake mr-2"></i> {{ $birthday->name }}
+                            <span class="float-right text-muted text-xs">{{
+                                \Carbon\Carbon::parse($birthday->birthday)->format('j F') }}</span>
+                        </a>                        
+                        @empty
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-birthday-cake mr-2"></i> Tidak ada
+                            <span class="float-right text-muted text-sm"><i class="fas fa-times-circle"></i></span>
+                        </a>
+                        @endforelse
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
@@ -68,23 +102,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     @php
-                        function getInitials($fullName)
-                        {
-                            $words = explode(' ', $fullName);
-                            $initials = '';
+                    function getInitials($fullName)
+                    {
+                    $words = explode(' ', $fullName);
+                    $initials = '';
 
-                            foreach ($words as $word) {
-                                $initials .= strtoupper($word[0]);
-                                if (strlen($initials) == 2) {
-                                    break; // Stop after getting the first two initials
-                                }
-                            }
+                    foreach ($words as $word) {
+                    $initials .= strtoupper($word[0]);
+                    if (strlen($initials) == 2) {
+                    break; // Stop after getting the first two initials
+                    }
+                    }
 
-                            return $initials;
-                        }
+                    return $initials;
+                    }
 
-                        $fullName = Auth::user()->name;
-                        $initials = getInitials($fullName);
+                    $fullName = Auth::user()->name;
+                    $initials = getInitials($fullName);
                     @endphp
                     <div class="image">
                         <div class="avatar">{{ $initials }}</div>

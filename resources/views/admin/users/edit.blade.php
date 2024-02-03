@@ -38,6 +38,16 @@
                         {{ trans('cruds.user.fields.email_helper') }}
                     </p>
                 </div>
+                <div class="form-group {{ $errors->has('birthday') ? 'has-error' : '' }}">
+                    <label for="birthday">Birthday</label>
+                    <input type="date" id="birthday" name="birthday" class="form-control"
+                        value="{{ old('birthday', isset($user) ? $user->birthday : '') }}" required>
+                    @if ($errors->has('birthday'))
+                        <em class="invalid-feedback">
+                            {{ $errors->first('birthday') }}
+                        </em>
+                    @endif
+                </div>
                 <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                     <label for="password">{{ trans('cruds.user.fields.password') }}</label>
                     <input type="password" id="password" name="password" class="form-control">

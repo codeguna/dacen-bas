@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/user/view_users_pin','Admin\UsersController@usersPin')->name('user.pin');
     Route::get('/user/set_users_pin/{user}','Admin\UsersController@setPIN')->name('user.set-pin');
     Route::post('/user/update_users_pin/{user}','Admin\UsersController@updatePIN')->name('user.update-pin');
+    Route::get('/user/set_users_birthday','Admin\UsersController@setBirthday')->name('user.set-birthday');
+    Route::post('/user/update_users_birthday','Admin\UsersController@updateBirthday')->name('user.update-birthday');
     Route::resource('scan-logs', 'ScanlogController');
     Route::get('/scan-log/detail/', 'ScanlogController@detailData')->name('scanlogs.detail');
     Route::get('/scan-log/detail/filter', 'ScanlogController@detailDataFilter')->name('scanlogs.detail.filter');
@@ -122,4 +124,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/scan-log/check-late','ScanlogController@selectPeriodLate')->name('scan-log.selectLate');
     Route::get('/scan-log/result-late','ScanlogController@resultLate')->name('scan-log.resultLate');
     //End Route Check Late
+    //Route Holidays
+    Route::resource('holidays', 'HolidayController');
+    Route::post('/holiday/import/','ImportExcelController@importHolidays')->name('holidays.import');
+    Route::delete('/holiday/bulk-destroy-last/', 'HolidayController@destroyLastYear')->name('holidays.destroy-last-year');
+    Route::delete('/holiday/bulk-destroy-current/', 'HolidayController@destroyCurrentYear')->name('holidays.destroy-current-year');
+    //End Route Holidays
 });

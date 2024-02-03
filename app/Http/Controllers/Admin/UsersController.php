@@ -154,7 +154,26 @@ class UsersController extends Controller
 
         return view('admin.users.set-users-pin', compact('user'));
     }
+    public function setBirthday(){
 
+        return view('admin.users.set-users-birthday');
+    }
+
+    public function updateBirthday(Request $request)
+    {
+        $birthday   = $request->birthday;
+        $id         = Auth::User()->id;
+
+        $request->validate([
+            'birthday' => 'required',
+        ]);
+
+        $users              = User::find($id);
+        $users->update([
+                'birthday'       => $birthday,
+        ]);
+        return redirect()->route('admin.scan-log.my-attendances')->with('success', 'Berhasil memperbarui Tanggal Lahir Pengguna.');
+    }
     public function updatePIN(Request $request, $id)
     {
         $pin                = $request->pin;

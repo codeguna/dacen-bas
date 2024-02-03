@@ -23,7 +23,7 @@ class User extends Authenticatable
     use Notifiable;
     use HasRoles;
 
-    protected $fillable = ['name', 'email', 'password', 'remember_token', 'google_id', 'nomor_induk', 'position','pin'];
+    protected $fillable = ['name', 'email', 'password', 'remember_token', 'google_id', 'nomor_induk', 'position','pin','birthday'];
 
 
     /**

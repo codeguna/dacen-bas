@@ -151,10 +151,12 @@ class HomeController extends Controller
 
     public function saveProfile(Request $request){
         $request->validate([
+            'birthday' => 'required',
             'position' => 'required',
             'nomor_induk' => 'required|unique:users,nomor_induk,' . Auth::user()->id,
         ]);
         
+        $birthday           = $request->birthday;
         $position           = $request->position;
         $nomor_induk        = $request->nomor_induk;
 
@@ -162,6 +164,7 @@ class HomeController extends Controller
 
         $users              = User::find($id);
         $users->update([
+            'birthday'              => $birthday,
             'nomor_induk'           => $nomor_induk,
             'position'              => $position,
 
