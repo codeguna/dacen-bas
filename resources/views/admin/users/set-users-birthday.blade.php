@@ -17,7 +17,7 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Set Ulang Tahun Pengguna</label>
+                                <label>Set Tanggal Lahir</label>
                                 <input class="form-control" type="date" name="birthday" required>
                                 <small class="form-text text-danger">*input tanggal lahir anda</small>
                             </div>
