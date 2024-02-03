@@ -12,7 +12,7 @@ Presensi Saya
     </a>
     <div class="row">
         <div class="col-md-8">
-            <div class="card card-widget widget-user">
+            <div class="card card-widget widget-user h-100">
                 <div class="widget-user-header text-white"
                     style="background: url('https://images.pexels.com/photos/8250880/pexels-photo-8250880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center center;">
                     <h2 class="widget-user-desc text-right">
@@ -21,7 +21,7 @@ Presensi Saya
                     <h3 class="widget-user-username text-right">{{ Auth::User()->name }}</h3>
                     <h5 class="widget-user-desc text-right">{{ Auth::User()->nomor_induk??'' }}</h5>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer bg-white">
                     <div class="row">
                         <div class="col-sm-3 border-right">
                             <div class="description-block">
@@ -84,7 +84,7 @@ Presensi Saya
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card bg-gradient-dark">
+            <div class="card bg-gradient-dark h-100">
                 <div class="card-header">
                     <h2><i class="fas fa-calendar"></i> {{ date('j F Y') }}</h2>
                 </div>
