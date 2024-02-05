@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -80,6 +81,11 @@ class Lecturer extends Model
     public function lecturerFunctionalPositions()
     {
         return $this->hasMany('App\Models\LecturerFunctionalPosition', 'lecturer_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'nidn', 'nomor_induk');
     }
     
 

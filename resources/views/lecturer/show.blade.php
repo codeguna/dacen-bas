@@ -25,6 +25,12 @@
                             </p>
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
+                                    <b>Tanggal Lahir</b> <a class="float-right">
+                                        <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+                                        {{ $lecturer->user->birthday??'Belum Set' }}
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
                                     <b>NIDN/NITK</b> <a class="float-right">
                                         <i class="fa fa-hashtag" aria-hidden="true"></i>
                                         {{ $lecturer->nidn }}
