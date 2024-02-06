@@ -168,7 +168,11 @@
                 request()->is('admin/scan-log/check-late') ||
                 request()->is('admin/scan-log/check-late/*') ||
                 request()->is('admin/scan-log/result-late') ||
-                request()->is('admin/scan-log/result-late/*')
+                request()->is('admin/scan-log/result-late/*') ||
+                request()->is('admin/scan-log/select-period-total-hours') ||
+                request()->is('admin/scan-log/select-period-total-hours/*') ||
+                request()->is('admin/scan-log/result-total-hours') ||
+                    request()->is('admin/scan-log/result-total-hours/*')
                     ? 'menu-open'
                     : '' }}">
             <a href="#" class="nav-link {{ request()->is('admin/scan-logs') ||
@@ -193,7 +197,11 @@
                     request()->is('admin/scan-log/check-late') ||
                     request()->is('admin/scan-log/check-late/*') ||
                     request()->is('admin/scan-log/result-late') ||
-                    request()->is('admin/scan-log/result-late/*')
+                    request()->is('admin/scan-log/result-late/*') ||
+                    request()->is('admin/scan-log/select-period-total-hours') ||
+                    request()->is('admin/scan-log/select-period-total-hours/*') ||
+                    request()->is('admin/scan-log/result-total-hours') ||
+                    request()->is('admin/scan-log/result-total-hours/*')
                         ? 'active'
                         : '' }}">
                 <i class="nav-icon fa fa-history" aria-hidden="true"></i>
@@ -209,6 +217,13 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('admin.scan-log.select-period-total-hours') }}"
+                        class="nav-link {{ request()->is('admin/scan-log/select-period-total-hours') || request()->is('admin/scan-log/select-period-total-hours/*') || request()->is('admin/scan-log/result-total-hours') || request()->is('admin/scan-log/result-total-hours/*') ? 'active' : '' }}">
+                        <i class="fas fa-stopwatch nav-icon"></i>
+                        <p>Jam Kerja</p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.scan-log.view-request-attendances') }}"
                         class="nav-link {{ request()->is('admin/scan-log/view_request_attendances') || request()->is('admin/scan-logs/view_request_attendances/*') ? 'active' : '' }}">

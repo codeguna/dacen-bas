@@ -460,7 +460,7 @@ class ScanlogController extends Controller
             ->whereBetween('date', [$startHoliday, $endHoliday])
             ->orderBy('date', 'ASC')
             ->get();
-            
+
         $scan_logs_late = ScanLog::selectRaw('DATE(scan) as date')->where('pin', $pin)
             ->whereBetween('scan', [$startDate, $endDate])
             ->groupBy('date')
@@ -828,5 +828,18 @@ class ScanlogController extends Controller
             )
         )
             ->with('i');
+    }
+
+    public function selectPeriodHours()
+    {
+        return view('scan-log.select-total-hours-period')->with('success', 'Silahkan pilih rentang waktu untuk ditampilkan!');
+    }
+
+    public function resultTotalHours(Request $request)
+    {
+        $startDate  = $request->startDate;
+        $endDate    = $request->endDate;
+
+       return view('scan-log.result-total-hours'); 
     }
 }
