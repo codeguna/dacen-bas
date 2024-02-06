@@ -50,8 +50,8 @@
         document.getElementById('attendanceForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Mencegah pengiriman formulir secara otomatis
 
-            var startDate = new Date(document.getElementById('start_date').value);
-            var endDate = new Date(document.getElementById('end_date').value);
+            var startDate = new Date(document.getElementById('startDate').value);
+            var endDate = new Date(document.getElementById('endDate').value);
 
             if (startDate > endDate) {
                 alert("Tanggal Akhir tidak bisa lebih kecil dari Tanggal Awal.");
