@@ -840,6 +840,16 @@ class ScanlogController extends Controller
         $startDate  = $request->startDate;
         $endDate    = $request->endDate;
 
-       return view('scan-log.result-total-hours'); 
+        // $scan_logs = ScanLog::selectRaw('DATE(scan) as date')->where('pin', $pin)
+        //     ->whereBetween('scan', [$startDate, $endDate])
+        //     ->groupBy('date')
+        //     ->orderBy('date', 'ASC')
+        //     ->get();
+        $users  = User::select('id', 'name')
+            ->where('pin', '<>', NULL)
+            ->orderBy('name', 'ASC')
+            ->get();
+
+        return view('scan-log.result-total-hours', compact('users'));
     }
 }
