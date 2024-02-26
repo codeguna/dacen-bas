@@ -57,20 +57,30 @@
                                     <th>No.</th>
                                     <th>Nama - NIP/NIDN</th>
                                     <th>Departemen</th>
-                                    <th>Waktu Terlambat</th>
-                                    <th>Pulang Cepat</th>
+                                    <th>Jam Kerja</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td>
+                                            {{ ++$i }}
+                                        </td>
+                                        <td>
+                                            {{ $user->name }}
+                                        </td>
+                                        <td>
+                                            {{ $user->position??'' }}
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>No.</th>
                                     <th>Nama</th>
                                     <th>Departemen</th>
-                                    <th>Waktu Terlambat</th>
-                                    <th>Pulang Cepat</th>
+                                    <th>Jam Kerja</th>
                                 </tr>
                             </tfoot>
                         </table>
