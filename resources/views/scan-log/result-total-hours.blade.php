@@ -49,14 +49,15 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="alert alert-primary" role="alert">
-                            <strong><i class="fa fa-info-circle" aria-hidden="true"></i> Penting!</strong> Jika terdapat data yang tidak lazim/lengkap. Kemungkinan yang bersangkutan terlewatkan presensinya.
+                            <strong><i class="fa fa-info-circle" aria-hidden="true"></i> Penting!</strong> Jika terdapat
+                            data yang tidak lazim/lengkap. Kemungkinan yang bersangkutan terlewatkan presensinya.
                         </div>
                         <table id="dataTable1" class="table table-sm">
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Nama - NIP/NIDN</th>
-                                    <th>Departemen</th>
+                                    <th>Nama</th>
+                                    <th>NIP/NIDN</th>
                                     <th>Jam Kerja</th>
                                 </tr>
                             </thead>
@@ -70,7 +71,57 @@
                                             {{ $user->name }}
                                         </td>
                                         <td>
-                                            {{ $user->position??'' }}
+                                           {{ $user->nomor_induk }}
+                                        </td>
+                                        <td>
+                                            @php
+                                                $pin = $user->pin;
+                                                $startDate = request('startDate');
+                                                $endDate = request('endDate');
+                                                $scan_logs = \App\Models\ScanLog::selectRaw('DATE(scan) as date')
+                                                    ->where('pin', $pin)
+                                                    ->whereBetween('scan', [$startDate, $endDate])
+                                                    ->groupBy('date')
+                                                    ->orderBy('date', 'ASC')
+                                                    ->get();
+                                            @endphp
+                                           @php
+                                           $totalHours = 0;
+                                           $totalMinutes = 0;
+                                           @endphp
+                                           
+                                           @foreach ($scan_logs as $time)
+                                               @php
+                                               $dates = $time->date;
+                                               $firstScan = \App\Models\ScanLog::where('pin', $pin)
+                                                   ->whereDate('scan', '=', $dates)
+                                                   ->first();
+                                               $firstTime = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
+                                           
+                                               $lastScan = \App\Models\ScanLog::where('pin', $pin)
+                                                   ->whereDate('scan', '=', $dates)
+                                                   ->orderBy('scan', 'DESC')
+                                                   ->first();
+                                               $lastTime = \Carbon\Carbon::parse($lastScan->scan)->format('H:i:s');
+                                           
+                                               $start = \Carbon\Carbon::createFromFormat('H:i:s', $firstTime);
+                                               $end = \Carbon\Carbon::createFromFormat('H:i:s', $lastTime);
+                                           
+                                               $diffInHours = $start->diffInHours($end);
+                                               $diffInMinutes = $start->diffInMinutes($end) - $diffInHours * 60;
+                                           
+                                               $totalHours += $diffInHours;
+                                               $totalMinutes += $diffInMinutes;
+                                               @endphp
+                                           @endforeach
+                                           
+                                           @php
+                                           $totalHours += floor($totalMinutes / 60);
+                                           $totalMinutes = $totalMinutes % 60;
+                                           $totalTime = $totalHours . ' jam ' . $totalMinutes . ' menit';
+                                           @endphp
+                                           
+                                           <i class="fas fa-clock text-primary"></i> {{ $totalTime }}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -79,8 +130,8 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Nama</th>
-                                    <th>Departemen</th>
-                                    <th>Jam Kerja</th>
+                                    <th>NIP/NIDN</th>
+                                    <th>Total Jam Kerja</th>
                                 </tr>
                             </tfoot>
                         </table>
