@@ -537,8 +537,10 @@ class ScanlogController extends Controller
             ->groupBy('date')
             ->orderBy('date', 'ASC')
             ->get();
+        $startHoliday = date('Y-m-01'); // First day of the current month
+        $endHoliday = date('Y-m-t');    // Last day of the current month
         $holidays = Holiday::select('date', 'name')
-            ->whereBetween('date', [$start_date, $end_date])
+            ->whereBetween('date', [$startHoliday, $endHoliday])
             ->orderBy('date', 'ASC')
             ->get();
         return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs', 'scan_logs_late', 'myWillingness', 'expDate', 'holidays'))->with('i');
@@ -847,10 +849,10 @@ class ScanlogController extends Controller
         //     ->groupBy('date')
         //     ->orderBy('date', 'ASC')
         //     ->get();
-        $users  = User::select('id', 'name', 'position','pin','nomor_induk')
+        $users  = User::select('id', 'name', 'position', 'pin', 'nomor_induk')
             ->where('pin', '<>', NULL)
             ->orderBy('name', 'ASC')
-            ->get();       
+            ->get();
 
         return view('scan-log.result-total-hours', compact('users'))->with('i');
     }
