@@ -10,31 +10,11 @@ Presensi Saya
         title="Jam Kesediaan Bekerja">
         <i class="fas fa-calendar-check my-float"></i>
     </a>
-    <div class="row">        
-        <div class="col-md-4">
-            <div class="card bg-gradient-dark h-100">
-                <div class="card-header">
-                    <h2><i class="fas fa-calendar"></i> {{ date('j F Y') }}</h2>
-                </div>
-                <div class="card-body">
-                    <h5><i class="fas fa-check-circle text-success"></i> Libur Bulan ini:</h5>
-                    <small>
-                        <ol>
-                            @forelse ($holidays as $holiday)
-                            <li>{{ \Carbon\Carbon::parse($holiday->date)->format('j F') }} - {{ $holiday->name }}</li>
-                            @empty
-                            <i class="fas fa-info-circle"></i> Tidak ada libur bulan ini
-                            @endforelse
-                        </ol>
-                    </small>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
+    <div class="row">
+        <div class="col-md-12">
             <div class="card card-widget widget-user h-100">
                 <div class="widget-user-header text-white"
-                    style="background: url('https://images.pexels.com/photos/8250880/pexels-photo-8250880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center center;">
+                    style="background: url('{{ asset('images/cover-attendances.jpeg') }}') center center;background-size: 750px;">
                     <h2 class="widget-user-desc text-right">
                         <i class="fas fa-user-clock"></i> Presensi Hari Ini
                     </h2>
@@ -95,14 +75,11 @@ Presensi Saya
                                     Presensi
                                     @endif</span>
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
             </div>
-        </div>
+        </div>        
     </div>
     <br>
     <div class="row">

@@ -16,6 +16,12 @@
                                 <small><i class="fa fa-bolt text-warning"></i> Pulang Cepat</small>
                             </button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="hari-libur-tab" data-toggle="tab" data-target="#hari-libur"
+                                type="button" role="tab">
+                                <small><i class="fas fa-star text-primary"></i> Hari Libur</small>
+                            </button>
+                        </li>
                     </ul>
                 </h3>
             </div>
@@ -188,6 +194,30 @@
                             <strong>
                                 <p id="countfast"></p>
                             </strong>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="hari-libur" role="tabpanel">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card bg-gradient-dark h-100">
+                                    <div class="card-header">
+                                        <h2><i class="fas fa-calendar"></i> {{ date('j F Y') }}</h2>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-check-circle text-success"></i> Libur Bulan ini:</h5>
+                                        <small>
+                                            <ol>
+                                                @forelse ($holidays as $holiday)
+                                                <li>{{ \Carbon\Carbon::parse($holiday->date)->format('j F') }} - {{ $holiday->name }}</li>
+                                                @empty
+                                                <i class="fas fa-info-circle"></i> Tidak ada libur bulan ini
+                                                @endforelse
+                                            </ol>
+                                        </small>
+                    
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

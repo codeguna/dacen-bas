@@ -146,6 +146,34 @@
                 </li>
             </ul>
         </li>
+        <li class="nav-item {{ request()->is('admin/birthday/*') ||
+                request()->is('admin/birthday/select')
+                    ? 'menu-open'
+                    : '' }}">
+            <a href="#" class="nav-link 
+        {{ request()->is('admin/birthday/*') ||
+        request()->is('admin/birthday/select') ||
+        request()->is('admin/birthday/result') ||
+        request()->is('admin/birthday/result/*')
+            ? 'active'
+            : '' }}">
+                <i class="fas fa-birthday-cake nav-icon"></i>
+                <p>
+                    Ulang Tahun
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('admin.birthday.select') }}"
+                        class="nav-link {{ request()->is('admin/birthday/select') ||request()->is('admin/birthday/select/*') ||request()->is('admin/birthday/result') ||
+                        request()->is('admin/birthday/result/*') ? 'active' : '' }}">
+                       <i class="fas fa-search nav-icon"></i>
+                        <p>Cari Ulang Tahun</p>
+                    </a>
+                </li>                
+            </ul>
+        </li>
         <li class="nav-item {{ request()->is('admin/scan-logs') ||
                 request()->is('admin/scan-logs/*') ||
                 request()->is('admin/scan-log/filter') ||

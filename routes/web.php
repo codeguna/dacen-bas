@@ -131,4 +131,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::delete('/holiday/bulk-destroy-last/', 'HolidayController@destroyLastYear')->name('holidays.destroy-last-year');
     Route::delete('/holiday/bulk-destroy-current/', 'HolidayController@destroyCurrentYear')->name('holidays.destroy-current-year');
     //End Route Holidays
+    //Route Birthday
+    Route::get('/birthday/select','Admin\UsersController@selectPeriod')->name('birthday.select');
+    Route::get('/birthday/result','Admin\UsersController@resultBirthday')->name('birthday.result');
+    Route::get('/birthday/result/filter','Admin\UsersController@resultBirthdayFilter')->name('birthday.result.filter');
+    //End Route Birthday
 });

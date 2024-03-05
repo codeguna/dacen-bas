@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Ui\Presets\React;
 
@@ -21,7 +22,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
 
@@ -37,7 +38,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
         $roles = Role::get()->pluck('name', 'name');
@@ -53,7 +54,7 @@ class UsersController extends Controller
      */
     public function store(StoreUsersRequest $request)
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
         $user = User::create($request->all());
@@ -72,7 +73,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
         $roles = Role::get()->pluck('name', 'name');
@@ -89,7 +90,7 @@ class UsersController extends Controller
      */
     public function update(UpdateUsersRequest $request, User $user)
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
 
@@ -102,7 +103,7 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
 
@@ -119,7 +120,7 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
 
@@ -135,7 +136,7 @@ class UsersController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
         User::whereIn('id', request('ids'))->delete();
@@ -143,18 +144,21 @@ class UsersController extends Controller
         return response()->noContent();
     }
 
-    public function usersPin(){
-        $users  = User::orderBy('name','ASC')->get();
+    public function usersPin()
+    {
+        $users  = User::orderBy('name', 'ASC')->get();
 
-        return view('admin.users.view-users-pin',compact('users'))->with('i');
+        return view('admin.users.view-users-pin', compact('users'))->with('i');
     }
-    public function setPin($id){
+    public function setPin($id)
+    {
 
         $user = User::find($id);
 
         return view('admin.users.set-users-pin', compact('user'));
     }
-    public function setBirthday(){
+    public function setBirthday()
+    {
 
         return view('admin.users.set-users-birthday');
     }
@@ -170,7 +174,7 @@ class UsersController extends Controller
 
         $users              = User::find($id);
         $users->update([
-                'birthday'       => $birthday,
+            'birthday'       => $birthday,
         ]);
         return redirect()->route('admin.scan-log.my-attendances')->with('success', 'Berhasil memperbarui Tanggal Lahir Pengguna.');
     }
@@ -184,8 +188,49 @@ class UsersController extends Controller
 
         $users              = User::find($id);
         $users->update([
-                'pin'       => $pin,
+            'pin'       => $pin,
         ]);
         return redirect()->route('admin.user.pin')->with('success', 'Berhasil memperbarui PIN Pengguna.');
+    }
+
+    public function selectPeriod()
+    {
+        return view('admin.users.select-period');
+    }
+
+    public function resultBirthday(Request $request)
+    {
+        $start_date = $request->start_date;
+        $end_date   = $request->end_date;
+
+        $startMonth = Carbon::parse($start_date)->format('m');
+        $endMonth = Carbon::parse($end_date)->format('m');
+
+        $users      = User::select('name', 'birthday')
+            ->where('birthday', '<>', NULL)
+            ->whereMonth('birthday', '>=', $startMonth)
+            ->whereMonth('birthday', '<=', $endMonth)
+            ->orderBy('birthday', 'ASC')
+            ->get();
+
+        return view('admin.users.result-birthday', compact('start_date', 'end_date', 'users'))->with('i');
+    }
+
+    public function resultBirthdayFilter(Request $request)
+    {
+        $start_date = $request->start_date;
+        $end_date   = $request->end_date;
+
+        $startMonth = Carbon::parse($start_date)->format('m');
+        $endMonth = Carbon::parse($end_date)->format('m');
+
+        $users      = User::select('name', 'birthday')
+            ->where('birthday', '<>', NULL)
+            ->whereMonth('birthday', '>=', $startMonth)
+            ->whereMonth('birthday', '<=', $endMonth)
+            ->orderByRaw("MONTH(birthday), DAY(birthday)")
+            ->get();
+
+        return view('admin.users.result-birthday', compact('start_date', 'end_date', 'users'))->with('i');
     }
 }
