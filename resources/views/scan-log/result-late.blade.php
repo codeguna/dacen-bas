@@ -131,6 +131,7 @@
                                                     if (!empty($lateTime)) {
                                                         $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s', $lateTime->time_of_entry)
                                                             ->addMinutes(10)
+                                                            ->addSeconds(01)
                                                             ->format('H:i:s');
                                                     } else {
                                                         $resultLateTime = null;
