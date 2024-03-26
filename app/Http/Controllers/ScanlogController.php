@@ -533,7 +533,8 @@ class ScanlogController extends Controller
             ->orderBy('scan', 'ASC')
             ->get();
         $scan_logs_late = ScanLog::selectRaw('DATE(scan) as date')->where('pin', $pin)
-            ->whereBetween('scan', [$start_date, $end_date])
+            ->whereDate('scan', '>=', $start_date)
+            ->whereDate('scan', '<=', $end_date)
             ->groupBy('date')
             ->orderBy('date', 'ASC')
             ->get();
