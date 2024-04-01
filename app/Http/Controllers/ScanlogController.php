@@ -168,12 +168,21 @@ class ScanlogController extends Controller
         $userIP = request()->ip(); // Mendapatkan alamat IP  
         // $response = Http::get("https://ipinfo.io/{$userIP}/json");
         // $data = $response->json();
-       
+
 
         // $org = $data['org'];
         // $org = 'BIZNET';
 
-        if ($userIP === '118.99.72.33') {
+        // if (stristr($org, 'BIZNET') !== false) {
+        //     ScanLog::create([
+        //         'pin' => auth()->user()->pin, // Ganti dengan cara yang sesuai untuk mendapatkan PIN pengguna yang login
+        //         'scan' => now(), // Tanggal dan waktu saat ini
+        //         'verify' => true, // Contoh nilai verifikasi
+        //         'status_scan' => true, // Contoh status scan
+        //         'ip_scan' => $userIP, // Alamat IP pengguna yang melakukan presensi
+        //     ]);
+        $myIP = env('OFFICE_IP');
+        if ($userIP === $myIP) {
             ScanLog::create([
                 'pin' => auth()->user()->pin, // Ganti dengan cara yang sesuai untuk mendapatkan PIN pengguna yang login
                 'scan' => now(), // Tanggal dan waktu saat ini
