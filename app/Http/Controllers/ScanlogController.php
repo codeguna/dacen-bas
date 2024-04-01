@@ -165,14 +165,15 @@ class ScanlogController extends Controller
             return redirect()->back()->with('error', 'Anda Tidak memiliki PIN ');
         }
 
-        $userIP = request()->ip(); // Mendapatkan alamat IP 
-        $response = Http::get("https://ipinfo.io/{$userIP}/json");
-        $data = $response->json();
+        $userIP = request()->ip(); // Mendapatkan alamat IP  
+        // $response = Http::get("https://ipinfo.io/{$userIP}/json");
+        // $data = $response->json();
+       
 
-        $org = $data['org'];
+        // $org = $data['org'];
         // $org = 'BIZNET';
 
-        if (stristr($org, 'BIZNET') !== false) {
+        if ($userIP === '118.99.72.33') {
             ScanLog::create([
                 'pin' => auth()->user()->pin, // Ganti dengan cara yang sesuai untuk mendapatkan PIN pengguna yang login
                 'scan' => now(), // Tanggal dan waktu saat ini
