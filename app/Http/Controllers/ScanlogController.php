@@ -182,7 +182,7 @@ class ScanlogController extends Controller
         //         'ip_scan' => $userIP, // Alamat IP pengguna yang melakukan presensi
         //     ]);
         $myIP = env('OFFICE_IP');
-        if ($userIP === $myIP) {
+        if ($userIP === '118.99.72.241') {
             ScanLog::create([
                 'pin' => auth()->user()->pin, // Ganti dengan cara yang sesuai untuk mendapatkan PIN pengguna yang login
                 'scan' => now(), // Tanggal dan waktu saat ini
