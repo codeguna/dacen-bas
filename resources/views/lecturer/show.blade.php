@@ -14,9 +14,26 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle"
-                                    src="https://www.w3schools.com/howto/img_avatar.png" alt="User profile picture">
+                                @if (Auth::user()->photo == null)
+                                    <img class="profile-user-img img-fluid img-circle"
+                                        src="https://www.w3schools.com/howto/img_avatar.png" alt="User profile picture">
+                                        @else
+                                        <img class="profile-user-img img-fluid img-circle"
+                                        src="/data_photo_profil/{{ Auth::User()->photo }}" alt="User profile picture">
+                                @endif
                             </div>
+                            <p class="text-center">
+                                <form action="{{ route('admin.users.photo') }}" method="POST" id="myForm"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group">
+                                        <input type="file" class="form-control-file" name="photo" onchange="submitForm()"
+                                            required>
+                                        <small class="form-text text-danger">*Format .jpg maksimal 500x500 &
+                                            1MB</small>
+                                    </div>
+                                </form>
+                                </p>
                             <h3 class="profile-username text-center">
                                 {{ $lecturer->name }}
                             </h3>
@@ -246,5 +263,8 @@
             // Submit the form when the checkbox is clicked
             statusForm.submit();
         });
+        function submitForm() {
+            document.getElementById('myForm').submit();
+        }
     </script>
 @endsection

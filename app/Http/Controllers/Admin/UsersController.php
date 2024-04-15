@@ -11,7 +11,9 @@ use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Ui\Presets\React;
+use Intervention\Image\Facades\Image;
 
 class UsersController extends Controller
 {
@@ -232,5 +234,34 @@ class UsersController extends Controller
             ->get();
 
         return view('admin.users.result-birthday', compact('start_date', 'end_date', 'users'))->with('i');
+    }
+
+    public function updatePhoto(Request $request)
+    {
+        $validator = Validator::make($request->all(), User::$rules);
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali format file anda (.jpg, .jpeg) dan pastikan file tidak melebihi 1MB');
+        }
+
+        $id             = Auth::user()->id;
+        $photo_file     = $request->file('photo');
+        $user_id        = $id;
+
+        $name_file = time() . "_" . $photo_file->getClientOriginalName();
+        $tujuan_upload = 'data_photo_profil';
+        $photo_file->move($tujuan_upload, $name_file); // Save the compressed image
+
+        $user = User::find($user_id);
+        // Update the photo attribute
+        $user->photo = $name_file;
+        // Save the changes
+        $user->save();
+
+        return redirect()->back()
+            ->with('success', 'Berhasil menambahkan data Pengajuan, silahkan menunggu untuk persetujuan dari BAS.');
     }
 }

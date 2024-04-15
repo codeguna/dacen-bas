@@ -9,6 +9,7 @@
 /public/data_sertifikat_dosen
 /public/data_jabfung_dosen
 /public/data_photo_pengajuan
+/public/data_photo_profil
 /public/storage
 /storage/*.key
 /vendor
