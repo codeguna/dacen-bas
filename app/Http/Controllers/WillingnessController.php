@@ -19,8 +19,8 @@ class WillingnessController extends Controller
      */
     public function index()
     {
-        
-        $users          = User::where('pin', '<>', null)->orderBy('name','ASC')->get();
+
+        $users          = User::where('pin', '<>', null)->orderBy('name', 'ASC')->get();
 
         return view('willingness.index', compact('users'))
             ->with('i');
@@ -61,10 +61,10 @@ class WillingnessController extends Controller
      */
     public function show($pin)
     {
-        $willingnesses = Willingness::where('pin',$pin)->paginate(6);
-        $willingnessID = Willingness::select('pin')->where('pin',$pin)->first();
+        $willingnesses = Willingness::where('pin', $pin)->paginate(6);
+        $willingnessID = Willingness::select('pin')->where('pin', $pin)->first();
 
-        return view('willingness.show', compact('willingnesses','willingnessID'))->with('i');
+        return view('willingness.show', compact('willingnesses', 'willingnessID'))->with('i');
     }
 
     /**
@@ -89,7 +89,7 @@ class WillingnessController extends Controller
      */
     public function update(Request $request, Willingness $willingness)
     {
-       //request()->validate(Willingness::$rules);
+        //request()->validate(Willingness::$rules);
 
         $willingness->update($request->all());
 
@@ -104,9 +104,29 @@ class WillingnessController extends Controller
      */
     public function destroy($pin)
     {
-        $willingness = Willingness::where('pin',$pin)->delete();
+        $willingness = Willingness::where('pin', $pin)->delete();
 
         return redirect()->route('admin.willingnesses.index')
             ->with('success', 'Willingness deleted successfully');
+    }
+
+    public function bulkUpdate(Request $request)
+    {
+        $data = $request->all();
+        // Loop melalui data yang diterima dan lakukan pembaruan
+        foreach ($data['id'] as $index => $id) {
+            $willingness = Willingness::find($id);
+            if ($willingness) {
+                $willingness->day_code = $data['day_code'][$index];
+                $willingness->start_date = $data['start_date'][$index];
+                $willingness->end_date = $data['end_date'][$index];
+                $willingness->time_of_entry = $data['time_of_entry'][$index];
+                $willingness->time_of_return = $data['time_of_return'][$index];
+                $willingness->save();
+            }
+        }
+
+        return redirect()->back()
+            ->with('success', 'Willingness updated successfully');
     }
 }

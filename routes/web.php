@@ -120,6 +120,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('/willingness/store_time/','WillingnessController@storeTime')->name('willingness.storeTime');
     Route::post('/willingness/update_time/','WillingnessController@updateTime')->name('willingness.updateTime');
     Route::post('/willingness/import/','ImportExcelController@importWillingness')->name('willingness.import');
+    Route::post('/willingness/bulk_update/','WillingnessController@bulkUpdate')->name('willingness.bulkUpdate');
     //End Route Willingness
     //Route Check Late
     Route::get('/scan-log/check-late','ScanlogController@selectPeriodLate')->name('scan-log.selectLate');

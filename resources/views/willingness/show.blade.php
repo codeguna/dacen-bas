@@ -53,16 +53,30 @@
                                     <th>Jam Pulang</th>
                                     <th>Berlaku Dari</th>
                                     <th>Berlaku Sampai</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
+                            <form method="POST" action="{{ route('admin.willingness.bulkUpdate') }}"
+                                            role="form" enctype="multipart/form-data">
+                                            @csrf
+                                            @php
+                                            $indexID = 0;
+                                            $indexDAYCODE = 0;
+                                            $indexSTARTDATE = 0;
+                                            $indexENDDATE = 0;
+                                            $indexENTRY = 0;
+                                            $indexRETURN = 0;
+                                        @endphp
                             @foreach ($willingnesses as $willingness)
                                 <tbody>
                                     <tr>
                                         <td>
                                             {{ ++$i }}
+                                            <input type="hidden" name="id[{{ ++$indexID }}]"
+                                                    value="{{ $willingness->id }}">
                                         </td>
                                         <td>
+                                            <input type="hidden" name="day_code[{{ ++$indexDAYCODE }}]"
+                                                    value="{{ $willingness->day_code }}">
                                             @switch($willingness->day_code)
                                                 @case(1)
                                                     Senin
@@ -97,31 +111,33 @@
                                             <form method="POST"
                                                 action="{{ route('admin.willingnesses.update', $willingness->id) }}"
                                                 role="form" enctype="multipart/form-data">
-                                                <input class="form-control" type="time" name="time_of_entry"
+                                                <input class="form-control" type="time" name="time_of_entry[{{ ++$indexENTRY }}]"
                                                     value="{{ $willingness->time_of_entry }}">
                                         <td>
-                                            <input class="form-control" type="time" name="time_of_return"
+                                            <input class="form-control" type="time" name="time_of_return[{{ ++$indexRETURN }}]"
                                                 value="{{ $willingness->time_of_return }}">
                                         </td>
                                         <td>
-                                            <input class="form-control" type="date" name="start_date"
+                                            <input class="form-control" type="date" name="start_date[{{ ++$indexSTARTDATE }}]"
                                                 value="{{ $willingness->start_date }}">
                                         </td>
                                         <td>
-                                            <input class="form-control" type="date" name="end_date"
+                                            <input class="form-control" type="date" name="end_date[{{ ++$indexENDDATE }}]"
                                                 value="{{ $willingness->end_date }}">
-                                        </td>
-                                        <td>
-                                            {{ method_field('PATCH') }}
-                                            @csrf
-                                            <button class="btn btn-warning">
-                                                <i class="fa fa-check-circle" aria-hidden="true"></i>
-                                            </button>
-                                            </form>
                                         </td>
                                     </tr>
                             @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6">                                      
+                                            <button class="btn btn-primary w-100" type="submit">
+                                                <i class="fas fa-check-circle"></i> Update Semua
+                                            </button>                                        
+                                    </td>
+                                </form>
+                                </tr>
+                            </tfoot>
                         </table>
 
                     </div>
