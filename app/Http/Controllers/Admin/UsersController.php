@@ -262,6 +262,6 @@ class UsersController extends Controller
         $user->save();
 
         return redirect()->back()
-            ->with('success', 'Berhasil menambahkan data Pengajuan, silahkan menunggu untuk persetujuan dari BAS.');
+            ->with('success', 'Berhasil menambahkan foto profil.');
     }
 }
