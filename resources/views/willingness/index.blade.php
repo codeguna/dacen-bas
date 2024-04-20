@@ -35,7 +35,7 @@
 
                                 @csrf
                                 <div class="input-group mb-3">
-                                    <input type="file" name="file" class="form-control-file m-1">
+                                    <input type="file" name="file" class="form-control-file m-1" required>
                                     <br>
                                     <button type="submit" class="btn btn-warning btn-sm m-1">
                                         <i class="fas fa-check-circle"></i> Import
