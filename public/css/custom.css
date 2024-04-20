@@ -139,3 +139,19 @@ hr {
 .my-float {
   margin-top: 12px;
 }
+
+@keyframes beat-fade {
+  0%, 100% {
+      opacity: 0;
+      transform: scale(0.8);
+  }
+  50% {
+      opacity: 1;
+      transform: scale(0.8); /* Increase the scale for the beat effect */
+  }
+}
+
+.beat-fade-icon {
+  font-size: 24px;
+  animation: beat-fade 2s ease infinite;
+}

@@ -61,8 +61,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fas fa-birthday-cake text-pink"></i>
+                            @if ($birthdayCount == 0)
+                            <i class="fas fa-birthday-cake text-muted"></i>
+                            @else
+                            <i class="fas fa-birthday-cake text-pink beat-fade-icon"></i>
                             <span class="badge badge-warning navbar-badge">{{ $birthdayCount }}</span>
+                            @endif
+                            
+
+                            
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <span class="dropdown-item dropdown-header">{{ $birthdayCount }} orang Ulang Tahun</span>
