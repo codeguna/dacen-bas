@@ -21,8 +21,8 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th width="10">
-
+                        <th width="20">
+                            <i class="fa fa-camera" aria-hidden="true"></i>
                         </th>
                         <th>
                             {{ trans('cruds.user.fields.id') }}
@@ -45,7 +45,13 @@
                     @foreach ($users as $key => $user)
                         <tr data-entry-id="{{ $user->id }}">
                             <td>
-
+                                @if ($user->photo == null)
+                                    <img class="profile-user-img img-fluid"
+                                        src="https://www.w3schools.com/howto/img_avatar.png" alt="User profile picture">
+                                @else
+                                    <img class="profile-user-img img-fluid"
+                                        src="/data_photo_profil/{{ $user->photo }}" alt="User profile picture">
+                                @endif
                             </td>
                             <td>
                                 {{ $user->id ?? '' }}
