@@ -25,9 +25,6 @@
                             <i class="fa fa-camera" aria-hidden="true"></i>
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.user.fields.name') }}
                         </th>
                         <th>
@@ -43,7 +40,7 @@
                 </thead>
                 <tbody>
                     @foreach ($users as $key => $user)
-                        <tr data-entry-id="{{ $user->id }}">
+                        <tr>
                             <td>
                                 @if ($user->photo == null)
                                     <img class="profile-user-img img-fluid"
@@ -52,9 +49,6 @@
                                     <img class="profile-user-img img-fluid"
                                         src="/data_photo_profil/{{ $user->photo }}" alt="User profile picture">
                                 @endif
-                            </td>
-                            <td>
-                                {{ $user->id ?? '' }}
                             </td>
                             <td>
                                 {{ $user->name ?? '' }}

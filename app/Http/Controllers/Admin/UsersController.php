@@ -28,7 +28,7 @@ class UsersController extends Controller
             return abort(401);
         }
 
-        $users = User::all();
+        $users = User::orderBy('name','ASC')->get();
 
         return view('admin.users.index', compact('users'));
     }
