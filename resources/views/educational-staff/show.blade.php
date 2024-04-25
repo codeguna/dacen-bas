@@ -15,25 +15,37 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                @if (Auth::user()->photo == null)
-                                    <img class="profile-user-img img-fluid img-circle"
-                                        src="https://www.w3schools.com/howto/img_avatar.png" alt="User profile picture">
-                                        @else
+                                @php
+                                    $idTendik = $educationalStaff->nip;
+                                    $cekUser = \App\User::where('nomor_induk', $idTendik)->first();
+                                @endphp
+                                @if ($cekUser)
+                                    @if ($educationalStaff->user->photo == null)
                                         <img class="profile-user-img img-fluid img-circle"
-                                        src="/data_photo_profil/{{ Auth::User()->photo }}" alt="User profile picture">
+                                            src="https://www.w3schools.com/howto/img_avatar.png" alt="User profile picture">
+                                    @else
+                                        <img class="profile-user-img img-fluid img-circle"
+                                            src="/data_photo_profil/{{ $educationalStaff->user->photo }}"
+                                            alt="User profile picture">
+                                    @endif
                                 @endif
+
                             </div>
                             <p class="text-center">
-                            <form action="{{ route('admin.users.photo') }}" method="POST" id="myForm"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <input type="file" class="form-control-file" name="photo" onchange="submitForm()"
-                                        required>
-                                    <small class="form-text text-danger">*Format .jpg maksimal 500x500 &
-                                        1MB</small>
-                                </div>
-                            </form>
+                                @if ($cekUser)
+                                    <form action="{{ route('admin.users.photo') }}" method="POST" id="myForm"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $educationalStaff->nip }}">
+                                        <div class="form-group">
+                                            <input type="file" class="form-control-file" name="photo"
+                                                onchange="submitForm()" required>
+                                            <small class="form-text text-danger">*Format .jpg maksimal 500x500 &
+                                                1MB</small>
+                                        </div>
+                                    </form>
+                                @endif
+
                             </p>
                             <h3 class="profile-username text-center">
                                 {{ $educationalStaff->name }}

@@ -247,15 +247,21 @@ class UsersController extends Controller
                 ->with('error', 'Periksa kembali format file anda (.jpg, .jpeg) dan pastikan file tidak melebihi 1MB');
         }
 
-        $id             = Auth::user()->id;
+        $id             = $request->id;
         $photo_file     = $request->file('photo');
         $user_id        = $id;
+        $user = User::where('nomor_induk',$user_id)->first();
 
+        if($user == null){
+            return redirect()->back()
+            ->with('warning', 'Untuk Dosen Non Tetap, fitur ini masih Coming-Soon');
+        }
+        
         $name_file = time() . "_" . $photo_file->getClientOriginalName();
         $tujuan_upload = 'data_photo_profil';
         $photo_file->move($tujuan_upload, $name_file); // Save the compressed image
 
-        $user = User::find($user_id);
+        
         // Update the photo attribute
         $user->photo = $name_file;
         // Save the changes
