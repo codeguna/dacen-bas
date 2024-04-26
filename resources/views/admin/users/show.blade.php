@@ -63,9 +63,10 @@
                                         enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $user->nomor_induk }}">
-                                        <div class="form-group">
-                                            <input type="file" class="form-control-file" name="photo"
+                                        <div class="custom-file mt-1">
+                                            <input type="file" class="custom-file-input" name="photo"
                                                 onchange="submitForm()" required>
+                                                <label class="custom-file-label">Choose file</label>
                                             <small class="form-text text-danger">*Format .jpg maksimal 500x500 &
                                                 1MB</small>
                                         </div>

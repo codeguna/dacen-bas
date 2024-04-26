@@ -44,10 +44,10 @@
                             <td>
                                 @if ($user->photo == null)
                                     <img class="profile-user-img img-fluid"
-                                        src="https://www.w3schools.com/howto/img_avatar.png" alt="User profile picture">
+                                        src="https://www.w3schools.com/howto/img_avatar.png" alt="User profile picture" loading="lazy">
                                 @else
                                     <img class="profile-user-img img-fluid"
-                                        src="/data_photo_profil/{{ $user->photo }}" alt="User profile picture">
+                                        src="/data_photo_profil/{{ $user->photo }}" alt="User profile picture" loading="lazy">
                                 @endif
                             </td>
                             <td>
