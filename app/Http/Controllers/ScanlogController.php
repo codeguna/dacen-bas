@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\AttendancesRequest;
 use App\Models\Holiday;
+use App\Models\Log;
 use App\Models\ScanLog;
 use App\Models\ScanLogsExtra;
 use App\Models\Willingness;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 use Intervention\Image\Facades\Image;
+use Jenssegers\Agent\Facades\Agent;
 
 class ScanlogController extends Controller
 {
@@ -347,7 +349,7 @@ class ScanlogController extends Controller
 
         $pin = Auth::user()->pin;
         $birthday_pengguna = auth()->user()->birthday;
-
+        
         if ($birthday_pengguna === null) {
             return redirect()->route('admin.user.set-birthday')->with('warning', 'Silahkan lengkapi data tanggal lahir anda!');
         }

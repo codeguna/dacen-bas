@@ -138,4 +138,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/birthday/result/filter','Admin\UsersController@resultBirthdayFilter')->name('birthday.result.filter');
     Route::post('/user/update-photo','Admin\UsersController@updatePhoto')->name('users.photo');
     //End Route Birthday
+    //Logs Route
+    Route::get('/logs/index','LogController@index')->name('logs.index');
+    Route::delete('/logs/delete', 'LogController@destroy')->name('logs.destroy');
+    //End Logs Route
 });
