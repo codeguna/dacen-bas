@@ -43,61 +43,62 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($scan_logs_late as $late)
-                                    @php
-                                    $pin = Auth::user()->pin;
-                                    $dates = \Carbon\Carbon::parse($late->date);
-                                    $firstScan = \App\Models\ScanLog::where('pin', $pin)
-                                    ->where(function ($query) use ($dates) {
-                                    $query->whereDate('scan', '=', $dates);
-                                    })
-                                    ->orderBy('scan', 'ASC')
-                                    ->first();
-                                    $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
-                                    $days = \Carbon\Carbon::parse($firstScan->scan)->format('l');
-                                    if ($days == 'Monday') {
-                                    $dayCode = 1;
-                                    } elseif ($days == 'Tuesday') {
-                                    $dayCode = 2;
-                                    } elseif ($days == 'Wednesday') {
-                                    $dayCode = 3;
-                                    } elseif ($days == 'Thursday') {
-                                    $dayCode = 4;
-                                    } elseif ($days == 'Friday') {
-                                    $dayCode = 5;
-                                    } elseif ($days == 'Saturday') {
-                                    $dayCode = 6;
-                                    }
-                                    $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
-                                    $lateTime = \App\Models\Willingness::where('pin', $pin)
-                                    ->where('day_code', $dayCode)
-                                    ->where(function ($query) use ($now) {
-                                    $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
-                                        })
-                                        ->first();
-                                        if (!empty($lateTime)) {
-                                        $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s',
-                                        $lateTime->time_of_entry)
-                                        ->addMinutes(10)
-                                        ->addSeconds(01)
-                                        ->format('H:i:s');
-                                        } else {
-                                        $resultLateTime = null;
-                                        }
-                                        @endphp
-                                        <tr>
-                                            @if ($resultLateTime == null)
-                                            @elseif ($times >= $resultLateTime)
-                                            <td>
-                                                {{ $days }} | {{ $late->date }}
-                                            </td>
-                                            <td>
-                                                <span><i class="fa fa-times text-danger" aria-hidden="true"></i>
-                                                    {{ $times }}</span>
-                                            </td>
-                                            @else
-                                            @endif
-                                        </tr>
-                                        @endforeach
+    @php
+    $pin = Auth::user()->pin;
+    $dates = \Carbon\Carbon::parse($late->date);
+    $firstScan = \App\Models\ScanLog::where('pin', $pin)
+        ->where(function ($query) use ($dates) {
+            $query->whereDate('scan', '=', $dates);
+        })
+        ->orderBy('scan', 'ASC')
+        ->first();
+    $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
+    $days = date('l', strtotime($firstScan->scan));
+    $dayCode = null;
+    if ($days == 'Monday') {
+        $dayCode = 1;
+    } elseif ($days == 'Tuesday') {
+        $dayCode = 2;
+    } elseif ($days == 'Wednesday') {
+        $dayCode = 3;
+    } elseif ($days == 'Thursday') {
+        $dayCode = 4;
+    } elseif ($days == 'Friday') {
+        $dayCode = 5;
+    } elseif ($days == 'Saturday') {
+        $dayCode = 6;
+    }
+    $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
+    $lateTime = \App\Models\Willingness::where('pin', $pin)
+        ->where('day_code', $dayCode)
+        ->where(function ($query) use ($now) {
+            $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
+        })
+        ->first();
+    if (!empty($lateTime)) {
+        $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s',
+            $lateTime->time_of_entry)
+            ->addMinutes(10)
+            ->addSeconds(01)
+            ->format('H:i:s');
+    } else {
+        $resultLateTime = null;
+    }
+    @endphp
+    <tr>
+        @if ($resultLateTime == null)
+        @elseif ($times >= $resultLateTime)
+        <td>
+            {{ $days }} | {{ $late->date }}
+        </td>
+        <td>
+            <span><i class="fa fa-times text-danger" aria-hidden="true"></i>
+                {{ $times }}</span>
+        </td>
+        @else
+        @endif
+    </tr>
+@endforeach
                                 <tfoot>
                                     <tr>
                                         <th><i class="fas fa-calendar"></i> Tanggal</th>
