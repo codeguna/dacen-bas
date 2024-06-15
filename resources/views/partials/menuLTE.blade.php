@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -103,6 +103,46 @@
                             class="nav-link {{ request()->is('admin/lecturers/create') || request()->is('admin/lecturers/create/*') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-user-plus"></i>
                             <p>Tambah Dosen</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li
+                class="nav-item {{ request()->is('admin/dashboard/dosen-prodi/*') || request()->is('admin/dashboard/dosen-prodi')
+                    ? 'menu-open'
+                    : '' }}">
+                <a href="#"
+                    class="nav-link  {{ request()->is('admin/dashboard/dosen-prodi/*') || request()->is('admin/dashboard/dosen-prodi') ? 'active' : '' }}">
+                    <i class="fas fa-user-graduate nav-icon"></i>
+                    <p>
+                        Dosen Dashboard
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.dashboard.dosen-prodi') }}"
+                            class="nav-link {{ request()->is('admin/dashboard/dosen-prodi') || request()->is('admin/dashboard/dosen-prodi/*') ? 'active' : '' }}">
+                            <i class="fas fa-university nav-icon"></i>
+                            <p>Per Prodi</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-user-tie nav-icon"></i>
+                            <p>Per Jabatan Akademik</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-pallet nav-icon"></i>
+                            <p>Per Golongan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-arrow-up nav-icon"></i>
+                            <p>Pengembangan Dosen</p>
                         </a>
                     </li>
                 </ul>

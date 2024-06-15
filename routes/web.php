@@ -142,4 +142,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/logs/index','LogController@index')->name('logs.index');
     Route::delete('/logs/delete', 'LogController@destroy')->name('logs.destroy');
     //End Logs Route
+    //Route Dashboard
+    Route::get('/dashboard/dosen-prodi','DashboardController@dosenProdi')->name('dashboard.dosen-prodi');
+    //End Route Dashboard
 });
