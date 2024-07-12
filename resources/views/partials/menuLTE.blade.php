@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -108,11 +108,19 @@
                 </ul>
             </li>
             <li
-                class="nav-item {{ request()->is('admin/dashboard/dosen-prodi/*') || request()->is('admin/dashboard/dosen-prodi')
+                class="nav-item {{ request()->is('admin/dashboard/dosen-prodi/*') ||
+                request()->is('admin/dashboard/dosen-prodi') ||
+                request()->is('admin/dashboard/jabatan-akademik') ||
+                request()->is('admin/dashboard/jabatan-akademik/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
-                    class="nav-link  {{ request()->is('admin/dashboard/dosen-prodi/*') || request()->is('admin/dashboard/dosen-prodi') ? 'active' : '' }}">
+                    class="nav-link  {{ request()->is('admin/dashboard/dosen-prodi/*') ||
+                    request()->is('admin/dashboard/dosen-prodi') ||
+                    request()->is('admin/dashboard/jabatan-akademik') ||
+                    request()->is('admin/dashboard/jabatan-akademik/*')
+                        ? 'active'
+                        : '' }}">
                     <i class="fas fa-user-graduate nav-icon"></i>
                     <p>
                         Dosen Dashboard
@@ -128,7 +136,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.dashboard.jabatan-akademik') }}"
+                            class="nav-link {{ request()->is('admin/dashboard/jabatan-akademik') || request()->is('admin/dashboard/jabatan-akademik/*') ? 'active' : '' }}">
                             <i class="fas fa-user-tie nav-icon"></i>
                             <p>Per Jabatan Akademik</p>
                         </a>
@@ -248,7 +257,9 @@
                 request()->is('admin/scan-log/select-period-total-hours') ||
                 request()->is('admin/scan-log/select-period-total-hours/*') ||
                 request()->is('admin/scan-log/result-total-hours') ||
-                request()->is('admin/scan-log/result-total-hours/*')
+                request()->is('admin/scan-log/result-total-hours/*') ||
+                request()->is('admin/scan-log/select-missing-date') ||
+                request()->is('admin/scan-log/select-missing-date/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -278,7 +289,9 @@
                     request()->is('admin/scan-log/select-period-total-hours') ||
                     request()->is('admin/scan-log/select-period-total-hours/*') ||
                     request()->is('admin/scan-log/result-total-hours') ||
-                    request()->is('admin/scan-log/result-total-hours/*')
+                    request()->is('admin/scan-log/result-total-hours/*') ||
+                    request()->is('admin/scan-log/select-missing-date') ||
+                    request()->is('admin/scan-log/select-missing-date/*')
                         ? 'active'
                         : '' }}">
                     <i class="nav-icon fa fa-history" aria-hidden="true"></i>
@@ -294,6 +307,13 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.scan-log.select-missing-date') }}"
+                            class="nav-link {{ request()->is('admin/scan-log/select-missing-date') || request()->is('admin/scan-log/select-missing-date/*') ? 'active' : '' }}">
+                            <i class="fa fa-download nav-icon" aria-hidden="true"></i>
+                            <p>Tarik Presensi Manual</p>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.scan-log.select-period-total-hours') }}"
                             class="nav-link {{ request()->is('admin/scan-log/select-period-total-hours') || request()->is('admin/scan-log/select-period-total-hours/*') || request()->is('admin/scan-log/result-total-hours') || request()->is('admin/scan-log/result-total-hours/*') ? 'active' : '' }}">

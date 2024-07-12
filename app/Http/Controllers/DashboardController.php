@@ -35,10 +35,10 @@ class DashboardController extends Controller
             )
         );
     }
-    public function viewDosenProdi()
+    public function jabatanAkademik()
     {
         return view(
-            'dashboard.dosen-prodi'
+            'dashboard.jabatan-akademik'
         );
     }
 }

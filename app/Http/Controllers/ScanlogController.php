@@ -18,6 +18,7 @@ use GeoIP;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\Facades\Image;
 use Jenssegers\Agent\Facades\Agent;
 
@@ -174,7 +175,7 @@ class ScanlogController extends Controller
 
         $org = $data['isp'];
         // $org = 'BIZNET';
-        
+
         if (stristr($org, 'BIZNET') !== false) {
             ScanLog::create([
                 'pin' => auth()->user()->pin, // Ganti dengan cara yang sesuai untuk mendapatkan PIN pengguna yang login
@@ -183,15 +184,15 @@ class ScanlogController extends Controller
                 'status_scan' => true, // Contoh status scan
                 'ip_scan' => $userIP, // Alamat IP pengguna yang melakukan presensi
             ]);
-        // $myIP = env('OFFICE_IP');
-        // if ($userIP === '118.99.72.241') {
-        //     ScanLog::create([
-        //         'pin' => auth()->user()->pin, // Ganti dengan cara yang sesuai untuk mendapatkan PIN pengguna yang login
-        //         'scan' => now(), // Tanggal dan waktu saat ini
-        //         'verify' => true, // Contoh nilai verifikasi
-        //         'status_scan' => true, // Contoh status scan
-        //         'ip_scan' => $userIP, // Alamat IP pengguna yang melakukan presensi
-        //     ]);
+            // $myIP = env('OFFICE_IP');
+            // if ($userIP === '118.99.72.241') {
+            //     ScanLog::create([
+            //         'pin' => auth()->user()->pin, // Ganti dengan cara yang sesuai untuk mendapatkan PIN pengguna yang login
+            //         'scan' => now(), // Tanggal dan waktu saat ini
+            //         'verify' => true, // Contoh nilai verifikasi
+            //         'status_scan' => true, // Contoh status scan
+            //         'ip_scan' => $userIP, // Alamat IP pengguna yang melakukan presensi
+            //     ]);
             return redirect()->route('admin.scan-log.my-attendances')->with('success', 'Presensi berhasil.');
         } else {
             return redirect()->back()->with('error', 'Anda tidak diizinkan untuk melakukan presensi dari alamat IP ini.');
@@ -349,7 +350,7 @@ class ScanlogController extends Controller
 
         $pin = Auth::user()->pin;
         $birthday_pengguna = auth()->user()->birthday;
-        
+
         if ($birthday_pengguna === null) {
             return redirect()->route('admin.user.set-birthday')->with('warning', 'Silahkan lengkapi data tanggal lahir anda!');
         }
@@ -868,5 +869,28 @@ class ScanlogController extends Controller
             ->get();
 
         return view('scan-log.result-total-hours', compact('users'))->with('i');
+    }
+
+    public function selectMissingDate()
+    {
+        return view('scan-log.select-missing-date');
+    }
+
+    public function getMissingScan(Request $request)
+    {
+        $date = $request->date;
+        $response = Http::post('https://hera.lpkia.ac.id/api/scanlog', [
+            'date' => $date,
+        ]);
+
+        // Check if the response was successful
+        if ($response->ok()) {
+            // Redirect the user back to the admin.index route
+            return Redirect::route('admin.home')->with('success','Berhasil menambahkan presensi!');
+        } else {
+            // Handle the error
+            $error = $response->json('error');
+            // ...
+        }
     }
 }

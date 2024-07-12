@@ -51,6 +51,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/scan-log/check_attendances_filter/','ScanlogController@checkAttendanceFilter')->name('scan-log.check-attendances-filter');
     Route::get('scan-log/select-period-total-hours','ScanlogController@selectPeriodHours')->name('scan-log.select-period-total-hours');
     Route::get('scan-log/result-total-hours/','ScanlogController@resultTotalHours')->name('scan-log.result-total-hours');
+    Route::get('scan-log/select-missing-date','ScanlogController@selectMissingDate')->name('scan-log.select-missing-date');
+    Route::post('scan-log/proceed-missing-date','ScanlogController@getMissingScan')->name('scan-log.proceed-missing-date');
     //Route activities
     Route::resource('activities', 'ActivityController');
     //End Route activities
@@ -144,5 +146,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //End Logs Route
     //Route Dashboard
     Route::get('/dashboard/dosen-prodi','DashboardController@dosenProdi')->name('dashboard.dosen-prodi');
+    Route::get('/dashboard/jabatan-akademik','DashboardController@jabatanAkademik')->name('dashboard.jabatan-akademik');
     //End Route Dashboard
 });

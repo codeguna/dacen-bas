@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    Departmen
+    Daftar Nama Dosen
 @endsection
 
 @section('content')
@@ -18,7 +18,7 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-6 col-12">
                                 <div class="info-box">
-                                    <span class="info-box-icon bg-purple"><i class="far fa-envelope"></i></span>
+                                    <span class="info-box-icon bg-purple">SI</span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Sistem Informasi (S1)</span>
                                         <span class="info-box-number">
@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-md-4 col-sm-6 col-12">
                                 <div class="info-box">
-                                    <span class="info-box-icon bg-primary"><i class="far fa-envelope"></i></span>
+                                    <span class="info-box-icon bg-primary">IF</span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Teknik Informatika (S1)</span>
                                         <span class="info-box-number">
@@ -74,7 +74,7 @@
                             </div>
                             <div class="col-md-4 col-sm-6 col-12">
                                 <div class="info-box">
-                                    <span class="info-box-icon bg-teal"><i class="far fa-envelope"></i></span>
+                                    <span class="info-box-icon bg-teal">AB</span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Administrasi Bisnis (S1)</span>
                                         <span class="info-box-number">
@@ -105,7 +105,7 @@
                             </div>
                             <div class="col-md-4 col-sm-6 col-12">
                                 <div class="info-box">
-                                    <span class="info-box-icon bg-orange"><i class="far fa-envelope"></i></span>
+                                    <span class="info-box-icon bg-orange">AK</span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Akuntansi (S1)</span>
                                         <span class="info-box-number">
@@ -133,7 +133,7 @@
                             </div>
                             <div class="col-md-4 col-sm-6 col-12">
                                 <div class="info-box">
-                                    <span class="info-box-icon bg-warning"><i class="far fa-envelope"></i></span>
+                                    <span class="info-box-icon bg-warning">KA</span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Komputerisasi Akuntansi (D3)</span>
                                         <span class="info-box-number">
@@ -161,7 +161,7 @@
                             </div>
                             <div class="col-md-4 col-sm-6 col-12">
                                 <div class="info-box">
-                                    <span class="info-box-icon bg-olive"><i class="far fa-envelope"></i></span>
+                                    <span class="info-box-icon bg-olive">AB</span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Administrasi Bisnis (D3)</span>
                                         <span class="info-box-number">
