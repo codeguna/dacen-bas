@@ -199,13 +199,19 @@ class DashboardController extends Controller
 
     public function getJabatanAkademik($jabatan)
     {
-        $jabatanID        = $jabatan;
-        $asistenAhliTitle   = FunctionalPosition::find($jabatan);
+        $jabatanID  = $jabatan;
+        $title      = FunctionalPosition::find($jabatan);
 
         $lecturers  = Lecturer::whereHas('lecturerFunctionalPositions', function ($query) use ($jabatanID) {
             $query->where('functional_position_id', $jabatanID);
-        })->get();
+        })->orderBy('name', 'ASC')->get();
 
-        return $lecturers;
+        return view(
+            'dashboard.view-dosen-jabatan-akademik',
+            compact(
+                'lecturers',
+                'title'
+            )
+        )->with('i');
     }
 }

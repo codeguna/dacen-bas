@@ -58,7 +58,7 @@
                                     <div class="icon">
                                         <i class="fas fa-user-tag"></i>
                                     </div>
-                                    <a href="{{ $jabatan['lektor'] }}" class="small-box-footer">
+                                    <a href="{{ route('admin.dashboard.get-jabatan-akademik',$jabatan['lektor']) }}" class="small-box-footer">
                                         Detail data <i class="fas fa-arrow-circle-right"></i>
                                     </a>
                                 </div>
@@ -72,7 +72,7 @@
                                     <div class="icon">
                                         <i class="fas fa-user-tag"></i>
                                     </div>
-                                    <a href="{{ $jabatan['lektorKepala'] }}" class="small-box-footer">
+                                    <a href="{{ route('admin.dashboard.get-jabatan-akademik',$jabatan['lektorKepala']) }}" class="small-box-footer">
                                         Detail data <i class="fas fa-arrow-circle-right"></i>
                                     </a>
                                 </div>
@@ -86,7 +86,7 @@
                                     <div class="icon">
                                         <i class="fas fa-user-tag text-white"></i>
                                     </div>
-                                    <a href="{{ $jabatan['guruBesar'] }}" class="small-box-footer">
+                                    <a href="{{ route('admin.dashboard.get-jabatan-akademik',$jabatan['guruBesar']) }}" class="small-box-footer">
                                         Detail data <i class="fas fa-arrow-circle-right"></i>
                                     </a>
                                 </div>
