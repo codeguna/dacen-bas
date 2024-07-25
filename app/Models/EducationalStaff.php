@@ -31,7 +31,7 @@ class EducationalStaff extends Model
         'name' => 'required',
         'department_id' => 'required',
         'date_of_entry' => 'required',
-        'id_card' => 'required|mimes:pdf,jpg,jpeg|max:2048',
+        'id_card' => 'mimes:pdf,jpg,jpeg|max:2048',
     ];
 
     protected $perPage = 20;
@@ -41,7 +41,7 @@ class EducationalStaff extends Model
      *
      * @var array
      */
-    protected $fillable = ['nip', 'name', 'department_id', 'date_of_entry', 'status', 'id_card'];
+    protected $fillable = ['nip', 'name', 'department_id', 'date_of_entry', 'status', 'id_card','nuptk'];
 
 
     /**

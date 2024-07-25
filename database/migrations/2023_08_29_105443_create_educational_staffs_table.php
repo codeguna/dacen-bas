@@ -20,7 +20,7 @@ class CreateEducationalStaffsTable extends Migration
             $table->integer('department_id')->unsigned();
             $table->date('date_of_entry');
             $table->boolean('status');
-            $table->text('id_card');
+            $table->text('id_card')->nullable();
             $table->timestamps();
         });
     }

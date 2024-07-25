@@ -34,7 +34,7 @@ class Lecturer extends Model
 		'homebase_id' => 'required',
 		'appointment_date' => 'required',
 		'status' => 'required',
-		'id_card' => 'required|mimes:pdf,jpg,jpeg|max:2048',
+		'id_card' => 'mimes:pdf,jpg,jpeg|max:2048',
     ];
 
     protected $perPage = 20;
@@ -44,7 +44,7 @@ class Lecturer extends Model
      *
      * @var array
      */
-    protected $fillable = ['nidn','name','homebase_id','appointment_date','status','id_card'];
+    protected $fillable = ['nidn','name','homebase_id','appointment_date','status','id_card','nip','nuptk'];
 
 
     /**

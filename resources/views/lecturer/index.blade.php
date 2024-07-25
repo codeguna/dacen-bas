@@ -11,17 +11,9 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-
                             <span id="card_title">
                                 <i class="fa fa-check-circle"></i> Dosen
                             </span>
-
-                            <div class="float-right">
-                                <a href="{{ route('admin.lecturers.create') }}" class="btn btn-primary btn-sm float-right"
-                                    data-placement="left">
-                                    <i class="fa fa-plus-circle"></i>
-                                </a>
-                            </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -36,6 +28,7 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
+                                        <th>NIP/NUPTK</th>
                                         <th>NIDN/NIDK</th>
                                         <th>Nama</th>
                                         <th>Homebase</th>
@@ -48,6 +41,9 @@
                                     @foreach ($lecturers as $lecturer)
                                         <tr>
                                             <td>{{ ++$i }}</td>
+                                            <td>
+                                                <small>{{ $lecturer->nip ?? '-' }}/{{ $lecturer->nuptk ?? '-' }}</small>
+                                            </td>
                                             <td>{{ $lecturer->nidn }}</td>
                                             <td>{{ $lecturer->name }}</td>
                                             <td>{{ $lecturer->homebases->name }}</td>
@@ -64,17 +60,19 @@
                                             <td>
                                                 <form action="{{ route('admin.lecturers.destroy', $lecturer->id) }}"
                                                     method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('admin.lecturers.show', $lecturer->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i></a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('admin.lecturers.edit', $lecturer->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i></a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Hapus data dosen {{ $lecturer->name }}?')"><i
-                                                            class="fa fa-fw fa-trash"></i></button>
+                                                    <div class="btn-group">
+                                                        <a class="btn btn-sm btn-primary "
+                                                            href="{{ route('admin.lecturers.show', $lecturer->id) }}"><i
+                                                                class="fa fa-fw fa-eye"></i></a>
+                                                        <a class="btn btn-sm btn-success"
+                                                            href="{{ route('admin.lecturers.edit', $lecturer->id) }}"><i
+                                                                class="fa fa-fw fa-edit"></i></a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Hapus data dosen {{ $lecturer->name }}?')"><i
+                                                                class="fa fa-fw fa-trash"></i></button>
+                                                    </div>
                                                 </form>
                                             </td>
                                         </tr>

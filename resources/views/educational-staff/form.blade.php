@@ -13,11 +13,11 @@ $lastTwoDigits = substr($currentYear, -2);
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('NIP') }}
-                    <input class="form-control" type="text" name="nip" value="{{ $educationalStaff->nip }}"
+                    <input class="form-control" type="number" min="0" name="nip" value="{{ $educationalStaff->nip }}"
                         {{ $errors->has('nip') ? ' is-invalid' : '' }} required>
                     {!! $errors->first('nip', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
-            </div>
+            </div>            
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Nama Lengkap') }}
@@ -26,6 +26,14 @@ $lastTwoDigits = substr($currentYear, -2);
                     {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
+            {{-- <div class="col-md-12">
+                <div class="form-group">
+                    {{ Form::label('NUPTK') }}
+                    <input class="form-control" type="number" name="nuptk" value="{{ $educationalStaff->nuptk }}"
+                        {{ $errors->has('nuptk') ? ' is-invalid' : '' }} placeholder="Kosongkan jika tidak ada .">
+                    {!! $errors->first('nuptk', '<div class="invalid-feedback">:message</div>') !!}
+                </div>
+            </div> --}}
             <div class="col-md-12">
                 <div class="form-group">
                     {{ Form::label('Departemen') }}
@@ -63,7 +71,7 @@ $lastTwoDigits = substr($currentYear, -2);
                 <div class="form-group">
                     {{ Form::label('Upload KTP') }} <br>
                     <input class="form-control-file" type="file" name="id_card"
-                        {{ $errors->has('id_card') ? ' is-id_card' : '' }} required>
+                        {{ $errors->has('id_card') ? ' is-id_card' : '' }}>
                     {!! $errors->first('id_card', '<div class="invalid-feedback">:message</div>') !!}
                     <small class="text-danger">
                         *Maksimum ukuran file 2mb, jenis file: *pdf, *jpg, *jpeg

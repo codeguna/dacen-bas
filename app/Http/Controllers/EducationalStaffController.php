@@ -26,14 +26,14 @@ class EducationalStaffController extends Controller
      */
     public function index()
     {
-        $educationalStaffs = EducationalStaff::where('status',1)->orderBy('name','ASC')->get();
+        $educationalStaffs = EducationalStaff::where('status', 1)->orderBy('name', 'ASC')->get();
 
         return view('educational-staff.index', compact('educationalStaffs'))
             ->with('i');
     }
     public function inActive()
     {
-        $educationalStaffs = EducationalStaff::where('status',0)->paginate();
+        $educationalStaffs = EducationalStaff::where('status', 0)->paginate();
 
         return view('educational-staff.inactive', compact('educationalStaffs'))
             ->with('i', (request()->input('page', 1) - 1) * $educationalStaffs->perPage());
@@ -46,12 +46,16 @@ class EducationalStaffController extends Controller
      */
     public function create()
     {
-        $getDepartmensId    = Departmen::orderBy('name','ASC')->pluck('id','name');
+        $getDepartmensId    = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
         $educationalStaff   = new EducationalStaff();
 
-        return view('educational-staff.create', 
-        compact('educationalStaff'
-    ,'getDepartmensId'));
+        return view(
+            'educational-staff.create',
+            compact(
+                'educationalStaff',
+                'getDepartmensId'
+            )
+        );
     }
 
     /**
@@ -71,7 +75,7 @@ class EducationalStaffController extends Controller
                 ->withInput()
                 ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
         }
-        
+
         $id_card_file   = $request->file('id_card');
         $nip            = $request->nip;
         $name           = $request->name;
@@ -107,21 +111,23 @@ class EducationalStaffController extends Controller
     public function show($id)
     {
         $educationalStaff   = EducationalStaff::find($id);
-        $universities       = University::orderBy('name','ASC')->pluck('id','name');   
-        $levels             = Level::orderBy('name','ASC')->pluck('id','name');   
-        $studyPrograms      = StudyProgram::orderBy('name','ASC')->pluck('id','name');   
-        $knowledges         = Knowledge::orderBy('name','ASC')->pluck('id','name');   
-        $certificateTypes   = CertificateType::orderBy('name','ASC')->pluck('id','name');  
+        $universities       = University::orderBy('name', 'ASC')->pluck('id', 'name');
+        $levels             = Level::orderBy('name', 'ASC')->pluck('id', 'name');
+        $studyPrograms      = StudyProgram::orderBy('name', 'ASC')->pluck('id', 'name');
+        $knowledges         = Knowledge::orderBy('name', 'ASC')->pluck('id', 'name');
+        $certificateTypes   = CertificateType::orderBy('name', 'ASC')->pluck('id', 'name');
 
-        return view('educational-staff.show', 
-        compact(
-            'educationalStaff',
-            'universities',
-            'levels',
-            'studyPrograms',
-            'knowledges',
-            'certificateTypes'
-        ));
+        return view(
+            'educational-staff.show',
+            compact(
+                'educationalStaff',
+                'universities',
+                'levels',
+                'studyPrograms',
+                'knowledges',
+                'certificateTypes'
+            )
+        );
     }
 
     /**
@@ -133,8 +139,8 @@ class EducationalStaffController extends Controller
     public function edit($id)
     {
         $educationalStaff = EducationalStaff::find($id);
-        $getDepartmensId    = Departmen::orderBy('name','ASC')->pluck('id','name');
-        return view('educational-staff.edit', compact('educationalStaff','getDepartmensId'));
+        $getDepartmensId    = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
+        return view('educational-staff.edit', compact('educationalStaff', 'getDepartmensId'));
     }
 
     /**
@@ -145,10 +151,10 @@ class EducationalStaffController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, EducationalStaff $educationalStaff)
-    {        
+    {
         $validator = Validator::make($request->all(), EducationalStaff::$rules);
         if ($validator->fails()) {
-            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
+            // If validation fails, redirect back with error messages
             return redirect()
                 ->back()
                 ->withErrors($validator)
@@ -156,32 +162,40 @@ class EducationalStaffController extends Controller
                 ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
         }
 
-        $id_card_file   = $request->file('id_card');
         $nip            = $request->nip;
         $name           = $request->name;
         $department_id  = $request->department_id;
         $date_of_entry  = $request->date_of_entry;
         $status         = $request->status;
 
-        $name_file = time() . "_" . $id_card_file->getClientOriginalName();
-        // isi dengan nama folder tempat kemana file diupload
-        $tujuan_upload = 'data_ktp_tendik';
-        $id_card_file->move($tujuan_upload, $name_file);
-
-        if ($educationalStaff) {
-        $educationalStaff->update([
+        $updateData = [
             'nip'           => $nip,
             'name'          => $name,
             'department_id' => $department_id,
             'date_of_entry' => $date_of_entry,
             'status'        => $status,
-            'id_card'       => $name_file,
-        ]);
+        ];
 
-        return redirect()->route('admin.educational-staffs.index')
-            ->with('success', 'EducationalStaff updated successfully');
+        $id_card_file = $request->file('id_card');
+        if ($id_card_file) {
+            $name_file = time() . "_" . $id_card_file->getClientOriginalName();
+            // Directory for uploading the file
+            $tujuan_upload = 'data_ktp_tendik';
+            $id_card_file->move($tujuan_upload, $name_file);
+
+            $updateData['id_card'] = $name_file;
+        }
+
+        if ($educationalStaff) {
+            $educationalStaff->update($updateData);
+
+            return redirect()->route('admin.educational-staffs.index')
+                ->with('success', 'EducationalStaff updated successfully');
+        }
+
+        return redirect()->back()->with('error', 'EducationalStaff not found');
     }
-}
+
 
     /**
      * @param int $id
@@ -201,7 +215,8 @@ class EducationalStaffController extends Controller
             ->with('success', 'Berhasil menghapus data TenDik');
     }
 
-    public function setStatus(Request $request){
+    public function setStatus(Request $request)
+    {
         $status = $request->status;
         $id     = $request->id;
 
@@ -209,7 +224,7 @@ class EducationalStaffController extends Controller
         $educationalStaff->update([
             'status'           => $status,
         ]);
-        
+
         return redirect()->back()->with('warning', 'Berhasil memperbarui Status TenDik.');
     }
 }

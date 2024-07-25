@@ -20,6 +20,22 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
+                    {{ Form::label('NIP') }}
+                    <input class="form-control {{ $errors->has('nip') ? ' is-invalid' : '' }}" type="number"
+                        name="nip" value="{{ $lecturer->nip }}" min="0" maxlength="6" placeholder="Kosongkan jika tidak ada .">
+                    {!! $errors->first('nip', '<div class="invalid-feedback">:message</div>') !!}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ Form::label('NUPTK') }}
+                    <input class="form-control {{ $errors->has('nuptk') ? ' is-invalid' : '' }}" type="number"
+                        name="nuptk" value="{{ $lecturer->nuptk }}" min="0" maxlength="16"  placeholder="Kosongkan jika tidak ada .">
+                    {!! $errors->first('nuptk', '<div class="invalid-feedback">:message</div>') !!}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
                     <label>Homebase</label>
                     <select class="form-control {{ $errors->has('homebase_id') ? ' is-invalid' : '' }}"
                         name="homebase_id" required>
@@ -50,7 +66,7 @@
                 <div class="form-group">
                     {{ Form::label('Upload KTP') }} <br>
                     <input class="form-control-file" type="file" name="id_card"
-                        {{ $errors->has('id_card') ? ' is-id_card' : '' }} required>
+                        {{ $errors->has('id_card') ? ' is-id_card' : '' }}>
                     {!! $errors->first('id_card', '<div class="invalid-feedback">:message</div>') !!}
                     <small class="text-danger">
                         *Maksimum ukuran file 2mb, jenis file: *pdf, *jpg, *jpeg

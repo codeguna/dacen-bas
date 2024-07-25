@@ -66,6 +66,18 @@
                                     </a>
                                 </li>
                                 <li class="list-group-item">
+                                    <b>NIP</b> <a class="float-right">
+                                        <i class="fa fa-hashtag" aria-hidden="true"></i>
+                                        {{ $lecturer->nip??'-' }}
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>NUPTK</b> <a class="float-right">
+                                        <i class="fa fa-hashtag" aria-hidden="true"></i>
+                                        {{ $lecturer->nuptk??'-' }}
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
                                     <b>Tanggal Masuk</b> <a class="float-right">
                                         <i class="fa fa-calendar-check" aria-hidden="true"></i>
                                         {{ $lecturer->appointment_date }}

@@ -11,17 +11,9 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-
                             <span id="card_title">
                                 <i class="fa fa-check-circle"></i> Dosen
                             </span>
-
-                            <div class="float-right">
-                                <a href="{{ route('admin.lecturers.create') }}" class="btn btn-primary btn-sm float-right"
-                                    data-placement="left">
-                                    <i class="fa fa-plus-circle"></i>
-                                </a>
-                            </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))

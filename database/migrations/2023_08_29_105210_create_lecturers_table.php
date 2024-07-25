@@ -20,7 +20,7 @@ class CreateLecturersTable extends Migration
             $table->integer('homebase_id')->unsigned();
             $table->date('appointment_date');
             $table->boolean('status');
-            $table->text('id_card');
+            $table->text('id_card')->nullable();
             $table->timestamps();
         });
     }

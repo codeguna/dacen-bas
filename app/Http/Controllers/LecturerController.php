@@ -79,6 +79,8 @@ class LecturerController extends Controller
         
         $id_card_file       = $request->file('id_card');        
         $nidn               = $request->nidn;        
+        $nip                = $request->nip;        
+        $nuptk              = $request->nuptk;        
         $name               = $request->name;        
         $homebase_id        = $request->homebase_id;      
         $appointment_date   = $request->appointment_date;         
@@ -91,6 +93,8 @@ class LecturerController extends Controller
 
         $lecturers  = Lecturer::create([
             'nidn'              => $nidn,
+            'nip'               => $nip,
+            'nuptk'             => $nuptk,
             'name'              => $name,
             'homebase_id'       => $homebase_id,
             'appointment_date'  => $appointment_date,
@@ -155,43 +159,55 @@ class LecturerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Lecturer $lecturer)
-    {
-        $validator = Validator::make($request->all(), Lecturer::$rules);
-        if ($validator->fails()) {
-            // Jika validasi gagal, kembali ke halaman sebelumnya dengan pesan error
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
-        }
+{
+    $validator = Validator::make($request->all(), Lecturer::$rules);
+    if ($validator->fails()) {
+        // If validation fails, redirect back with error messages
+        return redirect()
+            ->back()
+            ->withErrors($validator)
+            ->withInput()
+            ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
+    }
 
-        $id_card_file       = $request->file('id_card');
-        $nidn               = $request->nidn;
-        $name               = $request->name;
-        $homebase_id        = $request->homebase_id;
-        $appointment_date   = $request->appointment_date;
-        $status             = $request->status;
+    $nidn               = $request->nidn;
+    $nip                = $request->nip;        
+    $nuptk              = $request->nuptk; 
+    $name               = $request->name;
+    $homebase_id        = $request->homebase_id;
+    $appointment_date   = $request->appointment_date;
+    $status             = $request->status;
 
+    $updateData = [
+        'nidn'              => $nidn,
+        'nip'               => $nip,
+        'nuptk'             => $nuptk,
+        'name'              => $name,
+        'homebase_id'       => $homebase_id,
+        'appointment_date'  => $appointment_date,
+        'status'            => $status,
+    ];
+
+    $id_card_file = $request->file('id_card');
+    if ($id_card_file) {
         $name_file = time() . "_" . $id_card_file->getClientOriginalName();
-        // isi dengan nama folder tempat kemana file diupload
+        // Directory for uploading the file
         $tujuan_upload = 'data_ktp_dosen';
         $id_card_file->move($tujuan_upload, $name_file);
 
-        if ($lecturer) {
-        $lecturer->update([
-            'nidn'              => $nidn,
-            'name'              => $name,
-            'homebase_id'       => $homebase_id,
-            'appointment_date'  => $appointment_date,
-            'status'            => $status,
-            'id_card'           => $name_file,
-        ]);
+        $updateData['id_card'] = $name_file;
+    }
+
+    if ($lecturer) {
+        $lecturer->update($updateData);
 
         return redirect()->route('admin.lecturers.index')
             ->with('success', 'Lecturer updated successfully');
     }
+
+    return redirect()->back()->with('error', 'Lecturer not found');
 }
+
 
     /**
      * @param int $id
