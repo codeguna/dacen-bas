@@ -32,6 +32,7 @@
                                 <img src="{{ asset('login-new/assets/images/hera.png') }}" alt="logo"
                                     style="width:300px">
                             </div>
+                            <hr>
                             <p class="login-card-description">Isi Email dan Password untuk masuk Admin Panel.</p>
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
@@ -51,10 +52,11 @@
                             </form>
                             <p class="login-card-footer-text">
                                 Mulai
-                                Presensi? <a href="{{ url('auth/google') }}" class="text-reset">
+                                Presensi? <br> <a href="{{ url('auth/google') }}" class="text-reset">
                                     <b><img src="https://cdn-icons-png.flaticon.com/512/300/300221.png"
                                             style="height: 20px"> Klik/Tap Disini!</b> </a>
                             </p>
+                            <hr>
                             <nav class="login-card-footer-nav">
                                 <a href="#!">Copyright</a>
                                 <a href="https://www.linkedin.com/in/gunadhip/">
