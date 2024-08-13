@@ -5,11 +5,11 @@ Presensi Saya
 @endsection
 @section('content')
 <div class="container-fluid">
-    @include('admin.users.willingness')
+    {{-- @include('admin.users.willingness')
     <a href="#" class="float btn-primary" data-toggle="modal" data-target="#kesediaanModal"
         title="Jam Kesediaan Bekerja">
         <i class="fas fa-calendar-check my-float"></i>
-    </a>
+    </a> --}}
     <div class="row">
         <div class="col-md-12">
             <div class="card card-widget widget-user h-100">

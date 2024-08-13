@@ -65,12 +65,13 @@ class ScanlogController extends Controller
         $pin_pengguna = auth()->user()->pin;
         $tanggal_hari_ini = Carbon::now()->toDateString();
         $birthday_pengguna = auth()->user()->birthday;
+        $checkWillingness = Willingness::where('pin', $pin_pengguna)->first();
 
         if ($birthday_pengguna === null) {
             return redirect()->route('admin.user.set-birthday')->with('warning', 'Silahkan lengkapi data tanggal lahir anda!');
         }
-        if ($pin_pengguna === null) {
-            return redirect()->route('admin.myprofile')->with('warning', 'Silahkan hubungi Admin/BAS untuk melakukan input PIN');
+        if ($pin_pengguna === null || $checkWillingness === null) {
+            return redirect()->route('admin.myprofile')->with('warning', 'Silahkan hubungi Admin/BAS untuk melakukan input PIN atau input Kesediaan');
         }
         // Menggunakan Eloquent untuk mengambil data scan_logs
         $scan_logs = ScanLog::where('pin', $pin_pengguna)
@@ -351,9 +352,9 @@ class ScanlogController extends Controller
         $pin = Auth::user()->pin;
         $birthday_pengguna = auth()->user()->birthday;
 
-        if ($birthday_pengguna === null) {
-            return redirect()->route('admin.user.set-birthday')->with('warning', 'Silahkan lengkapi data tanggal lahir anda!');
-        }
+        // if ($birthday_pengguna === null) {
+        //     return redirect()->route('admin.user.set-birthday')->with('warning', 'Silahkan lengkapi data tanggal lahir anda!');
+        // }
         // Hitung startDate (tanggal 26 bulan lalu)
         $today = Carbon::now();
         // Peroleh tanggal 26 bulan lalu
