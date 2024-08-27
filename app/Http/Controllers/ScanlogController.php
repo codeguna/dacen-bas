@@ -334,7 +334,7 @@ class ScanlogController extends Controller
                         $attlogData = [
                             'pin' => $realPin,
                             'scan' => $value['scan_date'],
-                            'verify' => $value['verify'],
+                            'verify' => 0,
                             'status_scan' => $value['status_scan'],
                             'ip_scan' => '3.1.174.198',
                         ];
@@ -887,7 +887,7 @@ class ScanlogController extends Controller
         // Check if the response was successful
         if ($response->ok()) {
             // Redirect the user back to the admin.index route
-            return Redirect::route('admin.home')->with('success','Berhasil menambahkan presensi!');
+            return Redirect::route('admin.home')->with('success', 'Berhasil menambahkan presensi!');
         } else {
             // Handle the error
             $error = $response->json('error');
