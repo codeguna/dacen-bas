@@ -148,5 +148,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/dashboard/dosen-prodi','DashboardController@dosenProdi')->name('dashboard.dosen-prodi');
     Route::get('/dashboard/jabatan-akademik','DashboardController@jabatanAkademik')->name('dashboard.jabatan-akademik');
     Route::get('/dashboard/jabatan-akademik/{jabatan}','DashboardController@getJabatanAkademik')->name('dashboard.get-jabatan-akademik');
+    Route::get('/dashboard/golongan-dosen/','DashboardController@golonganDosen')->name('dashboard.golongan-dosen');
     //End Route Dashboard
 });

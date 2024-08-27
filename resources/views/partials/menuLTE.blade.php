@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -111,14 +111,18 @@
                 class="nav-item {{ request()->is('admin/dashboard/dosen-prodi/*') ||
                 request()->is('admin/dashboard/dosen-prodi') ||
                 request()->is('admin/dashboard/jabatan-akademik') ||
-                request()->is('admin/dashboard/jabatan-akademik/*')
+                request()->is('admin/dashboard/jabatan-akademik/*') ||
+                request()->is('admin/dashboard/golongan-dosen') ||
+                    request()->is('admin/dashboard/golongan-dosen/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
                     class="nav-link  {{ request()->is('admin/dashboard/dosen-prodi/*') ||
                     request()->is('admin/dashboard/dosen-prodi') ||
                     request()->is('admin/dashboard/jabatan-akademik') ||
-                    request()->is('admin/dashboard/jabatan-akademik/*')
+                    request()->is('admin/dashboard/jabatan-akademik/*') ||
+                    request()->is('admin/dashboard/golongan-dosen') ||
+                    request()->is('admin/dashboard/golongan-dosen/*')
                         ? 'active'
                         : '' }}">
                     <i class="fas fa-user-graduate nav-icon"></i>
@@ -143,7 +147,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.dashboard.golongan-dosen') }}"
+                            class="nav-link {{ request()->is('admin/dashboard/golongan-dosen') || request()->is('admin/dashboard/golongan-dosen/*')
+                                ? 'active'
+                                : '' }}">
                             <i class="fas fa-pallet nav-icon"></i>
                             <p>Per Golongan</p>
                         </a>

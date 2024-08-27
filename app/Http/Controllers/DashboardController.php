@@ -214,4 +214,9 @@ class DashboardController extends Controller
             )
         )->with('i');
     }
+
+    public function golonganDosen()
+    {
+        return view('dashboard.golongan-dosen');
+    }
 }
