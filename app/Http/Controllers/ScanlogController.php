@@ -894,4 +894,34 @@ class ScanlogController extends Controller
             // ...
         }
     }
+
+    public function viewImportAttendances()
+    {
+        $users = User::where('pin', '!=', null)->orderBy('name', 'ASC')->pluck('pin', 'name');
+        return view('scan-log.view-import', compact('users'));
+    }
+
+    public function importAttendances(Request $request)
+    {
+        $data   = $request->all();
+
+        $pin    = $data["pin"];
+        $scan   = $data["scan"];
+        $userIP = request()->ip();
+
+        if ($pin) {
+            foreach ($pin  as $key => $value) {
+                $scanlog = new ScanLog();
+                $scanlog->pin           = $pin[$key];
+                $scanlog->scan          = Carbon::parse($scan[$key])->format('Y-m-d H:i:s');
+                $scanlog->verify        = 1;
+                $scanlog->status_scan   = 0;
+                $scanlog->ip_scan       = $userIP;
+                $scanlog->created_at    = now();
+                $scanlog->save();
+            }
+        }
+
+        return redirect()->back()->with('success', ' Berhasil menambahkan presensi');
+    }
 }

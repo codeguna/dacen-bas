@@ -53,6 +53,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('scan-log/result-total-hours/','ScanlogController@resultTotalHours')->name('scan-log.result-total-hours');
     Route::get('scan-log/select-missing-date','ScanlogController@selectMissingDate')->name('scan-log.select-missing-date');
     Route::post('scan-log/proceed-missing-date','ScanlogController@getMissingScan')->name('scan-log.proceed-missing-date');
+    Route::get('scan-log/import','ScanlogController@viewImportAttendances')->name('scan-log.view-import-scan');
+    Route::post('scan-log/import-proceed','ScanlogController@importAttendances')->name('scan-log.proceed-import-scan');
     //Route activities
     Route::resource('activities', 'ActivityController');
     //End Route activities

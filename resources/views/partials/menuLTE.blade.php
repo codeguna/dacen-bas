@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -113,7 +113,7 @@
                 request()->is('admin/dashboard/jabatan-akademik') ||
                 request()->is('admin/dashboard/jabatan-akademik/*') ||
                 request()->is('admin/dashboard/golongan-dosen') ||
-                    request()->is('admin/dashboard/golongan-dosen/*')
+                request()->is('admin/dashboard/golongan-dosen/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -266,7 +266,9 @@
                 request()->is('admin/scan-log/result-total-hours') ||
                 request()->is('admin/scan-log/result-total-hours/*') ||
                 request()->is('admin/scan-log/select-missing-date') ||
-                request()->is('admin/scan-log/select-missing-date/*')
+                request()->is('admin/scan-log/select-missing-date/*') ||
+                request()->is('admin/scan-log/import') ||
+                request()->is('admin/scan-log/import/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -298,7 +300,9 @@
                     request()->is('admin/scan-log/result-total-hours') ||
                     request()->is('admin/scan-log/result-total-hours/*') ||
                     request()->is('admin/scan-log/select-missing-date') ||
-                    request()->is('admin/scan-log/select-missing-date/*')
+                    request()->is('admin/scan-log/select-missing-date/*') ||
+                    request()->is('admin/scan-log/import') ||
+                    request()->is('admin/scan-log/import/*')
                         ? 'active'
                         : '' }}">
                     <i class="nav-icon fa fa-history" aria-hidden="true"></i>
@@ -383,6 +387,13 @@
                             class="nav-link {{ request()->is('admin/scan-log/check-late') || request()->is('admin/scan-log/check-late/*') || request()->is('admin/scan-log/result-late/*') || request()->is('admin/scan-log/result-late') ? 'active' : '' }}">
                             <i class="fa fa-user-times nav-icon" aria-hidden="true"></i>
                             <p>Presensi Terlambat/Pulang Cepat</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.scan-log.view-import-scan') }}"
+                            class="nav-link {{ request()->is('admin/scan-log/import') || request()->is('admin/scan-log/import/*') || request()->is('admin/scan-log/result-late/*') || request()->is('admin/scan-log/result-late') ? 'active' : '' }}">
+                        <i class="fa fa-database nav-icon" aria-hidden="true"></i>
+                            <p>Import Presensi</p>
                         </a>
                     </li>
                 </ul>
