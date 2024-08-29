@@ -924,4 +924,9 @@ class ScanlogController extends Controller
 
         return redirect()->back()->with('success', ' Berhasil menambahkan presensi');
     }
+
+    public function selectRecapPresences()
+    {
+        return view('recap.precense-period');
+    }
 }

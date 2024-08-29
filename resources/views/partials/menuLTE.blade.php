@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -209,13 +209,12 @@
             <li
                 class="nav-item {{ request()->is('admin/birthday/*') || request()->is('admin/birthday/select') ? 'menu-open' : '' }}">
                 <a href="#"
-                    class="nav-link 
-        {{ request()->is('admin/birthday/*') ||
-        request()->is('admin/birthday/select') ||
-        request()->is('admin/birthday/result') ||
-        request()->is('admin/birthday/result/*')
-            ? 'active'
-            : '' }}">
+                    class="nav-link {{ request()->is('admin/birthday/*') ||
+                    request()->is('admin/birthday/select') ||
+                    request()->is('admin/birthday/result') ||
+                    request()->is('admin/birthday/result/*')
+                        ? 'active'
+                        : '' }}">
                     <i class="fas fa-birthday-cake nav-icon"></i>
                     <p>
                         Ulang Tahun
@@ -233,6 +232,33 @@
                                 : '' }}">
                             <i class="fas fa-search nav-icon"></i>
                             <p>Cari Ulang Tahun</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li
+                class="nav-item {{ request()->is('admin/scan-log/select-period/precences/*') || request()->is('admin/scan-log/select-period/precences') ? 'menu-open' : '' }}">
+                <a
+                    href="#"class="nav-link {{ request()->is('admin/scan-log/select-period/precences/*') || request()->is('admin/scan-log/select-period/precences') ? 'active' : '' }}">
+                    <i class="fa fa-book nav-icon" aria-hidden="true"></i>
+                    <p>
+                        Rekapitulasi
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.scan-log.select-recap-precences') }}"
+                            class="nav-link {{ request()->is('admin/scan-log/select-period/precences') ? 'active' : '' }}">
+                            <i class="fa fa-table nav-icon" aria-hidden="true"></i>
+                            <p>Kehadiran</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.lecturer.inactive') }}"
+                            class="nav-link {{ request()->is('admin/lecturer/inactive') || request()->is('admin/lecturer/inactive/*') ? 'active' : '' }}">
+                            <i class="fa fa-user-times nav-icon" aria-hidden="true"></i>
+                            <p>Ketidakhadiran Staf</p>
                         </a>
                     </li>
                 </ul>
@@ -392,8 +418,15 @@
                     <li class="nav-item">
                         <a href="{{ route('admin.scan-log.view-import-scan') }}"
                             class="nav-link {{ request()->is('admin/scan-log/import') || request()->is('admin/scan-log/import/*') || request()->is('admin/scan-log/result-late/*') || request()->is('admin/scan-log/result-late') ? 'active' : '' }}">
-                        <i class="fa fa-database nav-icon" aria-hidden="true"></i>
+                            <i class="fa fa-database nav-icon" aria-hidden="true"></i>
                             <p>Import Presensi</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.scan-log.view-import-scan') }}"
+                            class="nav-link {{ request()->is('admin/scan-log/import') || request()->is('admin/scan-log/import/*') || request()->is('admin/scan-log/result-late/*') || request()->is('admin/scan-log/result-late') ? 'active' : '' }}">
+                            <i class="fa fa-database nav-icon" aria-hidden="true"></i>
+                            <p>Input Ketidakhadiran</p>
                         </a>
                     </li>
                 </ul>
