@@ -66,22 +66,63 @@
                             </thead>
                             <tbody>
                                 @forelse ($users as $user)
-                                  <tr>
-                                    <td>{{ ++$i }}</td>
-                                    <td>{{ $user->nomor_induk }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>  
+                                    <tr>
+                                        <td>{{ ++$i }}</td>
+                                        <td>{{ $user->nomor_induk }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            @php
+
+                                                // Retrieve scan timestamps
+                                                $scanlog = \App\Models\ScanLog::where('pin', $user->pin)
+                                                    ->whereBetween('scan', [$start_date, $end_date])
+                                                    ->orderBy('scan', 'ASC')
+                                                    ->pluck('scan')
+                                                    ->toArray();
+
+                                                $totalSeconds = 0;
+                                                $previousScan = null;
+                                                $currentDate = null;
+
+                                                foreach ($scanlog as $scan) {
+                                                    $currentScan = \Carbon\Carbon::parse($scan);
+                                                    $scanDate = $currentScan->format('Y-m-d');
+
+                                                    if ($previousScan && $scanDate === $currentDate) {
+                                                        // If it's the same day, calculate the difference
+                                                        $totalSeconds += $currentScan->diffInSeconds($previousScan);
+                                                    }
+
+                                                    // Update current date and previous scan
+                                                    $currentDate = $scanDate;
+                                                    $previousScan = $currentScan;
+                                                }
+
+                                                // Convert total seconds to hours, minutes, and seconds
+                                                $hours = floor($totalSeconds / 3600);
+                                                $minutes = floor(($totalSeconds % 3600) / 60);
+                                                $seconds = $totalSeconds % 60;
+
+                                                // Calculate total hours as a single number (floating point)
+                                                $totalHours = $totalSeconds / 3600;
+                                                $roundedHours = round($totalHours, 2); // Round to 2 decimal places
+                                            @endphp
+
+                                            {{ $hours }}:{{ $minutes }}:{{ $seconds }}
+                                        </td>
+
+
+                                        <td>{{ number_format(($roundedHours / $total_hour) * 100, 2) }}%</td>
+                                        <td></td>
+                                    </tr>
                                 @empty
                                     <tr>
                                         <td colspan="8">== Tidak Ada Data ==</td>
                                     </tr>
                                 @endforelse
-                                
+
                             </tbody>
                         </table>
                     </div>

@@ -934,7 +934,7 @@ class ScanlogController extends Controller
     {
 
         $total_hour     = $request->total_hour;
-        $total_day     = $request->total_day;
+        $total_day      = $request->total_day;
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
 
@@ -947,7 +947,7 @@ class ScanlogController extends Controller
                 'total_hour',
                 'total_day',
                 'start_date',
-                'end_date'
+                'end_date',
             )
         )->with('i');
     }
