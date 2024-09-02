@@ -81,57 +81,60 @@
                                             ->unique()
                                             ->count();
                                     @endphp
-                                    <tr>
-                                        <td>{{ ++$i }}</td>
-                                        <td>{{ $user->nomor_induk }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $scannedDates }}</td>
-                                        <td>{{ number_format(($scannedDates / $total_day) * 100, 2) }}%</td>
-                                        <td>
-                                            @php
-                                                $scannedDates = collect($scanlog)
-                                                    ->map(function ($scan) {
-                                                        return Carbon\Carbon::parse($scan)->format('Y-m-d');
-                                                    })
-                                                    ->unique()
-                                                    ->count();
+                                    @if ($scannedDates < 1)
+                                    @else
+                                        <tr>
+                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $user->nomor_induk??'NIP/NIDN not found!' }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $scannedDates }}</td>
+                                            <td>{{ number_format(($scannedDates / $total_day) * 100, 2) }}%</td>
+                                            <td>
+                                                @php
+                                                    $scannedDates = collect($scanlog)
+                                                        ->map(function ($scan) {
+                                                            return Carbon\Carbon::parse($scan)->format('Y-m-d');
+                                                        })
+                                                        ->unique()
+                                                        ->count();
 
-                                                $totalSeconds = 0;
-                                                $previousScan = null;
-                                                $currentDate = null;
+                                                    $totalSeconds = 0;
+                                                    $previousScan = null;
+                                                    $currentDate = null;
 
-                                                foreach ($scanlog as $scan) {
-                                                    $currentScan = \Carbon\Carbon::parse($scan);
-                                                    $scanDate = $currentScan->format('Y-m-d');
+                                                    foreach ($scanlog as $scan) {
+                                                        $currentScan = \Carbon\Carbon::parse($scan);
+                                                        $scanDate = $currentScan->format('Y-m-d');
 
-                                                    if ($previousScan && $scanDate === $currentDate) {
-                                                        // If it's the same day, calculate the difference
-                                                        $totalSeconds += $currentScan->diffInSeconds($previousScan);
+                                                        if ($previousScan && $scanDate === $currentDate) {
+                                                            // If it's the same day, calculate the difference
+                                                            $totalSeconds += $currentScan->diffInSeconds($previousScan);
+                                                        }
+
+                                                        // Update current date and previous scan
+                                                        $currentDate = $scanDate;
+                                                        $previousScan = $currentScan;
                                                     }
 
-                                                    // Update current date and previous scan
-                                                    $currentDate = $scanDate;
-                                                    $previousScan = $currentScan;
-                                                }
+                                                    // Convert total seconds to hours, minutes, and seconds
+                                                    $hours = floor($totalSeconds / 3600);
+                                                    $minutes = floor(($totalSeconds % 3600) / 60);
+                                                    $seconds = $totalSeconds % 60;
 
-                                                // Convert total seconds to hours, minutes, and seconds
-                                                $hours = floor($totalSeconds / 3600);
-                                                $minutes = floor(($totalSeconds % 3600) / 60);
-                                                $seconds = $totalSeconds % 60;
+                                                    // Calculate total hours as a single number (floating point)
+                                                    $totalHours = $totalSeconds / 3600;
+                                                    $roundedHours = round($totalHours, 2); // Round to 2 decimal places
 
-                                                // Calculate total hours as a single number (floating point)
-                                                $totalHours = $totalSeconds / 3600;
-                                                $roundedHours = round($totalHours, 2); // Round to 2 decimal places
+                                                @endphp
 
-                                            @endphp
-
-                                            {{ $hours }}:{{ $minutes }}:{{ $seconds }}
-                                        </td>
+                                                {{ $hours }}:{{ $minutes }}:{{ $seconds }}
+                                            </td>
 
 
-                                        <td>{{ number_format(($roundedHours / $total_hour) * 100, 2) }}%</td>
-                                        <td></td>
-                                    </tr>
+                                            <td>{{ number_format(($roundedHours / $total_hour) * 100, 2) }}%</td>
+                                            <td></td>
+                                        </tr>
+                                    @endif
                                 @empty
                                     <tr>
                                         <td colspan="8">== Tidak Ada Data ==</td>
