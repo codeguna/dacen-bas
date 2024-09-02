@@ -10,12 +10,32 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('admin.scan-log.resultLate') }}" method="GET" id="attendanceForm">
+                        <form action="{{ route('admin.scan-log.recap-all-presences') }}" method="GET">
                             <div class="row">
                                 <div class="col md-12">
                                     <h3>
-                                        <i class="fa fa-th-list text-primary" aria-hidden="true"></i> Kehadiran Semua Departemen
+                                        <i class="fa fa-th-list text-primary" aria-hidden="true"></i> Kehadiran Semua
+                                        Departemen
                                     </h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Jumlah Hari Kerja</label>
+                                                <input type="number" class="form-control" name="total_day" required>
+                                                <small class="form-text text-info">Total Hari Kerja dalam 1
+                                                    periode</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Jumlah Jam Kerja</label>
+                                                <input type="number" class="form-control" name="total_hour" required>
+                                                <small class="form-text text-info">Total Jumlah Kerja dalam 1
+                                                    periode</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <h4>
                                         Tanggal Awal / Tanggal Akhir
                                     </h4>
@@ -39,11 +59,12 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('admin.scan-log.resultLate') }}" method="GET" id="attendanceForm">
+                        <form action="{{ route('admin.scan-log.resultLate') }}" method="GET">
                             <div class="row">
                                 <div class="col md-12">
                                     <h3>
-                                        <i class="fa fa-building text-success" aria-hidden="true"></i> Kehadiran Per Departemen
+                                        <i class="fa fa-building text-success" aria-hidden="true"></i> Kehadiran Per
+                                        Departemen
                                     </h3>
                                     <div class="form-group">
                                         <label for=""></label>
@@ -65,7 +86,7 @@
                                             <i class="fa fa-search" aria-hidden="true"></i>
                                         </button>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -74,11 +95,12 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('admin.scan-log.resultLate') }}" method="GET" id="attendanceForm">
+                        <form action="{{ route('admin.scan-log.resultLate') }}" method="GET">
                             <div class="row">
                                 <div class="col md-12">
                                     <h3>
-                                        <i class="fa fa-user-circle text-warning" aria-hidden="true"></i> Kehadiran Per Orang
+                                        <i class="fa fa-user-circle text-warning" aria-hidden="true"></i> Kehadiran Per
+                                        Orang
                                     </h3>
                                     <div class="form-group">
                                         <label for=""></label>
@@ -108,21 +130,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('scripts')
-    <script>
-        document.getElementById('attendanceForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah pengiriman formulir secara otomatis
-
-            var startDate = new Date(document.getElementById('start_date').value);
-            var endDate = new Date(document.getElementById('end_date').value);
-
-            if (startDate > endDate) {
-                alert("Tanggal Akhir tidak bisa lebih kecil dari Tanggal Awal.");
-            } else {
-                document.getElementById('date_error').textContent = "";
-                this.submit(); // Kirim formulir jika valid
-            }
-        });
-    </script>
 @endsection

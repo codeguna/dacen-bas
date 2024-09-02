@@ -237,9 +237,9 @@
                 </ul>
             </li>
             <li
-                class="nav-item {{ request()->is('admin/scan-log/select-period/precences/*') || request()->is('admin/scan-log/select-period/precences') ? 'menu-open' : '' }}">
+                class="nav-item {{ request()->is('admin/scan-log/select-period/presences/*') || request()->is('admin/scan-log/select-period/precences') ? 'menu-open' : '' }}">
                 <a
-                    href="#"class="nav-link {{ request()->is('admin/scan-log/select-period/precences/*') || request()->is('admin/scan-log/select-period/precences') ? 'active' : '' }}">
+                    href="#"class="nav-link {{ request()->is('admin/scan-log/select-period/presences/*') || request()->is('admin/scan-log/select-period/precences') ? 'active' : '' }}">
                     <i class="fa fa-book nav-icon" aria-hidden="true"></i>
                     <p>
                         Rekapitulasi
@@ -248,8 +248,8 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ route('admin.scan-log.select-recap-precences') }}"
-                            class="nav-link {{ request()->is('admin/scan-log/select-period/precences') ? 'active' : '' }}">
+                        <a href="{{ route('admin.scan-log.select-recap-presences') }}"
+                            class="nav-link {{ request()->is('admin/scan-log/select-period/presences') ? 'active' : '' }}">
                             <i class="fa fa-table nav-icon" aria-hidden="true"></i>
                             <p>Kehadiran</p>
                         </a>

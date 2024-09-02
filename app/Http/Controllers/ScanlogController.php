@@ -929,4 +929,26 @@ class ScanlogController extends Controller
     {
         return view('recap.precense-period');
     }
+
+    public function resultRecapAllPresences(Request $request)
+    {
+
+        $total_hour     = $request->total_hour;
+        $total_day     = $request->total_day;
+        $start_date     = $request->start_date;
+        $end_date       = $request->end_date;
+
+        $users          = User::where('pin', '<>', null)->orderBy('name', 'ASC')->get();
+
+        return view(
+            'recap.report.all',
+            compact(
+                'users',
+                'total_hour',
+                'total_day',
+                'start_date',
+                'end_date'
+            )
+        )->with('i');
+    }
 }

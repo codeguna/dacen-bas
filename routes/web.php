@@ -56,7 +56,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('scan-log/import','ScanlogController@viewImportAttendances')->name('scan-log.view-import-scan');
     Route::post('scan-log/import-proceed','ScanlogController@importAttendances')->name('scan-log.proceed-import-scan');
     //recap Route
-    Route::get('scan-log/select-period/precences','ScanlogController@selectRecapPresences')->name('scan-log.select-recap-precences');
+    Route::get('scan-log/select-period/presences','ScanlogController@selectRecapPresences')->name('scan-log.select-recap-presences');
+    Route::get('scan-log/result-all/presences','ScanlogController@resultRecapAllPresences')->name('scan-log.recap-all-presences');
     //end recp Route
     //Route activities
     Route::resource('activities', 'ActivityController');
