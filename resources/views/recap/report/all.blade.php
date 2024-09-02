@@ -66,21 +66,35 @@
                             </thead>
                             <tbody>
                                 @forelse ($users as $user)
+                                    @php
+                                        // Retrieve scan timestamps
+                                        $scanlog = \App\Models\ScanLog::where('pin', $user->pin)
+                                            ->whereBetween('scan', [$start_date, $end_date])
+                                            ->orderBy('scan', 'ASC')
+                                            ->pluck('scan')
+                                            ->toArray();
+
+                                        $scannedDates = collect($scanlog)
+                                            ->map(function ($scan) {
+                                                return Carbon\Carbon::parse($scan)->format('Y-m-d');
+                                            })
+                                            ->unique()
+                                            ->count();
+                                    @endphp
                                     <tr>
                                         <td>{{ ++$i }}</td>
                                         <td>{{ $user->nomor_induk }}</td>
                                         <td>{{ $user->name }}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $scannedDates }}</td>
+                                        <td>{{ number_format(($scannedDates / $total_day) * 100, 2) }}%</td>
                                         <td>
                                             @php
-
-                                                // Retrieve scan timestamps
-                                                $scanlog = \App\Models\ScanLog::where('pin', $user->pin)
-                                                    ->whereBetween('scan', [$start_date, $end_date])
-                                                    ->orderBy('scan', 'ASC')
-                                                    ->pluck('scan')
-                                                    ->toArray();
+                                                $scannedDates = collect($scanlog)
+                                                    ->map(function ($scan) {
+                                                        return Carbon\Carbon::parse($scan)->format('Y-m-d');
+                                                    })
+                                                    ->unique()
+                                                    ->count();
 
                                                 $totalSeconds = 0;
                                                 $previousScan = null;
@@ -108,6 +122,7 @@
                                                 // Calculate total hours as a single number (floating point)
                                                 $totalHours = $totalSeconds / 3600;
                                                 $roundedHours = round($totalHours, 2); // Round to 2 decimal places
+
                                             @endphp
 
                                             {{ $hours }}:{{ $minutes }}:{{ $seconds }}
