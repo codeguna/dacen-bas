@@ -1,12 +1,12 @@
-<div class="row">    
+<div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <h3>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="terlambat-tab" data-toggle="tab"
-                                data-target="#terlambat" type="button" role="tab">
+                            <button class="nav-link active" id="terlambat-tab" data-toggle="tab" data-target="#terlambat"
+                                type="button" role="tab">
                                 <small><i class="fa fa-times text-danger"></i> Datang Terlambat</small>
                             </button>
                         </li>
@@ -43,62 +43,66 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($scan_logs_late as $late)
-    @php
-    $pin = Auth::user()->pin;
-    $dates = \Carbon\Carbon::parse($late->date);
-    $firstScan = \App\Models\ScanLog::where('pin', $pin)
-        ->where(function ($query) use ($dates) {
-            $query->whereDate('scan', '=', $dates);
-        })
-        ->orderBy('scan', 'ASC')
-        ->first();
-    $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
-    $days = date('l', strtotime($firstScan->scan));
-    $dayCode = null;
-    if ($days == 'Monday') {
-        $dayCode = 1;
-    } elseif ($days == 'Tuesday') {
-        $dayCode = 2;
-    } elseif ($days == 'Wednesday') {
-        $dayCode = 3;
-    } elseif ($days == 'Thursday') {
-        $dayCode = 4;
-    } elseif ($days == 'Friday') {
-        $dayCode = 5;
-    } elseif ($days == 'Saturday') {
-        $dayCode = 6;
-    }
-    $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
-    $lateTime = \App\Models\Willingness::where('pin', $pin)
-        ->where('day_code', $dayCode)
-        ->where(function ($query) use ($now) {
-            $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
-        })
-        ->first();
-    if (!empty($lateTime)) {
-        $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s',
-            $lateTime->time_of_entry)
-            ->addMinutes(10)
-            ->addSeconds(01)
-            ->format('H:i:s');
-    } else {
-        $resultLateTime = null;
-    }
-    @endphp
-    <tr>
-        @if ($resultLateTime == null)
-        @elseif ($times >= $resultLateTime)
-        <td>
-            {{ $days }} | {{ $late->date }}
-        </td>
-        <td>
-            <span><i class="fa fa-times text-danger" aria-hidden="true"></i>
-                {{ $times }}</span>
-        </td>
-        @else
-        @endif
-    </tr>
-@endforeach
+                                        @php
+                                            $pin = Auth::user()->pin;
+                                            $dates = \Carbon\Carbon::parse($late->date);
+                                            $firstScan = \App\Models\ScanLog::where('pin', $pin)
+                                                ->where(function ($query) use ($dates) {
+                                                    $query->whereDate('scan', '=', $dates);
+                                                })
+                                                ->orderBy('scan', 'ASC')
+                                                ->first();
+                                            $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
+                                            $days = date('l', strtotime($firstScan->scan));
+                                            $dayCode = null;
+                                            if ($days == 'Monday') {
+                                                $dayCode = 1;
+                                            } elseif ($days == 'Tuesday') {
+                                                $dayCode = 2;
+                                            } elseif ($days == 'Wednesday') {
+                                                $dayCode = 3;
+                                            } elseif ($days == 'Thursday') {
+                                                $dayCode = 4;
+                                            } elseif ($days == 'Friday') {
+                                                $dayCode = 5;
+                                            } elseif ($days == 'Saturday') {
+                                                $dayCode = 6;
+                                            }
+                                            $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
+                                            $lateTime = \App\Models\Willingness::where('pin', $pin)
+                                                ->where('day_code', $dayCode)
+                                                ->where(function ($query) use ($now) {
+                                                    $query
+                                                        ->whereDate('start_date', '<=', $now)
+                                                        ->whereDate('end_date', '>=', $now);
+                                                })
+                                                ->first();
+                                            if (!empty($lateTime)) {
+                                                $resultLateTime = \Carbon\Carbon::createFromFormat(
+                                                    'H:i:s',
+                                                    $lateTime->time_of_entry,
+                                                )
+                                                    ->addMinutes(10)
+                                                    ->addSeconds(01)
+                                                    ->format('H:i:s');
+                                            } else {
+                                                $resultLateTime = null;
+                                            }
+                                        @endphp
+                                        <tr>
+                                            @if ($resultLateTime == null)
+                                            @elseif ($times >= $resultLateTime)
+                                                <td>
+                                                    {{ $days }} | {{ $late->date }}
+                                                </td>
+                                                <td>
+                                                    <span><i class="fa fa-times text-danger" aria-hidden="true"></i>
+                                                        {{ $times }}</span>
+                                                </td>
+                                            @else
+                                            @endif
+                                        </tr>
+                                    @endforeach
                                 <tfoot>
                                     <tr>
                                         <th><i class="fas fa-calendar"></i> Tanggal</th>
@@ -130,61 +134,66 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($scan_logs_late as $late)
-                                    @php
-                                    $pin = Auth::user()->pin;
-                                    $dates = \Carbon\Carbon::parse($late->date);
-                                    $firstScan = \App\Models\ScanLog::where('pin', $pin)
-                                    ->where(function ($query) use ($dates) {
-                                    $query->whereDate('scan', '=', $dates);
-                                    })
-                                    ->orderBy('scan', 'DESC')
-                                    ->first();
-                                    $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
-                                    $days = \Carbon\Carbon::parse($firstScan->scan)->format('l');
-                                    if ($days == 'Monday') {
-                                    $dayCode = 1;
-                                    } elseif ($days == 'Tuesday') {
-                                    $dayCode = 2;
-                                    } elseif ($days == 'Wednesday') {
-                                    $dayCode = 3;
-                                    } elseif ($days == 'Thursday') {
-                                    $dayCode = 4;
-                                    } elseif ($days == 'Friday') {
-                                    $dayCode = 5;
-                                    } elseif ($days == 'Saturday') {
-                                    $dayCode = 6;
-                                    }
-                                    $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
-                                    $lateTime = \App\Models\Willingness::where('pin', $pin)
-                                    ->where('day_code', $dayCode)
-                                    ->where(function ($query) use ($now) {
-                                    $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
-                                        })
-                                        ->first();
-                                        if (!empty($lateTime)) {
-                                        $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s',
-                                        $lateTime->time_of_return)
-                                        ->format('H:i:s');
-                                        } else {
-                                        $resultLateTime = null;
-                                        }
+                                        @php
+                                            $pin = Auth::user()->pin;
+                                            $dates = \Carbon\Carbon::parse($late->date);
+                                            $firstScan = \App\Models\ScanLog::where('pin', $pin)
+                                                ->where(function ($query) use ($dates) {
+                                                    $query->whereDate('scan', '=', $dates);
+                                                })
+                                                ->orderBy('scan', 'DESC')
+                                                ->first();
+                                            $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
+                                            $days = \Carbon\Carbon::parse($firstScan->scan)->format('l');
+                                            if ($days == 'Monday') {
+                                                $dayCode = 1;
+                                            } elseif ($days == 'Tuesday') {
+                                                $dayCode = 2;
+                                            } elseif ($days == 'Wednesday') {
+                                                $dayCode = 3;
+                                            } elseif ($days == 'Thursday') {
+                                                $dayCode = 4;
+                                            } elseif ($days == 'Friday') {
+                                                $dayCode = 5;
+                                            } elseif ($days == 'Saturday') {
+                                                $dayCode = 6;
+                                            }
+                                            $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
+                                            $lateTime = \App\Models\Willingness::where('pin', $pin)
+                                                ->where('day_code', $dayCode)
+                                                ->where(function ($query) use ($now) {
+                                                    $query
+                                                        ->whereDate('start_date', '<=', $now)
+                                                        ->whereDate('end_date', '>=', $now);
+                                                })
+                                                ->first();
+                                            if (!empty($lateTime)) {
+                                                $resultLateTime = \Carbon\Carbon::createFromFormat(
+                                                    'H:i:s',
+                                                    $lateTime->time_of_return,
+                                                )->format('H:i:s');
+                                            } else {
+                                                $resultLateTime = null;
+                                            }
                                         @endphp
                                         <tr>
                                             @if ($resultLateTime == null)
-                                            @elseif ($times <= $resultLateTime) @if ($now==date('Y-m-d')) @else <td>
-                                                {{ $days }} | {{ $late->date }}
-                                                </td>
-                                                <td>
-                                                    <span><i class="fa fa-info-circle text-warning"
-                                                            aria-hidden="true"></i>
-                                                        {{ $times }}</span>
-                                                </td>
-                                                @endif
-
+                                            @elseif ($times <= $resultLateTime)
+                                                @if ($now == date('Y-m-d'))
                                                 @else
+                                                    <td>
+                                                        {{ $days }} | {{ $late->date }}
+                                                    </td>
+                                                    <td>
+                                                        <span><i class="fa fa-info-circle text-warning"
+                                                                aria-hidden="true"></i>
+                                                            {{ $times }}</span>
+                                                    </td>
                                                 @endif
+                                            @else
+                                            @endif
                                         </tr>
-                                        @endforeach
+                                    @endforeach
 
                                 </tbody>
                                 <tfoot>
@@ -210,13 +219,14 @@
                                         <small>
                                             <ol>
                                                 @forelse ($holidays as $holiday)
-                                                <li>{{ \Carbon\Carbon::parse($holiday->date)->format('j F') }} - {{ $holiday->name }}</li>
+                                                    <li>{{ \Carbon\Carbon::parse($holiday->date)->format('j F') }} -
+                                                        {{ $holiday->name }}</li>
                                                 @empty
-                                                <i class="fas fa-info-circle"></i> Tidak ada libur bulan ini
+                                                    <i class="fas fa-info-circle"></i> Tidak ada libur bulan ini
                                                 @endforelse
                                             </ol>
                                         </small>
-                    
+
                                     </div>
                                 </div>
                             </div>
