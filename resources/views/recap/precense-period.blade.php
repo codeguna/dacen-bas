@@ -64,13 +64,34 @@
                                 <div class="col md-12">
                                     <h3>
                                         <i class="fa fa-building text-success" aria-hidden="true"></i> Kehadiran Per
-                                        Departemen
+                                        Departemen - <span class="bg-warning rounded p-1">on progress</span>
                                     </h3>
                                     <div class="form-group">
-                                        <label for=""></label>
+                                        <label>Departemen</label>
                                         <select class="form-control" name="department_id" required>
                                             <option disabled selected>== Pilih Departemen ==</option>
+                                            @foreach ($departments as $value => $key)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                            @endforeach
                                         </select>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Jumlah Hari Kerja</label>
+                                                <input type="number" class="form-control" name="total_day" required>
+                                                <small class="form-text text-info">Total Hari Kerja dalam 1
+                                                    periode</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Jumlah Jam Kerja</label>
+                                                <input type="number" class="form-control" name="total_hour" required>
+                                                <small class="form-text text-info">Total Jumlah Kerja dalam 1
+                                                    periode</small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <h4>
                                         Tanggal Awal / Tanggal Akhir
@@ -100,13 +121,34 @@
                                 <div class="col md-12">
                                     <h3>
                                         <i class="fa fa-user-circle text-warning" aria-hidden="true"></i> Kehadiran Per
-                                        Orang
+                                        Orang - <span class="bg-warning rounded p-1">on progress</span>
                                     </h3>
                                     <div class="form-group">
-                                        <label for=""></label>
-                                        <select class="form-control" name="pin" required>
+                                        <label>Nama</label>
+                                        <select class="form-control" name="user_id" required>
                                             <option disabled selected>== Pilih Nama ==</option>
+                                            @foreach ($users as $value => $key)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                            @endforeach
                                         </select>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Jumlah Hari Kerja</label>
+                                                <input type="number" class="form-control" name="total_day" required>
+                                                <small class="form-text text-info">Total Hari Kerja dalam 1
+                                                    periode</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Jumlah Jam Kerja</label>
+                                                <input type="number" class="form-control" name="total_hour" required>
+                                                <small class="form-text text-info">Total Jumlah Kerja dalam 1
+                                                    periode</small>
+                                            </div>
+                                        </div>
                                     </div>
                                     <h4>
                                         Tanggal Awal / Tanggal Akhir

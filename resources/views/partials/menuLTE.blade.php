@@ -236,10 +236,9 @@
                     </li>
                 </ul>
             </li>
-            <li
-                class="nav-item {{ request()->is('admin/scan-log/select-period/presences/*') || request()->is('admin/scan-log/select-period/precences') ? 'menu-open' : '' }}">
+            <li class="nav-item {{ request()->is('admin/scan-log/select-period/presences') ? 'menu-open' : '' }}">
                 <a
-                    href="#"class="nav-link {{ request()->is('admin/scan-log/select-period/presences/*') || request()->is('admin/scan-log/select-period/precences') ? 'active' : '' }}">
+                    href="#" class="nav-link {{ request()->is('admin/scan-log/select-period/presences') ? 'active' : '' }}">
                     <i class="fa fa-book nav-icon" aria-hidden="true"></i>
                     <p>
                         Rekapitulasi

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\AttendancesRequest;
+use App\Models\Departmen;
 use App\Models\Holiday;
 use App\Models\Log;
 use App\Models\ScanLog;
@@ -927,7 +928,10 @@ class ScanlogController extends Controller
 
     public function selectRecapPresences()
     {
-        return view('recap.precense-period');
+        $users          = User::where('pin', '<>', null)->orderBy('name', 'ASC')->pluck('id', 'name');
+        $departments    = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
+
+        return view('recap.precense-period', compact('users', 'departments'));
     }
 
     public function resultRecapAllPresences(Request $request)
