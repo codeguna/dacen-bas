@@ -157,7 +157,7 @@
                                             })
                                             ->count();
                                     @endphp
-                                    @if ($scannedDates >= 0)
+                                    @if ($scannedDates > 0)
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $user->nomor_induk ?? 'NIP/NIDN not found!' }}</td>
