@@ -69,43 +69,43 @@
                                     @php
                                         // Retrieve scan timestamps
                                         $scanlog = \App\Models\ScanLog::where('pin', $user->pin)
-                                            ->whereBetween('scan', [$start_date, $end_date])
+                                            ->whereBetween(\DB::raw('DATE(scan)'), [$start_date, $end_date])
                                             ->orderBy('scan', 'ASC')
                                             ->pluck('scan')
                                             ->toArray();
-                        
+
                                         $scannedDates = collect($scanlog)
                                             ->map(fn($scan) => Carbon\Carbon::parse($scan)->format('Y-m-d'))
                                             ->unique()
                                             ->count();
-                        
+
                                         $totalSeconds = 0;
                                         $previousScan = null;
                                         $currentDate = null;
-                        
+
                                         foreach ($scanlog as $scan) {
                                             $currentScan = \Carbon\Carbon::parse($scan);
                                             $scanDate = $currentScan->format('Y-m-d');
-                        
+
                                             if ($previousScan && $scanDate === $currentDate) {
                                                 // Calculate the difference
                                                 $totalSeconds += $currentScan->diffInSeconds($previousScan);
                                             }
-                        
+
                                             // Update current date and previous scan
                                             $currentDate = $scanDate;
                                             $previousScan = $currentScan;
                                         }
-                        
+
                                         // Convert total seconds to hours, minutes, and seconds
                                         $hours = floor($totalSeconds / 3600);
                                         $minutes = floor(($totalSeconds % 3600) / 60);
                                         $seconds = $totalSeconds % 60;
-                        
+
                                         // Calculate total hours as a single number
                                         $totalHours = $totalSeconds / 3600;
                                         $roundedHours = round($totalHours, 2);
-                        
+
                                         // Calculate total late count
                                         $totalLate = App\Models\ScanLog::selectRaw('DATE(scan) as date')
                                             ->where('pin', $user->pin)
@@ -120,40 +120,44 @@
                                                     ->whereDate('scan', '=', $dates)
                                                     ->orderBy('scan', 'ASC')
                                                     ->first();
-                        
+
                                                 $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
                                                 $days = \Carbon\Carbon::parse($firstScan->scan)->format('l');
-                                                $dayCode = [
-                                                    'Monday' => 1, 
-                                                    'Tuesday' => 2, 
-                                                    'Wednesday' => 3, 
-                                                    'Thursday' => 4, 
-                                                    'Friday' => 5, 
-                                                    'Saturday' => 6
-                                                ][$days] ?? null;
-                        
+                                                $dayCode =
+                                                    [
+                                                        'Monday' => 1,
+                                                        'Tuesday' => 2,
+                                                        'Wednesday' => 3,
+                                                        'Thursday' => 4,
+                                                        'Friday' => 5,
+                                                        'Saturday' => 6,
+                                                    ][$days] ?? null;
+
                                                 $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
-                        
+
                                                 $lateTime = \App\Models\Willingness::where('pin', $pin)
                                                     ->where('day_code', $dayCode)
                                                     ->whereDate('start_date', '<=', $now)
                                                     ->whereDate('end_date', '>=', $now)
                                                     ->first();
-                        
+
                                                 if ($lateTime) {
-                                                    $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s', $lateTime->time_of_entry)
+                                                    $resultLateTime = \Carbon\Carbon::createFromFormat(
+                                                        'H:i:s',
+                                                        $lateTime->time_of_entry,
+                                                    )
                                                         ->addMinutes(10)
                                                         ->addSeconds(1)
                                                         ->format('H:i:s');
-                        
+
                                                     return $times >= $resultLateTime;
                                                 }
-                        
+
                                                 return false;
                                             })
                                             ->count();
                                     @endphp
-                                    @if ($scannedDates > 0)
+                                    @if ($scannedDates >= 0)
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $user->nomor_induk ?? 'NIP/NIDN not found!' }}</td>
@@ -171,12 +175,12 @@
                                     </tr>
                                 @endforelse
                             </tbody>
-                        </table>                        
+                        </table>
                     </div>
                     <div class="col-md-12">
                         <hr>
                         <small>
-                           <em>Dicetak pada: {{ now() }}</em> 
+                            <em>Dicetak pada: {{ now() }}</em>
                         </small>
                     </div>
                 </div>
