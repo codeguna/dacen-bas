@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -237,8 +237,8 @@
                 </ul>
             </li>
             <li class="nav-item {{ request()->is('admin/scan-log/select-period/presences') ? 'menu-open' : '' }}">
-                <a
-                    href="#" class="nav-link {{ request()->is('admin/scan-log/select-period/presences') ? 'active' : '' }}">
+                <a href="#"
+                    class="nav-link {{ request()->is('admin/scan-log/select-period/presences') ? 'active' : '' }}">
                     <i class="fa fa-book nav-icon" aria-hidden="true"></i>
                     <p>
                         Rekapitulasi
@@ -293,7 +293,9 @@
                 request()->is('admin/scan-log/select-missing-date') ||
                 request()->is('admin/scan-log/select-missing-date/*') ||
                 request()->is('admin/scan-log/import') ||
-                request()->is('admin/scan-log/import/*')
+                request()->is('admin/scan-log/import/*') ||
+                request()->is('admin/scan-log/select-period-not-present') ||
+                request()->is('admin/scan-log/select-period-not-present/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -327,7 +329,9 @@
                     request()->is('admin/scan-log/select-missing-date') ||
                     request()->is('admin/scan-log/select-missing-date/*') ||
                     request()->is('admin/scan-log/import') ||
-                    request()->is('admin/scan-log/import/*')
+                    request()->is('admin/scan-log/import/*') ||
+                    request()->is('admin/scan-log/select-period-not-present') ||
+                    request()->is('admin/scan-log/select-period-not-present/*')
                         ? 'active'
                         : '' }}">
                     <i class="nav-icon fa fa-history" aria-hidden="true"></i>
@@ -422,9 +426,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.scan-log.view-import-scan') }}"
-                            class="nav-link {{ request()->is('admin/scan-log/import') || request()->is('admin/scan-log/import/*') || request()->is('admin/scan-log/result-late/*') || request()->is('admin/scan-log/result-late') ? 'active' : '' }}">
-                            <i class="fa fa-database nav-icon" aria-hidden="true"></i>
+                        <a href="{{ route('admin.scan-log.select-period-not-present') }}"
+                            class="nav-link {{ request()->is('admin/scan-log/select-period-not-present') || request()->is('admin/scan-log/select-period-not-present/*') ? 'active' : '' }}">
+                            <i class="fas fa-calendar-times nav-icon"></i>
                             <p>Input Ketidakhadiran</p>
                         </a>
                     </li>
