@@ -5,6 +5,7 @@ use Database\Seeders\DepartmensSeeder;
 use Database\Seeders\FunctionalPositionSeeder;
 use Database\Seeders\FunctionalRankSeeder;
 use Database\Seeders\HomebaseSeeder;
+use Database\Seeders\ReasonSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FunctionalPositionSeeder::class);
         $this->call(FunctionalRankSeeder::class);
         $this->call(CertificateTypesSeeder::class);
+        $this->call(ReasonSeeder::class);
     }
 }

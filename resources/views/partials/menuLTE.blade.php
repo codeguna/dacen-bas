@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -295,7 +295,8 @@
                 request()->is('admin/scan-log/import') ||
                 request()->is('admin/scan-log/import/*') ||
                 request()->is('admin/scan-log/select-period-not-present') ||
-                request()->is('admin/scan-log/select-period-not-present/*')
+                request()->is('admin/scan-log/select-period-not-present/*') ||
+                request()->is('admin/not-scan-log/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -331,7 +332,8 @@
                     request()->is('admin/scan-log/import') ||
                     request()->is('admin/scan-log/import/*') ||
                     request()->is('admin/scan-log/select-period-not-present') ||
-                    request()->is('admin/scan-log/select-period-not-present/*')
+                    request()->is('admin/scan-log/select-period-not-present/*') ||
+                    request()->is('admin/not-scan-log/*')
                         ? 'active'
                         : '' }}">
                     <i class="nav-icon fa fa-history" aria-hidden="true"></i>
@@ -427,7 +429,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.scan-log.select-period-not-present') }}"
-                            class="nav-link {{ request()->is('admin/scan-log/select-period-not-present') || request()->is('admin/scan-log/select-period-not-present/*') ? 'active' : '' }}">
+                            class="nav-link {{ request()->is('admin/scan-log/select-period-not-present') || request()->is('admin/scan-log/select-period-not-present/*') || request()->is('admin/not-scan-log/*') ? 'active' : '' }}">
                             <i class="fas fa-calendar-times nav-icon"></i>
                             <p>Input Ketidakhadiran</p>
                         </a>
@@ -457,7 +459,9 @@
                 request()->is('admin/willingnesses') ||
                 request()->is('admin/willingnesses/*') ||
                 request()->is('admin/holidays') ||
-                request()->is('admin/holidays/*')
+                request()->is('admin/holidays/*') ||
+                request()->is('admin/reasons') ||
+                request()->is('admin/reasons/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -485,7 +489,9 @@
         request()->is('admin/willingnesses') ||
         request()->is('admin/willingnesses/*') ||
         request()->is('admin/holidays') ||
-        request()->is('admin/holidays/*')
+        request()->is('admin/holidays/*') ||
+        request()->is('admin/reasons') ||
+        request()->is('admin/reasons/*')
             ? 'active'
             : '' }}">
                     <i class="nav-icon fa fa-cogs"></i>
@@ -495,6 +501,13 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.reasons.index') }}"
+                            class="nav-link {{ request()->is('admin/reasons') || request()->is('admin/reasons/*') ? 'active' : '' }}">
+                            <i class="fa fa-question-circle nav-icon" aria-hidden="true"></i>
+                            <p>Alasan Tidak Hadir</p>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.activities.index') }}"
                             class="nav-link {{ request()->is('admin/activities') || request()->is('admin/activities/*') ? 'active' : '' }}">

@@ -157,4 +157,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/dashboard/jabatan-akademik/{jabatan}','DashboardController@getJabatanAkademik')->name('dashboard.get-jabatan-akademik');
     Route::get('/dashboard/golongan-dosen/','DashboardController@golonganDosen')->name('dashboard.golongan-dosen');
     //End Route Dashboard
+
+    //Route Reasons
+    Route::resource('reasons','ReasonController');
+    //End Route Reasons
+    //Route Not Scan
+    Route::resource('not-scan-logs','NotScanLogController');
+    Route::get('not-scan-log/getDate','NotScanLogController@getNotScan')->name('not-scan-logs.getDate');
+    //End Route Not Scan
 });

@@ -961,14 +961,9 @@ class ScanlogController extends Controller
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
 
-        if ($request->has('start_date') && $request->has('end_date')) {
-            // Get the users where pin is not null and order by name, filtering by date range
-            $users = User::where('pin', '<>', null)
-                ->orderBy('name', 'ASC')
-                ->get();
-            return view('scan-log.select-period-not-present', compact('start_date', 'end_date', 'users'))->with('i');
-        } else {
-            return view('scan-log.select-period-not-present', compact('start_date', 'end_date'));
-        }
+        $users = User::where('pin', '<>', null)
+            ->orderBy('name', 'ASC')
+            ->get();
+        return view('scan-log.select-period-not-present', compact('start_date', 'end_date', 'users'))->with('i');
     }
 }

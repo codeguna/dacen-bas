@@ -27,7 +27,7 @@
                                             value="{{ request('end_date') }}" required>
                                         <p id="date_error" style="color: red;"></p>
                                         <span class="input-group-btn">
-                                            <a href="{{ route('admin.scan-log.my-attendances') }}"
+                                            <a href="{{ route('admin.scan-log.select-period-not-present') }}"
                                                 class="btn btn-success ml-1">
                                                 <i class="fas fa-sync"></i>
                                             </a>
@@ -86,10 +86,10 @@
                                                 });
 
                                                 // Ambil hari yang sudah di-scan
-                                                $scannedDays = DB::table('scan_logs')
+                                                $scannedDays = \DB::table('scan_logs')
                                                     ->where('pin', $user->pin)
-                                                    ->whereBetween('scan', [$startDate, $endDate])
-                                                    ->whereNotIn(DB::raw('DAYOFWEEK(scan)'), [1]) // Kecualikan hari Minggu
+                                                    ->whereBetween(\DB::raw('DATE(scan)'), [$start_date, $end_date])
+                                                    ->whereNotIn(\DB::raw('DAYOFWEEK(scan)'), [1]) // Kecualikan hari Minggu
                                                     ->pluck('scan')
                                                     ->map(function ($date) {
                                                         return Carbon\Carbon::parse($date)->format('Y-m-d');
@@ -112,7 +112,7 @@
                                                 <ul>
                                                     @foreach ($daysNotScannedFormatted as $day)
                                                         <li>
-                                                            <a class="btn btn-xs btn-primary" href="#" target="_blank">
+                                                            <a class="btn btn-xs btn-primary" href="{{ route('admin.not-scan-logs.getDate',['pin' => $user->pin, 'date' => $day]) }}" target="_blank">
                                                                 <i class="fa fa-plus" aria-hidden="true"></i> {{ $day }}
                                                             </a>
                                                         </li>
