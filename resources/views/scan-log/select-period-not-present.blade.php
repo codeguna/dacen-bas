@@ -109,15 +109,17 @@
                                             @if ($daysNotScannedFormatted->isEmpty())
                                                 <p>Tidak ada hari yang terlewat.</p>
                                             @else
-                                                <ul>
-                                                    @foreach ($daysNotScannedFormatted as $day)
-                                                        <li>
-                                                            <a class="btn btn-xs btn-primary" href="{{ route('admin.not-scan-logs.getDate',['pin' => $user->pin, 'date' => $day]) }}" target="_blank">
-                                                                <i class="fa fa-plus" aria-hidden="true"></i> {{ $day }}
-                                                            </a>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
+                                                @foreach ($daysNotScannedFormatted as $day)
+                                                    <div class="btn-group" role="group" aria-label="">
+                                                        <a class="btn btn-xs btn-primary"
+                                                            href="{{ route('admin.not-scan-logs.getDate', ['pin' => $user->pin, 'date' => $day]) }}"
+                                                            target="_blank">
+                                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a href="#" class="btn btn-xs btn-outline-primary"
+                                                            disabled>{{ $day }}</a>
+                                                    </div> <br>
+                                                @endforeach
                                             @endif
                                         </td>
                                     </tr>
