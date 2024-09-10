@@ -42,4 +42,9 @@ class NotScanLog extends Model
         return $this->belongsTo(User::class, 'pin', 'pin');
     }
 
+    public function reason()
+    {
+        return $this->belongsTo(Reason::class);
+    }
+
 }

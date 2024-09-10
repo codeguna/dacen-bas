@@ -20,7 +20,7 @@ class NotScanLogController extends Controller
      */
     public function index()
     {
-        $notScanLogs = NotScanLog::paginate();
+        $notScanLogs = NotScanLog::orderBy('date','ASC')->paginate();
 
         return view('not-scan-log.index', compact('notScanLogs'))
             ->with('i', (request()->input('page', 1) - 1) * $notScanLogs->perPage());

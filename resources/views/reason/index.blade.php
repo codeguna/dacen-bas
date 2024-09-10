@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    Alasan Ketidakhadiran
+    Reason
 @endsection
 
 @section('content')
@@ -13,16 +13,16 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                <i class="fa fa-question-circle text-info" aria-hidden="true"></i> Alasan Ketidakhadiran
+                                {{ __('Reason') }}
                             </span>
 
                             <div class="float-right">
-                                <a href="#" data-toggle="modal" data-target="#createReason"
+                                <a href="#" data-toggle="modal" data-target="#createActivity"
                                     class="btn btn-success btn-sm float-right" data-placement="left">
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
                             </div>
-                            @include('reason.modal.create')
+                            @include('activity.modal.create-activity')
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -55,11 +55,12 @@
                                                     method="POST">
                                                     <a class="btn btn-sm btn-primary "
                                                         href="{{ route('admin.reasons.show', $reason->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> </a>
+                                                            class="fa fa-fw fa-eye"></i></a>
+
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> </button>
+                                                            class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
