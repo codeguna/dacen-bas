@@ -25,7 +25,8 @@
                                     <label>Nama Pengguna</label>
                                     <input class="form-control" type="text" name="name" value="{{ $name->name }}"
                                         readonly>
-                                    <input type="hidden" name="pin" value="{{ $pin }}">
+                                    <input class="form-control" type="hidden" name="pin" value="{{ $pin }}"
+                                        readonly>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Tanggal</label>
@@ -34,7 +35,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label></label>
+                                        <label>Alasan Tidak Hadir</label>
                                         <select class="form-control" name="reason_id" required>
                                             <option disabled selected>== Pilih Alasan ==</option>
                                             @foreach ($reasons as $value => $key)

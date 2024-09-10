@@ -21,8 +21,10 @@ class NotScanLogController extends Controller
     public function index()
     {
         $notScanLogs = NotScanLog::orderBy('date','ASC')->paginate();
+        $reasons    = Reason::orderBy('name','ASC')->pluck('id','name');
+        $users      = User::where('pin','<>', null)->orderBy('name','ASC')->pluck('pin','name');
 
-        return view('not-scan-log.index', compact('notScanLogs'))
+        return view('not-scan-log.index', compact('notScanLogs','reasons','users'))
             ->with('i', (request()->input('page', 1) - 1) * $notScanLogs->perPage());
     }
 
@@ -44,7 +46,7 @@ class NotScanLogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {       
         request()->validate(NotScanLog::$rules);
 
         $notScanLog = NotScanLog::create($request->all());

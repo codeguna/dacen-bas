@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('scan-log/proceed-missing-date','ScanlogController@getMissingScan')->name('scan-log.proceed-missing-date');
     Route::get('scan-log/import','ScanlogController@viewImportAttendances')->name('scan-log.view-import-scan');
     Route::post('scan-log/import-proceed','ScanlogController@importAttendances')->name('scan-log.proceed-import-scan');
-    Route::get('scan-log/select-period-not-present','ScanlogController@selectPeriodNotPresent')->name('scan-log.select-period-not-present');
+    Route::get('not-scan-log/select-period-not-present','ScanlogController@selectPeriodNotPresent')->name('scan-log.select-period-not-present');
     //recap Route
     Route::get('scan-log/select-period/presences','ScanlogController@selectRecapPresences')->name('scan-log.select-recap-presences');
     Route::get('scan-log/result-all/presences','ScanlogController@resultRecapAllPresences')->name('scan-log.recap-all-presences');

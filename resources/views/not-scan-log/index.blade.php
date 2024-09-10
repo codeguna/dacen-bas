@@ -16,11 +16,13 @@
                               <i class="fa fa-calendar-minus text-danger" aria-hidden="true"></i>  Daftar Ketidakhadiran
                             </span>
 
-                             <div class="float-right">
-                                <a href="{{ route('admin.not-scan-logs.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            <div class="float-right">
+                                <a href="#" data-toggle="modal" data-target="#createNotScan"
+                                    class="btn btn-success btn-sm float-right" data-placement="left">
+                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
-                              </div>
+                            </div>
+                            @include('not-scan-log.modal.create')
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -46,7 +48,7 @@
                                     @foreach ($notScanLogs as $notScanLog)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            <td>{{ ++$notScanLog->date }}</td>                                            
+                                            <td>{{ $notScanLog->date }}</td>                                            
 											<td>{{ $notScanLog->user->name }}</td>
 											<td>{{ $notScanLog->reason->name }}</td>
 											<td>{{ $notScanLog->note }}</td>

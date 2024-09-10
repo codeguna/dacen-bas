@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -293,10 +293,7 @@
                 request()->is('admin/scan-log/select-missing-date') ||
                 request()->is('admin/scan-log/select-missing-date/*') ||
                 request()->is('admin/scan-log/import') ||
-                request()->is('admin/scan-log/import/*') ||
-                request()->is('admin/scan-log/select-period-not-present') ||
-                request()->is('admin/scan-log/select-period-not-present/*') ||
-                request()->is('admin/not-scan-log/*')
+                request()->is('admin/scan-log/import/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -330,10 +327,7 @@
                     request()->is('admin/scan-log/select-missing-date') ||
                     request()->is('admin/scan-log/select-missing-date/*') ||
                     request()->is('admin/scan-log/import') ||
-                    request()->is('admin/scan-log/import/*') ||
-                    request()->is('admin/scan-log/select-period-not-present') ||
-                    request()->is('admin/scan-log/select-period-not-present/*') ||
-                    request()->is('admin/not-scan-log/*')
+                    request()->is('admin/scan-log/import/*')
                         ? 'active'
                         : '' }}">
                     <i class="nav-icon fa fa-history" aria-hidden="true"></i>
@@ -427,14 +421,34 @@
                             <p>Import Presensi</p>
                         </a>
                     </li>
+                </ul>
+            <li
+                class="nav-item {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log/*') || request()->is('admin/not-scan-log') ? 'menu-open' : '' }}">
+                <a
+                    href="#"class="nav-link  {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log/*') || request()->is('admin/not-scan-log') ? 'active' : '' }}">
+                    <i class="fa fa-calendar-times nav-icon" aria-hidden="true"></i>
+                    <p>
+                        Ketidakhadiran
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.not-scan-logs.index') }}"
+                            class="nav-link {{ request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-logs/*') ? 'active' : '' }}">
+                            <i class="fa fa-user-times nav-icon" aria-hidden="true"></i>
+                            <p>Semua</p>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('admin.scan-log.select-period-not-present') }}"
-                            class="nav-link {{ request()->is('admin/scan-log/select-period-not-present') || request()->is('admin/scan-log/select-period-not-present/*') || request()->is('admin/not-scan-log/*') ? 'active' : '' }}">
+                            class="nav-link {{ request()->is('admin/not-scan-log/select-period-not-present') || request()->is('admin/not-scan-log/select-period-not-present/*') || request()->is('admin/not-scan-log/*') ? 'active' : '' }}">
                             <i class="fas fa-calendar-times nav-icon"></i>
                             <p>Input Ketidakhadiran</p>
                         </a>
                     </li>
                 </ul>
+            </li>
             <li
                 class="nav-item {{ request()->is('admin/homebases/*') ||
                 request()->is('admin/homebases') ||
