@@ -961,7 +961,9 @@ class ScanlogController extends Controller
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
 
-        $users = User::where('pin', '<>', null)
+        $users = User::whereHas('scanLogs', function ($query) use ($start_date, $end_date) {
+            $query->whereBetween('date', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
+        })
             ->orderBy('name', 'ASC')
             ->get();
         return view('scan-log.select-period-not-present', compact('start_date', 'end_date', 'users'))->with('i');
