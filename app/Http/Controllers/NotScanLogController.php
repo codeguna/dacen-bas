@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departmen;
 use App\Models\NotScanLog;
 use App\Models\Reason;
 use App\User;
@@ -20,11 +21,11 @@ class NotScanLogController extends Controller
      */
     public function index()
     {
-        $notScanLogs = NotScanLog::orderBy('date','ASC')->paginate();
-        $reasons    = Reason::orderBy('name','ASC')->pluck('id','name');
-        $users      = User::where('pin','<>', null)->orderBy('name','ASC')->pluck('pin','name');
+        $notScanLogs = NotScanLog::orderBy('date', 'ASC')->paginate();
+        $reasons    = Reason::orderBy('name', 'ASC')->pluck('id', 'name');
+        $users      = User::where('pin', '<>', null)->orderBy('name', 'ASC')->pluck('pin', 'name');
 
-        return view('not-scan-log.index', compact('notScanLogs','reasons','users'))
+        return view('not-scan-log.index', compact('notScanLogs', 'reasons', 'users'))
             ->with('i', (request()->input('page', 1) - 1) * $notScanLogs->perPage());
     }
 
@@ -46,13 +47,13 @@ class NotScanLogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {       
+    {
         request()->validate(NotScanLog::$rules);
 
         $notScanLog = NotScanLog::create($request->all());
 
         return redirect()->route('admin.not-scan-logs.index')
-            ->with('success', 'NotScanLog created successfully.');
+            ->with('success', 'Berhasil menambahkan data ketidakhadiran.');
     }
 
     /**
@@ -77,8 +78,8 @@ class NotScanLogController extends Controller
     public function edit($id)
     {
         $notScanLog = NotScanLog::find($id);
-
-        return view('not-scan-log.edit', compact('notScanLog'));
+        $reasons    = Reason::orderBy('name', 'ASC')->pluck('id', 'name');
+        return view('not-scan-log.edit', compact('notScanLog', 'reasons'));
     }
 
     /**
@@ -115,9 +116,39 @@ class NotScanLogController extends Controller
     {
         $pin        = $request->pin;
         $date       = $request->date;
-        $name       = User::select('name')->where('pin',$pin)->first();
-        $reasons    = Reason::orderBy('name','ASC')->pluck('id','name');
+        $name       = User::select('name')->where('pin', $pin)->first();
+        $reasons    = Reason::orderBy('name', 'ASC')->pluck('id', 'name');
 
-        return view('not-scan-log.create', compact('pin', 'date','reasons','name'));
+        return view('not-scan-log.create', compact('pin', 'date', 'reasons', 'name'));
+    }
+
+    public function selectRecapNotPresent()
+    {
+        $users          = User::where('pin', '<>', null)->orderBy('name', 'ASC')->pluck('id', 'name');
+        $departments    = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
+
+        return view('recap.not-precense-period', compact('users', 'departments'));
+    }
+
+    public function resultRecapAllNotPresences(Request $request)
+    {
+
+        // $total_hour     = $request->total_hour;
+        // $total_day      = $request->total_day;
+        $start_date     = $request->start_date;
+        $end_date       = $request->end_date;
+
+        $users          = User::where('pin', '<>', null)->orderBy('name', 'ASC')->get();
+
+        return view(
+            'recap.report.not-presence-all',
+            compact(
+                'users',
+                // 'total_hour',
+                // 'total_day',
+                'start_date',
+                'end_date',
+            )
+        )->with('i');
     }
 }

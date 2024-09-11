@@ -10,8 +10,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('admin.scan-log.select-period-not-present') }}" method="GET"
-                            id="attendanceForm">
+                        <form action="{{ route('admin.scan-log.input') }}" method="GET" id="attendanceForm">
                             <div class="row">
                                 <div class="col md-12">
                                     <h3 class="text-center">
@@ -27,8 +26,7 @@
                                             value="{{ request('end_date') }}" required>
                                         <p id="date_error" style="color: red;"></p>
                                         <span class="input-group-btn">
-                                            <a href="{{ route('admin.scan-log.select-period-not-present') }}"
-                                                class="btn btn-success ml-1">
+                                            <a href="{{ route('admin.scan-log.input') }}" class="btn btn-success ml-1">
                                                 <i class="fas fa-sync"></i>
                                             </a>
                                             <button type="submit" class="btn btn-warning" type="button"
@@ -111,12 +109,28 @@
                                             @else
                                                 @foreach ($daysNotScannedFormatted as $day)
                                                     <div class="btn-group" role="group" aria-label="">
-                                                        <a class="btn btn-xs btn-primary"
-                                                            href="{{ route('admin.not-scan-logs.getDate', ['pin' => $user->pin, 'date' => $day]) }}"
-                                                            target="_blank">
-                                                            <i class="fa fa-plus" aria-hidden="true"></i>
-                                                        </a>
-                                                        <a href="#" class="btn btn-xs btn-outline-primary"
+                                                        @php
+                                                            $checkNotScan = App\Models\NotScanLog::where(
+                                                                'pin',
+                                                                $user->pin,
+                                                            )
+                                                                ->where('date', $day)
+                                                                ->exists();
+                                                        @endphp
+                                                        @if ($checkNotScan)
+                                                            <a class="btn btn-xs btn-success" href="#" disabled
+                                                                title="Sudah input ketidakhadiran">
+                                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                                            </a>
+                                                        @else
+                                                            <a class="btn btn-xs btn-primary"
+                                                                href="{{ route('admin.not-scan-logs.getDate', ['pin' => $user->pin, 'date' => $day]) }}"
+                                                                target="_blank" title="Input ketidakhadiran">
+                                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                            </a>
+                                                        @endif
+                                                        <a href="#"
+                                                            class="btn btn-xs btn-outline-{{ $checkNotScan ? 'success' : 'primary' }}"
                                                             disabled>{{ $day }}</a>
                                                     </div> <br>
                                                 @endforeach

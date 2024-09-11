@@ -105,10 +105,10 @@ Presensi Saya
                                     <p id="date_error" style="color: red;"></p>
                                     <span class="input-group-btn">
                                         <a href="{{ route('admin.scan-log.my-attendances') }}"
-                                            class="btn btn-success ml-1">
+                                            class="btn btn-success ml-1" title="Reset tanggal">
                                             <i class="fas fa-sync"></i>
                                         </a>
-                                        <button type="submit" class="btn btn-warning" type="button" id="submit_button">
+                                        <button type="submit" class="btn btn-warning" type="button" id="submit_button" title="Submit">
                                             <i class="fa fa-search" aria-hidden="true"></i>
                                         </button>
                                     </span>

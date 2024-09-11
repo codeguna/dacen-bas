@@ -27,38 +27,40 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::delete('roles_mass_destroy', 'Admin\RolesController@massDestroy')->name('roles.mass_destroy');
     Route::resource('users', 'Admin\UsersController');
     Route::delete('users_mass_destroy', 'Admin\UsersController@massDestroy')->name('users.mass_destroy');
-    Route::get('/user/view_users_pin','Admin\UsersController@usersPin')->name('user.pin');
-    Route::get('/user/set_users_pin/{user}','Admin\UsersController@setPIN')->name('user.set-pin');
-    Route::post('/user/update_users_pin/{user}','Admin\UsersController@updatePIN')->name('user.update-pin');
-    Route::get('/user/set_users_birthday','Admin\UsersController@setBirthday')->name('user.set-birthday');
-    Route::post('/user/update_users_birthday','Admin\UsersController@updateBirthday')->name('user.update-birthday');
+    Route::get('/user/view_users_pin', 'Admin\UsersController@usersPin')->name('user.pin');
+    Route::get('/user/set_users_pin/{user}', 'Admin\UsersController@setPIN')->name('user.set-pin');
+    Route::post('/user/update_users_pin/{user}', 'Admin\UsersController@updatePIN')->name('user.update-pin');
+    Route::get('/user/set_users_birthday', 'Admin\UsersController@setBirthday')->name('user.set-birthday');
+    Route::post('/user/update_users_birthday', 'Admin\UsersController@updateBirthday')->name('user.update-birthday');
     Route::resource('scan-logs', 'ScanlogController');
     Route::get('/scan-log/detail/', 'ScanlogController@detailData')->name('scanlogs.detail');
     Route::get('/scan-log/detail/filter', 'ScanlogController@detailDataFilter')->name('scanlogs.detail.filter');
     Route::get('/scan-log/print', 'ScanlogController@print')->name('scanlogs.print');
     Route::get('/scan-log/print/result', 'ScanlogController@printResult')->name('scanlogs.print.result');
     Route::get('/scan-log/filter/', 'ScanlogController@filterDate')->name('scanlogs.search');
-    Route::get('/presensi','ScanlogController@presensi')->name('presensi');   
-    Route::get('/scan-log/myattendances','ScanlogController@myAttendances')->name('scan-log.my-attendances');
-    Route::get('/scan-log/myattendancesfilter/','ScanlogController@myAttendancesFilter')->name('scan-log.my-attendances-filter');
-    Route::get('/scan-log/view_request_attendances_filter/','ScanlogController@filterRequestAttendances')->name('scan-log.request-attendances-filter');
-    Route::get('scan-log/request_attendances/','ScanlogController@requestAttendances')->name('scan-log.request-attendances');
-    Route::post('scan-log/request_attendances_store/','ScanlogController@requestAttendanceStore')->name('scan-log.request-attendances-store');
-    Route::post('/scan-log/request_attendances_process/{request}','ScanlogController@processRequest')->name('scan-log.request-attendances-process');
-    Route::post('/scan-log/request_attendances_reject/{request}','ScanlogController@rejectRequest')->name('scan-log.request-attendances-reject');
-    Route::get('/scan-log/view_request_attendances/','ScanlogController@viewRequestAttendances')->name('scan-log.view-request-attendances');
-    Route::get('/scan-log/check_attendances/','ScanlogController@checkAttendance')->name('scan-log.check-attendances');
-    Route::get('/scan-log/check_attendances_filter/','ScanlogController@checkAttendanceFilter')->name('scan-log.check-attendances-filter');
-    Route::get('scan-log/select-period-total-hours','ScanlogController@selectPeriodHours')->name('scan-log.select-period-total-hours');
-    Route::get('scan-log/result-total-hours/','ScanlogController@resultTotalHours')->name('scan-log.result-total-hours');
-    Route::get('scan-log/select-missing-date','ScanlogController@selectMissingDate')->name('scan-log.select-missing-date');
-    Route::post('scan-log/proceed-missing-date','ScanlogController@getMissingScan')->name('scan-log.proceed-missing-date');
-    Route::get('scan-log/import','ScanlogController@viewImportAttendances')->name('scan-log.view-import-scan');
-    Route::post('scan-log/import-proceed','ScanlogController@importAttendances')->name('scan-log.proceed-import-scan');
-    Route::get('not-scan-log/select-period-not-present','ScanlogController@selectPeriodNotPresent')->name('scan-log.select-period-not-present');
+    Route::get('/presensi', 'ScanlogController@presensi')->name('presensi');
+    Route::get('/scan-log/myattendances', 'ScanlogController@myAttendances')->name('scan-log.my-attendances');
+    Route::get('/scan-log/myattendancesfilter/', 'ScanlogController@myAttendancesFilter')->name('scan-log.my-attendances-filter');
+    Route::get('/scan-log/view_request_attendances_filter/', 'ScanlogController@filterRequestAttendances')->name('scan-log.request-attendances-filter');
+    Route::get('scan-log/request_attendances/', 'ScanlogController@requestAttendances')->name('scan-log.request-attendances');
+    Route::post('scan-log/request_attendances_store/', 'ScanlogController@requestAttendanceStore')->name('scan-log.request-attendances-store');
+    Route::post('/scan-log/request_attendances_process/{request}', 'ScanlogController@processRequest')->name('scan-log.request-attendances-process');
+    Route::post('/scan-log/request_attendances_reject/{request}', 'ScanlogController@rejectRequest')->name('scan-log.request-attendances-reject');
+    Route::get('/scan-log/view_request_attendances/', 'ScanlogController@viewRequestAttendances')->name('scan-log.view-request-attendances');
+    Route::get('/scan-log/check_attendances/', 'ScanlogController@checkAttendance')->name('scan-log.check-attendances');
+    Route::get('/scan-log/check_attendances_filter/', 'ScanlogController@checkAttendanceFilter')->name('scan-log.check-attendances-filter');
+    Route::get('scan-log/select-period-total-hours', 'ScanlogController@selectPeriodHours')->name('scan-log.select-period-total-hours');
+    Route::get('scan-log/result-total-hours/', 'ScanlogController@resultTotalHours')->name('scan-log.result-total-hours');
+    Route::get('scan-log/select-missing-date', 'ScanlogController@selectMissingDate')->name('scan-log.select-missing-date');
+    Route::post('scan-log/proceed-missing-date', 'ScanlogController@getMissingScan')->name('scan-log.proceed-missing-date');
+    Route::get('scan-log/import', 'ScanlogController@viewImportAttendances')->name('scan-log.view-import-scan');
+    Route::post('scan-log/import-proceed', 'ScanlogController@importAttendances')->name('scan-log.proceed-import-scan');
+    Route::get('not-scan-log/input', 'ScanlogController@selectPeriodNotPresent')->name('scan-log.input');
     //recap Route
-    Route::get('scan-log/select-period/presences','ScanlogController@selectRecapPresences')->name('scan-log.select-recap-presences');
-    Route::get('scan-log/result-all/presences','ScanlogController@resultRecapAllPresences')->name('scan-log.recap-all-presences');
+    Route::get('scan-log/select-period/presences', 'ScanlogController@selectRecapPresences')->name('scan-log.select-recap-presences');
+    Route::get('scan-log/result-all/presences', 'ScanlogController@resultRecapAllPresences')->name('scan-log.recap-all-presences');
+    Route::get('not-scan-log/select-period/not-present', 'NotScanLogController@selectRecapNotPresent')->name('not-scan-log.select-recap-not-presences');
+    Route::get('not-scan-log/result-all/not-present', 'NotScanLogController@resultRecapAllNotPresences')->name('not-scan-log.recap-all-not-presences');
     //end recap Route
     //Route activities
     Route::resource('activities', 'ActivityController');
@@ -119,50 +121,50 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('lecturer-functional-positions', 'LecturerFunctionalPositionController');
     //End Route Lecturer Functional Position
     //Route Scan Logs Extra
-    Route::resource('scan-logs-extras','ScanLogsExtraController');
-    Route::get('/scan-log-extra/filter/','ScanLogsExtraController@filter')->name('scan-log-extra.filter');
+    Route::resource('scan-logs-extras', 'ScanLogsExtraController');
+    Route::get('/scan-log-extra/filter/', 'ScanLogsExtraController@filter')->name('scan-log-extra.filter');
     //End route Scan Logs Extra
     //Route Willingness
-    Route::resource('willingnesses','WillingnessController');
-    Route::get('/willingness/set_time/{user}','WillingnessController@setTime')->name('willingness.setTime');
-    Route::get('/willingness/get_time/{user}','WillingnessController@getTime')->name('willingness.getTime');
-    Route::post('/willingness/store_time/','WillingnessController@storeTime')->name('willingness.storeTime');
-    Route::post('/willingness/update_time/','WillingnessController@updateTime')->name('willingness.updateTime');
-    Route::post('/willingness/import/','ImportExcelController@importWillingness')->name('willingness.import');
-    Route::post('/willingness/bulk_update/','WillingnessController@bulkUpdate')->name('willingness.bulkUpdate');
+    Route::resource('willingnesses', 'WillingnessController');
+    Route::get('/willingness/set_time/{user}', 'WillingnessController@setTime')->name('willingness.setTime');
+    Route::get('/willingness/get_time/{user}', 'WillingnessController@getTime')->name('willingness.getTime');
+    Route::post('/willingness/store_time/', 'WillingnessController@storeTime')->name('willingness.storeTime');
+    Route::post('/willingness/update_time/', 'WillingnessController@updateTime')->name('willingness.updateTime');
+    Route::post('/willingness/import/', 'ImportExcelController@importWillingness')->name('willingness.import');
+    Route::post('/willingness/bulk_update/', 'WillingnessController@bulkUpdate')->name('willingness.bulkUpdate');
     //End Route Willingness
     //Route Check Late
-    Route::get('/scan-log/check-late','ScanlogController@selectPeriodLate')->name('scan-log.selectLate');
-    Route::get('/scan-log/result-late','ScanlogController@resultLate')->name('scan-log.resultLate');
+    Route::get('/scan-log/check-late', 'ScanlogController@selectPeriodLate')->name('scan-log.selectLate');
+    Route::get('/scan-log/result-late', 'ScanlogController@resultLate')->name('scan-log.resultLate');
     //End Route Check Late
     //Route Holidays
     Route::resource('holidays', 'HolidayController');
-    Route::post('/holiday/import/','ImportExcelController@importHolidays')->name('holidays.import');
+    Route::post('/holiday/import/', 'ImportExcelController@importHolidays')->name('holidays.import');
     Route::delete('/holiday/bulk-destroy-last/', 'HolidayController@destroyLastYear')->name('holidays.destroy-last-year');
     Route::delete('/holiday/bulk-destroy-current/', 'HolidayController@destroyCurrentYear')->name('holidays.destroy-current-year');
     //End Route Holidays
     //Route Birthday
-    Route::get('/birthday/select','Admin\UsersController@selectPeriod')->name('birthday.select');
-    Route::get('/birthday/result','Admin\UsersController@resultBirthday')->name('birthday.result');
-    Route::get('/birthday/result/filter','Admin\UsersController@resultBirthdayFilter')->name('birthday.result.filter');
-    Route::post('/user/update-photo','Admin\UsersController@updatePhoto')->name('users.photo');
+    Route::get('/birthday/select', 'Admin\UsersController@selectPeriod')->name('birthday.select');
+    Route::get('/birthday/result', 'Admin\UsersController@resultBirthday')->name('birthday.result');
+    Route::get('/birthday/result/filter', 'Admin\UsersController@resultBirthdayFilter')->name('birthday.result.filter');
+    Route::post('/user/update-photo', 'Admin\UsersController@updatePhoto')->name('users.photo');
     //End Route Birthday
     //Logs Route
-    Route::get('/logs/index','LogController@index')->name('logs.index');
+    Route::get('/logs/index', 'LogController@index')->name('logs.index');
     Route::delete('/logs/delete', 'LogController@destroy')->name('logs.destroy');
     //End Logs Route
     //Route Dashboard
-    Route::get('/dashboard/dosen-prodi','DashboardController@dosenProdi')->name('dashboard.dosen-prodi');
-    Route::get('/dashboard/jabatan-akademik','DashboardController@jabatanAkademik')->name('dashboard.jabatan-akademik');
-    Route::get('/dashboard/jabatan-akademik/{jabatan}','DashboardController@getJabatanAkademik')->name('dashboard.get-jabatan-akademik');
-    Route::get('/dashboard/golongan-dosen/','DashboardController@golonganDosen')->name('dashboard.golongan-dosen');
+    Route::get('/dashboard/dosen-prodi', 'DashboardController@dosenProdi')->name('dashboard.dosen-prodi');
+    Route::get('/dashboard/jabatan-akademik', 'DashboardController@jabatanAkademik')->name('dashboard.jabatan-akademik');
+    Route::get('/dashboard/jabatan-akademik/{jabatan}', 'DashboardController@getJabatanAkademik')->name('dashboard.get-jabatan-akademik');
+    Route::get('/dashboard/golongan-dosen/', 'DashboardController@golonganDosen')->name('dashboard.golongan-dosen');
     //End Route Dashboard
 
     //Route Reasons
-    Route::resource('reasons','ReasonController');
+    Route::resource('reasons', 'ReasonController');
     //End Route Reasons
     //Route Not Scan
-    Route::resource('not-scan-logs','NotScanLogController');
-    Route::get('not-scan-log/getDate','NotScanLogController@getNotScan')->name('not-scan-logs.getDate');
+    Route::resource('not-scan-logs', 'NotScanLogController');
+    Route::get('not-scan-log/getDate', 'NotScanLogController@getNotScan')->name('not-scan-logs.getDate');
     //End Route Not Scan
 });

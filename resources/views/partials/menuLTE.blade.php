@@ -236,9 +236,9 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item {{ request()->is('admin/scan-log/select-period/presences') ? 'menu-open' : '' }}">
+            <li class="nav-item {{ request()->is('admin/scan-log/select-period/presences') || request()->is('admin/not-scan-log/select-period/not-present') ? 'menu-open' : '' }}">
                 <a href="#"
-                    class="nav-link {{ request()->is('admin/scan-log/select-period/presences') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/scan-log/select-period/presences') || request()->is('admin/not-scan-log/select-period/not-present') ? 'active' : '' }}">
                     <i class="fa fa-book nav-icon" aria-hidden="true"></i>
                     <p>
                         Rekapitulasi
@@ -254,8 +254,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.lecturer.inactive') }}"
-                            class="nav-link {{ request()->is('admin/lecturer/inactive') || request()->is('admin/lecturer/inactive/*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.not-scan-log.select-recap-not-presences') }}"
+                            class="nav-link {{ request()->is('admin/not-scan-log/select-period/not-present') ? 'active' : '' }}">
                             <i class="fa fa-user-times nav-icon" aria-hidden="true"></i>
                             <p>Ketidakhadiran Staf</p>
                         </a>
@@ -423,9 +423,9 @@
                     </li>
                 </ul>
             <li
-                class="nav-item {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log/*') || request()->is('admin/not-scan-log') ? 'menu-open' : '' }}">
+                class="nav-item {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log') ||request()->is('admin/not-scan-log/input') ? 'menu-open' : '' }}">
                 <a
-                    href="#"class="nav-link  {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log/*') || request()->is('admin/not-scan-log') ? 'active' : '' }}">
+                    href="#"class="nav-link  {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log') || request()->is('admin/not-scan-log/input') ? 'active' : '' }}">
                     <i class="fa fa-calendar-times nav-icon" aria-hidden="true"></i>
                     <p>
                         Ketidakhadiran
@@ -441,8 +441,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.scan-log.select-period-not-present') }}"
-                            class="nav-link {{ request()->is('admin/not-scan-log/select-period-not-present') || request()->is('admin/not-scan-log/select-period-not-present/*') || request()->is('admin/not-scan-log/*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.scan-log.input') }}"
+                            class="nav-link {{ request()->is('admin/not-scan-log/input') || request()->is('admin/not-scan-log/input/*') ? 'active' : '' }}">
                             <i class="fas fa-calendar-times nav-icon"></i>
                             <p>Input Ketidakhadiran</p>
                         </a>
