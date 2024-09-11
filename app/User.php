@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\NotScanLog;
 use App\Models\ScanLog;
 use App\Models\Willingness;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -58,6 +59,10 @@ class User extends Authenticatable
     public function scanLogs()
     {
         return $this->hasMany(ScanLog::class, 'pin', 'pin');
+    }
+    public function notScanLogs()
+    {
+        return $this->hasMany(NotScanLog::class, 'pin', 'pin');
     }
 
     public function willingness()

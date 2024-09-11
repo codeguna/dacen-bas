@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-        <title>{{ env('APP_NAME') }} | Rekapitulasi Ketidakhadiran Periode - {{ $start_date }}/ {{ $end_date }}</title>
+        <title>{{ env('APP_NAME') }} | Rekapitulasi Ketidakhadiran Periode - {{ $start_date }}/ {{ $end_date }}
+        </title>
         <style>
             .header {
                 padding: 10px;
@@ -57,19 +58,144 @@
                                     <th>No.</th>
                                     <th>NIP/NIDN</th>
                                     <th>Nama</th>
-                                    <th>Alasan</th>
-                                    <th>Jumlah</th>
+                                    <th>Alasan/Jumlah</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($users as $user)                                    
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            <td>{{ $user->nomor_induk ?? 'NIP/NIDN not found!' }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
+                                @php
+                                    $cuti = 1;
+                                    $izin = 2;
+                                    $izin_khusus = 3;
+                                    $izin_waktu_kerja = 4;
+                                    $sakit = 5;
+                                    $tanpa_pemberitahuan = 6;
+                                    $piket = 7;
+                                    $pulang_cepat = 8;
+                                    $tidak_absen_masuk = 9;
+                                    $penggantian = 10;
+                                    $izin_khusus_anak_menikah = 11;
+                                    $izin_menikah = 12;
+                                    $cuti_melahirkan = 13;
+                                    $penelitian = 14;
+                                    $pkm = 15;
+                                @endphp
+                                @forelse ($users as $user)
+                                    <tr>
+                                        <td>{{ ++$i }}</td>
+                                        <td>{{ $user->nomor_induk ?? 'NIP/NIDN not found!' }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        @php
+                                            $pin = $user->pin;
+                                            $cuti_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $cuti)
+                                                ->count();
+                                            $izin_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $izin)
+                                                ->count();
+                                            $izin_khusus_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $izin_khusus)
+                                                ->count();
+                                            $izin_waktu_kerja_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $izin_waktu_kerja)
+                                                ->count();
+                                            $sakit_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $sakit)
+                                                ->count();
+                                            $tanpa_pemberitahuan_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $tanpa_pemberitahuan)
+                                                ->count();
+                                            $piket_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $piket)
+                                                ->count();
+                                            $pulang_cepat_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $pulang_cepat)
+                                                ->count();
+                                            $tidak_absen_masuk_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $tidak_absen_masuk)
+                                                ->count();
+                                            $penggantian_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $penggantian)
+                                                ->count();
+                                            $izin_khusus_anak_menikah_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $izin_khusus_anak_menikah)
+                                                ->count();
+                                            $izin_menikah_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $izin_menikah)
+                                                ->count();
+                                            $cuti_melahirkan_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $cuti_melahirkan)
+                                                ->count();
+                                            $penelitian_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $penelitian)
+                                                ->count();
+                                            $pkm_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $pkm)
+                                                ->count();
+                                        @endphp
+                                        <td>
+                                            @if ($cuti_count > 0)
+                                                Cuti: {{ $cuti_count }} <br>
+                                            @endif
+                                            @if ($izin_count > 0)
+                                                Izin Khusus: {{ $izin_count }} <br>
+                                            @endif
+                                            @if ($izin_khusus_count > 0)
+                                                Izin Khusus: {{ $izin_khusus_count }} <br>
+                                            @endif
+                                            @if ($izin_waktu_kerja_count > 0)
+                                                Izin Khusus: {{ $izin_waktu_kerja_count }} <br>
+                                            @endif
+                                            @if ($sakit_count > 0)
+                                                Izin Khusus: {{ $sakit_count }} <br>
+                                            @endif
+                                            @if ($tanpa_pemberitahuan_count > 0)
+                                                Izin Khusus: {{ $tanpa_pemberitahuan_count }} <br>
+                                            @endif
+                                            @if ($piket_count > 0)
+                                                Izin Khusus: {{ $piket_count }} <br>
+                                            @endif
+                                            @if ($pulang_cepat_count > 0)
+                                                Izin Khusus: {{ $pulang_cepat_count }} <br>
+                                            @endif
+                                            @if ($tidak_absen_masuk_count > 0)
+                                                Izin Khusus: {{ $tidak_absen_masuk_count }} <br>
+                                            @endif
+                                            @if ($penggantian_count > 0)
+                                                Izin Khusus: {{ $penggantian_count }} <br>
+                                            @endif
+                                            @if ($izin_khusus_anak_menikah_count > 0)
+                                                Izin Khusus: {{ $izin_khusus_anak_menikah_count }} <br>
+                                            @endif
+                                            @if ($izin_menikah_count > 0)
+                                                Izin Khusus: {{ $izin_menikah_count }} <br>
+                                            @endif
+                                            @if ($cuti_melahirkan_count > 0)
+                                                Izin Khusus: {{ $cuti_melahirkan_count }} <br>
+                                            @endif
+                                            @if ($penelitian_count > 0)
+                                                Izin Khusus: {{ $penelitian_count }} <br>
+                                            @endif
+                                            @if ($pkm_count > 0)
+                                                Izin Khusus: {{ $pkm_count }} <br>
+                                            @endif
+
+                                        </td>
+                                    </tr>
                                 @empty
                                     <tr>
                                         <td colspan="8">== Tidak Ada Data ==</td>
@@ -88,4 +214,5 @@
             </div>
         </div>
     </body>
+
 </html>

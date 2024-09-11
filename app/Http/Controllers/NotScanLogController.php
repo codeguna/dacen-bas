@@ -6,6 +6,7 @@ use App\Models\Departmen;
 use App\Models\NotScanLog;
 use App\Models\Reason;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -138,7 +139,9 @@ class NotScanLogController extends Controller
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
 
-        $users          = User::where('pin', '<>', null)->orderBy('name', 'ASC')->get();
+        $users = User::whereHas('notScanLogs', function ($query) use ($start_date, $end_date) {
+            $query->whereBetween('date', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
+        })->orderBy('name', 'ASC')->get();
 
         return view(
             'recap.report.not-present-all',
