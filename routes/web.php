@@ -61,6 +61,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('scan-log/result-all/presences', 'ScanlogController@resultRecapAllPresences')->name('scan-log.recap-all-presences');
     Route::get('not-scan-log/select-period/not-present', 'NotScanLogController@selectRecapNotPresent')->name('not-scan-log.select-recap-not-presences');
     Route::get('not-scan-log/result-all/not-present', 'NotScanLogController@resultRecapAllNotPresences')->name('not-scan-log.recap-all-not-presences');
+    Route::get('not-scan-log/result-all/not-present-individual', 'NotScanLogController@resultNotPresencesIndividual')->name('not-scan-log.recap-individual-not-presences');
+    
     //end recap Route
     //Route activities
     Route::resource('activities', 'ActivityController');

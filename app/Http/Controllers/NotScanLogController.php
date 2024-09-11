@@ -125,7 +125,7 @@ class NotScanLogController extends Controller
 
     public function selectRecapNotPresent()
     {
-        $users          = User::where('pin', '<>', null)->orderBy('name', 'ASC')->pluck('id', 'name');
+        $users          = User::where('pin', '<>', null)->orderBy('name', 'ASC')->pluck('pin', 'name');
         $departments    = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
 
         return view('recap.not-precense-period', compact('users', 'departments'));
@@ -142,6 +142,56 @@ class NotScanLogController extends Controller
         $users = User::whereHas('notScanLogs', function ($query) use ($start_date, $end_date) {
             $query->whereBetween('date', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
         })->orderBy('name', 'ASC')->get();
+
+        return view(
+            'recap.report.not-present-all',
+            compact(
+                'users',
+                // 'total_hour',
+                // 'total_day',
+                'start_date',
+                'end_date',
+            )
+        )->with('i');
+    }
+    public function resultNotPresencesIndividual(Request $request)
+    {
+
+        // $total_hour     = $request->total_hour;
+        // $total_day      = $request->total_day;
+        $start_date     = $request->start_date;
+        $end_date       = $request->end_date;
+        $pin            = $request->pin;
+
+        $users = User::where('pin',$pin)->whereHas('notScanLogs', function ($query) use ($start_date, $end_date) {
+            $query->whereBetween('date', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
+        })->orderBy('name', 'ASC')->get();
+        
+
+        return view(
+            'recap.report.not-present-all',
+            compact(
+                'users',
+                // 'total_hour',
+                // 'total_day',
+                'start_date',
+                'end_date',
+            )
+        )->with('i');
+    }
+    public function resultNotPresencesDepartment(Request $request)
+    {
+
+        // $total_hour     = $request->total_hour;
+        // $total_day      = $request->total_day;
+        $start_date     = $request->start_date;
+        $end_date       = $request->end_date;
+        $department_id  = $request->department_id;
+
+        $users = User::where('pin',$department_id)->whereHas('notScanLogs', function ($query) use ($start_date, $end_date) {
+            $query->whereBetween('date', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
+        })->orderBy('name', 'ASC')->get();
+        
 
         return view(
             'recap.report.not-present-all',

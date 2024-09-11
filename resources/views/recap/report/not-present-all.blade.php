@@ -152,46 +152,46 @@
                                                 Cuti: {{ $cuti_count }} <br>
                                             @endif
                                             @if ($izin_count > 0)
-                                                Izin Khusus: {{ $izin_count }} <br>
+                                                Izin: {{ $izin_count }} <br>
                                             @endif
                                             @if ($izin_khusus_count > 0)
                                                 Izin Khusus: {{ $izin_khusus_count }} <br>
                                             @endif
                                             @if ($izin_waktu_kerja_count > 0)
-                                                Izin Khusus: {{ $izin_waktu_kerja_count }} <br>
+                                                Izin Waktu Kerja: {{ $izin_waktu_kerja_count }} <br>
                                             @endif
                                             @if ($sakit_count > 0)
-                                                Izin Khusus: {{ $sakit_count }} <br>
+                                                Sakit: {{ $sakit_count }} <br>
                                             @endif
                                             @if ($tanpa_pemberitahuan_count > 0)
-                                                Izin Khusus: {{ $tanpa_pemberitahuan_count }} <br>
+                                                Tanpa Pemberitahuan: {{ $tanpa_pemberitahuan_count }} <br>
                                             @endif
                                             @if ($piket_count > 0)
-                                                Izin Khusus: {{ $piket_count }} <br>
+                                                Piket: {{ $piket_count }} <br>
                                             @endif
                                             @if ($pulang_cepat_count > 0)
-                                                Izin Khusus: {{ $pulang_cepat_count }} <br>
+                                                Pulang Cepat: {{ $pulang_cepat_count }} <br>
                                             @endif
                                             @if ($tidak_absen_masuk_count > 0)
-                                                Izin Khusus: {{ $tidak_absen_masuk_count }} <br>
+                                                Tidak Absen Masuk: {{ $tidak_absen_masuk_count }} <br>
                                             @endif
                                             @if ($penggantian_count > 0)
-                                                Izin Khusus: {{ $penggantian_count }} <br>
+                                                Penggantian: {{ $penggantian_count }} <br>
                                             @endif
                                             @if ($izin_khusus_anak_menikah_count > 0)
-                                                Izin Khusus: {{ $izin_khusus_anak_menikah_count }} <br>
+                                                Izin Khusus Anak Menikah: {{ $izin_khusus_anak_menikah_count }} <br>
                                             @endif
                                             @if ($izin_menikah_count > 0)
-                                                Izin Khusus: {{ $izin_menikah_count }} <br>
+                                                Izin Menikah: {{ $izin_menikah_count }} <br>
                                             @endif
                                             @if ($cuti_melahirkan_count > 0)
-                                                Izin Khusus: {{ $cuti_melahirkan_count }} <br>
+                                                Cuti Melahirkan: {{ $cuti_melahirkan_count }} <br>
                                             @endif
                                             @if ($penelitian_count > 0)
-                                                Izin Khusus: {{ $penelitian_count }} <br>
+                                                Penelitian: {{ $penelitian_count }} <br>
                                             @endif
                                             @if ($pkm_count > 0)
-                                                Izin Khusus: {{ $pkm_count }} <br>
+                                                Penelitian: {{ $pkm_count }} <br>
                                             @endif
 
                                         </td>

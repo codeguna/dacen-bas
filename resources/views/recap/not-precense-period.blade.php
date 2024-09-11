@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    Pilih Periode Terlambat
+    Pilih Periode Ketidakhadiran
 @endsection
 
 @section('content')
@@ -76,7 +76,7 @@
                                         </select>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        {{-- <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Jumlah Hari Kerja</label>
                                                 <input type="number" class="form-control" name="total_day" required>
@@ -91,7 +91,7 @@
                                                 <small class="form-text text-info">Total Jumlah Kerja dalam 1
                                                     periode</small>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <h4>
                                         Tanggal Awal / Tanggal Akhir
@@ -116,16 +116,16 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('admin.scan-log.resultLate') }}" method="GET">
+                        <form action="{{ route('admin.not-scan-log.recap-individual-not-presences') }}" method="GET">
                             <div class="row">
                                 <div class="col md-12">
                                     <h3>
                                         <i class="fa fa-user-circle text-warning" aria-hidden="true"></i> Kehadiran Per
-                                        Orang - <span class="bg-warning rounded p-1">on progress</span>
+                                        Orang
                                     </h3>
                                     <div class="form-group">
                                         <label>Nama</label>
-                                        <select class="form-control" name="user_id" required>
+                                        <select class="form-control" name="pin" required>
                                             <option disabled selected>== Pilih Nama ==</option>
                                             @foreach ($users as $value => $key)
                                                 <option value="{{ $key }}">{{ $value }}</option>
@@ -133,7 +133,7 @@
                                         </select>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        {{-- <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Jumlah Hari Kerja</label>
                                                 <input type="number" class="form-control" name="total_day" required>
@@ -148,7 +148,7 @@
                                                 <small class="form-text text-info">Total Jumlah Kerja dalam 1
                                                     periode</small>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <h4>
                                         Tanggal Awal / Tanggal Akhir
