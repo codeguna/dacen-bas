@@ -59,12 +59,12 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('admin.scan-log.resultLate') }}" method="GET">
+                        <form action="{{ route('admin.not-scan-log.recap-department-not-presences') }}" method="GET">
                             <div class="row">
                                 <div class="col md-12">
                                     <h3>
                                         <i class="fa fa-building text-success" aria-hidden="true"></i> Kehadiran Per
-                                        Departemen - <span class="bg-warning rounded p-1">on progress</span>
+                                        Departemen
                                     </h3>
                                     <div class="form-group">
                                         <label>Departemen</label>

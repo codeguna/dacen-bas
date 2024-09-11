@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Departmen;
 use App\Models\NotScanLog;
 use App\Models\ScanLog;
 use App\Models\Willingness;
@@ -68,5 +69,9 @@ class User extends Authenticatable
     public function willingness()
     {
         return $this->hasMany(Willingness::class, 'pin', 'pin');
+    }
+    public function department()
+    {
+        return $this->belongsTo(Departmen::class, 'department_id', 'id');
     }
 }

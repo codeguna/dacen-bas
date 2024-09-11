@@ -163,10 +163,10 @@ class NotScanLogController extends Controller
         $end_date       = $request->end_date;
         $pin            = $request->pin;
 
-        $users = User::where('pin',$pin)->whereHas('notScanLogs', function ($query) use ($start_date, $end_date) {
+        $users = User::where('pin', $pin)->whereHas('notScanLogs', function ($query) use ($start_date, $end_date) {
             $query->whereBetween('date', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
         })->orderBy('name', 'ASC')->get();
-        
+
 
         return view(
             'recap.report.not-present-all',
@@ -186,12 +186,12 @@ class NotScanLogController extends Controller
         // $total_day      = $request->total_day;
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
-        $department_id  = $request->department_id;
+        $department  = $request->department_id;
 
-        $users = User::where('pin',$department_id)->whereHas('notScanLogs', function ($query) use ($start_date, $end_date) {
+        $users = User::where('department_id', $department)->whereHas('notScanLogs', function ($query) use ($start_date, $end_date) {
             $query->whereBetween('date', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
         })->orderBy('name', 'ASC')->get();
-        
+        return $users;
 
         return view(
             'recap.report.not-present-all',
