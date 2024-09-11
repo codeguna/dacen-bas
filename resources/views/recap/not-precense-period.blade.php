@@ -10,14 +10,14 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('admin.scan-log.recap-all-presences') }}" method="GET">
+                        <form action="{{ route('admin.not-scan-log.recap-all-not-presences') }}" method="GET">
                             <div class="row">
                                 <div class="col md-12">
                                     <h3>
-                                        <i class="fa fa-th-list text-primary" aria-hidden="true"></i> Kehadiran Semua
+                                        <i class="fa fa-th-list text-primary" aria-hidden="true"></i> Ketidakhadiran Semua
                                         Departemen
                                     </h3>
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Jumlah Hari Kerja</label>
@@ -34,7 +34,7 @@
                                                     periode</small>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <h4>
                                         Tanggal Awal / Tanggal Akhir

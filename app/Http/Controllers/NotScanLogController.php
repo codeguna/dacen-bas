@@ -141,7 +141,7 @@ class NotScanLogController extends Controller
         $users          = User::where('pin', '<>', null)->orderBy('name', 'ASC')->get();
 
         return view(
-            'recap.report.not-presence-all',
+            'recap.report.not-present-all',
             compact(
                 'users',
                 // 'total_hour',
