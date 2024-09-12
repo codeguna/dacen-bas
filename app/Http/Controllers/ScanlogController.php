@@ -941,7 +941,8 @@ class ScanlogController extends Controller
         $total_day      = $request->total_day;
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
-
+        $type           = 'Semua Departemen';
+        
         $users          = User::where('pin', '<>', null)->orderBy('name', 'ASC')->get();
 
         return view(
@@ -952,6 +953,7 @@ class ScanlogController extends Controller
                 'total_day',
                 'start_date',
                 'end_date',
+                'type'
             )
         )->with('i');
     }
@@ -964,6 +966,8 @@ class ScanlogController extends Controller
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
         $pin            = $request->pin;
+        $type           = User::select('name')->where('pin',$pin)->first();
+        $type           = $type->name; 
 
         $users = User::where('pin', $pin)->whereHas('scanLogs', function ($query) use ($start_date, $end_date) {
             $query->whereBetween('scan', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
@@ -978,6 +982,7 @@ class ScanlogController extends Controller
                 'total_day',
                 'start_date',
                 'end_date',
+                'type'
             )
         )->with('i');
     }
@@ -988,7 +993,9 @@ class ScanlogController extends Controller
         $total_day      = $request->total_day;
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
-        $department  = $request->department_id;
+        $department     = $request->department_id;
+        $type           = Departmen::select('name')->where('id',$department)->first();
+        $type           = $type->name; 
 
         $users = User::where('department_id', $department)->whereHas('scanLogs', function ($query) use ($start_date, $end_date) {
             $query->whereBetween('scan', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
@@ -1002,6 +1009,7 @@ class ScanlogController extends Controller
                 'total_day',
                 'start_date',
                 'end_date',
+                'type'
             )
         )->with('i');
     }

@@ -39,7 +39,7 @@
                     <div class="col-md-12">
                         <div class="header">
                             <img src="{{ asset('images/logo-lpkia.png') }}" alt="Logo" class="logo">
-                            <h2>Rekapitulasi Kehadiran untuk Semua Departemen</h2>
+                            <h2>Rekapitulasi Kehadiran <br>{{ $type }}</h2>
                             <h3>Periode {{ Carbon\Carbon::parse($start_date)->format('d-M-Y') }} s/d Periode
                                 {{ Carbon\Carbon::parse($end_date)->format('d-M-Y') }}</h3>
                             <p class="header-text">Jumlah Hari Kerja {{ $total_day }} Hari dan {{ $total_hour }}
