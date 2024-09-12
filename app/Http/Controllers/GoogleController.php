@@ -38,7 +38,7 @@ class GoogleController extends Controller
             $user = Socialite::driver('google')->user();
             $finduser = User::where('google_id', $user->id)->first();
             // only allow people with @company.com to login
-            if (explode("@", $user->email)[1] !== 'lpkia.ac.id') {
+            if (explode("@", $user->email)[1] !== 'lpkia.ac.id' && explode("@", $user->email)[1] !== 'fellow.lpkia.ac.id') {
                 return redirect()->to('/')->with('error', 'Gunakan akun email @lpkia.ac.id untuk akses ke Sistem Hera');
             }
             if ($finduser) {
