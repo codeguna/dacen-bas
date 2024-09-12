@@ -191,7 +191,6 @@ class NotScanLogController extends Controller
         $users = User::where('department_id', $department)->whereHas('notScanLogs', function ($query) use ($start_date, $end_date) {
             $query->whereBetween('date', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
         })->orderBy('name', 'ASC')->get();
-        return $users;
 
         return view(
             'recap.report.not-present-all',

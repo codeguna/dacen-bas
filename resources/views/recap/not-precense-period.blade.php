@@ -63,7 +63,7 @@
                             <div class="row">
                                 <div class="col md-12">
                                     <h3>
-                                        <i class="fa fa-building text-success" aria-hidden="true"></i> Kehadiran Per
+                                        <i class="fa fa-building text-success" aria-hidden="true"></i> Ketidakhadiran Per
                                         Departemen
                                     </h3>
                                     <div class="form-group">
@@ -120,7 +120,7 @@
                             <div class="row">
                                 <div class="col md-12">
                                     <h3>
-                                        <i class="fa fa-user-circle text-warning" aria-hidden="true"></i> Kehadiran Per
+                                        <i class="fa fa-user-circle text-warning" aria-hidden="true"></i> Ketidakhadiran Per
                                         Orang
                                     </h3>
                                     <div class="form-group">
