@@ -1012,7 +1012,7 @@ class ScanlogController extends Controller
         $end_date       = $request->end_date;
 
         $users = User::whereHas('scanLogs', function ($query) use ($start_date, $end_date) {
-            $query->whereBetween('date', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
+            $query->whereBetween('scan', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
         })
             ->orderBy('name', 'ASC')
             ->get();
