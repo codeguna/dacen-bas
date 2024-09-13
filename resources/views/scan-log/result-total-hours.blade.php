@@ -58,7 +58,7 @@
                                     <th>No.</th>
                                     <th>Nama</th>
                                     <th>NIP/NIDN</th>
-                                    <th>Jam Kerja</th>
+                                    <th>Total Jam Kerja</th>
                                 </tr>
                             </thead>
                             <tbody>

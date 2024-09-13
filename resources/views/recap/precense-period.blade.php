@@ -132,7 +132,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Jumlah Hari Kerja</label>
@@ -149,7 +149,7 @@
                                                     periode</small>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <h4>
                                         Tanggal Awal / Tanggal Akhir
                                     </h4>

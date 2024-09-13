@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use GeoIP;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
@@ -67,6 +68,14 @@ class ScanlogController extends Controller
         $tanggal_hari_ini = Carbon::now()->toDateString();
         $birthday_pengguna = auth()->user()->birthday;
         $checkWillingness = Willingness::where('pin', $pin_pengguna)->first();
+
+        //Check Presences
+        $date   = date('Y-m-d');
+        $checkPresences = ScanLog::where('pin', $pin_pengguna)->where('ip_scan', '3.1.174.198')->whereDate('scan', $date)->doesntExist();
+        if ($checkPresences) {
+            return redirect()->back()->with('warning', 'Lakukan Presensi pada mesin Fingerprint terlebih dahulu untuk melanjutkan proses ini!');
+        }
+        //Check Presences
 
         if ($birthday_pengguna === null) {
             return redirect()->route('admin.user.set-birthday')->with('warning', 'Silahkan lengkapi data tanggal lahir anda!');
@@ -177,13 +186,13 @@ class ScanlogController extends Controller
 
         $org = $data['isp'];
         // $org = 'BIZNET';
-
+        //100 tanda untuk absen non mesin
         if (stristr($org, 'BIZNET') !== false) {
             ScanLog::create([
                 'pin' => auth()->user()->pin, // Ganti dengan cara yang sesuai untuk mendapatkan PIN pengguna yang login
                 'scan' => now(), // Tanggal dan waktu saat ini
                 'verify' => true, // Contoh nilai verifikasi
-                'status_scan' => true, // Contoh status scan
+                'status_scan' => 100, // Contoh status scan
                 'ip_scan' => $userIP, // Alamat IP pengguna yang melakukan presensi
             ]);
             // $myIP = env('OFFICE_IP');
@@ -942,7 +951,7 @@ class ScanlogController extends Controller
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
         $type           = 'Semua Departemen';
-        
+
         $users          = User::where('pin', '<>', null)->orderBy('name', 'ASC')->get();
 
         return view(
@@ -961,28 +970,30 @@ class ScanlogController extends Controller
     public function resultPresencesIndividual(Request $request)
     {
 
-        $total_hour     = $request->total_hour;
-        $total_day      = $request->total_day;
+        // $total_hour     = $request->total_hour;
+        // $total_day      = $request->total_day;
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
         $pin            = $request->pin;
-        $type           = User::select('name')->where('pin',$pin)->first();
-        $type           = $type->name; 
+        $type           = User::select('name')->where('pin', $pin)->first();
+        $type           = $type->name;
 
-        $users = User::where('pin', $pin)->whereHas('scanLogs', function ($query) use ($start_date, $end_date) {
-            $query->whereBetween('scan', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
-        })->orderBy('name', 'ASC')->get();
-
-
+        $scans = ScanLog::selectRaw('DATE(scan) as scan')->where('pin', $pin)
+            ->whereDate('scan', '>=', $start_date)
+            ->whereDate('scan', '<=', $end_date)
+            ->distinct()
+            ->pluck('scan');
+            
         return view(
-            'recap.report.all',
+            'recap.report.individual',
             compact(
-                'users',
-                'total_hour',
-                'total_day',
+                'scans',
+                // 'total_hour',
+                // 'total_day',
+                'pin',
                 'start_date',
                 'end_date',
-                'type'
+                'type',
             )
         )->with('i');
     }
@@ -994,8 +1005,8 @@ class ScanlogController extends Controller
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
         $department     = $request->department_id;
-        $type           = Departmen::select('name')->where('id',$department)->first();
-        $type           = $type->name; 
+        $type           = Departmen::select('name')->where('id', $department)->first();
+        $type           = $type->name;
 
         $users = User::where('department_id', $department)->whereHas('scanLogs', function ($query) use ($start_date, $end_date) {
             $query->whereBetween('scan', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
