@@ -34,6 +34,9 @@
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
                         <th>
+                            Departmen
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -60,6 +63,9 @@
                                 @foreach ($user->roles()->pluck('name') as $role)
                                     <span class="badge badge-info">{{ $role }}</span>
                                 @endforeach
+                            </td>
+                            <td>
+                                {{ $user->department->name??'Not set!' }}
                             </td>
                             <td>
                                 <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">

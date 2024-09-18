@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUsersRequest;
 use App\Http\Requests\Admin\UpdateUsersRequest;
+use App\Models\Departmen;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -78,9 +79,10 @@ class UsersController extends Controller
         if (!Gate::allows('users_manage')) {
             return abort(401);
         }
-        $roles = Role::get()->pluck('name', 'name');
+        $roles          = Role::get()->pluck('name', 'name');
+        $departments    = Departmen::orderBy('name','ASC')->pluck('id','name');
 
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('admin.users.edit', compact('user', 'roles','departments'));
     }
 
     /**

@@ -76,6 +76,16 @@
                             {{ $errors->first('roles') }}
                         </em>
                     @endif
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select class="form-control" name="department_id">
+                            @foreach ($departments as $value => $key)
+                                <option value="{{ $key }}"
+                                    @if ($user->department_id == $key) selected @endif>{{ $value }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <p class="helper-block">
                         {{ trans('cruds.user.fields.roles_helper') }}
                     </p>

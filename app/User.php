@@ -35,7 +35,8 @@ class User extends Authenticatable
         'position',
         'pin',
         'birthday',
-        'photo'
+        'photo',
+        'department_id'
     ];
 
     static $rules = [
