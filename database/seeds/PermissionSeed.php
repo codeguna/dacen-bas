@@ -52,5 +52,12 @@ class PermissionSeed extends Seeder
         //BAS
         Permission::create(['name' => 'bas_menu']);
 
+        //EFS
+        Permission::create(['name' => 'efs_menu']);
+        Permission::create(['name' => 'create_letter']);
+        Permission::create(['name' => 'update_letter']);
+        Permission::create(['name' => 'delete_letter']);
+        Permission::create(['name' => 'read_letter']);
+
     }
 }

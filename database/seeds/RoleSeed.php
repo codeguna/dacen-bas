@@ -60,6 +60,11 @@ class RoleSeed extends Seeder
         $role->givePermissionTo('delete_education_tendik');
         $role->givePermissionTo('delete_certificate_tendik');
         $role->givePermissionTo('bas_menu');
+        $role->givePermissionTo('efs_menu');
+        $role->givePermissionTo('create_letter');
+        $role->givePermissionTo('read_letter');
+        $role->givePermissionTo('update_letter');
+        $role->givePermissionTo('delete_letter');
 
         $role = Role::create(['name' => 'GUEST']);
         $role->givePermissionTo('view_profile');
