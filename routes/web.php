@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomebaseController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\LetterController;
 use App\Http\Controllers\ScanlogController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -165,7 +166,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/dashboard/jabatan-akademik/{jabatan}', 'DashboardController@getJabatanAkademik')->name('dashboard.get-jabatan-akademik');
     Route::get('/dashboard/golongan-dosen/', 'DashboardController@golonganDosen')->name('dashboard.golongan-dosen');
     //End Route Dashboard
-
     //Route Reasons
     Route::resource('reasons', 'ReasonController');
     //End Route Reasons
@@ -173,4 +173,12 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('not-scan-logs', 'NotScanLogController');
     Route::get('not-scan-log/getDate', 'NotScanLogController@getNotScan')->name('not-scan-logs.getDate');
     //End Route Not Scan
+    //Route Type Letters
+    Route::resource('type-letters', 'TypeLetterController');
+    //End Type Letters
+    //Route Letters
+    Route::resource('letters', 'LetterController');
+    Route::get('letter/inbox',[LetterController::class, 'inbox'])->name('letters.inbox');
+    Route::get('letter/outbox',[LetterController::class, 'outbox'])->name('letters.outbox');
+    //End Letters
 });

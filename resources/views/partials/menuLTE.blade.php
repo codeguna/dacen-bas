@@ -48,7 +48,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -236,7 +236,8 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item {{ request()->is('admin/scan-log/select-period/presences') || request()->is('admin/not-scan-log/select-period/not-present') ? 'menu-open' : '' }}">
+            <li
+                class="nav-item {{ request()->is('admin/scan-log/select-period/presences') || request()->is('admin/not-scan-log/select-period/not-present') ? 'menu-open' : '' }}">
                 <a href="#"
                     class="nav-link {{ request()->is('admin/scan-log/select-period/presences') || request()->is('admin/not-scan-log/select-period/not-present') ? 'active' : '' }}">
                     <i class="fa fa-book nav-icon" aria-hidden="true"></i>
@@ -423,7 +424,7 @@
                     </li>
                 </ul>
             <li
-                class="nav-item {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log') ||request()->is('admin/not-scan-log/input') ? 'menu-open' : '' }}">
+                class="nav-item {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log') || request()->is('admin/not-scan-log/input') ? 'menu-open' : '' }}">
                 <a
                     href="#"class="nav-link  {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log') || request()->is('admin/not-scan-log/input') ? 'active' : '' }}">
                     <i class="fa fa-calendar-times nav-icon" aria-hidden="true"></i>
@@ -604,6 +605,60 @@
                             class="nav-link {{ request()->is('admin/universities') || request()->is('admin/universities/*') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-university"></i>
                             <p>Universitas</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endcan
+        @can('efs_menu')
+            <li
+                class="nav-item {{ request()->is('admin/letters/*') ||
+                request()->is('admin/letters') ||
+                request()->is('admin/type-letters/*') ||
+                request()->is('admin/type-letters') ||
+                request()->is('admin/letter/outbox') ||
+                request()->is('admin/letter/outbox/*') ||
+                request()->is('admin/letter/inbox') ||
+                request()->is('admin/letter/inbox/*')
+                    ? 'menu-open'
+                    : '' }}">
+                <a
+                    href="#"class="nav-link  {{ request()->is('admin/letters/*') ||
+                    request()->is('admin/letters') ||
+                    request()->is('admin/type-letters/*') ||
+                    request()->is('admin/type-letters') ||
+                    request()->is('admin/letter/outbox') ||
+                    request()->is('admin/letter/outbox/*') ||
+                    request()->is('admin/letter/inbox') ||
+                    request()->is('admin/letter/inbox/*')
+                        ? 'active'
+                        : '' }}">
+                    <i class="fas fa-envelope nav-icon"></i>
+                    <p>
+                        Surat
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.type-letters.index') }}"
+                            class="nav-link {{ request()->is('admin/type-letters/*') || request()->is('admin/type-letters') ? 'active' : '' }}">
+                            <i class="fas fa-paperclip nav-icon"></i>
+                            <p>Set Tipe Surat</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.letters.inbox') }}"
+                            class="nav-link {{ request()->is('admin/letter/inbox') || request()->is('admin/letter/inbox/*') ? 'active' : '' }}">
+                            <i class="fas fa-arrow-circle-down nav-icon"></i>
+                            <p>Surat Masuk</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.letters.outbox') }}"
+                            class="nav-link {{ request()->is('admin/letter/outbox') || request()->is('admin/letter/outbox/*') ? 'active' : '' }}">
+                            <i class="fas fa-arrow-circle-up nav-icon"></i>
+                            <p>Surat Keluar</p>
                         </a>
                     </li>
                 </ul>
