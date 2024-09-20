@@ -22,7 +22,7 @@ class PermissionsController extends Controller
             return abort(401);
         }
 
-        $permissions = Permission::all();
+        $permissions = Permission::orderBy('name','ASC')->get();
 
         return view('admin.permissions.index', compact('permissions'));
     }

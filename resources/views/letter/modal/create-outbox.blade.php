@@ -11,13 +11,13 @@
                         <input type="hidden" name="letter_type" value="0">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Nomor Surat Masuk</label>
+                                <label>Nomor Surat Keluar</label>
                                 <input type="text" class="form-control" name="letter_number" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Tanggal Surat Masuk</label>
+                                <label>Tanggal Surat Keluar</label>
                                 <input type="date" class="form-control" name="date" required>
                             </div>
                         </div>
@@ -42,6 +42,11 @@
                                         <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
+                                <small class="text-danger">
+                                    <a href="{{ route('admin.type-letters.index') }}">
+                                        +Tambah jenis surat disini
+                                    </a>
+                                </small>
                             </div>
                         </div>
                         <div class="col-md-12">

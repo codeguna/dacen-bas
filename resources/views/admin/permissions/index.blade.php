@@ -120,10 +120,7 @@
             }
             dtButtons.push(deleteButton)
 
-            $.extend(true, $.fn.dataTable.defaults, {
-                order: [
-                    [1, 'desc']
-                ],
+            $.extend(true, $.fn.dataTable.defaults, {                
                 pageLength: 100,
             });
             $('.datatable-Permission:not(.ajaxTable)').DataTable({

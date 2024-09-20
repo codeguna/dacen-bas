@@ -78,7 +78,7 @@ class LetterController extends Controller
 
         $file->move($tujuan_upload, $name_file);
 
-        $educationalStaffs  = Letter::create([
+        $letters  = Letter::create([
             'letter_type'       => $letter_type,
             'letter_number'     => $letter_number,
             'date'              => $date,
@@ -115,8 +115,9 @@ class LetterController extends Controller
     public function edit($id)
     {
         $letter = Letter::find($id);
+        $typeLetters = TypeLetter::orderBy('name', 'ASC')->pluck('id', 'name');
 
-        return view('letter.edit', compact('letter'));
+        return view('letter.edit', compact('letter', 'typeLetters'));
     }
 
     /**
@@ -128,11 +129,58 @@ class LetterController extends Controller
      */
     public function update(Request $request, Letter $letter)
     {
-        request()->validate(Letter::$rules);
+        $validator = Validator::make($request->all(), Letter::$rules);
+        if ($validator->fails()) {
+            // If validation fails, redirect back with error messages
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
+        }
 
-        $letter->update($request->all());
+        $letter_type    = $request->letter_type;
+        $letter_number  = $request->letter_number;
+        $date           = $request->date;
+        $from           = $request->from;
+        $title          = $request->title;
+        $type_letter_id = $request->type_letter_id;
 
-        return redirect()->route('admin.letters.index')
+        $updateData = [
+            'letter_type'       => $letter_type,
+            'letter_number'     => $letter_number,
+            'date'              => $date,
+            'from'              => $from,
+            'title'             => $title,
+            'type_letter_id'    => $type_letter_id,
+            'created_at'        => now()
+        ];
+
+        $id_card_file = $request->file('file');
+        if ($letter_type == 1) {
+            $tujuan_upload = 'data_surat_masuk';
+            $route = 'admin.letters.inbox';
+        }
+        if ($letter_type == 0) {
+            $tujuan_upload = 'data_surat_keluar';
+            $route = 'admin.letters.outbox';
+        }
+        if ($id_card_file) {
+            $name_file = time() . "_" . $id_card_file->getClientOriginalName();
+            // Directory for uploading the file            
+            $id_card_file->move($tujuan_upload, $name_file);
+
+            $updateData['file'] = $name_file;
+        }
+
+        if ($letter) {
+            $letter->update($updateData);
+
+            return redirect()->route($route)
+                ->with('success', 'EducationalStaff updated successfully');
+        }
+
+        return redirect()->route($route)
             ->with('success', 'Letter updated successfully');
     }
 

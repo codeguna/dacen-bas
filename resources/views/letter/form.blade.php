@@ -1,44 +1,71 @@
-<div class="box box-info padding-1">
-    <div class="box-body">
-        
-        <div class="form-group">
-            {{ Form::label('letter_type') }}
-            {{ Form::text('letter_type', $letter->letter_type, ['class' => 'form-control' . ($errors->has('letter_type') ? ' is-invalid' : ''), 'placeholder' => 'Letter Type']) }}
-            {!! $errors->first('letter_type', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('letter_number') }}
-            {{ Form::text('letter_number', $letter->letter_number, ['class' => 'form-control' . ($errors->has('letter_number') ? ' is-invalid' : ''), 'placeholder' => 'Letter Number']) }}
-            {!! $errors->first('letter_number', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('date') }}
-            {{ Form::text('date', $letter->date, ['class' => 'form-control' . ($errors->has('date') ? ' is-invalid' : ''), 'placeholder' => 'Date']) }}
-            {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('from') }}
-            {{ Form::text('from', $letter->from, ['class' => 'form-control' . ($errors->has('from') ? ' is-invalid' : ''), 'placeholder' => 'From']) }}
-            {!! $errors->first('from', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('title') }}
-            {{ Form::text('title', $letter->title, ['class' => 'form-control' . ($errors->has('title') ? ' is-invalid' : ''), 'placeholder' => 'Title']) }}
-            {!! $errors->first('title', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('file') }}
-            {{ Form::text('file', $letter->file, ['class' => 'form-control' . ($errors->has('file') ? ' is-invalid' : ''), 'placeholder' => 'File']) }}
-            {!! $errors->first('file', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('type_letter_id') }}
-            {{ Form::text('type_letter_id', $letter->type_letter_id, ['class' => 'form-control' . ($errors->has('type_letter_id') ? ' is-invalid' : ''), 'placeholder' => 'Type Letter Id']) }}
-            {!! $errors->first('type_letter_id', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-
-    </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
-    </div>
-</div>
+                    <div class="row">
+                        <input type="hidden" name="letter_type"
+                            @if ($letter->letter_type == 1) value="1"
+                        @elseif ($letter->letter_type == 0)
+                        value="0" @endif>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nomor Surat
+                                    @if ($letter->letter_type == 1)
+                                        Masuk
+                                    @elseif ($letter->letter_type == 0)
+                                        Keluar
+                                    @endif
+                                </label>
+                                <input type="text" class="form-control" name="letter_number"
+                                    value="{{ $letter->letter_number }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Tanggal Surat
+                                    @if ($letter->letter_type == 1)
+                                        Masuk
+                                    @elseif ($letter->letter_type == 0)
+                                        Keluar
+                                    @endif
+                                </label>
+                                <input type="date" class="form-control" name="date" value="{{ $letter->date }}"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Surat Dari</label>
+                                <input type="text" class="form-control" name="from" value="{{ $letter->from }}"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Perihal</label>
+                                <input type="text" class="form-control" name="title" value="{{ $letter->title }}"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Jenis Surat</label>
+                                <select class="form-control" name="type_letter_id" required>
+                                    <option value="{{ $letter->type_letter_id }}" selected>
+                                        {{ $letter->typeLetter->name }}</option>
+                                    @foreach ($typeLetters as $value => $key)
+                                        <option value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>File Surat</label>
+                                <input type="file" class="form-control-file" name="file">
+                                <small class="badge bg-info">*{{ $letter->file }}</small><br>
+                                <small class="text-danger">*Jenis file *jpeg/jpg/pdf maks. 2MB</small>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn btn-success">
+                                <i class="fa fa-check-circle" aria-hidden="true"></i> Submit
+                            </button>
+                        </div>
+                    </div>

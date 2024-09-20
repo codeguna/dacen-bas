@@ -42,6 +42,11 @@
                                         <option value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
+                                <small class="text-danger">
+                                    <a href="{{ route('admin.type-letters.index') }}">
+                                        +Tambah jenis surat disini
+                                    </a>
+                                </small>
                             </div>
                         </div>
                         <div class="col-md-12">

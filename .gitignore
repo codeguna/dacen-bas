@@ -10,6 +10,8 @@
 /public/data_jabfung_dosen
 /public/data_photo_pengajuan
 /public/data_photo_profil
+/public/data_surat_masuk
+/public/data_surat_keluar
 /public/storage
 /storage/*.key
 /vendor
