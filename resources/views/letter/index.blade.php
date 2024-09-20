@@ -86,7 +86,7 @@
                                                     </a>
                                                 @endif
                                             </td>
-                                            <td>{{ $letter->typeLetter->name }}</td>
+                                            <td>{{ $letter->typeLetter->name??'Missing Type Letter' }}</td>
 
                                             <td>
                                                 <form action="{{ route('admin.letters.destroy', $letter->id) }}"
