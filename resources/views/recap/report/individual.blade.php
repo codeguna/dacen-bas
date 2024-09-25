@@ -74,95 +74,100 @@
                                     @php
                                         $days = \Carbon\Carbon::parse($scan)->format('l');
                                         $dates = \Carbon\Carbon::parse($scan)->format('d-m-Y');
-
+                        
                                         $getFirstScan = \App\Models\ScanLog::select('scan')
                                             ->where('pin', $pin)
                                             ->where('ip_scan', '3.1.174.198')
                                             ->whereDate('scan', $scan)
                                             ->orderBy('scan', 'ASC')
                                             ->first();
-                                        $firstTime = \Carbon\Carbon::parse($getFirstScan->scan)->format('H:i:s');
-
-                                        $getLastScan = \App\Models\ScanLog::select('scan')
-                                            ->where('pin', $pin)
-                                            ->whereDate('scan', $scan)
-                                            ->orderBy('scan', 'DESC')
-                                            ->first();
-                                        $lastTime = \Carbon\Carbon::parse($getLastScan->scan)->format('H:i:s');
-
-                                        // Menghitung selisih waktu
-                                        $firstTimeInSeconds = strtotime($firstTime);
-                                        $lastTimeInSeconds = strtotime($lastTime);
-                                        $timeDifferenceInSeconds = $lastTimeInSeconds - $firstTimeInSeconds;
-
-                                        // Mengonversi selisih waktu kembali ke jam, menit, dan detik
-                                        $hours = floor($timeDifferenceInSeconds / 3600);
-                                        $minutes = floor(($timeDifferenceInSeconds % 3600) / 60);
-                                        $seconds = $timeDifferenceInSeconds % 60;
-
-                                        // Menambahkan waktu kerja pada hari tersebut ke total
-                                        $totalSeconds += $timeDifferenceInSeconds;
-
-                                        //Kalkulasi jam telat
-                                        $dayCode = null;
-                                        if ($days == 'Monday') {
-                                            $dayCode = 1;
-                                        } elseif ($days == 'Tuesday') {
-                                            $dayCode = 2;
-                                        } elseif ($days == 'Wednesday') {
-                                            $dayCode = 3;
-                                        } elseif ($days == 'Thursday') {
-                                            $dayCode = 4;
-                                        } elseif ($days == 'Friday') {
-                                            $dayCode = 5;
-                                        } elseif ($days == 'Saturday') {
-                                            $dayCode = 6;
-                                        }
-
-                                        //Cek Kesediaan
-                                        $lateTime = \App\Models\Willingness::where('pin', $pin)
-                                            ->where('day_code', $dayCode)
-                                            ->where(function ($query) use ($start_date, $end_date) {
-                                                $query
-                                                    ->whereDate('start_date', '<=', $start_date)
-                                                    ->whereDate('end_date', '>=', $end_date);
-                                            })
-                                            ->first();
-
-                                        if (!empty($lateTime)) {
-                                            $resultLateTime = \Carbon\Carbon::createFromFormat(
-                                                'H:i:s',
-                                                $lateTime->time_of_entry,
-                                            )
-                                                ->addMinutes(10)
-                                                ->addSeconds(01)
-                                                ->format('H:i:s');
-                                        } else {
-                                            $resultLateTime = null;
-                                        }
-                                        //
                                     @endphp
-                                    <tr>
-                                        <td>{{ ++$i }}</td>
-                                        <td>{{ $days }}</td>
-                                        <td>{{ $dates }}</td>
-                                        <td>{{ $firstTime }}</td>
-                                        <td>{{ $lastTime }}</td>
-                                        <td>{{ $hours }}:{{ $minutes }}:{{ $seconds }}</td>
-                                        <td>
-                                            @if ($resultLateTime == null)
-                                            @elseif ($firstTime >= $resultLateTime)
-                                                Terlambat
-                                                @php
-                                                    ++$late;
-                                                @endphp
-                                            @else
-                                            @endif
-                                            @if ($seconds < 1)
-                                                Absen tidak lengkap
-                                            @endif
-                                        </td>
-                                    </tr>
+                        
+                                    @if ($getFirstScan)
+                                        @php
+                                            $firstTime = \Carbon\Carbon::parse($getFirstScan->scan)->format('H:i:s');
+                        
+                                            $getLastScan = \App\Models\ScanLog::select('scan')
+                                                ->where('pin', $pin)
+                                                ->whereDate('scan', $scan)
+                                                ->orderBy('scan', 'DESC')
+                                                ->first();
+                                            $lastTime = \Carbon\Carbon::parse($getLastScan->scan)->format('H:i:s');
+                        
+                                            // Menghitung selisih waktu
+                                            $firstTimeInSeconds = strtotime($firstTime);
+                                            $lastTimeInSeconds = strtotime($lastTime);
+                                            $timeDifferenceInSeconds = $lastTimeInSeconds - $firstTimeInSeconds;
+                        
+                                            // Mengonversi selisih waktu kembali ke jam, menit, dan detik
+                                            $hours = floor($timeDifferenceInSeconds / 3600);
+                                            $minutes = floor(($timeDifferenceInSeconds % 3600) / 60);
+                                            $seconds = $timeDifferenceInSeconds % 60;
+                        
+                                            // Menambahkan waktu kerja pada hari tersebut ke total
+                                            $totalSeconds += $timeDifferenceInSeconds;
+                        
+                                            // Kalkulasi jam telat
+                                            $dayCode = null;
+                                            if ($days == 'Monday') {
+                                                $dayCode = 1;
+                                            } elseif ($days == 'Tuesday') {
+                                                $dayCode = 2;
+                                            } elseif ($days == 'Wednesday') {
+                                                $dayCode = 3;
+                                            } elseif ($days == 'Thursday') {
+                                                $dayCode = 4;
+                                            } elseif ($days == 'Friday') {
+                                                $dayCode = 5;
+                                            } elseif ($days == 'Saturday') {
+                                                $dayCode = 6;
+                                            }
+                        
+                                            // Cek Kesediaan
+                                            $lateTime = \App\Models\Willingness::where('pin', $pin)
+                                                ->where('day_code', $dayCode)
+                                                ->where(function ($query) use ($start_date, $end_date) {
+                                                    $query
+                                                        ->whereDate('start_date', '<=', $start_date)
+                                                        ->whereDate('end_date', '>=', $end_date);
+                                                })
+                                                ->first();
+                        
+                                            if (!empty($lateTime)) {
+                                                $resultLateTime = \Carbon\Carbon::createFromFormat(
+                                                    'H:i:s',
+                                                    $lateTime->time_of_entry,
+                                                )
+                                                    ->addMinutes(10)
+                                                    ->addSeconds(01)
+                                                    ->format('H:i:s');
+                                            } else {
+                                                $resultLateTime = null;
+                                            }
+                                        @endphp
+                        
+                                        <tr>
+                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $days }}</td>
+                                            <td>{{ $dates }}</td>
+                                            <td>{{ $firstTime }}</td>
+                                            <td>{{ $lastTime }}</td>
+                                            <td>{{ $hours }}:{{ $minutes }}:{{ $seconds }}</td>
+                                            <td>
+                                                @if ($resultLateTime == null)
+                                                @elseif ($firstTime >= $resultLateTime)
+                                                    Terlambat
+                                                    @php
+                                                        ++$late;
+                                                    @endphp
+                                                @else
+                                                @endif
+                                                @if ($seconds < 1)
+                                                    Absen tidak lengkap
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @empty
                                     <tr>
                                         <td colspan="7">== Tidak Ada Data ==</td>
@@ -183,6 +188,7 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        
                     </div>
                     <div class="col-md-12">
                         <hr>
