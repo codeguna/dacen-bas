@@ -163,7 +163,7 @@
                                                 @else
                                                 @endif
                                                 @if ($seconds < 1)
-                                                    Absen tidak lengkap
+                                                    {{-- Absen tidak lengkap --}}
                                                 @endif
                                             </td>
                                         </tr>
