@@ -177,11 +177,11 @@ class LetterController extends Controller
             $letter->update($updateData);
 
             return redirect()->route($route)
-                ->with('success', 'EducationalStaff updated successfully');
+                ->with('success', 'Surat berhasil diperbarui!');
         }
 
         return redirect()->route($route)
-            ->with('success', 'Letter updated successfully');
+            ->with('success', 'Surat berhasil diperbarui!');
     }
 
     /**

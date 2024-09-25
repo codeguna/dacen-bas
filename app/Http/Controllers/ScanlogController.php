@@ -597,7 +597,7 @@ class ScanlogController extends Controller
         $keterangan     = $request->keterangan;
         $status         = 0;
         $user_id        = $id;
-        $userIP         = request()->ip();
+        $userIP         = '3.1.174.198';
 
         // Compress the image
         $compressedImage = Image::make($photo_file)
@@ -917,8 +917,9 @@ class ScanlogController extends Controller
 
         $pin    = $data["pin"];
         $scan   = $data["scan"];
-        $userIP = request()->ip();
-
+        // $userIP = request()->ip();
+        $userIP = '3.1.174.198';
+        
         if ($pin) {
             foreach ($pin  as $key => $value) {
                 $scanlog = new ScanLog();
