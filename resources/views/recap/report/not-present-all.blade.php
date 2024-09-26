@@ -147,6 +147,10 @@
                                                 ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
                                                 ->where('reason_id', $pkm)
                                                 ->count();
+                                            $abdimas_count = \App\Models\NotScanLog::where('pin', $pin)
+                                                ->whereBetween(\DB::raw('DATE(date)'), [$start_date, $end_date])
+                                                ->where('reason_id', $abdimas)
+                                                ->count();
                                         @endphp
                                         <td>
                                             @if ($cuti_count > 0)
@@ -193,6 +197,9 @@
                                             @endif
                                             @if ($pkm_count > 0)
                                                 Penelitian: {{ $pkm_count }} <br>
+                                            @endif
+                                            @if ($abdimas_count > 0)
+                                                Abdimas: {{ $abdimas_count }} <br>
                                             @endif
 
                                         </td>
