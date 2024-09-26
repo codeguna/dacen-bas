@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Alasan Tidak Hadir</label>
+                                <label>Nama</label>
                                 <select class="form-control" name="pin" required>
                                     <option disabled selected>== Pilih Nama ==</option>
                                     @foreach ($users as $value => $key)
