@@ -17,12 +17,12 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="#" data-toggle="modal" data-target="#createActivity"
+                                <a href="#" data-toggle="modal" data-target="#createReason"
                                     class="btn btn-success btn-sm float-right" data-placement="left">
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
                             </div>
-                            @include('activity.modal.create-activity')
+                            @include('reason.modal.create')
                         </div>
                     </div>
                     @if ($message = Session::get('success'))

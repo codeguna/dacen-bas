@@ -78,6 +78,7 @@
                                     $cuti_melahirkan = 13;
                                     $penelitian = 14;
                                     $pkm = 15;
+                                    $abdimas = 16;
                                 @endphp
                                 @forelse ($users as $user)
                                     <tr>
