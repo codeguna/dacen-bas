@@ -125,11 +125,21 @@
                                     </h3>
                                     <div class="form-group">
                                         <label>Nama</label>
-                                        <select class="form-control" name="pin" required>
+                                        <select class="form-control" name="pin">
                                             <option disabled selected>== Pilih Nama ==</option>
                                             @foreach ($users as $value => $key)
                                                 <option value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group">
+                                        <label>Nama Khusus</label>
+                                        <select class="form-control" name="pin">
+                                            <option disabled selected>== Pilih Nama ==</option>
+                                                <option value="61">Rini Ratnaningsih</option>
+                                                <option value="600">Hamidah</option>
+                                                <option value="50">Tuti Sulastri</option>
                                         </select>
                                     </div>
                                     {{-- <div class="row">

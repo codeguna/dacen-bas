@@ -977,8 +977,20 @@ class ScanlogController extends Controller
         $end_date       = $request->end_date;
         $pin            = $request->pin;
         $type           = User::select('name')->where('pin', $pin)->first();
-        $type           = $type->name;
 
+        if($pin == 61){
+            $type = 'Rini Ratnaningsih';            
+        }
+        elseif($pin == 600){
+            $type = 'Hamidah';
+        }
+        elseif($pin == 50){
+            $type = 'Tuti Sulastri';
+        }
+        else{
+         $type           = $type->name;   
+        }
+        
         $scans = ScanLog::selectRaw('DATE(scan) as scan')->where('pin', $pin)
             ->whereDate('scan', '>=', $start_date)
             ->whereDate('scan', '<=', $end_date)
