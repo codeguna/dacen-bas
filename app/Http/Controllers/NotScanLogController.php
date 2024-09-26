@@ -20,9 +20,20 @@ class NotScanLogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $notScanLogs = NotScanLog::orderBy('date', 'ASC')->paginate();
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        if ($start_date && $end_date) {
+            $notScanLogs = NotScanLog::whereDate('date', '>=', $start_date)
+                ->whereDate('date', '<=', $end_date)
+                ->orderBy('date', 'ASC')
+                ->paginate();
+        } else {
+            $notScanLogs = NotScanLog::orderBy('date', 'ASC')->paginate();
+        }
+
         $reasons    = Reason::orderBy('name', 'ASC')->pluck('id', 'name');
         $users      = User::where('pin', '<>', null)->orderBy('name', 'ASC')->pluck('pin', 'name');
 
@@ -164,8 +175,8 @@ class NotScanLogController extends Controller
         $start_date     = $request->start_date;
         $end_date       = $request->end_date;
         $pin            = $request->pin;
-        $type           = User::select('name')->where('pin',$pin)->first();
-        $type           = $type->name; 
+        $type           = User::select('name')->where('pin', $pin)->first();
+        $type           = $type->name;
 
         $users = User::where('pin', $pin)->whereHas('notScanLogs', function ($query) use ($start_date, $end_date) {
             $query->whereBetween('date', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
@@ -193,8 +204,8 @@ class NotScanLogController extends Controller
         $end_date       = $request->end_date;
         $department  = $request->department_id;
         $department     = $request->department_id;
-        $type           = Departmen::select('name')->where('id',$department)->first();
-        $type           = $type->name; 
+        $type           = Departmen::select('name')->where('id', $department)->first();
+        $type           = $type->name;
 
         $users = User::where('department_id', $department)->whereHas('notScanLogs', function ($query) use ($start_date, $end_date) {
             $query->whereBetween('date', [Carbon::parse($start_date)->format('Y-m-d'), Carbon::parse($end_date)->format('Y-m-d')]);
