@@ -69,7 +69,8 @@
                                     @php
                                         // Retrieve scan timestamps
                                         $scanlog = \App\Models\ScanLog::where('pin', $user->pin)
-                                            ->whereBetween(\DB::raw('DATE(scan)'), [$start_date, $end_date])
+                                            ->whereDate('scan', '>=', $start_date)
+                                            ->whereDate('scan', '<=', $end_date)
                                             ->orderBy('scan', 'ASC')
                                             ->pluck('scan')
                                             ->toArray();

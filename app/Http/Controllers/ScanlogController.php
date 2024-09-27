@@ -994,6 +994,7 @@ class ScanlogController extends Controller
         $scans = ScanLog::selectRaw('DATE(scan) as scan')->where('pin', $pin)
             ->whereDate('scan', '>=', $start_date)
             ->whereDate('scan', '<=', $end_date)
+            ->orderBy('scan','ASC')
             ->distinct()
             ->pluck('scan');
             
