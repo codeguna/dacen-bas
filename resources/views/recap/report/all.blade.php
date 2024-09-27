@@ -110,7 +110,8 @@
                                         // Calculate total late count
                                         $totalLate = App\Models\ScanLog::selectRaw('DATE(scan) as date')
                                             ->where('pin', $user->pin)
-                                            ->whereBetween('scan', [$start_date, $end_date])
+                                            ->whereDate('scan', '>=', $start_date)
+                                            ->whereDate('scan', '<=', $end_date)
                                             ->groupBy('date')
                                             ->orderBy('date', 'ASC')
                                             ->get()
