@@ -74,6 +74,7 @@
                                     @php
                                         $days = \Carbon\Carbon::parse($scan)->format('l');
                                         $dates = \Carbon\Carbon::parse($scan)->format('d-m-Y');
+                                        $tanggal= \Carbon\Carbon::parse($scan)->format('Y-m-d');
                         
                                         $getFirstScan = \App\Models\ScanLog::select('scan')
                                             ->where('pin', $pin)
@@ -126,10 +127,10 @@
                                             // Cek Kesediaan
                                             $lateTime = \App\Models\Willingness::where('pin', $pin)
                                                 ->where('day_code', $dayCode)
-                                                ->where(function ($query) use ($start_date, $end_date) {
+                                                ->where(function ($query) use ($start_date, $end_date,$tanggal) {
                                                     $query
-                                                        ->whereDate('start_date', '<=', $start_date)
-                                                        ->whereDate('end_date', '>=', $end_date);
+                                                        ->whereDate('start_date', '<=', $tanggal)
+                                                        ->whereDate('end_date', '>=', $tanggal);
                                                 })
                                                 ->first();
                         

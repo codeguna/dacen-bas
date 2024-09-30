@@ -138,11 +138,10 @@
                                                 $now = \Carbon\Carbon::parse($firstScan->scan)->format('Y-m-d');
 
                                                 $lateTime = \App\Models\Willingness::where('pin', $pin)
-                                                        ->where('day_code', $dayCode)
-                                                        ->where(function ($query) use ($now) {
-                                                            $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
-                                                        })
-                                                        ->first();
+                                                    ->where('day_code', $dayCode)
+                                                    ->whereDate('start_date', '<=', $now)
+                                                    ->whereDate('end_date', '>=', $now)
+                                                    ->first();
 
                                                 if ($lateTime) {
                                                     $resultLateTime = \Carbon\Carbon::createFromFormat(
