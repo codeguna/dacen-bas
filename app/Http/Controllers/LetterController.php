@@ -62,6 +62,7 @@ class LetterController extends Controller
         $letter_number  = $request->letter_number;
         $date           = $request->date;
         $from           = $request->from;
+        $for            = $request->for;
         $title          = $request->title;
         $type_letter_id = $request->type_letter_id;
 
@@ -83,6 +84,7 @@ class LetterController extends Controller
             'letter_number'     => $letter_number,
             'date'              => $date,
             'from'              => $from,
+            'for'               => $for,
             'title'             => $title,
             'file'              => $name_file,
             'type_letter_id'    => $type_letter_id,
@@ -143,6 +145,7 @@ class LetterController extends Controller
         $letter_number  = $request->letter_number;
         $date           = $request->date;
         $from           = $request->from;
+        $for            = $request->for;
         $title          = $request->title;
         $type_letter_id = $request->type_letter_id;
 
@@ -151,6 +154,7 @@ class LetterController extends Controller
             'letter_number'     => $letter_number,
             'date'              => $date,
             'from'              => $from,
+            'for'               => $for,
             'title'             => $title,
             'type_letter_id'    => $type_letter_id,
             'created_at'        => now()

@@ -41,7 +41,7 @@ class Letter extends Model
      *
      * @var array
      */
-    protected $fillable = ['letter_type','letter_number','date','from','title','file','type_letter_id'];
+    protected $fillable = ['letter_type','letter_number','date','from','title','file','type_letter_id','for'];
 
     public function typeLetter()
     {

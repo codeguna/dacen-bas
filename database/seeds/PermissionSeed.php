@@ -14,7 +14,7 @@ class PermissionSeed extends Seeder
     {
         Artisan::call('cache:clear');
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-        
+
         Permission::create(['name' => 'users_manage']);
         //TENDIK
         Permission::create(['name' => 'delete_tendik']);
@@ -59,5 +59,8 @@ class PermissionSeed extends Seeder
         Permission::create(['name' => 'delete_letter']);
         Permission::create(['name' => 'read_letter']);
 
+
+        //KOORDINATOR
+        Permission::create(['name' => 'view_presences']);
     }
 }

@@ -27,6 +27,12 @@
                                 <input type="text" class="form-control" name="from" required>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Surat Untuk</label>
+                                <input type="text" class="form-control" name="for" required>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Perihal</label>

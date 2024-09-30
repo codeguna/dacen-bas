@@ -36,6 +36,15 @@
                                     required>
                             </div>
                         </div>
+                        @if ($letter->letter_type == 0)
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Surat Untuk</label>
+                                    <input type="text" class="form-control" name="for"
+                                        value="{{ $letter->for ?? '' }}">
+                                </div>
+                            </div>
+                        @endif
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Perihal</label>

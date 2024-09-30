@@ -25,6 +25,7 @@
                             <div class="form-group">
                                 <label>Surat Dari</label>
                                 <input type="text" class="form-control" name="from" required>
+                                <input type="hidden" name="for" value="-">
                             </div>
                         </div>
                         <div class="col-md-6">

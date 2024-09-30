@@ -56,6 +56,7 @@
                                         <th>No. Surat</th>
                                         <th>Tanggal</th>
                                         <th>Dari</th>
+                                        <th>Untuk</th>
                                         <th>Judul</th>
                                         <th>Lampiran</th>
                                         <th>Jenis Surat</th>
@@ -70,6 +71,7 @@
                                             <td>{{ $letter->letter_number }}</td>
                                             <td>{{ $letter->date }}</td>
                                             <td>{{ $letter->from }}</td>
+                                            <td>{{ $letter->for??'not set' }}</td>
                                             <td>{{ $letter->title }}</td>
                                             <td>
                                                 @if ($letter->letter_type == 1)

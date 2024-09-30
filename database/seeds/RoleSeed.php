@@ -70,6 +70,12 @@ class RoleSeed extends Seeder
         $role->givePermissionTo('view_profile');
         $role->givePermissionTo('view_attendances');
         $role->givePermissionTo('create_attendances');
+
+        $role = Role::create(['name' => 'KOORDINATOR']);
+        $role->givePermissionTo('view_profile');
+        $role->givePermissionTo('view_attendances');
+        $role->givePermissionTo('create_attendances');
+        $role->givePermissionTo('view_presences');
         
     }
 }

@@ -44,6 +44,17 @@
                 </a>
             </li>
         @endcan
+        @can('view_presences')
+            <li class="nav-item">
+                <a href="{{ url('admin/myprofile') }}"
+                    class="nav-link {{ request()->is('admin/myprofile') || request()->is('admin/myprofile/*') ? 'active' : '' }}">
+                    <i class="fas fa-user-friends nav-icon"></i>
+                    <p>
+                        Presensi Departemen
+                    </p>
+                </a>
+            </li>
+        @endcan
 
 
         @can('bas_menu')

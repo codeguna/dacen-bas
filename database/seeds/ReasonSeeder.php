@@ -30,6 +30,7 @@ class ReasonSeeder extends Seeder
             ['name' => 'Cuti Melahirkan'],          
             ['name' => 'Penelitian'],          
             ['name' => 'PKM (Pengabdian Kepada Masyarakat) Anggaran Pribadi dan IDI Pangandaran'],          
+            ['name' => 'Abdimas'],          
                     
         ];
 
