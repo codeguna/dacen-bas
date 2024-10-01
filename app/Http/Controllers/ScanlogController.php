@@ -919,7 +919,7 @@ class ScanlogController extends Controller
         $scan   = $data["scan"];
         // $userIP = request()->ip();
         $userIP = '3.1.174.198';
-        
+
         if ($pin) {
             foreach ($pin  as $key => $value) {
                 $scanlog = new ScanLog();
@@ -978,26 +978,23 @@ class ScanlogController extends Controller
         $pin            = $request->pin;
         $type           = User::select('name')->where('pin', $pin)->first();
 
-        if($pin == 61){
-            $type = 'Rini Ratnaningsih';            
-        }
-        elseif($pin == 600){
+        if ($pin == 61) {
+            $type = 'Rini Ratnaningsih';
+        } elseif ($pin == 600) {
             $type = 'Hamidah';
-        }
-        elseif($pin == 50){
+        } elseif ($pin == 50) {
             $type = 'Tuti Sulastri';
+        } else {
+            $type           = $type->name;
         }
-        else{
-         $type           = $type->name;   
-        }
-        
+
         $scans = ScanLog::selectRaw('DATE(scan) as scan')->where('pin', $pin)
             ->whereDate('scan', '>=', $start_date)
             ->whereDate('scan', '<=', $end_date)
-            ->orderBy('scan','ASC')
+            ->orderBy('scan', 'ASC')
             ->distinct()
             ->pluck('scan');
-            
+
         return view(
             'recap.report.individual',
             compact(
@@ -1050,5 +1047,16 @@ class ScanlogController extends Controller
             ->orderBy('name', 'ASC')
             ->get();
         return view('scan-log.select-period-not-present', compact('start_date', 'end_date', 'users'))->with('i');
+    }
+
+    public function myDepartmentPresences()
+    {
+        $department = Auth::user()->department_id;
+        $users      = User::select('pin','name')
+            ->where('department_id', $department)
+            ->orderBy('name', 'ASC')
+            ->pluck('pin', 'name');
+
+        return view('recap.coordinator.index', compact('department','users'));
     }
 }

@@ -46,8 +46,8 @@
         @endcan
         @can('view_presences')
             <li class="nav-item">
-                <a href="{{ url('admin/myprofile') }}"
-                    class="nav-link {{ request()->is('admin/myprofile') || request()->is('admin/myprofile/*') ? 'active' : '' }}">
+                <a href="{{ route('admin.scan-log.my-department-presences') }}"
+                    class="nav-link {{ request()->is('admin/scan-log/my-department-presences') || request()->is('admin/scan-log/my-department-presences/*') ? 'active' : '' }}">
                     <i class="fas fa-user-friends nav-icon"></i>
                     <p>
                         Presensi Departemen
