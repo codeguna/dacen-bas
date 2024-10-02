@@ -65,6 +65,11 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $totalPresencePercentage = 0; // Total Persentase Kehadiran
+                                    $totalHoursPercentage = 0; // Total Persentase Jam Hadir
+                                    $countUsers = 0; // Jumlah pengguna
+                                @endphp
                                 @forelse ($users as $user)
                                     @php
                                         // Retrieve scan timestamps
@@ -158,6 +163,15 @@
                                                 return false;
                                             })
                                             ->count();
+
+                                        // Hitung persentase kehadiran dan persentase jam hadir
+                                        $presencePercentage = ($scannedDates / $total_day) * 100;
+                                        $hoursPercentage = ($roundedHours / $total_hour) * 100;
+
+                                        // Tambahkan ke total untuk menghitung rata-rata
+                                        $totalPresencePercentage += $presencePercentage;
+                                        $totalHoursPercentage += $hoursPercentage;
+                                        $countUsers++;
                                     @endphp
                                     @if ($scannedDates > 0)
                                         <tr>
@@ -177,6 +191,17 @@
                                     </tr>
                                 @endforelse
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4">Rata-rata</th>
+                                    <th>{{ $countUsers > 0 ? number_format($totalPresencePercentage / $countUsers, 2) : 0 }}%
+                                    </th>
+                                    <th></th>
+                                    <th>{{ $countUsers > 0 ? number_format($totalHoursPercentage / $countUsers, 2) : 0 }}%
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <div class="col-md-12">
