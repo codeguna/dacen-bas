@@ -4,6 +4,7 @@ use App\Http\Controllers\HomebaseController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\LetterController;
 use App\Http\Controllers\ScanlogController;
+use App\Http\Controllers\WillingnessController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -67,7 +68,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('not-scan-log/result-all/not-present-department', 'NotScanLogController@resultNotPresencesDepartment')->name('not-scan-log.recap-department-not-presences');
     Route::get('scan-log/result-all/present-individual', [ScanlogController::class, 'resultPresencesIndividual'])->name('scan-log.recap-individual-presences');
     Route::get('scan-log/result-all/present-department', [ScanlogController::class,'resultPresencesDepartment'])->name('scan-log.recap-department-presences');
-    Route::get('scan-log/my-department-presences',[ScanlogController::class, 'myDepartmentPresences'])->name('scan-log.my-department-presences');
+    Route::get('scan-log/my-department-presences',[ScanlogController::class, 'myDepartmentPresences'])->name('scan-log.my-department-presences');   
     //end recap Route
     //Route activities
     Route::resource('activities', 'ActivityController');
@@ -139,6 +140,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('/willingness/update_time/', 'WillingnessController@updateTime')->name('willingness.updateTime');
     Route::post('/willingness/import/', 'ImportExcelController@importWillingness')->name('willingness.import');
     Route::post('/willingness/bulk_update/', 'WillingnessController@bulkUpdate')->name('willingness.bulkUpdate');
+    Route::delete('willingness/destroy-period',[WillingnessController::class, 'bulkDelete'])->name('willingness.bulk-delete');
     //End Route Willingness
     //Route Check Late
     Route::get('/scan-log/check-late', 'ScanlogController@selectPeriodLate')->name('scan-log.selectLate');

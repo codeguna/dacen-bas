@@ -129,4 +129,17 @@ class WillingnessController extends Controller
         return redirect()->back()
             ->with('success', 'Willingness updated successfully');
     }
+    public function bulkDelete(Request $request)
+    {
+        $ids  = $request->ids;
+
+        // Check if IDs exist, then delete the records
+        if ($ids) {
+            Willingness::whereIn('id', $ids)->delete(); // Replace 'Item' with your model
+            return redirect()->back()->with('success', 'Kesediaan Periode ini behasil dihapus!');
+        }
+
+        // If no IDs are selected, return an error message
+        return redirect()->back()->with('error', 'No items selected for deletion');
+    }
 }
