@@ -28,6 +28,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="kehadiran" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row">
+                            @if (Auth::user()->email != 'abang@lpkia.ac.id')
                             <div class="col-sm-6">
                                 <div class="card">
                                     <div class="card-body">
@@ -42,7 +43,7 @@
                                                     </h3>
                                                     <div class="form-group">
                                                         <label>Departemen</label>
-                                                        <select class="form-control" name="department_id" required>
+                                                        <select class="form-control" name="department_id" required>                                                            
                                                             <option value="{{ $department }}" selected>
                                                                 {{ Auth::User()->department->name }}
                                                             </option>
@@ -89,6 +90,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif                            
                             <div class="col-sm-6">
                                 <div class="card">
                                     <div class="card-body">
@@ -135,6 +137,7 @@
                     </div>
                     <div class="tab-pane" id="ketidakhadiran" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="row">
+                            @if (Auth::user()->email != 'abang@lpkia.ac.id')
                             <div class="col-sm-6">
                                 <div class="card">
                                     <div class="card-body">
@@ -177,6 +180,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif                            
                             <div class="col-sm-6">
                                 <div class="card">
                                     <div class="card-body">

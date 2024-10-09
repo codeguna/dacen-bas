@@ -1051,11 +1051,25 @@ class ScanlogController extends Controller
 
     public function myDepartmentPresences()
     {
-        $department = Auth::user()->department_id;
-        $users      = User::select('pin','name')
+        if(Auth::user()->email == 'abang@lpkia.ac.id')
+        {
+            $ids    = [16,17,18,19];
+            $userId = [31,18,17,49,59,60];
+            $department = Departmen::whereIn('id', $ids)->orderBy('name','ASC')->pluck('id','name');
+            $users      = User::select('pin','name')
+            ->whereIn('id', $userId)
+            ->orderBy('name', 'ASC')
+            ->pluck('pin', 'name');
+        }
+        else{
+           $department = Auth::user()->department_id;  
+           $users      = User::select('pin','name')
             ->where('department_id', $department)
             ->orderBy('name', 'ASC')
             ->pluck('pin', 'name');
+        }
+        
+       
 
         return view('recap.coordinator.index', compact('department','users'));
     }
