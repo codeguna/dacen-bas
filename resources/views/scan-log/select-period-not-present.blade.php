@@ -79,7 +79,7 @@
 
                                                 // Ambil semua hari dalam periode tersebut, kecualikan hari Minggu dan hari libur
                                                 $allDays = collect($period)->filter(function ($date) use ($holidays) {
-                                                    return $date->isWeekday() &&
+                                                    return ($date->isWeekday() || $date->isSaturday()) && // Sertakan hari Sabtu
                                                         !$holidays->contains($date->format('Y-m-d'));
                                                 });
 
@@ -104,7 +104,7 @@
                                                 });
                                             @endphp
 
-                                            @if ($daysNotScannedFormatted->isEmpty())
+                                            @if ($daysNotScannedFormatted->count() === 0)
                                                 <p>Tidak ada hari yang terlewat.</p>
                                             @else
                                                 @foreach ($daysNotScannedFormatted as $day)
