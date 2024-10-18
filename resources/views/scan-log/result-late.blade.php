@@ -49,7 +49,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="alert alert-primary" role="alert">
-                            <strong><i class="fa fa-info-circle" aria-hidden="true"></i> Penting!</strong> Jika terdapat data yang tidak lazim/lengkap. Kemungkinan yang bersangkutan terlewatkan presensinya.
+                            <strong><i class="fa fa-info-circle" aria-hidden="true"></i> Penting!</strong> Jika terdapat
+                            data yang tidak lazim/lengkap. Kemungkinan yang bersangkutan terlewatkan presensinya.
                         </div>
                         <table id="dataTable1" class="table table-sm">
                             <thead>
@@ -70,7 +71,9 @@
                                             @switch($user->position)
                                                 @case('Tendik')
                                                     @php
-                                                        $departmentCode = \App\Models\EducationalStaff::select('department_id')
+                                                        $departmentCode = \App\Models\EducationalStaff::select(
+                                                            'department_id',
+                                                        )
                                                             ->where('nip', $user->nomor_induk)
                                                             ->first();
                                                         $departmentName = \App\Models\Departmen::select('name')
@@ -90,7 +93,9 @@
                                                 $scanlogs = \App\Models\ScanLog::selectRaw('DATE(scan) as date')
                                                     ->where('pin', $pin)
                                                     ->where(function ($query) use ($start_date, $end_date) {
-                                                        $query->whereDate('scan', '>=', $start_date)->whereDate('scan', '<=', $end_date);
+                                                        $query
+                                                            ->whereDate('scan', '>=', $start_date)
+                                                            ->whereDate('scan', '<=', $end_date);
                                                     })
                                                     ->groupBy('date')
                                                     ->get();
@@ -125,11 +130,16 @@
                                                     $lateTime = \App\Models\Willingness::where('pin', $pin)
                                                         ->where('day_code', $dayCode)
                                                         ->where(function ($query) use ($now) {
-                                                            $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
+                                                            $query
+                                                                ->whereDate('start_date', '<=', $now)
+                                                                ->whereDate('end_date', '>=', $now);
                                                         })
                                                         ->first();
                                                     if (!empty($lateTime)) {
-                                                        $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s', $lateTime->time_of_entry)
+                                                        $resultLateTime = \Carbon\Carbon::createFromFormat(
+                                                            'H:i:s',
+                                                            $lateTime->time_of_entry,
+                                                        )
                                                             ->addMinutes(10)
                                                             ->addSeconds(01)
                                                             ->format('H:i:s');
@@ -148,17 +158,15 @@
                                                         {{ $times }}</span> <br>
                                                 @else
                                                 @endif
-                                            @endforeach                                            
+                                            @endforeach
                                         </td>
                                         <td>
                                             @foreach ($scanlogs as $cepat)
                                                 @php
                                                     $date = $cepat->date;
                                                     $firstScan = \App\Models\ScanLog::where('pin', $user->pin)
-                                                        ->where(function ($query) use ($date) {
-                                                            $query->whereDate('scan', '=', $date);
-                                                        })
-                                                        ->latest()
+                                                        ->whereDate('scan', '=', $date)
+                                                        ->orderBy('scan', 'DESC')
                                                         ->first();
                                                     $times = \Carbon\Carbon::parse($firstScan->scan)->format('H:i:s');
                                                     $days = \Carbon\Carbon::parse($firstScan->scan)->format('l');
@@ -179,18 +187,22 @@
                                                     $lateTime = \App\Models\Willingness::where('pin', $pin)
                                                         ->where('day_code', $dayCode)
                                                         ->where(function ($query) use ($now) {
-                                                            $query->whereDate('start_date', '<=', $now)->whereDate('end_date', '>=', $now);
+                                                            $query
+                                                                ->whereDate('start_date', '<=', $now)
+                                                                ->whereDate('end_date', '>=', $now);
                                                         })
                                                         ->first();
                                                     if (!empty($lateTime)) {
-                                                        $resultLateTime = \Carbon\Carbon::createFromFormat('H:i:s', $lateTime->time_of_return)
-                                                            ->format('H:i:s');
+                                                        $resultLateTime = \Carbon\Carbon::createFromFormat(
+                                                            'H:i:s',
+                                                            $lateTime->time_of_return,
+                                                        )->format('H:i:s');
                                                     } else {
                                                         $resultLateTime = null;
                                                     }
                                                 @endphp
 
-                                                @if ($times <= $resultLateTime)
+                                                @if ($times < $resultLateTime)
                                                     @php
                                                         $incrementsB++;
                                                     @endphp
