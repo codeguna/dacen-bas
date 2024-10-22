@@ -29,7 +29,75 @@
                     <div class="tab-pane active" id="kehadiran" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row">
                             @if (Auth::user()->email == 'abang@lpkia.ac.id')
-                            @elseif (Auth::user()->email =='athena@lpkia.ac.id')
+                            @elseif (Auth::user()->email == 'athena@lpkia.ac.id')
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <form action="{{ route('admin.scan-log.recap-department-presences') }}"
+                                                method="GET">
+                                                <div class="row">
+                                                    <div class="col md-12">
+                                                        <h3>
+                                                            <i class="fa fa-building text-success" aria-hidden="true"></i>
+                                                            Per
+                                                            Departemen
+                                                        </h3>
+                                                        <div class="form-group">
+                                                            <label>Departemen</label>
+                                                            <select class="form-control" name="department_id" required>
+                                                                <option disabled selected>
+                                                                    ==Pilih Departemen==
+                                                                </option>
+                                                                @foreach ($department as $value => $key)
+                                                                    <option value="{{ $key }}">{{ $value }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Jumlah Hari Kerja</label>
+                                                                    <input type="number" class="form-control"
+                                                                        name="total_day" required>
+                                                                    <small class="form-text text-info">Total Hari Kerja
+                                                                        dalam 1
+                                                                        periode</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Jumlah Jam Kerja</label>
+                                                                    <input type="number" class="form-control"
+                                                                        name="total_hour" required>
+                                                                    <small class="form-text text-info">Total Jumlah Kerja
+                                                                        dalam
+                                                                        1
+                                                                        periode</small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h4>
+                                                            Tanggal Awal / Tanggal Akhir
+                                                        </h4>
+                                                        <div class="input-group">
+                                                            <input class="form-control" type="date" name="start_date"
+                                                                id="start_date" value="{{ request('start_date') }}"
+                                                                required>
+                                                            <input class="form-control" type="date" name="end_date"
+                                                                id="end_date" value="{{ request('end_date') }}" required>
+                                                            <p id="date_error" style="color: red;"></p>
+                                                            <button type="submit" class="ml-1 btn btn-warning"
+                                                                type="button" id="submit_button">
+                                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             @else
                                 <div class="col-sm-6">
                                     <div class="card">
@@ -143,8 +211,58 @@
                     <div class="tab-pane" id="ketidakhadiran" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="row">
                             @if (Auth::user()->email == 'abang@lpkia.ac.id')
-                            
                             @elseif (Auth::user()->email == 'athena@lpkia.ac.id')
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <form
+                                                action="{{ route('admin.not-scan-log.recap-department-not-presences') }}"
+                                                method="GET">
+                                                <div class="row">
+                                                    <div class="col md-12">
+                                                        <h3>
+                                                            <i class="fa fa-building text-success" aria-hidden="true"></i>
+                                                            Per
+                                                            Departemen
+                                                        </h3>
+                                                        <div class="form-group">
+                                                            <label>Departemen</label>
+                                                            <select class="form-control" name="department_id" required>
+                                                                <option disabled selected>
+                                                                    ==Pilih Departemen==
+                                                                </option>
+                                                                @foreach ($department as $value => $key)
+                                                                    <option value="{{ $key }}">
+                                                                        {{ $value }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            </select>
+                                                        </div>
+                                                        <div class="row">
+                                                        </div>
+                                                        <h4>
+                                                            Tanggal Awal / Tanggal Akhir
+                                                        </h4>
+                                                        <div class="input-group">
+                                                            <input class="form-control" type="date" name="start_date"
+                                                                id="start_date" value="{{ request('start_date') }}"
+                                                                required>
+                                                            <input class="form-control" type="date" name="end_date"
+                                                                id="end_date" value="{{ request('end_date') }}"
+                                                                required>
+                                                            <p id="date_error" style="color: red;"></p>
+                                                            <button type="submit" class="ml-1 btn btn-warning"
+                                                                type="button" id="submit_button">
+                                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             @else
                                 <div class="col-sm-6">
                                     <div class="card">
@@ -190,7 +308,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div>                            
+                                </div>
                             @endif
                             <div class="col-sm-6">
                                 <div class="card">
