@@ -1061,6 +1061,15 @@ class ScanlogController extends Controller
             ->orderBy('name', 'ASC')
             ->pluck('pin', 'name');
         }
+        elseif(Auth::user()->email == 'athena@lpkia.ac.id')
+        {
+            $userId = [31,40,31,20,22,59,14,51,49,15,35,60,11,56,9,17,39,13,18];
+            $department = null;
+            $users      = User::select('pin','name')
+            ->whereIn('id', $userId)
+            ->orderBy('name', 'ASC')
+            ->pluck('pin', 'name');
+        }
         else{
            $department = Auth::user()->department_id;  
            $users      = User::select('pin','name')
