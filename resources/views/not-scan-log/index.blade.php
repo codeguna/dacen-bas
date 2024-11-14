@@ -58,7 +58,7 @@
                             </div>
                         </form>
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table id="example1" class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -100,8 +100,28 @@
                         </div>
                     </div>
                 </div>
-                {!! $notScanLogs->links() !!}
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    @parent
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+            });
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
 @endsection

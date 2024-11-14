@@ -29,16 +29,16 @@ class NotScanLogController extends Controller
             $notScanLogs = NotScanLog::whereDate('date', '>=', $start_date)
                 ->whereDate('date', '<=', $end_date)
                 ->orderBy('date', 'ASC')
-                ->paginate();
+                ->get();
         } else {
-            $notScanLogs = NotScanLog::orderBy('date', 'ASC')->paginate();
+            $notScanLogs = NotScanLog::orderBy('date', 'ASC')->get();
         }
 
         $reasons    = Reason::orderBy('name', 'ASC')->pluck('id', 'name');
         $users      = User::where('pin', '<>', null)->orderBy('name', 'ASC')->pluck('pin', 'name');
 
         return view('not-scan-log.index', compact('notScanLogs', 'reasons', 'users'))
-            ->with('i', (request()->input('page', 1) - 1) * $notScanLogs->perPage());
+            ->with('i');
     }
 
     /**
