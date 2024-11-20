@@ -19,7 +19,13 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="hari-libur-tab" data-toggle="tab" data-target="#hari-libur"
                                 type="button" role="tab">
-                                <small><i class="fas fa-star text-primary"></i> Hari Libur</small>
+                                <small><i class="fas fa-star text-success"></i> Hari Libur</small>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tidak-hadir-tab" data-toggle="tab" data-target="#tidak-hadir"
+                                type="button" role="tab">
+                                <small><i class="fa fa-calendar-times text-primary" aria-hidden="true"></i> Ketidakhadiran</small>
                             </button>
                         </li>
                     </ul>
@@ -223,6 +229,30 @@
                                                         {{ $holiday->name }}</li>
                                                 @empty
                                                     <i class="fas fa-info-circle"></i> Tidak ada libur bulan ini
+                                                @endforelse
+                                            </ol>
+                                        </small>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tidak-hadir" role="tabpanel">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card bg-gradient-light h-100">
+                                    <div class="card-header">
+                                        <h2><i class="fa fa-calendar-minus" aria-hidden="true"></i> Daftar Tidak Hadir:</h2>
+                                    </div>
+                                    <div class="card-body">
+                                        <small>
+                                            <ol>
+                                                @forelse ($notScans as $notscan)
+                                                    <li>{{ \Carbon\Carbon::parse($notscan->date)->format('j F') }} -
+                                                        {{ $notscan->reason->name }}</li>
+                                                @empty
+                                                    <i class="fas fa-info-circle"></i> Tidak ada data ketidakhadiran
                                                 @endforelse
                                             </ol>
                                         </small>

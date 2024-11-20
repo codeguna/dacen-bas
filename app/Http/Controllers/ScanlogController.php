@@ -7,6 +7,7 @@ use App\Models\AttendancesRequest;
 use App\Models\Departmen;
 use App\Models\Holiday;
 use App\Models\Log;
+use App\Models\NotScanLog;
 use App\Models\ScanLog;
 use App\Models\ScanLogsExtra;
 use App\Models\Willingness;
@@ -490,6 +491,11 @@ class ScanlogController extends Controller
             ->orderBy('date', 'ASC')
             ->get();
 
+        $notScans = NotScanLog::where('pin', $pin)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->orderBy('date', 'ASC')
+            ->get();
+
         return view(
             'admin.users.myattendances',
             compact(
@@ -505,7 +511,8 @@ class ScanlogController extends Controller
                 'fourthPhase',
                 'myWillingness',
                 'expDate',
-                'holidays'
+                'holidays',
+                'notScans'
             )
         )
             ->with('i');
@@ -568,7 +575,13 @@ class ScanlogController extends Controller
             ->whereBetween('date', [$startHoliday, $endHoliday])
             ->orderBy('date', 'ASC')
             ->get();
-        return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs', 'scan_logs_late', 'myWillingness', 'expDate', 'holidays'))->with('i');
+
+        $notScans = NotScanLog::where('pin', $pin)
+            ->whereBetween('date', [$start_date, $end_date])
+            ->orderBy('date', 'ASC')
+            ->get();
+
+        return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs', 'scan_logs_late', 'myWillingness', 'expDate', 'holidays','notScans'))->with('i');
     }
 
     public function requestAttendances()
@@ -1051,36 +1064,32 @@ class ScanlogController extends Controller
 
     public function myDepartmentPresences()
     {
-        if(Auth::user()->email == 'abang@lpkia.ac.id')
-        {
-            $ids    = [16,17,18,19];
-            $userId = [31,18,17,49,59,60];
-            $department = Departmen::whereIn('id', $ids)->orderBy('name','ASC')->pluck('id','name');
-            $users      = User::select('pin','name')
-            ->whereIn('id', $userId)
-            ->orderBy('name', 'ASC')
-            ->pluck('pin', 'name');
+        if (Auth::user()->email == 'abang@lpkia.ac.id') {
+            $ids    = [16, 17, 18, 19];
+            $userId = [31, 18, 17, 49, 59, 60];
+            $department = Departmen::whereIn('id', $ids)->orderBy('name', 'ASC')->pluck('id', 'name');
+            $users      = User::select('pin', 'name')
+                ->whereIn('id', $userId)
+                ->orderBy('name', 'ASC')
+                ->pluck('pin', 'name');
+        } elseif (Auth::user()->email == 'athena@lpkia.ac.id') {
+            $ids    = [14, 16, 17, 18, 19];
+            $userId = [31, 40, 31, 20, 22, 59, 14, 51, 49, 15, 35, 60, 11, 56, 9, 17, 39, 13, 18, 12];
+            $department = Departmen::whereIn('id', $ids)->orderBy('name', 'ASC')->pluck('id', 'name');
+            $users      = User::select('pin', 'name')
+                ->whereIn('id', $userId)
+                ->orderBy('name', 'ASC')
+                ->pluck('pin', 'name');
+        } else {
+            $department = Auth::user()->department_id;
+            $users      = User::select('pin', 'name')
+                ->where('department_id', $department)
+                ->orderBy('name', 'ASC')
+                ->pluck('pin', 'name');
         }
-        elseif(Auth::user()->email == 'athena@lpkia.ac.id')
-        {
-            $ids    = [14,16,17,18,19];
-            $userId = [31,40,31,20,22,59,14,51,49,15,35,60,11,56,9,17,39,13,18,12];
-            $department = Departmen::whereIn('id', $ids)->orderBy('name','ASC')->pluck('id','name');
-            $users      = User::select('pin','name')
-            ->whereIn('id', $userId)
-            ->orderBy('name', 'ASC')
-            ->pluck('pin', 'name');
-        }
-        else{
-           $department = Auth::user()->department_id;  
-           $users      = User::select('pin','name')
-            ->where('department_id', $department)
-            ->orderBy('name', 'ASC')
-            ->pluck('pin', 'name');
-        }
-        
-       
 
-        return view('recap.coordinator.index', compact('department','users'));
+
+
+        return view('recap.coordinator.index', compact('department', 'users'));
     }
 }
