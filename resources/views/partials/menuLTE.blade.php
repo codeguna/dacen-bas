@@ -462,6 +462,33 @@
                 </ul>
             </li>
             <li
+                class="nav-item {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log') || request()->is('admin/not-scan-log/input') ? 'menu-open' : '' }}">
+                <a
+                    href="#"class="nav-link  {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log') || request()->is('admin/not-scan-log/input') ? 'active' : '' }}">
+                  <i class="fas fa-chart-bar nav-icon"></i>
+                    <p>
+                        Performance Appraisals
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.not-scan-logs.index') }}"
+                            class="nav-link {{ request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-logs/*') ? 'active' : '' }}">
+                            <i class="fas fa-calculator nav-icon"></i>
+                            <p>Input</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.scan-log.input') }}"
+                            class="nav-link {{ request()->is('admin/not-scan-log/input') || request()->is('admin/not-scan-log/input/*') ? 'active' : '' }}">
+                            <i class="fas fa-list-ol nav-icon"></i>
+                            <p>Report</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li
                 class="nav-item {{ request()->is('admin/homebases/*') ||
                 request()->is('admin/homebases') ||
                 request()->is('admin/departmens/*') ||

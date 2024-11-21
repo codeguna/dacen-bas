@@ -183,4 +183,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('letter/inbox',[LetterController::class, 'inbox'])->name('letters.inbox');
     Route::get('letter/outbox',[LetterController::class, 'outbox'])->name('letters.outbox');
     //End Letters
+
+    //Route Performance Appraisals
+    Route::resource('performance-appraisals', 'PerformanceAppraisalController');
+    //End Performance Appraisals
 });
