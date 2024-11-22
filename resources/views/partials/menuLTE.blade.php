@@ -59,7 +59,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -462,10 +462,10 @@
                 </ul>
             </li>
             <li
-                class="nav-item {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log') || request()->is('admin/not-scan-log/input') ? 'menu-open' : '' }}">
+                class="nav-item {{ request()->is('admin/performance-appraisals/*') || request()->is('admin/performance-appraisals') ? 'menu-open' : '' }}">
                 <a
-                    href="#"class="nav-link  {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log') || request()->is('admin/not-scan-log/input') ? 'active' : '' }}">
-                  <i class="fas fa-chart-bar nav-icon"></i>
+                    href="#"class="nav-link  {{ request()->is('admin/performance-appraisals/*') || request()->is('admin/performance-appraisals') ? 'active' : '' }}">
+                    <i class="fas fa-chart-bar nav-icon"></i>
                     <p>
                         Performance Appraisals
                         <i class="right fas fa-angle-left"></i>
@@ -473,8 +473,8 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ route('admin.not-scan-logs.index') }}"
-                            class="nav-link {{ request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-logs/*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.performance-appraisals.create') }}"
+                            class="nav-link {{ request()->is('admin/performance-appraisals/create')? 'active' : '' }}">
                             <i class="fas fa-calculator nav-icon"></i>
                             <p>Input</p>
                         </a>

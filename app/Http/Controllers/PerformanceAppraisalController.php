@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PerformanceAppraisal;
+use App\User;
 use Illuminate\Http\Request;
 
 /**
@@ -32,6 +33,8 @@ class PerformanceAppraisalController extends Controller
     public function create()
     {
         $performanceAppraisal = new PerformanceAppraisal();
+        $users = User::whereNotIn('department_id',['23','21'])->orderBy('name','ASC')->pluck('pin','name');
+        return $users;
         return view('performance-appraisal.create', compact('performanceAppraisal'));
     }
 

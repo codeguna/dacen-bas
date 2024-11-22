@@ -1,4 +1,4 @@
-<div class="box box-info padding-1">
+{{-- <div class="box box-info padding-1">
     <div class="box-body">
         
         <div class="form-group">
@@ -40,5 +40,87 @@
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+    </div>
+</div> --}}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Bulan</label>
+            <select class="form-control" name="period" required>
+                <option disabled selected>== Pilih Bulan ==</option>
+                <option value="01">Januari</option>
+                <option value="02">Februari</option>
+                <option value="03">Maret</option>
+                <option value="04">April</option>
+                <option value="05">Mei</option>
+                <option value="06">Juni</option>
+                <option value="07">Juli</option>
+                <option value="08">Agustus</option>
+                <option value="09">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Desember</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Tahun</label>
+            <input type="text" id="implementation_year" name="implementation_year" class="form-control"
+                min="0" max="9999" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);"
+                placeholder="Input 4-digit tahun" required>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table id="paTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Jumlah Terlambat</th>
+                        <th>PA Murni</th>
+                        <th>Kontribusi</th>
+                        <th>Keterangan</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $i = 0;
+                    @endphp
+                    <tr>
+                        <td>{{ ++$i }}</td>
+                        <td>
+                                <select class="form-select form-select-lg" name="" id="">
+                                    <option selected>Select one</option>
+                                    <option value="">New Delhi</option>
+                                    <option value="">Istanbul</option>
+                                    <option value="">Jakarta</option>
+                                </select>
+                        </td>
+                        <td>R1C2</td>
+                        <td>R1C3</td>
+                        <td>R1C2</td>
+                        <td>R1C3</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-danger" onclick="deleteRow(this)">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7">
+                            <button type="button" class="btn btn-success w-100" onclick="addRow()">
+                                <i class="fas fa-plus-circle"></i> Tambah Data
+                            </button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 </div>
