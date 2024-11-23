@@ -46,9 +46,14 @@ class PerformanceAppraisalController extends Controller
      */
     public function store(Request $request)
     {
+        return $request->all();
+        $data = $request->all();
+
         request()->validate(PerformanceAppraisal::$rules);
 
-        $performanceAppraisal = PerformanceAppraisal::create($request->all());
+        $performanceAppraisal = PerformanceAppraisal::create(
+            ['']
+        );
 
         return redirect()->route('admin.performance-appraisals.index')
             ->with('success', 'PerformanceAppraisal created successfully.');

@@ -93,15 +93,15 @@
                     <tr>
                         <td>{{ ++$i }}</td>
                         <td>
-                                <select class="form-control" name="pin[0]" required>
-                                    <option disabled selected>== Pilih Nama ==</option>
-                                    @foreach ($users as $value => $key )
-                                        <option value="{{ $key }}">{{ $value }}</option>
-                                    @endforeach                                    
-                                </select>
+                            <select class="form-control" name="pin[0]" required>
+                                <option disabled selected>== Pilih Nama ==</option>
+                                @foreach ($users as $value => $key)
+                                    <option value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
+                            </select>
                         </td>
                         <td>
-                           <input class="form-control" type="number" min="0" name="late_total[0]" required>
+                            <input class="form-control" type="number" min="0" name="late_total[0]" required>
                         </td>
                         <td>
                             <input class="form-control" type="number" min="0" name="pure_pa[0]" required>
@@ -122,9 +122,14 @@
                 <tfoot>
                     <tr>
                         <td colspan="7">
-                            <button type="button" class="btn btn-success w-100" onclick="addRow()">
-                                <i class="fas fa-plus-circle"></i> Tambah Data
-                            </button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success" onclick="addRow()">
+                                    <i class="fas fa-plus-circle"></i> Tambah Data
+                                </button>
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-check-circle"></i> Submit
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tfoot>
