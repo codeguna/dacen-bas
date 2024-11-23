@@ -33,9 +33,9 @@ class PerformanceAppraisalController extends Controller
     public function create()
     {
         $performanceAppraisal = new PerformanceAppraisal();
-        $users = User::whereNotIn('department_id',['23','21'])->orderBy('name','ASC')->pluck('pin','name');
-        return $users;
-        return view('performance-appraisal.create', compact('performanceAppraisal'));
+        $users = User::where('pin','<>',NULL)->orderBy('name','ASC')->pluck('pin','name');
+
+        return view('performance-appraisal.create', compact('performanceAppraisal','users'));
     }
 
     /**

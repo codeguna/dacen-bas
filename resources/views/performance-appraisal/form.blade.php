@@ -93,17 +93,25 @@
                     <tr>
                         <td>{{ ++$i }}</td>
                         <td>
-                                <select class="form-select form-select-lg" name="" id="">
-                                    <option selected>Select one</option>
-                                    <option value="">New Delhi</option>
-                                    <option value="">Istanbul</option>
-                                    <option value="">Jakarta</option>
+                                <select class="form-control" name="pin[0]" required>
+                                    <option disabled selected>== Pilih Nama ==</option>
+                                    @foreach ($users as $value => $key )
+                                        <option value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach                                    
                                 </select>
                         </td>
-                        <td>R1C2</td>
-                        <td>R1C3</td>
-                        <td>R1C2</td>
-                        <td>R1C3</td>
+                        <td>
+                           <input class="form-control" type="number" min="0" name="late_total[0]" required>
+                        </td>
+                        <td>
+                            <input class="form-control" type="number" min="0" name="pure_pa[0]" required>
+                        </td>
+                        <td>
+                            <input class="form-control" type="number" min="0" name="contribution[0]" required>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" name="note[0]" required>
+                        </td>
                         <td>
                             <button type="button" class="btn btn-outline-danger" onclick="deleteRow(this)">
                                 <i class="fas fa-trash-alt"></i>

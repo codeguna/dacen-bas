@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-   Import Nilai PA Karyawan
+    Import Nilai PA Karyawan
 @endsection
 
 @section('content')
@@ -16,7 +16,8 @@
                         <h3 class="card-title"><i class="fas fa-upload text-primary"></i> Import Nilai PA Karyawan</h3>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.performance-appraisals.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.performance-appraisals.store') }}" role="form"
+                            enctype="multipart/form-data">
                             @csrf
 
                             @include('performance-appraisal.form')
@@ -33,17 +34,40 @@
         function addRow() {
             const table = document.getElementById('paTable').getElementsByTagName('tbody')[0];
             const rowCount = table.rows.length;
-            const nameCount = table.rows.length;
-            const identifyCount = table.rows.length;
-            const affiliationCount = table.rows.length;
+            const pinCount = table.rows.length;
+            const lateCount = table.rows.length;
+            const paCount = table.rows.length;
+            const contributionCount = table.rows.length;
+            const noteCount = table.rows.length;
             const row = table.insertRow(rowCount);
 
             row.innerHTML = `
             <td>${rowCount + 1}</td>
-            <td><input type="text" class="form-control" name="name[${nameCount}]"></td>
-            <td><input type="number" class="form-control" name="identity_number[${identifyCount}]"></td>            
-            <td><input type="text" class="form-control" name="affiliation[${affiliationCount}]"></td>
-            <td><button type="button" class="btn btn-outline-danger" onclick="deleteRow(this)"><i class="fas fa-trash-alt"></i></button></td>
+            <td>
+                                <select class="form-control" name="pin[${pinCount}]" required>
+                                    <option disabled selected>== Pilih Nama ==</option>
+                                    @foreach ($users as $value => $key)
+                                        <option value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach                                    
+                                </select>
+                        </td>
+                        <td>
+                           <input class="form-control" type="number" min="0" name="late_total[${lateCount}]" required>
+                        </td>
+                        <td>
+                            <input class="form-control" type="number" min="0" name="pure_pa[${paCount}]" required>
+                        </td>
+                        <td>
+                            <input class="form-control" type="number" min="0" name="contribution[${contributionCount}]" required>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" name="note[${noteCount}]" required>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-danger" onclick="deleteRow(this)">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
         `;
         }
 
