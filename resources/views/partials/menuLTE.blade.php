@@ -59,7 +59,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -462,9 +462,19 @@
                 </ul>
             </li>
             <li
-                class="nav-item {{ request()->is('admin/performance-appraisals/*') || request()->is('admin/performance-appraisals') ? 'menu-open' : '' }}">
+                class="nav-item {{ request()->is('admin/performance-appraisals/*') ||
+                request()->is('admin/performance-appraisals') ||
+                request()->is('admin/performance-appraisal/select-period') ||
+                request()->is('admin/performance-appraisal/select-period/*')
+                    ? 'menu-open'
+                    : '' }}">
                 <a
-                    href="#"class="nav-link  {{ request()->is('admin/performance-appraisals/*') || request()->is('admin/performance-appraisals') ? 'active' : '' }}">
+                    href="#"class="nav-link  {{ request()->is('admin/performance-appraisals/*') ||
+                    request()->is('admin/performance-appraisals') ||
+                    request()->is('admin/performance-appraisal/select-period') ||
+                    request()->is('admin/performance-appraisal/select-period/*')
+                        ? 'active'
+                        : '' }}">
                     <i class="fas fa-chart-bar nav-icon"></i>
                     <p>
                         Performance Appraisals
@@ -474,14 +484,14 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{ route('admin.performance-appraisals.create') }}"
-                            class="nav-link {{ request()->is('admin/performance-appraisals/create')? 'active' : '' }}">
+                            class="nav-link {{ request()->is('admin/performance-appraisals/create') ? 'active' : '' }}">
                             <i class="fas fa-calculator nav-icon"></i>
-                            <p>Input</p>
+                            <p>Input/Delete</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.scan-log.input') }}"
-                            class="nav-link {{ request()->is('admin/not-scan-log/input') || request()->is('admin/not-scan-log/input/*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.performance-appraisals.select-period') }}"
+                            class="nav-link {{ request()->is('admin/performance-appraisal/select-period') || request()->is('admin/performance-appraisal/select-period/*') ? 'active' : '' }}">
                             <i class="fas fa-list-ol nav-icon"></i>
                             <p>Report</p>
                         </a>

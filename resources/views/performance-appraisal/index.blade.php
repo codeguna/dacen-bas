@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('template_title')
     Performance Appraisal
@@ -17,7 +17,7 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('performance-appraisals.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('admin.performance-appraisals.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Create New') }}
                                 </a>
                               </div>
@@ -61,9 +61,9 @@
 											<td>{{ $performanceAppraisal->note }}</td>
 
                                             <td>
-                                                <form action="{{ route('performance-appraisals.destroy',$performanceAppraisal->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('performance-appraisals.show',$performanceAppraisal->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('performance-appraisals.edit',$performanceAppraisal->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('admin.performance-appraisals.destroy',$performanceAppraisal->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('admin.performance-appraisals.show',$performanceAppraisal->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('admin.performance-appraisals.edit',$performanceAppraisal->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>

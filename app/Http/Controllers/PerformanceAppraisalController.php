@@ -33,9 +33,9 @@ class PerformanceAppraisalController extends Controller
     public function create()
     {
         $performanceAppraisal = new PerformanceAppraisal();
-        $users = User::where('pin','<>',NULL)->orderBy('name','ASC')->pluck('pin','name');
+        $users = User::where('pin', '<>', NULL)->orderBy('name', 'ASC')->pluck('pin', 'name');
 
-        return view('performance-appraisal.create', compact('performanceAppraisal','users'));
+        return view('performance-appraisal.create', compact('performanceAppraisal', 'users'));
     }
 
     /**
@@ -46,14 +46,34 @@ class PerformanceAppraisalController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+
         $data = $request->all();
 
-        request()->validate(PerformanceAppraisal::$rules);
+        $period         = $data["period"];
+        $year           = $data["year"];
+        $pin            = $data["pin"];
+        $late_total     = $data["late_total"];
+        $pure_pa        = $data["pure_pa"];
+        $contribution   = $data["contribution"];
+        $note           = $data["note"];
 
-        $performanceAppraisal = PerformanceAppraisal::create(
-            ['']
-        );
+        //request()->validate(PerformanceAppraisal::$rules);
+
+        //PA
+        if ($pin) {
+            foreach ($pin  as $key => $value) {
+                $performanceAppraisal               = new PerformanceAppraisal();
+                $performanceAppraisal->period       = $period;
+                $performanceAppraisal->year         = $year;
+                $performanceAppraisal->pin          = $pin[$key];
+                $performanceAppraisal->late_total   = $late_total[$key];
+                $performanceAppraisal->pure_pa      = $pure_pa[$key];
+                $performanceAppraisal->contribution = $contribution[$key];
+                $performanceAppraisal->note         = $note[$key];
+                $performanceAppraisal->created_at   = now();
+                $performanceAppraisal->save();
+            }
+        }
 
         return redirect()->route('admin.performance-appraisals.index')
             ->with('success', 'PerformanceAppraisal created successfully.');
@@ -113,5 +133,34 @@ class PerformanceAppraisalController extends Controller
 
         return redirect()->route('admin.performance-appraisals.index')
             ->with('success', 'PerformanceAppraisal deleted successfully');
+    }
+
+    public function selectPeriod(Request $request)
+    {
+        $year = $request->year;
+        $period = $request->period;
+        if ($year) {
+            $performanceAppraisals = PerformanceAppraisal::where('period', '=', $period)
+                ->where('year', '=', $year)->get();
+        } else {
+            $performanceAppraisals = [];
+        }
+
+
+        return view('performance-appraisal.select-period', compact('performanceAppraisals'));
+    }
+
+    public function destroyBulk(Request $request)
+    {
+        $year = $request->year;
+        $period = $request->period;
+
+        $deletedRows = PerformanceAppraisal::where('period', '=', $period) ->where('year', '=', $year) ->delete();
+
+        if ($deletedRows > 0) {
+            return redirect()->back()->with('success', 'Berhasil hapus PA pada periode ini!');
+        } else {
+            return redirect()->back()->with('error', 'Tidak ada PA yang ditemukan untuk periode ini.');
+        }
     }
 }
