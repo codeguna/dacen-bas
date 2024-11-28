@@ -75,8 +75,7 @@ class PerformanceAppraisalController extends Controller
             }
         }
 
-        return redirect()->route('admin.performance-appraisals.index')
-            ->with('success', 'PerformanceAppraisal created successfully.');
+        return redirect()->back()->with('success', 'Berhasil menambah PA pada periode ini!');
     }
 
     /**
