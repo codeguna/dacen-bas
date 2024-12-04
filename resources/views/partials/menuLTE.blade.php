@@ -43,6 +43,15 @@
                     </p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ url('admin/mywillingness') }}"
+                    class="nav-link {{ request()->is('admin/mywillingness') || request()->is('admin/mywillingness/*') ? 'active' : '' }}">
+                    <i class="fas fa-user-clock nav-icon"></i>
+                    <p>
+                        Kesediaan Saya
+                    </p>
+                </a>
+            </li>
         @endcan
         @can('view_presences')
             <li class="nav-item">

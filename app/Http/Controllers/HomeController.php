@@ -14,6 +14,7 @@ use App\Models\Level;
 use App\Models\ScanLog;
 use App\Models\StudyProgram;
 use App\Models\University;
+use App\Models\Willingness;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -171,5 +172,17 @@ class HomeController extends Controller
         ]);
         
         return redirect()->route('admin.myprofile')->with('success', 'Berhasil memperbarui Profil.');
+    }
+
+    public function myWillingness()
+    {
+        $pin = Auth::user()->pin; 
+        $myWillingness = Willingness::where('pin',$pin)->latest()->orderBy('day_code','ASC')->paginate(6);
+
+        if($myWillingness->count()==0)
+        {
+            return redirect()->route('admin.scan-log.my-attendances')->with('warning','Kesediaan belum di atur. Silahkan hubungi BAS!');
+        }
+        return view('admin.users.mywillingness',compact('myWillingness'));
     }
 }

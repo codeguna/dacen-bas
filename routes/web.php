@@ -21,6 +21,7 @@ Route::patch('change_password', 'Auth\ChangePasswordController@changePassword')-
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/myprofile', 'HomeController@myProfile')->name('myprofile');
+    Route::get('/mywillingness', 'HomeController@myWillingness')->name('mywillingness');
     Route::get('/updateprofile', 'HomeController@updateProfile')->name('updateprofile');
     Route::post('/saveprofile', 'HomeController@saveProfile')->name('saveprofile');
 
