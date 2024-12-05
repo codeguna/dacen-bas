@@ -6,14 +6,17 @@
 @section('content')
     <div class="container-fluid">
         <div class="card">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-info" role="alert">
-                        <strong>
-                            <i class="fa fa-info-circle" aria-hidden="true"></i> Untuk perubahan jam kesediaan,
-                            silahkan
-                            hubungi Departemen BAS
-                        </strong>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3><i class="fas fa-clock text-primary"></i> Waktu Kesediaan Bekerja</h3>
+                        <div class="alert alert-warning" role="alert"> <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            Untuk
+                            perubahan jam kesediaan,
+                            <strong> silahkan
+                                hubungi Departemen BAS
+                            </strong>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -77,5 +80,9 @@
                 </div>
             </div>
         </div>
+        <blockquote class="blockquote">
+            <p class="mb-0">"Tepat waktu dalam bekerja bukan hanya tentang disiplin, tapi juga tentang menjaga tunjangan TKK tetap aman di kantong. Jangan sampai tunjangan melayang karena malas! 💼⏰"</p>
+            <footer class="blockquote-footer">Anonymous <cite title="Source Title">ChatGPT</cite></footer>
+        </blockquote>
     </div>
 @endsection
