@@ -248,6 +248,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 document.getElementById("quote").innerText = quotes[randomIndex];
             }
             window.onload = generateQuote; // Call generateQuote function when the page loads 
+
+            function getGreeting() {
+                const now = new Date();
+                const hours = now.getHours();
+                let greeting = "";
+                if (hours >= 5 && hours < 12) {
+                    greeting =
+                        "Hi, Selamat Pagi 🌞"; // Good Morning 
+                } else if (hours >= 12 && hours < 15) {
+                    greeting = "Hi, Selamat Siang ☀️"; // Good Noon 
+                } else if (hours >= 15 && hours < 18) {
+                    greeting = "Hi, Selamat Sore 🌤️"; // Good Afternoon 
+                } else if (hours >= 18 && hours < 21) {
+                    greeting = "Hi, Selamat Petang 🌆"; // Good Evening 
+                } else {
+                    greeting = "Hi, Selamat Malam 🌜"; // Good Night 
+                }
+                return greeting;
+            }
+            document.getElementById("greeting").innerText = getGreeting();
         </script>
     </body>
 

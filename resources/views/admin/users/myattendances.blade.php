@@ -12,6 +12,9 @@ Presensi Saya
     </a> --}}
     <div class="row">
         <div class="col-md-12">
+            <h3 id="greeting"></h3>
+        </div>
+        <div class="col-md-12">
             <div class="card card-widget widget-user h-100">
                 <div class="widget-user-header text-white"
                     style="background: url('{{ asset('images/cover-attendances.jpeg') }}') center center;background-size: 750px;">
