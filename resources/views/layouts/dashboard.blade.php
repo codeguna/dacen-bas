@@ -62,14 +62,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             @if ($birthdayCount == 0)
-                            <i class="fas fa-birthday-cake text-muted"></i>
+                                <i class="fas fa-birthday-cake text-muted"></i>
                             @else
-                            <i class="fas fa-birthday-cake text-pink beat-fade-icon"></i>
-                            <span class="badge badge-warning navbar-badge">{{ $birthdayCount }}</span>
+                                <i class="fas fa-birthday-cake text-pink beat-fade-icon"></i>
+                                <span class="badge badge-warning navbar-badge">{{ $birthdayCount }}</span>
                             @endif
-                            
 
-                            
+
+
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <span class="dropdown-item dropdown-header">{{ $birthdayCount }} orang Ulang Tahun</span>
@@ -178,7 +178,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <footer class="main-footer">
                 <!-- To the right -->
                 <div class="float-right d-none d-sm-inline">
-                    made with ☕ to help your productivity
+                    <em>
+                        "<small id="quote"></small>"
+                    </em>
                 </div>
                 <!-- Default to the left -->
                 <strong>Copyright <a href="https://www.linkedin.com/in/gunadhip/" target="_blank">
@@ -213,6 +215,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Select2 -->
         <script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
         @yield('scripts')
+        <script>
+            const quotes = ["Bekerja keras hari ini, biar besok bisa malas-malasan tanpa merasa bersalah. 😎✨",
+                "Ingat, kopi cuma motivasi sementara. Kerja keras yang bikin bos senyum lebar. ☕💪",
+                "Waktu bukan uang, tapi waktu kerja itu mahal harganya. Jangan disia-siakan! ⏳💼",
+                "Semangat kerja itu kayak Wi-Fi kafe, kadang lemot tapi tetap butuh! 📶😉",
+                "Kerja sesuai waktu biar gaji dan tunjangan aman di kantong. 🤑💰",
+                "Kerja serius dulu, becanda nanti. Jangan sampai terbalik ya! 😂📈",
+                "Kerja keras itu kayak olahraga, capek tapi bikin sehat dompet. 🏋️‍♂️💵",
+                "Semangat kerja seperti Superman! Tapi ingat, Batman juga punya hari libur. 🦸‍♂️🦇",
+                "Kapan lagi bisa bangun pagi? Biar pas pensiun bisa bangun siang. ⏰🔜😴",
+                "Kerja keras hari Senin, biar Jumat bisa ngopi sambil santai. ☕➡️🛋️",
+                "Bekerjalah seakan-akan atasanmu mengawasi, karena mungkin dia memang sedang begitu. 👀💼",
+                "Bekerja itu seperti nonton drama, penuh konflik tapi menarik. 📺😅",
+                "Kerja keras sekarang, biar weekend bisa happy tanpa beban. 🥳📅",
+                "Jangan lupa, kerja keras hari ini adalah investasi masa depan. 💪🔮",
+                "Kerja itu ibarat cinta, kadang butuh pengorbanan biar hasilnya manis. ❤️💼",
+                "Semangat kerja bukan cuma soal target, tapi juga soal perjalanan. 🎯🚀",
+                "Kerja sesuai waktu biar nggak usah nunggu gajian terlalu lama. ⏰💸",
+                "Bekerja keras di pagi hari biar malam bisa tidur nyenyak. 🌞💤",
+                "Semangat kerja itu kayak bensin, kadang perlu diisi ulang. ⛽🔋",
+                "Bekerjalah dengan sepenuh hati, biar hasilnya juga maksimal. ❤️📊",
+                "Kerja keras itu kayak menabung, sedikit demi sedikit lama-lama jadi bukit. 🏦⛰️",
+                "Ingat, kerja keras adalah kunci kesuksesan, tapi jangan lupa istirahat juga. 🗝️😌",
+                "Semangat kerja itu kayak playlist favorit, bikin hari-hari lebih bersemangat! 🎧🎶",
+                "Kerja itu kayak puzzle, setiap potongan penting untuk gambaran besar. 🧩🏢",
+                "Rajin bekerja bukan cuma buat atasan, tapi juga buat masa depan kita sendiri. 🚀🌟"
+            ];
+
+            function generateQuote() {
+                const randomIndex = Math.floor(Math.random() * quotes.length);
+                document.getElementById("quote").innerText = quotes[randomIndex];
+            }
+            window.onload = generateQuote; // Call generateQuote function when the page loads 
+        </script>
     </body>
 
 </html>
