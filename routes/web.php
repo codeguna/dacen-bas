@@ -188,6 +188,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     //Route Performance Appraisals
     Route::resource('performance-appraisals', 'PerformanceAppraisalController');
     Route::get('performance-appraisal/select-period', 'PerformanceAppraisalController@selectPeriod')->name('performance-appraisals.select-period');
+    Route::get('performance-appraisal/all-pa', 'PerformanceAppraisalController@allPa')->name('performance-appraisals.all-pa');
     Route::post('performance-appraisal/destroy-bulk', 'PerformanceAppraisalController@destroyBulk')->name('performance-appraisals.destroy-bulk');
     //End Performance Appraisals
 });

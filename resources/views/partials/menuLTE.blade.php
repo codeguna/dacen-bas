@@ -68,7 +68,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -474,14 +474,18 @@
                 class="nav-item {{ request()->is('admin/performance-appraisals/*') ||
                 request()->is('admin/performance-appraisals') ||
                 request()->is('admin/performance-appraisal/select-period') ||
-                request()->is('admin/performance-appraisal/select-period/*')
+                request()->is('admin/performance-appraisal/select-period/*') ||
+                request()->is('admin/performance-appraisal/all-pa') ||
+                request()->is('admin/performance-appraisal/all-pa/*')
                     ? 'menu-open'
                     : '' }}">
                 <a
                     href="#"class="nav-link  {{ request()->is('admin/performance-appraisals/*') ||
                     request()->is('admin/performance-appraisals') ||
                     request()->is('admin/performance-appraisal/select-period') ||
-                    request()->is('admin/performance-appraisal/select-period/*')
+                    request()->is('admin/performance-appraisal/select-period/*') ||
+                    request()->is('admin/performance-appraisal/all-pa') ||
+                    request()->is('admin/performance-appraisal/all-pa/*')
                         ? 'active'
                         : '' }}">
                     <i class="fas fa-chart-bar nav-icon"></i>
@@ -503,6 +507,13 @@
                             class="nav-link {{ request()->is('admin/performance-appraisal/select-period') || request()->is('admin/performance-appraisal/select-period/*') ? 'active' : '' }}">
                             <i class="fas fa-list-ol nav-icon"></i>
                             <p>Report</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.performance-appraisals.all-pa') }}"
+                            class="nav-link {{ request()->is('admin/performance-appraisal/all-pa') || request()->is('admin/performance-appraisal/all-pa/*') ? 'active' : '' }}">
+                            <i class="fas fa-user-friends nav-icon"></i>
+                            <p>Semua Data</p>
                         </a>
                     </li>
                 </ul>

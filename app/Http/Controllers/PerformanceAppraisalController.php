@@ -100,8 +100,9 @@ class PerformanceAppraisalController extends Controller
     public function edit($id)
     {
         $performanceAppraisal = PerformanceAppraisal::find($id);
+        $users = User::where('pin', '<>', NULL)->orderBy('name', 'ASC')->pluck('pin', 'name');
 
-        return view('performance-appraisal.edit', compact('performanceAppraisal'));
+        return view('performance-appraisal.edit', compact('performanceAppraisal','users'));
     }
 
     /**
@@ -113,12 +114,12 @@ class PerformanceAppraisalController extends Controller
      */
     public function update(Request $request, PerformanceAppraisal $performanceAppraisal)
     {
-        request()->validate(PerformanceAppraisal::$rules);
+        //request()->validate(PerformanceAppraisal::$rules);
 
         $performanceAppraisal->update($request->all());
 
-        return redirect()->route('admin.performance-appraisals.index')
-            ->with('success', 'PerformanceAppraisal updated successfully');
+        return redirect()->route('admin.performance-appraisals.all-pa')
+            ->with('success', 'Berhasil Perbarui data PA');
     }
 
     /**
@@ -161,5 +162,14 @@ class PerformanceAppraisalController extends Controller
         } else {
             return redirect()->back()->with('error', 'Tidak ada PA yang ditemukan untuk periode ini.');
         }
+    }
+
+    public function allPa()
+    {
+        $performanceAppraisals = PerformanceAppraisal::whereHas('user', function ($query){
+            $query->orderBy('name','ASC');
+        })->orderBy('created_at','DESC')->get();     
+
+        return view('performance-appraisal.all-pa',compact('performanceAppraisals'))->with('i');
     }
 }
