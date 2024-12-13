@@ -131,8 +131,8 @@ class PerformanceAppraisalController extends Controller
     {
         $performanceAppraisal = PerformanceAppraisal::find($id)->delete();
 
-        return redirect()->route('admin.performance-appraisals.index')
-            ->with('success', 'PerformanceAppraisal deleted successfully');
+        return redirect()->route('admin.performance-appraisals.all-pa')
+            ->with('success', 'Berhasil Hapus Data PA!');
     }
 
     public function selectPeriod(Request $request)
