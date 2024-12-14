@@ -10,94 +10,47 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3><i class="fa fa-search text-primary" aria-hidden="true"></i> Pilih Periode dan Tahun</h3>
+                        <h3><i class="fas fa-newspaper text-info"></i> Report PA</h3>
                     </div>
-                    <div class="card-body"> 
-                        <form action="{{ route('admin.performance-appraisals.select-period') }}" method="GET">
-                        <div class="row">                           
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Bulan</label>
-                                    <select class="form-control" name="period" required>
-                                        <option disabled selected>== Pilih Bulan ==</option>
-                                        <option value="01">Januari</option>
-                                        <option value="02">Februari</option>
-                                        <option value="03">Maret</option>
-                                        <option value="04">April</option>
-                                        <option value="05">Mei</option>
-                                        <option value="06">Juni</option>
-                                        <option value="07">Juli</option>
-                                        <option value="08">Agustus</option>
-                                        <option value="09">September</option>
-                                        <option value="10">Oktober</option>
-                                        <option value="11">November</option>
-                                        <option value="12">Desember</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Tahun</label>
-                                    <input type="text" id="implementation_year" name="year" class="form-control"
-                                        min="0" max="9999"
-                                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);"
-                                        placeholder="Input 4-digit tahun" required>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <button class="btn btn-success w-100" type="submit">
-                                    <i class="fa fa-check-circle" aria-hidden="true"></i> Submit
-                                </button>
-                            </div>                        
-                        </div>
-                    </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
                     <div class="card-body">
-                        @php
-                            $i =0;
-                        @endphp
-                        <table id="example1" class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Periode - Tahun</th>
-                                    <th>Nama</th>
-                                    <th>Total Terlambat</th>
-                                    <th>PA Murni</th>
-                                    <th>Kontribusi</th>
-                                    <th>Catatan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($performanceAppraisals as $pa)
-                                    <tr>
-                                        <td>{{ ++$i }}</td>
-                                        <td>{{ $pa->period }} - {{ $pa->year }}</td>
-                                        <td>{{ $pa->user->name }}</td>
-                                        <td>{{ $pa->late_total }}</td>
-                                        <td>{{ $pa->pure_pa }}</td>
-                                        <td>{{ $pa->contribution }}</td>
-                                        <td>{{ $pa->note }}</td>
-                                    </tr>
-                                @empty
-                                    <tr style="text-align: center">
-                                        <td colspan="7">== data tidak ada ==</td>
-                                    </tr>
-                                @endforelse
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home"
+                                    type="button" role="tab" aria-controls="home" aria-selected="true">
+                                  <i class="fas fa-calendar-alt    "></i> Per Periode
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile"
+                                    type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                    Profile
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="messages-tab" data-toggle="tab" data-target="#messages"
+                                    type="button" role="tab" aria-controls="messages" aria-selected="false">
+                                    Messages
+                                </button>
+                            </li>
+                        </ul>
 
-                            </tbody>
-                        </table>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                @include('performance-appraisal.pa.all-person')
+                            </div>
+                            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                profile
+                            </div>
+                            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                                messages
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
+        </div>        
     </div>
 @endsection
 @section('scripts')

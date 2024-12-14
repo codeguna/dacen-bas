@@ -155,3 +155,7 @@ hr {
   font-size: 24px;
   animation: beat-fade 2s ease infinite;
 }
+hr.s1 {
+  height:5px;
+  border-top:1px solid black;
+}
