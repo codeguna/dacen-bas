@@ -46,7 +46,7 @@ class PerformanceAppraisal extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'pin', 'pin')->orderBy('name', 'ASC');;
+        return $this->belongsTo(User::class, 'pin', 'pin')->orderBy('name', 'ASC');
     }
 
 }

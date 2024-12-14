@@ -24,7 +24,7 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile"
                                     type="button" role="tab" aria-controls="profile" aria-selected="false">
-                                    Profile
+                                  <i class="fas fa-building"></i>  Per Departemen
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
@@ -41,7 +41,7 @@
                                 @include('performance-appraisal.pa.all-person')
                             </div>
                             <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                profile
+                                @include('performance-appraisal.pa.department')
                             </div>
                             <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
                                 messages
@@ -58,6 +58,11 @@
     <script>
         $(function() {
             $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $("#example3").DataTable({
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false

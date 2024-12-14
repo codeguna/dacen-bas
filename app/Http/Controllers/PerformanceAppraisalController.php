@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departmen;
 use App\Models\PerformanceAppraisal;
 use App\User;
 use Illuminate\Http\Request;
@@ -102,7 +103,7 @@ class PerformanceAppraisalController extends Controller
         $performanceAppraisal = PerformanceAppraisal::find($id);
         $users = User::where('pin', '<>', NULL)->orderBy('name', 'ASC')->pluck('pin', 'name');
 
-        return view('performance-appraisal.edit', compact('performanceAppraisal','users'));
+        return view('performance-appraisal.edit', compact('performanceAppraisal', 'users'));
     }
 
     /**
@@ -136,26 +137,35 @@ class PerformanceAppraisalController extends Controller
     }
 
     public function selectPeriod(Request $request)
-    {
-        $year = $request->year;
-        $period = $request->period;
-        if ($year) {
-            $performanceAppraisals = PerformanceAppraisal::where('period', '=', $period)
-                ->where('year', '=', $year)->get();
-        } else {
-            $performanceAppraisals = [];
-        }
+{
+    $year = $request->year;
+    $period = $request->period;
+    $department = $request->department;
 
-
-        return view('performance-appraisal.select-period', compact('performanceAppraisals'));
+    $departments = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
+    
+    if ($department && $year) {
+        $performanceAppraisalsDepartments = User::where('department_id', $department)->orderBy('name','ASC')->get();
+        $performanceAppraisalsAll = [];
+    } elseif ($year && $period) {
+        $performanceAppraisalsAll = PerformanceAppraisal::where('period', $period)
+            ->where('year', $year)->get();
+        $performanceAppraisalsDepartments = [];
+    } else {
+        $performanceAppraisalsDepartments = [];
+        $performanceAppraisalsAll = [];
     }
+
+    return view('performance-appraisal.select-period', compact('year','performanceAppraisalsDepartments', 'performanceAppraisalsAll', 'departments'));
+}
+
 
     public function destroyBulk(Request $request)
     {
         $year = $request->year;
         $period = $request->period;
 
-        $deletedRows = PerformanceAppraisal::where('period', '=', $period) ->where('year', '=', $year) ->delete();
+        $deletedRows = PerformanceAppraisal::where('period', '=', $period)->where('year', '=', $year)->delete();
 
         if ($deletedRows > 0) {
             return redirect()->back()->with('success', 'Berhasil hapus PA pada periode ini!');
@@ -166,10 +176,10 @@ class PerformanceAppraisalController extends Controller
 
     public function allPa()
     {
-        $performanceAppraisals = PerformanceAppraisal::whereHas('user', function ($query){
-            $query->orderBy('name','ASC');
-        })->orderBy('created_at','DESC')->get();     
+        $performanceAppraisals = PerformanceAppraisal::whereHas('user', function ($query) {
+            $query->orderBy('name', 'ASC');
+        })->orderBy('created_at', 'DESC')->get();
 
-        return view('performance-appraisal.all-pa',compact('performanceAppraisals'))->with('i');
+        return view('performance-appraisal.all-pa', compact('performanceAppraisals'))->with('i');
     }
 }

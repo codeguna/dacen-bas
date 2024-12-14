@@ -6,7 +6,7 @@
                     $i = 0;
                 @endphp
                 <table id="example1" class="table table-hover">
-                    <thead>
+                    <thead class="bg-primary">
                         <tr>
                             <th>#</th>
                             <th>Periode - Tahun</th>
@@ -22,10 +22,10 @@
                         $totalPurePa = 0;
                         $totalContribution = 0;
                         $totalLate = 0;
-                        $count = count($performanceAppraisals);
+                        $count = $performanceAppraisalsAll->count();
                     @endphp
                     <tbody>
-                        @forelse ($performanceAppraisals as $pa)
+                        @forelse ($performanceAppraisalsAll as $pa)
                             @php
                                 $totalPurePa += $pa->pure_pa;
                                 $totalContribution += $pa->contribution;
