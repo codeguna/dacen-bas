@@ -137,27 +137,37 @@ class PerformanceAppraisalController extends Controller
     }
 
     public function selectPeriod(Request $request)
-{
-    $year = $request->year;
-    $period = $request->period;
-    $department = $request->department;
+    {
+        $year           = $request->year;
+        $period         = $request->period;
+        $department     = $request->department;
+        $pin            = $request->pin;
 
-    $departments = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
-    
-    if ($department && $year) {
-        $performanceAppraisalsDepartments = User::where('department_id', $department)->orderBy('name','ASC')->get();
-        $performanceAppraisalsAll = [];
-    } elseif ($year && $period) {
-        $performanceAppraisalsAll = PerformanceAppraisal::where('period', $period)
-            ->where('year', $year)->get();
-        $performanceAppraisalsDepartments = [];
-    } else {
-        $performanceAppraisalsDepartments = [];
-        $performanceAppraisalsAll = [];
+        $departments    = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
+        $users          = User::where('pin','<>', null)->orderBy('name', 'ASC')->pluck('pin', 'name');
+
+        if ($department && $year) {
+            $performanceAppraisalsDepartments = User::where('department_id', $department)->orderBy('name', 'ASC')->get();
+            $performanceAppraisalsAll = [];
+            $performanceAppraisalsPersons = [];
+        } elseif ($year && $period) {
+            $performanceAppraisalsAll = PerformanceAppraisal::where('period', $period)
+                ->where('year', $year)->get();
+            $performanceAppraisalsDepartments = [];
+            $performanceAppraisalsPersons = [];
+        } elseif ($pin && $year) {
+            $performanceAppraisalsPersons = PerformanceAppraisal::where('pin', $pin)
+                ->where('year', $year)->orderBy('period','ASC')->get();
+            $performanceAppraisalsDepartments = [];
+            $performanceAppraisalsAll = [];
+        } else {
+            $performanceAppraisalsDepartments = [];
+            $performanceAppraisalsAll = [];
+            $performanceAppraisalsPersons = [];
+        }
+
+        return view('performance-appraisal.select-period', compact('users', 'year', 'performanceAppraisalsPersons', 'performanceAppraisalsDepartments', 'performanceAppraisalsAll', 'departments'));
     }
-
-    return view('performance-appraisal.select-period', compact('year','performanceAppraisalsDepartments', 'performanceAppraisalsAll', 'departments'));
-}
 
 
     public function destroyBulk(Request $request)

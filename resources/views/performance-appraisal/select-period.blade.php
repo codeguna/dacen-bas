@@ -30,7 +30,7 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="messages-tab" data-toggle="tab" data-target="#messages"
                                     type="button" role="tab" aria-controls="messages" aria-selected="false">
-                                    Messages
+                                   <i class="fas fa-user-plus"></i> Per Orang
                                 </button>
                             </li>
                         </ul>
@@ -44,7 +44,7 @@
                                 @include('performance-appraisal.pa.department')
                             </div>
                             <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
-                                messages
+                                @include('performance-appraisal.pa.person')
                             </div>
                         </div>
                     </div>
