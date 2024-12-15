@@ -9,6 +9,7 @@ use App\Models\Knowledge;
 use App\Models\Level;
 use App\Models\StudyProgram;
 use App\Models\University;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -223,6 +224,13 @@ class EducationalStaffController extends Controller
         $educationalStaff = EducationalStaff::find($id);
         $educationalStaff->update([
             'status'           => $status,
+        ]);
+
+        $nomor_induk    = $educationalStaff->nip;
+        $users          = User::where('nomor_induk',$nomor_induk)->first(); 
+        $users->update([
+            'pin'           => null,
+            'department_id' => null
         ]);
 
         return redirect()->back()->with('warning', 'Berhasil memperbarui Status TenDik.');
