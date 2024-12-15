@@ -42,7 +42,7 @@
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $lecturer->nidn }}</td>
                                             <td>{{ $lecturer->name }}</td>
-                                            <td>{{ $lecturer->homebase_id }}</td>
+                                            <td>{{ $lecturer->homebases->name }}</td>
                                             <td>{{ $lecturer->appointment_date }}</td>
                                             <td>
                                                 @if ($lecturer->status == 1)
