@@ -188,7 +188,7 @@ class PerformanceAppraisalController extends Controller
     {
         $performanceAppraisals = PerformanceAppraisal::whereHas('user', function ($query) {
             $query->orderBy('name', 'ASC');
-        })->orderBy('created_at', 'DESC')->get();
+        })->orderBy('period', 'ASC')->orderBy('year', 'DESC')->get();
 
         return view('performance-appraisal.all-pa', compact('performanceAppraisals'))->with('i');
     }
