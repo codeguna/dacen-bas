@@ -22,6 +22,31 @@
                         @forelse ($performanceAppraisalsPersons as $pa)
                             @php
                                 $pin = $pa->pin;
+                                $totalMonth = App\Models\PerformanceAppraisal::where('pin', $pin)
+                                    ->where('year', '=', $year)
+                                    ->count();
+
+                                $totalContribution = App\Models\PerformanceAppraisal::select('contribution')
+                                    ->where('pin', $pin)
+                                    ->where('year', '=', $year)
+                                    ->sum('contribution');
+
+                                $totalLate = App\Models\PerformanceAppraisal::select('late_total')
+                                    ->where('pin', $pin)
+                                    ->where('year', '=', $year)
+                                    ->sum('late_total');
+
+                                $totalPurePa = App\Models\PerformanceAppraisal::select('pure_pa')
+                                    ->where('pin', $pin)
+                                    ->where('year', '=', $year)
+                                    ->sum('pure_pa');
+
+                                $summaryPA = $totalPurePa + $totalContribution;
+
+                                $avgLate = $totalMonth > 0 ? number_format($totalLate / $totalMonth, 2) : 0;
+                                $avgPurePA = $totalMonth > 0 ? number_format($totalPurePa / $totalMonth, 2) : 0;
+                                $avgContribution =  $totalMonth > 0 ? number_format($totalContribution / $totalMonth, 2) : 0;
+                                $avgSummaryPA = $totalMonth > 0 ? number_format($summaryPA / $totalMonth, 2) : 0;
                             @endphp
                             <tr>
                                 <td>{{ ++$i }}</td>
@@ -100,50 +125,22 @@
                                 <tr style="text-align: center">
                                     <td colspan="8">== data tidak ada ==</td>
                                 </tr>
-                            @endforelse
-                            @php
-
-                                $totalMonth = App\Models\PerformanceAppraisal::where('pin', $pin)
-                                    ->where('year', '=', $year)
-                                    ->count();
-
-                                $totalContribution = App\Models\PerformanceAppraisal::select('contribution')
-                                    ->where('pin', $pin)
-                                    ->where('year', '=', $year)
-                                    ->sum('contribution');
-
-                                $totalLate = App\Models\PerformanceAppraisal::select('late_total')
-                                    ->where('pin', $pin)
-                                    ->where('year', '=', $year)
-                                    ->sum('late_total');
-
-                                $totalPurePa = App\Models\PerformanceAppraisal::select('pure_pa')
-                                    ->where('pin', $pin)
-                                    ->where('year', '=', $year)
-                                    ->sum('pure_pa');
-
-                                $summaryPA = $totalPurePa + $totalContribution;
-
-                                $avgLate = $totalMonth > 0 ? number_format($totalLate / $totalMonth, 2) : 0;
-                                $avgPurePA = $totalMonth > 0 ? number_format($totalPurePa / $totalMonth, 2) : 0;
-                                $avgContribution =  $totalMonth > 0 ? number_format($totalContribution / $totalMonth, 2) : 0;
-                                $avgSummaryPA = $totalMonth > 0 ? number_format($summaryPA / $totalMonth, 2) : 0;
-                            @endphp
+                            @endforelse                                
                             <tr class="bg-primary">
                                 <td class="text-center" colspan="3">
                                     <strong>&Sigma; Total</strong>
                                 </td>
                                 <td>
-                                    <strong>{{ $totalLate }}</strong>
+                                    <strong>{{ $totalLate ?? '' }}</strong>
                                 </td>
                                 <td>
-                                    <strong>{{ $totalPurePa }}</strong>
+                                    <strong>{{ $totalPurePa ?? ''  }}</strong>
                                 </td>
                                 <td>
-                                    <strong>{{ $totalContribution }}</strong>
+                                    <strong>{{ $totalContribution ?? ''  }}</strong>
                                 </td>
                                 <td colspan="2">
-                                    <strong>{{ $summaryPA }}</strong>
+                                    <strong>{{ $summaryPA ?? ''  }}</strong>
                                 </td>
                             </tr>
                             <tr class="bg-success">
@@ -151,16 +148,16 @@
                                     <strong>% Rata-rata</strong>
                                 </td>
                                 <td>
-                                    <strong>{{ $avgLate }}</strong>
+                                    <strong>{{ $avgLate ?? '' }}</strong>
                                 </td>
                                 <td>
-                                    <strong>{{ $avgPurePA }}</strong>
+                                    <strong>{{ $avgPurePA ?? '' }}</strong>
                                 </td>
                                 <td>
-                                    <strong>{{ $avgContribution }}</strong>
+                                    <strong>{{ $avgContribution?? ''  }}</strong>
                                 </td>
                                 <td colspan="2">
-                                    <strong>{{ $avgSummaryPA }}</strong>
+                                    <strong>{{ $avgSummaryPA ?? '' }}</strong>
                                 </td>
                             </tr>
                         </tbody>
