@@ -60,10 +60,12 @@
                                     <form action="{{ route('admin.permissions.destroy', $permission->id) }}" method="POST"
                                         onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
                                         style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="btn btn-xs btn-danger"><i
-                                                class="fa fa-trash"></i></button>
+                                        <div class="btn-group">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="btn btn-xs btn-danger"><i
+                                                    class="fa fa-trash"></i></button>
+                                        </div>
                                     </form>
                                 </td>
 
@@ -120,7 +122,7 @@
             }
             dtButtons.push(deleteButton)
 
-            $.extend(true, $.fn.dataTable.defaults, {                
+            $.extend(true, $.fn.dataTable.defaults, {
                 pageLength: 100,
             });
             $('.datatable-Permission:not(.ajaxTable)').DataTable({

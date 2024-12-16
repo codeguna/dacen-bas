@@ -20,7 +20,7 @@ class CreateEmployeeDevelopmentsTable extends Migration
             $table->string('event_organizer');
             $table->string('place');
             $table->char('price');
-            $table->integer('event_type')->unsigned();
+            $table->integer('event_type_id')->unsigned();
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();

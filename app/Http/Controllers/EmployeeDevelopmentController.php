@@ -47,7 +47,7 @@ class EmployeeDevelopmentController extends Controller
 
         $employeeDevelopment = EmployeeDevelopment::create($request->all());
 
-        return redirect()->route('employee-developments.index')
+        return redirect()->route('admin.employee-developments.index')
             ->with('success', 'EmployeeDevelopment created successfully.');
     }
 
@@ -90,7 +90,7 @@ class EmployeeDevelopmentController extends Controller
 
         $employeeDevelopment->update($request->all());
 
-        return redirect()->route('employee-developments.index')
+        return redirect()->route('admin.employee-developments.index')
             ->with('success', 'EmployeeDevelopment updated successfully');
     }
 
@@ -103,7 +103,7 @@ class EmployeeDevelopmentController extends Controller
     {
         $employeeDevelopment = EmployeeDevelopment::find($id)->delete();
 
-        return redirect()->route('employee-developments.index')
+        return redirect()->route('admin.employee-developments.index')
             ->with('success', 'EmployeeDevelopment deleted successfully');
     }
 }

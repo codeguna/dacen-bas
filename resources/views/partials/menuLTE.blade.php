@@ -53,6 +53,35 @@
                 </a>
             </li>
         @endcan
+        @can('create_employee_developments')
+            <li
+                class="nav-item {{ request()->is('admin/letters/*') || request()->is('admin/letters') ? 'menu-open' : '' }}">
+                <a
+                    href="#"class="nav-link  {{ request()->is('admin/letters/*') || request()->is('admin/letters') ? 'active' : '' }}">
+                    <i class="fas fa-thumbs-up nav-icon"></i>
+                    <p>
+                        Pengembangan Karyawan
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.type-letters.index') }}"
+                            class="nav-link {{ request()->is('admin/type-letters/*') || request()->is('admin/type-letters') ? 'active' : '' }}">
+                            <i class="fa fa-plus-circle nav-icon" aria-hidden="true"></i>
+                            <p>Tambah</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.type-letters.index') }}"
+                            class="nav-link {{ request()->is('admin/type-letters/*') || request()->is('admin/type-letters') ? 'active' : '' }}">
+                            <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
+                            <p>Report</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endcan
         @can('view_presences')
             <li class="nav-item">
                 <a href="{{ route('admin.scan-log.my-department-presences') }}"
@@ -68,7 +97,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -544,7 +573,9 @@
                 request()->is('admin/holidays') ||
                 request()->is('admin/holidays/*') ||
                 request()->is('admin/reasons') ||
-                request()->is('admin/reasons/*')
+                request()->is('admin/reasons/*') ||
+                request()->is('admin/event-types') ||
+                request()->is('admin/event-types/*')
                     ? 'menu-open'
                     : '' }}">
                 <a href="#"
@@ -574,7 +605,9 @@
         request()->is('admin/holidays') ||
         request()->is('admin/holidays/*') ||
         request()->is('admin/reasons') ||
-        request()->is('admin/reasons/*')
+        request()->is('admin/reasons/*') ||
+        request()->is('admin/event-types') ||
+        request()->is('admin/event-types/*')
             ? 'active'
             : '' }}">
                     <i class="nav-icon fa fa-cogs"></i>
@@ -641,6 +674,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('admin.event-types.index') }}"
+                            class="nav-link {{ request()->is('admin/event-types') || request()->is('admin/event-types/*') ? 'active' : '' }}">
+                           <i class="fa fa-compass nav-icon" aria-hidden="true"></i>
+                            <p>Jenis Kegiatan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('admin.certificate-types.index') }}"
                             class="nav-link {{ request()->is('admin/certificate-types') || request()->is('admin/certificate-types/*') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-certificate" aria-hidden="true"></i>
@@ -679,44 +719,6 @@
             </li>
         @endcan
         @can('efs_menu')
-            <li
-                class="nav-item {{ request()->is('admin/letters/*') ||
-                request()->is('admin/letters') ||
-                request()->is('admin/type-letters/*') ||
-                request()->is('admin/type-letters') ||
-                request()->is('admin/letter/outbox') ||
-                request()->is('admin/letter/outbox/*') ||
-                request()->is('admin/letter/inbox') ||
-                request()->is('admin/letter/inbox/*')
-                    ? 'menu-open'
-                    : '' }}">
-                <a
-                    href="#"class="nav-link  {{ request()->is('admin/letters/*') ||
-                    request()->is('admin/letters') ||
-                    request()->is('admin/type-letters/*') ||
-                    request()->is('admin/type-letters') ||
-                    request()->is('admin/letter/outbox') ||
-                    request()->is('admin/letter/outbox/*') ||
-                    request()->is('admin/letter/inbox') ||
-                    request()->is('admin/letter/inbox/*')
-                        ? 'active'
-                        : '' }}">
-                <i class="fas fa-thumbs-up nav-icon"></i>
-                    <p>
-                        Pengembangan Karyawan
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('admin.type-letters.index') }}"
-                            class="nav-link {{ request()->is('admin/type-letters/*') || request()->is('admin/type-letters') ? 'active' : '' }}">
-                           <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
-                            <p>Report</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
             <li
                 class="nav-item {{ request()->is('admin/letters/*') ||
                 request()->is('admin/letters') ||

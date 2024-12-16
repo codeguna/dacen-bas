@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('template_title')
-    Event Type
+    Jenis Kegiatan (Pengembangan Karyawan)
 @endsection
 
 @section('content')
@@ -13,14 +13,16 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Event Type') }}
+                                <i class="fa fa-compass text-primary" aria-hidden="true"></i> Jenis Kegiatan (Pengembangan
+                                Karyawan)
                             </span>
-
-                             <div class="float-right">
-                                <a href="{{ route('event-types.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
+                            <div class="float-right">
+                                <a href="#" data-toggle="modal" data-target="#createEvent"
+                                    class="btn btn-success btn-sm float-right" data-placement="left">
+                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
-                              </div>
+                            </div>
+                            @include('event-type.modal.create')
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -31,30 +33,27 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table id="dataTable1" class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        
-										<th>Name</th>
-
+                                        <th>Nama</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($eventTypes as $eventType)
+                                    @foreach ($eventTypes as $event)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            
-											<td>{{ $eventType->name }}</td>
-
+                                            <td>{{ $event->name }}</td>
                                             <td>
-                                                <form action="{{ route('event-types.destroy',$eventType->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('event-types.show',$eventType->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('event-types.edit',$eventType->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('admin.event-types.destroy', $event->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Hapus data Kegiatan {{ $event->name }}?')"><i
+                                                            class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -64,8 +63,19 @@
                         </div>
                     </div>
                 </div>
-                {!! $eventTypes->links() !!}
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        $(function() {
+            $("#dataTable1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
 @endsection

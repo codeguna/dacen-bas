@@ -18,10 +18,10 @@ class EventTypeController extends Controller
      */
     public function index()
     {
-        $eventTypes = EventType::paginate();
+        $eventTypes = EventType::orderBy('name','ASC')->get();
 
         return view('event-type.index', compact('eventTypes'))
-            ->with('i', (request()->input('page', 1) - 1) * $eventTypes->perPage());
+            ->with('i');
     }
 
     /**
@@ -47,8 +47,8 @@ class EventTypeController extends Controller
 
         $eventType = EventType::create($request->all());
 
-        return redirect()->route('event-types.index')
-            ->with('success', 'EventType created successfully.');
+        return redirect()->route('admin.event-types.index')
+            ->with('success', 'Berhasil menambahkan jenis kegiatan pada pengembangan!.');
     }
 
     /**
@@ -90,7 +90,7 @@ class EventTypeController extends Controller
 
         $eventType->update($request->all());
 
-        return redirect()->route('event-types.index')
+        return redirect()->route('admin.event-types.index')
             ->with('success', 'EventType updated successfully');
     }
 
@@ -103,7 +103,7 @@ class EventTypeController extends Controller
     {
         $eventType = EventType::find($id)->delete();
 
-        return redirect()->route('event-types.index')
-            ->with('success', 'EventType deleted successfully');
+        return redirect()->route('admin.event-types.index')
+            ->with('success', 'Berhasil menghapus data jenis kegiatan!');
     }
 }

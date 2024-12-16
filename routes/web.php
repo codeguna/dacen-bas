@@ -191,4 +191,11 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('performance-appraisal/all-pa', 'PerformanceAppraisalController@allPa')->name('performance-appraisals.all-pa');
     Route::post('performance-appraisal/destroy-bulk', 'PerformanceAppraisalController@destroyBulk')->name('performance-appraisals.destroy-bulk');
     //End Performance Appraisals
+
+     //Route Employee Developments
+     Route::resource('employee-developments', 'EmployeeDevelopmentController');
+     //End Route Employee Developments
+     //Route Event Types
+     Route::resource('event-types', 'EventTypeController');
+     //End Route Event Types
 });

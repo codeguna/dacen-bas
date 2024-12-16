@@ -32,7 +32,7 @@ class EmployeeDevelopment extends Model
 		'event_organizer' => 'required',
 		'place' => 'required',
 		'price' => 'required',
-		'event_type' => 'required',
+		'event_type_id' => 'required',
 		'start_date' => 'required',
 		'end_date' => 'required',
     ];
@@ -44,7 +44,7 @@ class EmployeeDevelopment extends Model
      *
      * @var array
      */
-    protected $fillable = ['event_name','speaker','event_organizer','place','price','event_type','start_date','end_date'];
+    protected $fillable = ['event_name','speaker','event_organizer','place','price','event_type_id','start_date','end_date'];
 
 
     /**
