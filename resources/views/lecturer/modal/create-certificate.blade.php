@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>File Ijazah</label>
+                                <label>File Sertifikat</label>
                                 <input type="file" class="form-control-file" name="certificate_attachment" required>
                                 <small class="form-text text-danger">*Jenis file .pdf, .jpg
                                     maksimal 2MB</small>
