@@ -126,7 +126,7 @@
 
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
+                                        <i class="fas fa-plus"></i>
                                     </button>
                                     <button type="button" class="btn btn-tool" data-card-widget="remove">
                                         <i class="fas fa-times"></i>
@@ -140,13 +140,13 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="card card-cyan">
+                        <div class="card card-cyan collapsed-card">
                             <div class="card-header">
                                 <h3 class="card-title">Dosen Summary</h3>
 
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
+                                        <i class="fas fa-plus"></i>
                                     </button>
                                     <button type="button" class="btn btn-tool" data-card-widget="remove">
                                         <i class="fas fa-times"></i>
@@ -188,7 +188,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="card card-teal">
+                        <div class="card card-teal collapsed-card">
                             <div class="card-header">
                                 <h3 class="card-title">TenDik Summary</h3>
 

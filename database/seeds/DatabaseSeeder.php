@@ -2,6 +2,7 @@
 
 use Database\Seeders\CertificateTypesSeeder;
 use Database\Seeders\DepartmensSeeder;
+use Database\Seeders\EventTypeSeeder;
 use Database\Seeders\FunctionalPositionSeeder;
 use Database\Seeders\FunctionalRankSeeder;
 use Database\Seeders\HomebaseSeeder;
@@ -28,5 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CertificateTypesSeeder::class);
         $this->call(ReasonSeeder::class);
         $this->call(TypeLetterSeeder::class);
+        $this->call(EventTypeSeeder::class);
     }
 }

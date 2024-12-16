@@ -701,6 +701,44 @@
                     request()->is('admin/letter/inbox/*')
                         ? 'active'
                         : '' }}">
+                <i class="fas fa-thumbs-up nav-icon"></i>
+                    <p>
+                        Pengembangan Karyawan
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.type-letters.index') }}"
+                            class="nav-link {{ request()->is('admin/type-letters/*') || request()->is('admin/type-letters') ? 'active' : '' }}">
+                           <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
+                            <p>Report</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li
+                class="nav-item {{ request()->is('admin/letters/*') ||
+                request()->is('admin/letters') ||
+                request()->is('admin/type-letters/*') ||
+                request()->is('admin/type-letters') ||
+                request()->is('admin/letter/outbox') ||
+                request()->is('admin/letter/outbox/*') ||
+                request()->is('admin/letter/inbox') ||
+                request()->is('admin/letter/inbox/*')
+                    ? 'menu-open'
+                    : '' }}">
+                <a
+                    href="#"class="nav-link  {{ request()->is('admin/letters/*') ||
+                    request()->is('admin/letters') ||
+                    request()->is('admin/type-letters/*') ||
+                    request()->is('admin/type-letters') ||
+                    request()->is('admin/letter/outbox') ||
+                    request()->is('admin/letter/outbox/*') ||
+                    request()->is('admin/letter/inbox') ||
+                    request()->is('admin/letter/inbox/*')
+                        ? 'active'
+                        : '' }}">
                     <i class="fas fa-envelope nav-icon"></i>
                     <p>
                         Surat

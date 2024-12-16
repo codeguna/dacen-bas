@@ -71,11 +71,21 @@ class RoleSeed extends Seeder
         $role->givePermissionTo('view_attendances');
         $role->givePermissionTo('create_attendances');
 
+        $role->givePermissionTo('create_employee_developments');
+        $role->givePermissionTo('read_employee_developments');
+        $role->givePermissionTo('update_employee_developments');
+        $role->givePermissionTo('delete_employee_developments');
+
         $role = Role::create(['name' => 'KOORDINATOR']);
         $role->givePermissionTo('view_profile');
         $role->givePermissionTo('view_attendances');
         $role->givePermissionTo('create_attendances');
         $role->givePermissionTo('view_presences');
+        
+        $role->givePermissionTo('create_employee_developments');
+        $role->givePermissionTo('read_employee_developments');
+        $role->givePermissionTo('update_employee_developments');
+        $role->givePermissionTo('delete_employee_developments');
         
     }
 }

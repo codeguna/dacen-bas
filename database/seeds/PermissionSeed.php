@@ -62,5 +62,11 @@ class PermissionSeed extends Seeder
 
         //KOORDINATOR
         Permission::create(['name' => 'view_presences']);
+
+        //PENGEMBANGAN KARYAWAN
+        Permission::create(['name' => 'create_employee_developments']);
+        Permission::create(['name' => 'read_employee_developments']);
+        Permission::create(['name' => 'update_employee_developments']);
+        Permission::create(['name' => 'delete_employee_developments']);
     }
 }
