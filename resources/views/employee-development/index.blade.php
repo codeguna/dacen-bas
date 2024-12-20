@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                              <h3><i class="fas fa-certificate text-orange"></i> Pengembangan Saya</h3>  
+                                <h3><i class="fas fa-certificate text-orange"></i> Pengembangan Saya</h3>
                             </span>
 
                             <div class="float-right">
@@ -46,6 +46,7 @@
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Selesai</th>
                                         <th>Status</th>
+                                        <th>Sertifikat</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -55,7 +56,7 @@
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $employeeDevelopment->event_name }}</td>
                                             <td>{{ $employeeDevelopment->speaker }}</td>
-                                            <td>{{ $employeeDevelopment->event_type }}</td>
+                                            <td>{{ $employeeDevelopment->eventTypes->name }}</td>
                                             <td>{{ $employeeDevelopment->place }}</td>
                                             <td>{{ $employeeDevelopment->start_date }}</td>
                                             <td>{{ $employeeDevelopment->end_date }}</td>
@@ -72,27 +73,36 @@
                                                     </div>
                                                 @endif
                                             </td>
+                                            <td>
+                                                <a href="{{ url('/data_pengembangan/' . $employeeDevelopment->employeeDevelopmentMembers->certificate_attachment) }}"
+                                                    target="_blank">
+                                                    <i class="fa fa-paperclip text-primary" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
 
                                             <td>
                                                 <form
                                                     action="{{ route('admin.employee-developments.destroy', $employeeDevelopment->id) }}"
                                                     method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('admin.employee-developments.show', $employeeDevelopment->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i></a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('admin.employee-developments.edit', $employeeDevelopment->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i></a>
+                                                    <div class="btn-group">
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus data Pengembangan {{ $employeeDevelopment->event_name }}?')"><i
+                                                                class="fa fa-fw fa-trash"></i></button>
+                                                        <a class="btn btn-sm btn-primary "
+                                                            href="{{ route('admin.employee-developments.show', $employeeDevelopment->id) }}"><i
+                                                                class="fa fa-fw fa-eye"></i></a>
+                                                        <a class="btn btn-sm btn-success"
+                                                            href="{{ route('admin.employee-developments.edit', $employeeDevelopment->id) }}"><i
+                                                                class="fa fa-fw fa-edit"></i></a>
+                                                    </div>
+
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" class="text-center">== Data Pengembangan tidak ditemukan! ==
+                                            <td colspan="10" class="text-center">== Data Pengembangan tidak ditemukan! ==
                                             </td>
                                         </tr>
                                     @endforelse

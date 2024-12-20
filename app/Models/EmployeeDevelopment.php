@@ -52,7 +52,7 @@ class EmployeeDevelopment extends Model
      */
     public function employeeDevelopmentMembers()
     {
-        return $this->hasMany('App\Models\EmployeeDevelopmentMember', 'employee_developments_id', 'id');
+        return $this->hasOne('App\Models\EmployeeDevelopmentMember', 'employee_developments_id', 'id');
     }
     public function eventTypes()
     {

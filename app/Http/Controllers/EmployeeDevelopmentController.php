@@ -7,6 +7,7 @@ use App\Models\EmployeeDevelopmentMember;
 use App\Models\EventType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -159,7 +160,13 @@ class EmployeeDevelopmentController extends Controller
      */
     public function destroy($id)
     {
-        $employeeDevelopment = EmployeeDevelopment::find($id)->delete();
+        $employeeDevelopments       = EmployeeDevelopment::find($id);
+        $employeeDevelopmentMember  = EmployeeDevelopmentMember::select('certificate_attachment')->where('employee_developments_id', $employeeDevelopments->id)->first();
+
+        $file = public_path('data_pengembangan/' . $employeeDevelopmentMember->certificate_attachment);
+        $img = File::delete($file);
+
+        $employeeDevelopments = EmployeeDevelopment::find($id)->delete();
 
         return redirect()->route('admin.employee-developments.index')
             ->with('success', 'EmployeeDevelopment deleted successfully');

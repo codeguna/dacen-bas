@@ -12,6 +12,7 @@
 /public/data_photo_profil
 /public/data_surat_masuk
 /public/data_surat_keluar
+/public/data_pengembangan
 /public/storage
 /storage/*.key
 /vendor
