@@ -53,7 +53,7 @@
                 </a>
             </li>
         @endcan
-        @can('menu_employee_developmentsa')
+        @can('menu_employee_developments')
             <li
                 class="nav-item {{ request()->is('admin/employee-developments/create/*') ||
                 request()->is('admin/employee-developments/create') ||

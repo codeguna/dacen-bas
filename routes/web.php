@@ -194,6 +194,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 
      //Route Employee Developments
      Route::resource('employee-developments', 'EmployeeDevelopmentController');
+     Route::get('employee-development/{id}', 'EmployeeDevelopmentController@updateStatus')->name('employee-developments.status');
      //End Route Employee Developments
      //Route Event Types
      Route::resource('event-types', 'EventTypeController');

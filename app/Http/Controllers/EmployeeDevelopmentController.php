@@ -25,15 +25,16 @@ class EmployeeDevelopmentController extends Controller
     {
         $getID                  = Auth::user()->id;
         $getDEPT                = Auth::user()->department_id;
-        $eventTypes             = EventType::orderBy('name','ASC')->pluck('id','name');
+        $eventTypes             = EventType::orderBy('name', 'ASC')->pluck('id', 'name');
 
-        $employeeDevelopments   = EmployeeDevelopment::whereHas('employeeDevelopmentMembers', function ($query) use ($getID, $getDEPT) {
-            $query->where('user_id', $getID)->whereHas('user', function ($query) use ($getDEPT) {
+        $employeeDevelopments = EmployeeDevelopment::whereHas('employeeDevelopmentMembers', function ($query) use ($getDEPT) {
+            $query->whereHas('user', function ($query) use ($getDEPT) {
                 $query->where('department_id', $getDEPT);
             });
         })->get();
 
-        return view('employee-development.index', compact('employeeDevelopments','eventTypes'))
+
+        return view('employee-development.index', compact('employeeDevelopments', 'eventTypes'))
             ->with('i');
     }
 
@@ -105,7 +106,7 @@ class EmployeeDevelopmentController extends Controller
 
 
         ]);
-        
+
         return redirect()->route('admin.employee-developments.index')
             ->with('success', 'Behasil Menambahkan Data Pengembangan Baru!');
     }
@@ -170,5 +171,27 @@ class EmployeeDevelopmentController extends Controller
 
         return redirect()->route('admin.employee-developments.index')
             ->with('success', 'EmployeeDevelopment deleted successfully');
+    }
+
+    public function updateStatus($id)
+    {
+        $employeeDevelopments = EmployeeDevelopment::find($id);
+        $status = $employeeDevelopments->is_approved;
+
+        $updateData = [
+            'updated_at' => now()
+        ];
+
+        if ($status == '0') {
+            $updateData['is_approved'] = '1';
+        } else {
+            $updateData['is_approved'] = '0';
+        }
+
+        $employeeDevelopments->update($updateData);
+
+
+
+        return redirect()->back()->with('success', 'Berhasil Perbarui Status Pengajuan Pengembangan Karyawan!');
     }
 }

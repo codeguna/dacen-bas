@@ -85,7 +85,8 @@
                                                     action="{{ route('admin.employee-developments.destroy', $employeeDevelopment->id) }}"
                                                     method="POST">
                                                     <div class="btn-group">
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus data Pengembangan {{ $employeeDevelopment->event_name }}?')"><i
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Hapus data Pengembangan {{ $employeeDevelopment->event_name }}?')"><i
                                                                 class="fa fa-fw fa-trash"></i></button>
                                                         <a class="btn btn-sm btn-primary "
                                                             href="{{ route('admin.employee-developments.show', $employeeDevelopment->id) }}"><i
@@ -93,6 +94,17 @@
                                                         <a class="btn btn-sm btn-success"
                                                             href="{{ route('admin.employee-developments.edit', $employeeDevelopment->id) }}"><i
                                                                 class="fa fa-fw fa-edit"></i></a>
+                                                        @can('approve_employee_developments')
+                                                            <a class="btn btn-sm btn-warning"
+                                                                href="{{ route('admin.employee-developments.status', $employeeDevelopment->id) }}">
+                                                                @if ($employeeDevelopment->is_approved == '0')
+                                                                    <i class="fa fa-check-circle" aria-hidden="true" title="Setujui Pengajuan?"></i>
+                                                                @else
+                                                                    <i class="fa fa-times-circle" aria-hidden="true" title="Batalkan Pengajuan?"></i>
+                                                                @endif
+
+                                                            </a>
+                                                        @endcan
                                                     </div>
 
                                                     @csrf
