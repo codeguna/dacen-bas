@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('template_title')
-    Employee Development
+    Pengembangan Saya
 @endsection
 
 @section('content')
@@ -13,14 +13,18 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Employee Development') }}
+                              <h3><i class="fas fa-certificate text-orange"></i> Pengembangan Saya</h3>  
                             </span>
 
-                             <div class="float-right">
-                                <a href="{{ route('employee-developments.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
-                              </div>
+                            <div class="float-right">
+                                @can('create_employee_developments')
+                                    <a href="#" data-toggle="modal" data-target="#createCertificate"
+                                        class="btn btn-success btn-sm float-right" data-placement="left">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                    </a>
+                                @endcan
+                            </div>
+                            @include('employee-development.modal.create')
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -31,55 +35,99 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table id="example1" class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        
-										<th>Event Name</th>
-										<th>Speaker</th>
-										<th>Event Organizer</th>
-										<th>Place</th>
-										<th>Price</th>
-										<th>Event Type</th>
-										<th>Start Date</th>
-										<th>End Date</th>
-
+                                        <th>Nama Acara</th>
+                                        <th>Pemateri</th>
+                                        <th>Jenis Acara</th>
+                                        <th>Tempat Acara</th>
+                                        <th>Tanggal Mulai</th>
+                                        <th>Tanggal Selesai</th>
+                                        <th>Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($employeeDevelopments as $employeeDevelopment)
+                                    @forelse ($employeeDevelopments as $employeeDevelopment)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            
-											<td>{{ $employeeDevelopment->event_name }}</td>
-											<td>{{ $employeeDevelopment->speaker }}</td>
-											<td>{{ $employeeDevelopment->event_organizer }}</td>
-											<td>{{ $employeeDevelopment->place }}</td>
-											<td>{{ $employeeDevelopment->price }}</td>
-											<td>{{ $employeeDevelopment->event_type }}</td>
-											<td>{{ $employeeDevelopment->start_date }}</td>
-											<td>{{ $employeeDevelopment->end_date }}</td>
+                                            <td>{{ $employeeDevelopment->event_name }}</td>
+                                            <td>{{ $employeeDevelopment->speaker }}</td>
+                                            <td>{{ $employeeDevelopment->event_type }}</td>
+                                            <td>{{ $employeeDevelopment->place }}</td>
+                                            <td>{{ $employeeDevelopment->start_date }}</td>
+                                            <td>{{ $employeeDevelopment->end_date }}</td>
+                                            <td>
+                                                @if ($employeeDevelopment->is_approved == 0)
+                                                    <div class="badge bg-warning">
+                                                        <i class="fa fa-times-circle" aria-hidden="true"></i> Belum
+                                                        Disetujui
+                                                    </div>
+                                                @else
+                                                    <div class="badge bg-success">
+                                                        <i class="fa fa-check-circle" aria-hidden="true"></i> Sudah
+                                                        Disetujui
+                                                    </div>
+                                                @endif
+                                            </td>
 
                                             <td>
-                                                <form action="{{ route('employee-developments.destroy',$employeeDevelopment->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('employee-developments.show',$employeeDevelopment->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('employee-developments.edit',$employeeDevelopment->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form
+                                                    action="{{ route('admin.employee-developments.destroy', $employeeDevelopment->id) }}"
+                                                    method="POST">
+                                                    <a class="btn btn-sm btn-primary "
+                                                        href="{{ route('admin.employee-developments.show', $employeeDevelopment->id) }}"><i
+                                                            class="fa fa-fw fa-eye"></i></a>
+                                                    <a class="btn btn-sm btn-success"
+                                                        href="{{ route('admin.employee-developments.edit', $employeeDevelopment->id) }}"><i
+                                                            class="fa fa-fw fa-edit"></i></a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                                            class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center">== Data Pengembangan tidak ditemukan! ==
+                                            </td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                {!! $employeeDevelopments->links() !!}
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    @parent
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $("#example3").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
 @endsection

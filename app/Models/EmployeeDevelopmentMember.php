@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -22,9 +23,7 @@ class EmployeeDevelopmentMember extends Model
 {
     
     static $rules = [
-		'employee_developments_id' => 'required',
-		'user_id' => 'required',
-		'certificate_attachment' => 'required',
+		'certificate_attachment' => 'required|mimes:pdf,jpg,jpeg|max:2048',
     ];
 
     protected $perPage = 20;
@@ -42,8 +41,12 @@ class EmployeeDevelopmentMember extends Model
      */
     public function employeeDevelopment()
     {
-        return $this->hasOne('App\Models\EmployeeDevelopment', 'id', 'employee_developments_id');
+        return $this->belongsTo('App\Models\EmployeeDevelopment', 'id', 'employee_developments_id');
     }
     
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

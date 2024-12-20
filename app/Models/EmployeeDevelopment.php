@@ -44,7 +44,7 @@ class EmployeeDevelopment extends Model
      *
      * @var array
      */
-    protected $fillable = ['event_name','speaker','event_organizer','place','price','event_type_id','start_date','end_date'];
+    protected $fillable = ['event_name','speaker','event_organizer','place','price','event_type_id','start_date','end_date','is_approved'];
 
 
     /**
@@ -53,6 +53,10 @@ class EmployeeDevelopment extends Model
     public function employeeDevelopmentMembers()
     {
         return $this->hasMany('App\Models\EmployeeDevelopmentMember', 'employee_developments_id', 'id');
+    }
+    public function eventTypes()
+    {
+        return $this->belongsTo('App\Models\EventType', 'event_type_id');
     }
     
 

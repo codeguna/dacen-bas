@@ -53,11 +53,21 @@
                 </a>
             </li>
         @endcan
-        @can('create_employee_developments')
+        @can('menu_employee_developments')
             <li
-                class="nav-item {{ request()->is('admin/letters/*') || request()->is('admin/letters') ? 'menu-open' : '' }}">
+                class="nav-item {{ request()->is('admin/employee-developments/create/*') ||
+                request()->is('admin/employee-developments/create') ||
+                request()->is('admin/employee-developments/*') ||
+                request()->is('admin/employee-developments')
+                    ? 'menu-open'
+                    : '' }}">
                 <a
-                    href="#"class="nav-link  {{ request()->is('admin/letters/*') || request()->is('admin/letters') ? 'active' : '' }}">
+                    href="#"class="nav-link  {{ request()->is('admin/employee-developments/create/*') ||
+                    request()->is('admin/employee-developments/create') ||
+                    request()->is('admin/employee-developments/*') ||
+                    request()->is('admin/employee-developments')
+                        ? 'active'
+                        : '' }}">
                     <i class="fas fa-thumbs-up nav-icon"></i>
                     <p>
                         Pengembangan Karyawan
@@ -66,10 +76,10 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ route('admin.type-letters.index') }}"
-                            class="nav-link {{ request()->is('admin/type-letters/*') || request()->is('admin/type-letters') ? 'active' : '' }}">
-                            <i class="fa fa-plus-circle nav-icon" aria-hidden="true"></i>
-                            <p>Tambah</p>
+                        <a href="{{ route('admin.employee-developments.index') }}"
+                            class="nav-link {{ request()->is('admin/employee-developments/*') || request()->is('admin/employee-developments') ? 'active' : '' }}">
+                            <i class="fas fa-certificate nav-icon"></i>
+                            <p>Pengembangan Saya</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -97,7 +107,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -676,7 +686,7 @@
                     <li class="nav-item">
                         <a href="{{ route('admin.event-types.index') }}"
                             class="nav-link {{ request()->is('admin/event-types') || request()->is('admin/event-types/*') ? 'active' : '' }}">
-                           <i class="fa fa-compass nav-icon" aria-hidden="true"></i>
+                            <i class="fa fa-compass nav-icon" aria-hidden="true"></i>
                             <p>Jenis Kegiatan</p>
                         </a>
                     </li>

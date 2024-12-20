@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('template_title')
     {{ __('Update') }} Employee Development
@@ -16,7 +16,7 @@
                         <span class="card-title">{{ __('Update') }} Employee Development</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('employee-developments.update', $employeeDevelopment->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.employee-developments.update', $employeeDevelopment->id) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

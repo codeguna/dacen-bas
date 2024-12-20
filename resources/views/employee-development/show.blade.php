@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('template_title')
     {{ $employeeDevelopment->name ?? "{{ __('Show') Employee Development" }}
@@ -14,7 +14,7 @@
                             <span class="card-title">{{ __('Show') }} Employee Development</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('employee-developments.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('admin.employee-developments.index') }}"> {{ __('Back') }}</a>
                         </div>
                     </div>
 
