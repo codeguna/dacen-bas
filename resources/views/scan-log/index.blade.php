@@ -66,6 +66,7 @@
                                     <th>PIN</th>
                                     <th>Scan</th>
                                     <th>Nama</th>
+                                    <th>Hapus?</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,6 +76,15 @@
                                         <td>{{ $scanLog->pin }}</td>
                                         <td>{{ $scanLog->scan }}</td>
                                         <td>{{ $scanLog->user->name ?? '' }}</td>
+                                        <td>
+                                            <form action="{{ route('admin.scan-logs.destroy', $scanLog->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus data Scan {{ $scanLog->user->name ?? '' }} di Jam {{ $scanLog->created_at }}?')"><i
+                                                            class="fa fa-fw fa-trash"></i> </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

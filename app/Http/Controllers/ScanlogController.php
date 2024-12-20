@@ -281,7 +281,10 @@ class ScanlogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $scanLogs = ScanLog::find($id)->delete();
+
+        return redirect()->back()
+            ->with('success', 'Berhasil hapus data Presensi!');
     }
 
     public function synchronize(Request $request)
@@ -581,7 +584,7 @@ class ScanlogController extends Controller
             ->orderBy('date', 'ASC')
             ->get();
 
-        return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs', 'scan_logs_late', 'myWillingness', 'expDate', 'holidays','notScans'))->with('i');
+        return view('admin.users.myattendances', compact('scan1', 'scan2', 'scan3', 'scan4', 'scan_logs', 'scan_logs_late', 'myWillingness', 'expDate', 'holidays', 'notScans'))->with('i');
     }
 
     public function requestAttendances()
