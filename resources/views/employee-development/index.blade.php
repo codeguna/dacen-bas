@@ -38,10 +38,11 @@
                             <strong><i class="fa fa-info" aria-hidden="true"></i> Harap follow up kepala departemen/koordinator</strong> setelah menambahkan pengembangan untuk selanjutnya di Validasi!
                         </div>
                         <div class="table-responsive">
-                            <table id="example1" class="table table-striped table-hover">
+                            <table id="example1" class="table table-striped table-sm table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
+                                        <th>Peserta</th>
                                         <th>Nama Acara</th>
                                         <th>Pemateri</th>
                                         <th>Jenis Acara</th>
@@ -57,7 +58,8 @@
                                     @forelse ($employeeDevelopments as $employeeDevelopment)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            <td>{{ $employeeDevelopment->event_name }}</td>
+                                            <td>{{  $employeeDevelopment->employeeDevelopmentMembers->user->name }}</td>
+                                            <td>{{  $employeeDevelopment->event_name }}</td>
                                             <td>{{ $employeeDevelopment->speaker }}</td>
                                             <td>{{ $employeeDevelopment->eventTypes->name }}</td>
                                             <td>{{ $employeeDevelopment->place }}</td>
@@ -79,7 +81,7 @@
                                             <td>
                                                 <a href="{{ url('/data_pengembangan/' . $employeeDevelopment->employeeDevelopmentMembers->certificate_attachment) }}"
                                                     target="_blank">
-                                                    <i class="fa fa-paperclip text-primary" aria-hidden="true"></i>
+                                                    <i class="fa fa-paperclip text-primary" aria-hidden="true"></i> Klik disini
                                                 </a>
                                             </td>
 
@@ -89,13 +91,13 @@
                                                     method="POST">
                                                     <div class="btn-group">
                                                         <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Hapus data Pengembangan {{ $employeeDevelopment->event_name }}?')"><i
+                                                            onclick="return confirm('Hapus data Pengembangan {{ $employeeDevelopment->event_name }}?')" title="Hapus Data Pengembangan?"><i
                                                                 class="fa fa-fw fa-trash"></i></button>
                                                         <a class="btn btn-sm btn-primary "
-                                                            href="{{ route('admin.employee-developments.show', $employeeDevelopment->id) }}"><i
+                                                            href="{{ route('admin.employee-developments.show', $employeeDevelopment->id) }}" title="Lihat Data Pengembangan?"><i
                                                                 class="fa fa-fw fa-eye"></i></a>
                                                         <a class="btn btn-sm btn-success"
-                                                            href="{{ route('admin.employee-developments.edit', $employeeDevelopment->id) }}"><i
+                                                            href="{{ route('admin.employee-developments.edit', $employeeDevelopment->id) }}" title="Perbarui Data Pengembangan?"><i
                                                                 class="fa fa-fw fa-edit"></i></a>
                                                         @can('approve_employee_developments')
                                                             <a class="btn btn-sm btn-warning"
@@ -123,6 +125,21 @@
                                             </td>
                                         </tr>
                                     @endforelse
+                                    <tfoot class="thead">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Peserta</th>
+                                            <th>Nama Acara</th>
+                                            <th>Pemateri</th>
+                                            <th>Jenis Acara</th>
+                                            <th>Tempat Acara</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Selesai</th>
+                                            <th>Status</th>
+                                            <th>Sertifikat</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
                                 </tbody>
                             </table>
                         </div>
