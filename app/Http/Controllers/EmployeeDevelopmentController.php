@@ -135,7 +135,7 @@ class EmployeeDevelopmentController extends Controller
         $employeeDevelopment = EmployeeDevelopment::find($id);
         $eventTypes             = EventType::orderBy('name', 'ASC')->pluck('id', 'name');
 
-        return view('employee-development.edit', compact('employeeDevelopment','eventTypes'));
+        return view('employee-development.edit', compact('employeeDevelopment', 'eventTypes'));
     }
 
     /**
@@ -147,9 +147,54 @@ class EmployeeDevelopmentController extends Controller
      */
     public function update(Request $request, EmployeeDevelopment $employeeDevelopment)
     {
-        request()->validate(EmployeeDevelopment::$rules);
+        $validator = Validator::make($request->all(), EmployeeDevelopmentMember::$rules);
+        if ($validator->fails()) {
+            // If validation fails, redirect back with error messages
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Periksa kembali inputan anda dan pastikan file tidak melebihi 2MB');
+        }
 
-        $employeeDevelopment->update($request->all());
+        $event_name         = $request->event_name;
+        $speaker            = $request->speaker;
+        $event_organizer    = $request->event_organizer;
+        $place              = $request->place;
+        $price              = $request->price;
+        $event_type_id      = $request->event_type_id;
+        $start_date         = $request->start_date;
+        $end_date           = $request->end_date;
+
+        $updateData = [
+            'event_name'        => $event_name,
+            'speaker'           => $speaker,
+            'event_organizer'   => $event_organizer,
+            'place'             => $place,
+            'price'             => $price,
+            'event_type_id'     => $event_type_id,
+            'start_date'        => $start_date,
+            'end_date'          => $end_date,
+        ];
+       
+        $id_card_file = $request->file('certificate_attachment');
+        $employeeDevelopmentMember = EmployeeDevelopmentMember::where('employee_developments_id', $employeeDevelopment->id)->first();
+        if ($id_card_file) {
+            $name_file = time() . "_" . $id_card_file->getClientOriginalName();
+            // Directory for uploading the file
+            $tujuan_upload = 'data_pengembangan';
+            $id_card_file->move($tujuan_upload, $name_file);
+
+            $updateDataMember['certificate_attachment'] = $name_file;
+            $employeeDevelopmentMember->update($updateDataMember);
+        }
+
+        if ($employeeDevelopment) {
+            $employeeDevelopment->update($updateData);
+
+            return redirect()->route('admin.employee-developments.index')
+                ->with('success', 'Berhasil Perbarui data Pengembangan Karyawan!');
+        }
 
         return redirect()->route('admin.employee-developments.index')
             ->with('success', 'EmployeeDevelopment updated successfully');

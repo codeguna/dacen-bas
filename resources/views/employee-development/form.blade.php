@@ -20,7 +20,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Tempat Kegiatan</label>
-                    <input class="form-control" name="" type="text" value="{{ $employeeDevelopment->place }}"
+                    <input class="form-control" name="place" type="text" value="{{ $employeeDevelopment->place }}"
                         required>
                 </div>
             </div>
