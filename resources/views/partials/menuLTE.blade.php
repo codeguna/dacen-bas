@@ -82,13 +82,15 @@
                             <p>Pengembangan Saya</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    @can('report_employee_developments')
+                       <li class="nav-item">
                         <a href="{{ route('admin.type-letters.index') }}"
                             class="nav-link {{ request()->is('admin/type-letters/*') || request()->is('admin/type-letters') ? 'active' : '' }}">
                             <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
                             <p>Report</p>
                         </a>
-                    </li>
+                    </li> 
+                    @endcan                    
                 </ul>
             </li>
         @endcan

@@ -1,9 +1,8 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    {{ __('Update') }} Employee Development
+    Perbarui Data Pengembangan Karyawan | {{ $employeeDevelopment->employeeDevelopmentMembers->user->name ?? '' }}
 @endsection
-
 @section('content')
     <section class="content container-fluid">
         <div class="">
@@ -13,10 +12,12 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Employee Development</span>
+                        <h3><i class="fa fa-pencil-alt text-warning" aria-hidden="true"></i> Perbarui Data Pengembangan Karyawan | {{ $employeeDevelopment->employeeDevelopmentMembers->user->name ?? '' }}</h3>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.employee-developments.update', $employeeDevelopment->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST"
+                            action="{{ route('admin.employee-developments.update', $employeeDevelopment->id) }}"
+                            role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

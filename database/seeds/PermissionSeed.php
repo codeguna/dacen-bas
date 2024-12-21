@@ -70,5 +70,6 @@ class PermissionSeed extends Seeder
         Permission::create(['name' => 'delete_employee_developments']);
         Permission::create(['name' => 'approve_employee_developments']);
         Permission::create(['name' => 'menu_employee_developments']);
+        Permission::create(['name' => 'report_employee_developments']);
     }
 }

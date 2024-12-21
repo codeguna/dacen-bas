@@ -133,8 +133,9 @@ class EmployeeDevelopmentController extends Controller
     public function edit($id)
     {
         $employeeDevelopment = EmployeeDevelopment::find($id);
+        $eventTypes             = EventType::orderBy('name', 'ASC')->pluck('id', 'name');
 
-        return view('employee-development.edit', compact('employeeDevelopment'));
+        return view('employee-development.edit', compact('employeeDevelopment','eventTypes'));
     }
 
     /**

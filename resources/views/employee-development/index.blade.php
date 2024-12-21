@@ -25,7 +25,7 @@
                                 @endcan
                             </div>
                             @include('employee-development.modal.create')
-                        </div>
+                        </div>                        
                     </div>
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success">
@@ -34,6 +34,9 @@
                     @endif
 
                     <div class="card-body">
+                        <div class="alert alert-primary" role="alert">
+                            <strong><i class="fa fa-info" aria-hidden="true"></i> Harap follow up kepala departemen/koordinator</strong> setelah menambahkan pengembangan untuk selanjutnya di Validasi!
+                        </div>
                         <div class="table-responsive">
                             <table id="example1" class="table table-striped table-hover">
                                 <thead class="thead">
@@ -98,9 +101,11 @@
                                                             <a class="btn btn-sm btn-warning"
                                                                 href="{{ route('admin.employee-developments.status', $employeeDevelopment->id) }}">
                                                                 @if ($employeeDevelopment->is_approved == '0')
-                                                                    <i class="fa fa-check-circle" aria-hidden="true" title="Setujui Pengajuan?"></i>
+                                                                    <i class="fa fa-check-circle" aria-hidden="true"
+                                                                        title="Setujui Pengajuan?"></i>
                                                                 @else
-                                                                    <i class="fa fa-times-circle" aria-hidden="true" title="Batalkan Pengajuan?"></i>
+                                                                    <i class="fa fa-times-circle" aria-hidden="true"
+                                                                        title="Batalkan Pengajuan?"></i>
                                                                 @endif
 
                                                             </a>

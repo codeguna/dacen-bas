@@ -88,6 +88,7 @@ class RoleSeed extends Seeder
         $role->givePermissionTo('delete_employee_developments');
         $role->givePermissionTo('approve_employee_developments');
         $role->givePermissionTo('menu_employee_developments');
+        $role->givePermissionTo('report_employee_developments');
         
     }
 }
