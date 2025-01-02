@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeDevelopmentController;
 use App\Http\Controllers\HomebaseController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\LetterController;
@@ -194,6 +195,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 
      //Route Employee Developments
      Route::resource('employee-developments', 'EmployeeDevelopmentController');
+     Route::get('employee-development/report', [EmployeeDevelopmentController::class,'report'])->name('employee-developments.report');
      Route::get('employee-development/{id}', 'EmployeeDevelopmentController@updateStatus')->name('employee-developments.status');
      //End Route Employee Developments
      //Route Event Types

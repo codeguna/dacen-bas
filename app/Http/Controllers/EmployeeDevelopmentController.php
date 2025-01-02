@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departmen;
 use App\Models\EmployeeDevelopment;
 use App\Models\EmployeeDevelopmentMember;
 use App\Models\EventType;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -176,7 +178,7 @@ class EmployeeDevelopmentController extends Controller
             'start_date'        => $start_date,
             'end_date'          => $end_date,
         ];
-       
+
         $id_card_file = $request->file('certificate_attachment');
         $employeeDevelopmentMember = EmployeeDevelopmentMember::where('employee_developments_id', $employeeDevelopment->id)->first();
         if ($id_card_file) {
@@ -239,5 +241,44 @@ class EmployeeDevelopmentController extends Controller
 
 
         return redirect()->back()->with('success', 'Berhasil Perbarui Status Pengajuan Pengembangan Karyawan!');
+    }
+
+    public function report(Request $request)
+    {
+        $year           = $request->year;
+        $period         = $request->period;
+        $department     = $request->department;
+        $user_id        = $request->user_id;
+
+        $myDept             = Auth::user()->department_id;
+        $departments        = Departmen::where('id', $myDept)->orderBy('name', 'ASC')->pluck('id', 'name');
+        $usersDepartmentID  = User::where('department_id', $myDept)->pluck('id')->toArray();
+        $usersDepartment    = User::whereIn('id', $usersDepartmentID)->pluck('id', 'name');
+
+        //Check Input
+        if ($period && $year) {
+            $employeeDevelopmentDepartments = EmployeeDevelopmentMember::whereHas('user', function ($query) use ($myDept) {
+                $query->where('department_id', $myDept)->orderBy('name', 'ASC');
+            })->get();
+            return $employeeDevelopmentDepartments;
+            $employeeDevelopmentAll         = [];
+            $employeeDevelopmentPersons     = [];
+
+            return $employeeDevelopmentDepartments;
+        } else {
+            $employeeDevelopmentDepartments = [];
+            $employeeDevelopmentAll = [];
+            $employeeDevelopmentPersons = [];
+        }
+        //End Check Input
+
+        $users          = User::where('department_id', $myDept)->orderBy('name', 'ASC')->pluck('pin', 'name');
+        return view('employee-development.select-period', compact(
+            'departments',
+            'usersDepartment',
+            'employeeDevelopmentDepartments',
+            'employeeDevelopmentAll',
+            'employeeDevelopmentPersons'
+        ));
     }
 }

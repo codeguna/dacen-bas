@@ -58,14 +58,18 @@
                 class="nav-item {{ request()->is('admin/employee-developments/create/*') ||
                 request()->is('admin/employee-developments/create') ||
                 request()->is('admin/employee-developments/*') ||
-                request()->is('admin/employee-developments')
+                request()->is('admin/employee-developments') ||
+                request()->is('admin/employee-development/report') || 
+                request()->is('admin/employee-development/report/*')
                     ? 'menu-open'
                     : '' }}">
                 <a
                     href="#"class="nav-link  {{ request()->is('admin/employee-developments/create/*') ||
                     request()->is('admin/employee-developments/create') ||
                     request()->is('admin/employee-developments/*') ||
-                    request()->is('admin/employee-developments')
+                    request()->is('admin/employee-developments') ||
+                    request()->is('admin/employee-development/report') || 
+                    request()->is('admin/employee-development/report/*')
                         ? 'active'
                         : '' }}">
                     <i class="fas fa-thumbs-up nav-icon"></i>
@@ -84,8 +88,8 @@
                     </li>
                     @can('report_employee_developments')
                        <li class="nav-item">
-                        <a href="{{ route('admin.type-letters.index') }}"
-                            class="nav-link {{ request()->is('admin/type-letters/*') || request()->is('admin/type-letters') ? 'active' : '' }}">
+                        <a href="{{ route('admin.employee-developments.report') }}"
+                            class="nav-link {{ request()->is('admin/employee-development/report') || request()->is('admin/employee-development/report') ? 'active' : '' }}">
                             <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
                             <p>Report</p>
                         </a>
