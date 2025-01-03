@@ -21,7 +21,7 @@
                     <tbody>
                         @forelse ($employeeDevelopmentDepartments as $pk)                           
                             <tr>                                
-                               <td></td>
+                               <td>{{ ++$i }}</td>
                             </tr>
                             @empty
                                 <tr style="text-align: center">

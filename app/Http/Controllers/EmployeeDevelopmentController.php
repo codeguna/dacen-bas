@@ -260,11 +260,8 @@ class EmployeeDevelopmentController extends Controller
             $employeeDevelopmentDepartments = EmployeeDevelopmentMember::whereHas('user', function ($query) use ($myDept) {
                 $query->where('department_id', $myDept)->orderBy('name', 'ASC');
             })->get();
-            return $employeeDevelopmentDepartments;
             $employeeDevelopmentAll         = [];
             $employeeDevelopmentPersons     = [];
-
-            return $employeeDevelopmentDepartments;
         } else {
             $employeeDevelopmentDepartments = [];
             $employeeDevelopmentAll = [];

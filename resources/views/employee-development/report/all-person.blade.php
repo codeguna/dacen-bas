@@ -30,7 +30,7 @@
                 <label>Tahun</label>
                 <input type="text" id="implementation_year" name="year" class="form-control" min="0"
                     max="9999" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);"
-                    placeholder="Input 4-digit tahun" required>
+                    placeholder="Input 4-digit tahun" value="{{ request('year') }}" required>
             </div>
         </div>
         <div class="col-md-12">
