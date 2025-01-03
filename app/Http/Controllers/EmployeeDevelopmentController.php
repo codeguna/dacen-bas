@@ -246,7 +246,8 @@ class EmployeeDevelopmentController extends Controller
     public function report(Request $request)
     {
         $year           = $request->year;
-        $period         = $request->period;
+        $start_date         = $request->start_date;
+        $end_date         = $request->start_date;
         $department     = $request->department;
         $user_id        = $request->user_id;
 
@@ -256,8 +257,11 @@ class EmployeeDevelopmentController extends Controller
         $usersDepartment    = User::whereIn('id', $usersDepartmentID)->pluck('id', 'name');
 
         //Check Input
-        if ($period && $year) {
-            $employeeDevelopmentDepartments = EmployeeDevelopmentMember::whereHas('user', function ($query) use ($myDept) {
+        if ($start_date && $end_date && $year) {
+            $employeeDevelopmentDepartments = EmployeeDevelopmentMember::whereHas('employeeDevelopment', function ($query) use ($start_date, $end_date) {
+                $query->whereDate('start_date', '<=', $start_date)
+                    ->whereDate('end_date', '>=', $end_date)->where('is_approved', 1);
+            })->whereHas('user', function ($query) use ($myDept) {
                 $query->where('department_id', $myDept)->orderBy('name', 'ASC');
             })->get();
             $employeeDevelopmentAll         = [];

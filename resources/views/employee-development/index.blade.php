@@ -121,7 +121,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="10" class="text-center">== Data Pengembangan tidak ditemukan! ==
+                                            <td colspan="11" class="text-center">== Data Pengembangan tidak ditemukan! ==
                                             </td>
                                         </tr>
                                     @endforelse

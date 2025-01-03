@@ -41,12 +41,12 @@ class EmployeeDevelopmentMember extends Model
      */
     public function employeeDevelopment()
     {
-        return $this->belongsTo('App\Models\EmployeeDevelopment', 'id', 'employee_developments_id');
+        return $this->belongsTo('App\Models\EmployeeDevelopment', 'employee_developments_id','id');
     }
     
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id','id');
     }
 
 }

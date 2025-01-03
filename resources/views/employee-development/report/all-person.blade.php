@@ -5,27 +5,19 @@
                 <strong><i class="fas fa-info-circle"></i> Silahkan pilih Bulan dan Tahun</strong> untuk memulai pencarian data PA!
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="form-group">
-                <label>Bulan</label>
-                <select class="form-control" name="period" required>
-                    <option disabled selected>== Pilih Bulan ==</option>
-                    <option value="01">Januari</option>
-                    <option value="02">Februari</option>
-                    <option value="03">Maret</option>
-                    <option value="04">April</option>
-                    <option value="05">Mei</option>
-                    <option value="06">Juni</option>
-                    <option value="07">Juli</option>
-                    <option value="08">Agustus</option>
-                    <option value="09">September</option>
-                    <option value="10">Oktober</option>
-                    <option value="11">November</option>
-                    <option value="12">Desember</option>
-                </select>
+                <label>Tanggal Mulai</label>
+                <input class="form-control" type="date" name="start_date" required>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Tanggal Akhir</label>
+                <input class="form-control" type="date" name="end_date" required>
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="form-group">
                 <label>Tahun</label>
                 <input type="text" id="implementation_year" name="year" class="form-control" min="0"
