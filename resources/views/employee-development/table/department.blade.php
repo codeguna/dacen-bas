@@ -5,90 +5,77 @@
                 @php
                     $i = 0;
                 @endphp
-                <table id="example1" class="table table-sm table-hover">
-                    <thead>
-                        <tr>
-                            <th class="text-center bg-primary" colspan="7">Total Keseluruhan</th>
-                            <th class="text-center bg-success" colspan="10">Rata-rata Keseluruhan</th>
-                        </tr>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>Bulan</th>
-                            <th>Terlambat</th>
-                            <th>PA Murni</th>
-                            <th>Kontribusi</th>
-                            <th>&Sigma; PA</th>
-                            <th>% Terlambat</th>
-                            <th>% PA Murni</th>
-                            <th>% Kontribusi</th>
-                            <th>% PA</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($performanceAppraisalsDepartments as $pa)
+                <div class="table-responsive">
+                    <table id="example1" class="table table-hover">
+                        <thead class="bg-primary">
                             <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $pa->name }}</td>
-                                <td>
-                                    @php
-                                        $pin = $pa->pin;
-                                        $totalMonth = App\Models\PerformanceAppraisal::where('pin', $pin)
-                                            ->where('year', '=', $year)
-                                            ->count();
-                                        $totalLate = App\Models\PerformanceAppraisal::select('late_total')
-                                            ->where('pin', $pin)
-                                            ->where('year', '=', $year)
-                                            ->sum('late_total');
-                                        $totalPurePa = App\Models\PerformanceAppraisal::select('pure_pa')
-                                            ->where('pin', $pin)
-                                            ->where('year', '=', $year)
-                                            ->sum('pure_pa');
-                                        $totalContribution = App\Models\PerformanceAppraisal::select('contribution')
-                                            ->where('pin', $pin)
-                                            ->where('year', '=', $year)
-                                            ->sum('contribution');
-                                        $summaryPA = $totalPurePa + $totalContribution;
-                                        $avgLate = $totalMonth > 0 ? number_format($totalLate / $totalMonth, 2) : 0;
-                                        $avgPurePA = $totalMonth > 0 ? number_format($totalPurePa / $totalMonth, 2) : 0;
-                                        $avgContribution = $totalMonth > 0 ? number_format($totalContribution / $totalMonth, 2) : 0;
-                                        $avgSummaryPA = $totalMonth > 0 ? number_format($summaryPA / $totalMonth, 2) : 0;
-                                    @endphp
-                                    {{ $totalMonth }}
-                                </td>
-                                <td>
-                                    {{ $totalLate }}
-                                </td>
-                                <td>
-                                    {{ $totalPurePa }}
-                                </td>
-                                <td>
-                                    {{ $totalContribution }}
-                                </td>
-                                <td>
-                                    {{ $summaryPA }}
-                                </td>
-                                <td>
-                                    {{ $avgLate }}
-                                </td>
-                                <td>
-                                    {{ $avgPurePA }}
-                                </td>
-                                <td>
-                                    {{ $avgContribution }}
-                                </td>
-                                <td>
-                                    {{ $avgSummaryPA }}
-                                </td>
+                                <th>#</th>
+                                <th>Peserta</th>
+                                <th>Nama Acara</th>
+                                <th>Pemateri</th>
+                                <th>Tgl. Mulai - Selesai</th>
+                                <th>Status</th>
+                                <th>Sertifikat</th>
+                                <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
                             </tr>
-                        @empty
-                            <tr style="text-align: center">
-                                <td colspan="7">== data tidak ada ==</td>
+                        </thead>
+                        <tbody>
+                            @php
+                                use Carbon\Carbon;
+                            @endphp
+                            @forelse ($employeeDevelopmentDepartments as $pk)
+                                <tr>
+                                    <td>{{ ++$i }}</td>
+                                    <td>{{ $pk->user->name }}</td>
+                                    <td>{{ $pk->employeeDevelopment->event_name }}</td>
+                                    <td>{{ $pk->employeeDevelopment->speaker }}</td>
+                                    <td>{{ Carbon::parse($pk->employeeDevelopment->start_date)->format('j F y') }}
+                                        s/d {{ Carbon::parse($pk->employeeDevelopment->end_date)->format('j F y') }}
+                                    </td>
+                                    <td>
+                                        @if ($pk->employeeDevelopment->is_approved == 1)
+                                            <span class="badge bg-success">
+                                                <i class="fa fa-check-circle" aria-hidden="true"></i> Terverifikasi
+                                            </span>
+                                        @else
+                                            <span class="badge bg-warning">
+                                                <i class="fa fa-times-circle" aria-hidden="true"></i> Belum
+                                                Terverifikasi
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a
+                                            href="{{ url('/data_pengembangan/' . $pk->certificate_attachment) }}" target="_blank">
+                                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-info" href="{{ route('admin.employee-developments.show',$pk->employeeDevelopment->id) }}" target="_blank">
+                                            <i class="fa fa-eye" aria-hidden="true"></i> Detail
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr style="text-align: center">
+                                    <td colspan="7">== data tidak ada ==</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                        <tfoot class="bg-primary">
+                            <tr>
+                                <th>#</th>
+                                <th>Peserta</th>
+                                <th>Nama Acara</th>
+                                <th>Pemateri</th>
+                                <th>Tgl. Mulai - Selesai</th>
+                                <th>Status</th>
+                                <th>Sertifikat</th>
+                                <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
                             </tr>
-                        @endforelse
-
-                    </tbody>
-                </table>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

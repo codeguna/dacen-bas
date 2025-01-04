@@ -23,7 +23,7 @@
                             @php
                                 use Carbon\Carbon;
                             @endphp
-                            @forelse ($employeeDevelopmentDepartments as $pk)
+                            @forelse ($employeeDevelopmentAll as $pk)
                                 <tr>
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $pk->user->name }}</td>
@@ -46,7 +46,7 @@
                                     </td>
                                     <td>
                                         <a
-                                            href="{{ url('/data_pengembangan/' . $pk->employeeDevelopment->employeeDevelopmentMembers->ccertificate_attachmenter) }}">
+                                            href="{{ url('/data_pengembangan/' . $pk->certificate_attachment) }}" target="_blank">
                                             <i class="fa fa-paperclip" aria-hidden="true"></i>
                                         </a>
                                     </td>

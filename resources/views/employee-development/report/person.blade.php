@@ -33,6 +33,6 @@
     </div>
 </form>
 <hr>
-{{-- @if ($performanceAppraisalsPersons)
-    @include('performance-appraisal.pa.table.person')
-@endif --}}
+@if ($employeeDevelopmentPersons)
+    @include('employee-development.table.person')
+@endif

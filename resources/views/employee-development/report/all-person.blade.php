@@ -1,23 +1,22 @@
-<form action="{{ route('admin.employee-developments.report') }}" method="GET">
     <div class="row">
         <div class="col-md-12 mt-3">
             <div class="alert alert-warning" role="alert">
                 <strong><i class="fas fa-info-circle"></i> Silahkan pilih Bulan dan Tahun</strong> untuk memulai pencarian data PA!
             </div>
         </div>
-        <div class="col-md-4">
+        {{-- <div class="col-md-4">
             <div class="form-group">
                 <label>Tanggal Mulai</label>
-                <input class="form-control" type="date" name="start_date" required>
+                <input class="form-control" type="date" name="start_date" value="{{ request('start_date') }}" required>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label>Tanggal Akhir</label>
-                <input class="form-control" type="date" name="end_date" required>
+                <input class="form-control" type="date" name="end_date" value="{{ request('end_date') }}" required>
             </div>
-        </div>
-        <div class="col-md-4">
+        </div> --}}
+        <div class="col-md-12">
             <div class="form-group">
                 <label>Tahun</label>
                 <input type="text" id="implementation_year" name="year" class="form-control" min="0"
@@ -31,8 +30,7 @@
             </button>
         </div>
     </div>
-</form>
 <hr>
-@if ($employeeDevelopmentDepartments)
+@if ($employeeDevelopmentAll)
     @include('employee-development.table.all-person')
 @endif

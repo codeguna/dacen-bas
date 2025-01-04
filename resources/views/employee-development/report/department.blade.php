@@ -11,13 +11,24 @@
             <div class="form-group">
                 <label>Departemen</label>
                 <select class="form-control" name="department" required>
-                    <option disabled selected>== Pilih Departemen ==</option>
                     @foreach ($departments as $value => $key)
-                        <option value="{{ $key }}">{{ $value }}</option>
+                        <option value="{{ $key }}"  @if ($key == request('department')) selected @endif>{{ $value }}</option>
                     @endforeach
                 </select>
             </div>
+        </div>        
+        {{-- <div class="col-md-4">
+            <div class="form-group">
+                <label>Tanggal Mulai</label>
+                <input class="form-control" type="date" name="start_date" value="{{ request('start_date') }}" required>
+            </div>
         </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Tanggal Akhir</label>
+                <input class="form-control" type="date" name="end_date" value="{{ request('end_date') }}" required>
+            </div>
+        </div> --}}
         <div class="col-md-6">
             <div class="form-group">
                 <label>Tahun</label>
@@ -27,13 +38,13 @@
             </div>
         </div>
         <div class="col-md-12">
-            <button class="btn btn-success w-100" type="submit">
+            <button class="btn btn-success w-100">
                 <i class="fa fa-check-circle" aria-hidden="true"></i> Submit
             </button>
         </div>
     </div>
 </form>
 <hr>
-{{-- @if ($performanceAppraisalsDepartments)
-    @include('performance-appraisal.pa.table.department')
-@endif --}}
+@if ($employeeDevelopmentDepartments)
+    @include('employee-development.table.department')
+@endif

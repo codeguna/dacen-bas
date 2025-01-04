@@ -38,13 +38,25 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="period" role="tabpanel" aria-labelledby="period-tab">
-                                @include('employee-development.report.all-person')
+                                <form action="{{ route('admin.employee-developments.report') }}" method="GET">
+                                    @csrf
+                                    <input type="hidden" name="type" value="1">
+                                    @include('employee-development.report.all-person')
+                                </form>
                             </div>
                             <div class="tab-pane" id="department" role="tabpanel" aria-labelledby="department-tab">
-                                @include('employee-development.report.department')
+                                <form action="{{ route('admin.employee-developments.report') }}" method="GET">
+                                    @csrf
+                                    <input type="hidden" name="type" value="2">
+                                    @include('employee-development.report.department')
+                                </form>
                             </div>
                             <div class="tab-pane" id="person" role="tabpanel" aria-labelledby="person-tab">
-                                @include('employee-development.report.person')
+                                <form action="{{ route('admin.employee-developments.report') }}" method="GET">
+                                    @csrf
+                                    <input type="hidden" name="type" value="3">
+                                    @include('employee-development.report.person')
+                                </form>
                             </div>
                         </div>
                     </div>

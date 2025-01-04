@@ -83,7 +83,7 @@
                         <a href="{{ route('admin.employee-developments.index') }}"
                             class="nav-link {{ request()->is('admin/employee-developments/*') || request()->is('admin/employee-developments') ? 'active' : '' }}">
                             <i class="fas fa-certificate nav-icon"></i>
-                            <p>Pengembangan Saya</p>
+                            <p>Pengembangan</p>
                         </a>
                     </li>
                     @can('report_employee_developments')

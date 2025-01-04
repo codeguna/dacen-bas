@@ -28,12 +28,27 @@ class EmployeeDevelopmentController extends Controller
         $getID                  = Auth::user()->id;
         $getDEPT                = Auth::user()->department_id;
         $eventTypes             = EventType::orderBy('name', 'ASC')->pluck('id', 'name');
+        $koordinator            = Auth::user()->hasRole('KOORDINATOR');
+        $guest                  = Auth::user()->hasRole('GUEST');
+        $bas                    = Auth::user()->hasRole('bas');
+        $administrator          = Auth::user()->hasRole('administrator');
 
-        $employeeDevelopments = EmployeeDevelopment::whereHas('employeeDevelopmentMembers', function ($query) use ($getDEPT) {
-            $query->whereHas('user', function ($query) use ($getDEPT) {
-                $query->where('department_id', $getDEPT);
-            });
-        })->get();
+        if ($koordinator) {
+            $employeeDevelopments = EmployeeDevelopment::whereHas('employeeDevelopmentMembers', function ($query) use ($getDEPT) {
+                $query->whereHas('user', function ($query) use ($getDEPT) {
+                    $query->where('department_id', $getDEPT);
+                });
+            })->get();
+        } elseif ($guest) {
+            $employeeDevelopments = EmployeeDevelopment::whereHas('employeeDevelopmentMembers', function ($query) use ($getID) {
+                $query->where('user_id', $getID);
+            })->get();
+        } elseif ($bas || $administrator) {
+            $employeeDevelopments = EmployeeDevelopmentMember::whereHas('employeeDevelopment', function ($query) use ($start_date, $end_date) {
+                $query->where('is_approved', 1);
+            })->get();
+        }
+
 
 
         return view('employee-development.index', compact('employeeDevelopments', 'eventTypes'))
@@ -246,30 +261,48 @@ class EmployeeDevelopmentController extends Controller
     public function report(Request $request)
     {
         $year           = $request->year;
-        $start_date         = $request->start_date;
-        $end_date         = $request->start_date;
+        $start_date     = $request->start_date;
+        $end_date       = $request->start_date;
         $department     = $request->department;
         $user_id        = $request->user_id;
+        $type           = $request->type;
 
         $myDept             = Auth::user()->department_id;
-        $departments        = Departmen::where('id', $myDept)->orderBy('name', 'ASC')->pluck('id', 'name');
+        if (Auth::user()->hasRole('bas') || Auth::user()->hasRole('administrator')) {
+            $departments        = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
+        } else {
+            $departments        = Departmen::where('id', $myDept)->orderBy('name', 'ASC')->pluck('id', 'name');
+        }
+
         $usersDepartmentID  = User::where('department_id', $myDept)->pluck('id')->toArray();
         $usersDepartment    = User::whereIn('id', $usersDepartmentID)->pluck('id', 'name');
 
         //Check Input
-        if ($start_date && $end_date && $year) {
-            $employeeDevelopmentDepartments = EmployeeDevelopmentMember::whereHas('employeeDevelopment', function ($query) use ($start_date, $end_date) {
-                $query->whereDate('start_date', '<=', $start_date)
-                    ->whereDate('end_date', '>=', $end_date)->where('is_approved', 1);
-            })->whereHas('user', function ($query) use ($myDept) {
-                $query->where('department_id', $myDept)->orderBy('name', 'ASC');
+        if ($type == 1) {
+            $employeeDevelopmentAll = EmployeeDevelopmentMember::whereYear('created_at', $year)->get();
+
+            $employeeDevelopmentDepartments = [];
+            $employeeDevelopmentPersons     = [];
+        } elseif ($type == 2) {
+            $employeeDevelopmentDepartments = EmployeeDevelopmentMember::whereHas('employeeDevelopment', function ($query) use ($year) {
+                $query->whereYear('created_at', $year);
+            })->whereHas('user', function ($query) use ($department) {
+                $query->where('department_id', $department);
             })->get();
             $employeeDevelopmentAll         = [];
             $employeeDevelopmentPersons     = [];
+        } elseif ($type == 3) {
+            $employeeDevelopmentPersons = EmployeeDevelopmentMember::whereHas('employeeDevelopment', function ($query) use ($year) {
+                $query->whereYear('created_at', $year);
+            })->whereHas('user', function ($query) use ($department, $user_id) {
+                $query->where('id', $user_id);
+            })->get();
+            $employeeDevelopmentAll         = [];
+            $employeeDevelopmentDepartments = [];
         } else {
             $employeeDevelopmentDepartments = [];
-            $employeeDevelopmentAll = [];
-            $employeeDevelopmentPersons = [];
+            $employeeDevelopmentAll         = [];
+            $employeeDevelopmentPersons     = [];
         }
         //End Check Input
 
