@@ -407,6 +407,8 @@ class ScanlogController extends Controller
             $dayCode = 5;
         } elseif ($dayName == 'Saturday') {
             $dayCode = 6;
+        }elseif ($dayName == 'Sunday') {
+            return view('errors.holiday');
         }
 
         $getWillingnessTime = Willingness::select('time_of_entry', 'time_of_return')
