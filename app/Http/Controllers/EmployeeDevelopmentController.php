@@ -44,7 +44,7 @@ class EmployeeDevelopmentController extends Controller
                 $query->where('user_id', $getID);
             })->get();
         } elseif ($bas || $administrator) {
-            $employeeDevelopments = EmployeeDevelopmentMember::whereHas('employeeDevelopment', function ($query) use ($start_date, $end_date) {
+            $employeeDevelopments = EmployeeDevelopment::whereHas('employeeDevelopmentMembers', function ($query) {
                 $query->where('is_approved', 1);
             })->get();
         }
@@ -270,12 +270,15 @@ class EmployeeDevelopmentController extends Controller
         $myDept             = Auth::user()->department_id;
         if (Auth::user()->hasRole('bas') || Auth::user()->hasRole('administrator')) {
             $departments        = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
-        } else {
+
+            $usersDepartment    = User::where('pin', '<>', null)->orderBY('name', 'ASC')->pluck('id', 'name');
+        } elseif (Auth::user()->hasRole('KOORDINATOR')) {
             $departments        = Departmen::where('id', $myDept)->orderBy('name', 'ASC')->pluck('id', 'name');
+            $usersDepartmentID  = User::where('department_id', $myDept)->where('pin', '<>', null)->pluck('id')->toArray();
+            $usersDepartment    = User::whereIn('id', $usersDepartmentID)->orderBY('name', 'ASC')->pluck('id', 'name');
         }
 
-        $usersDepartmentID  = User::where('department_id', $myDept)->pluck('id')->toArray();
-        $usersDepartment    = User::whereIn('id', $usersDepartmentID)->pluck('id', 'name');
+
 
         //Check Input
         if ($type == 1) {
