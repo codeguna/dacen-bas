@@ -88,7 +88,7 @@ Presensi Saya
                 @if ($needApproval > 0)
                     <div class="alert alert-warning" role="alert">
                         <strong>
-                            +{{ $needApproval }} orang
+                            +{{ $needApproval }} pengembangan
                         </strong>
                         butuh validasi pengembangan karyawan <a class="btn btn-primary" href="{{ route('admin.employee-developments.index') }}">
                             Klik disini!
