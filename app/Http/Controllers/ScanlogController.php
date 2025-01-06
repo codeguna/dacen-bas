@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\AttendancesRequest;
 use App\Models\Departmen;
+use App\Models\EmployeeDevelopment;
+use App\Models\EmployeeDevelopmentMember;
 use App\Models\Holiday;
 use App\Models\Log;
 use App\Models\NotScanLog;
@@ -363,9 +365,14 @@ class ScanlogController extends Controller
     public function myAttendances()
     {
 
-        $pin = Auth::user()->pin;
-        $birthday_pengguna = auth()->user()->birthday;
-
+        $pin                = Auth::user()->pin;
+        $birthday_pengguna  = auth()->user()->birthday;
+        $myDept             = Auth::user()->department_id;
+        $needApproval       = EmployeeDevelopmentMember::whereHas('user', function ($query) use ($myDept) {
+            $query->where('department_id', $myDept);
+        })->whereHas('employeeDevelopment', function ($query) {
+            $query->where('is_approved', '=', 0);
+        })->count();
         // if ($birthday_pengguna === null) {
         //     return redirect()->route('admin.user.set-birthday')->with('warning', 'Silahkan lengkapi data tanggal lahir anda!');
         // }
@@ -407,7 +414,7 @@ class ScanlogController extends Controller
             $dayCode = 5;
         } elseif ($dayName == 'Saturday') {
             $dayCode = 6;
-        }elseif ($dayName == 'Sunday') {
+        } elseif ($dayName == 'Sunday') {
             return view('errors.holiday');
         }
 
@@ -517,7 +524,8 @@ class ScanlogController extends Controller
                 'myWillingness',
                 'expDate',
                 'holidays',
-                'notScans'
+                'notScans',
+                'needApproval'
             )
         )
             ->with('i');
