@@ -15,7 +15,7 @@
                                 <th>Pemateri</th>
                                 <th>Tgl. Mulai - Selesai</th>
                                 <th>Status</th>
-                                <th>Sertifikat</th>
+                                <th>Bukti Kegiatan</th>
                                 <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
                             </tr>
                         </thead>
@@ -70,7 +70,7 @@
                                 <th>Pemateri</th>
                                 <th>Tgl. Mulai - Selesai</th>
                                 <th>Status</th>
-                                <th>Sertifikat</th>
+                                <th>Bukti Kegiatan</th>
                                 <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
                             </tr>
                         </tfoot>

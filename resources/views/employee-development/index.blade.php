@@ -50,7 +50,7 @@
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Selesai</th>
                                         <th>Status</th>
-                                        <th>Sertifikat</th>
+                                        <th>Bukti Kegiatan</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -136,7 +136,7 @@
                                             <th>Tanggal Mulai</th>
                                             <th>Tanggal Selesai</th>
                                             <th>Status</th>
-                                            <th>Sertifikat</th>
+                                            <th>Bukti Kegiatan</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
