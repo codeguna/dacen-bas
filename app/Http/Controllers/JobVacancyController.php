@@ -47,7 +47,7 @@ class JobVacancyController extends Controller
 
         $jobVacancy = JobVacancy::create($request->all());
 
-        return redirect()->route('job-vacancies.index')
+        return redirect()->route('admin.job-vacancies.index')
             ->with('success', 'JobVacancy created successfully.');
     }
 
@@ -90,7 +90,7 @@ class JobVacancyController extends Controller
 
         $jobVacancy->update($request->all());
 
-        return redirect()->route('job-vacancies.index')
+        return redirect()->route('admin.job-vacancies.index')
             ->with('success', 'JobVacancy updated successfully');
     }
 
@@ -103,7 +103,7 @@ class JobVacancyController extends Controller
     {
         $jobVacancy = JobVacancy::find($id)->delete();
 
-        return redirect()->route('job-vacancies.index')
+        return redirect()->route('admin.job-vacancies.index')
             ->with('success', 'JobVacancy deleted successfully');
     }
 }

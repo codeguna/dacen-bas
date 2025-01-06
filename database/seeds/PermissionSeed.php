@@ -71,5 +71,23 @@ class PermissionSeed extends Seeder
         Permission::create(['name' => 'approve_employee_developments']);
         Permission::create(['name' => 'menu_employee_developments']);
         Permission::create(['name' => 'report_employee_developments']);
+
+        //PEMBUATAN LOWONGAN KARYAWAN
+        Permission::create(['name' => 'create_job_vacancies']);
+        Permission::create(['name' => 'read_job_vacancies']);
+        Permission::create(['name' => 'update_job_vacancies']);
+        Permission::create(['name' => 'delete_job_vacancies']);
+        Permission::create(['name' => 'approve_job_vacancies']);
+        Permission::create(['name' => 'menu_job_vacancies']);
+        Permission::create(['name' => 'report_job_vacancies']);
+
+        //PEMBUATAN LOWONGAN KARYAWAN
+        Permission::create(['name' => 'create_job_applicant']);
+        Permission::create(['name' => 'read_job_applicant']);
+        Permission::create(['name' => 'update_job_applicant']);
+        Permission::create(['name' => 'delete_job_applicant']);
+        Permission::create(['name' => 'approve_job_applicant']);
+        Permission::create(['name' => 'menu_job_applicant']);
+        Permission::create(['name' => 'report_job_applicant']);
     }
 }

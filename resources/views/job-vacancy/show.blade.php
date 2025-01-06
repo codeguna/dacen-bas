@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('template_title')
     {{ $jobVacancy->name ?? "{{ __('Show') Job Vacancy" }}
@@ -14,7 +14,7 @@
                             <span class="card-title">{{ __('Show') }} Job Vacancy</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('job-vacancies.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('admin.job-vacancies.index') }}"> {{ __('Back') }}</a>
                         </div>
                     </div>
 

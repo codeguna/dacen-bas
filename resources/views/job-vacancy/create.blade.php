@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('template_title')
     {{ __('Create') }} Job Vacancy
@@ -16,7 +16,7 @@
                         <span class="card-title">{{ __('Create') }} Job Vacancy</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('job-vacancies.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.job-vacancies.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
                             @include('job-vacancy.form')
