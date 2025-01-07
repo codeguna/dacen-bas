@@ -12,6 +12,18 @@
 
                     {{ csrf_field() }}
                     <div class="row">
+                        @can('approve_employee_developments')
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Nama Peserta</label>
+                                    <select class="form-control" name="user_id">
+                                        @foreach ($getUsers as $value => $key)
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endcan
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Nama Kegiatan</label>
@@ -40,8 +52,7 @@
                             <div class="form-group">
                                 <label>Biaya Kegiatan</label>
                                 <input type="text" name="price" class="form-control" min="0"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);"
-                                     required>
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);" required>
                             </div>
                         </div>
                         <div class="col-md-6">

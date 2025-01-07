@@ -32,26 +32,25 @@ class EmployeeDevelopmentController extends Controller
         $guest                  = Auth::user()->hasRole('GUEST');
         $bas                    = Auth::user()->hasRole('bas');
         $administrator          = Auth::user()->hasRole('administrator');
+        $getUsers               = User::where('pin','<>',null)->orderBy('name','ASC')->pluck('id','name');
 
-        if ($koordinator) {
+        if (Auth::user()->hasRole('KOORDINATOR')) {
             $employeeDevelopments = EmployeeDevelopment::whereHas('employeeDevelopmentMembers', function ($query) use ($getDEPT) {
                 $query->whereHas('user', function ($query) use ($getDEPT) {
                     $query->where('department_id', $getDEPT);
                 });
             })->get();
-        } elseif ($guest) {
+        } elseif (Auth::user()->hasRole('GUEST')) {
             $employeeDevelopments = EmployeeDevelopment::whereHas('employeeDevelopmentMembers', function ($query) use ($getID) {
                 $query->where('user_id', $getID);
             })->get();
-        } elseif ($bas || $administrator) {
-            $employeeDevelopments = EmployeeDevelopment::whereHas('employeeDevelopmentMembers', function ($query) {
-                $query->where('is_approved', 1);
-            })->get();
+        } elseif (Auth::user()->hasRole('administrator') || Auth::user()->hasRole('bas')) {
+            $employeeDevelopments = EmployeeDevelopment::orderBy('is_approved','DESC')->orderBy('created_at','DESC')->get();
         }
 
 
 
-        return view('employee-development.index', compact('employeeDevelopments', 'eventTypes'))
+        return view('employee-development.index', compact('employeeDevelopments', 'eventTypes','getUsers'))
             ->with('i');
     }
 
@@ -114,7 +113,14 @@ class EmployeeDevelopmentController extends Controller
         ]);
 
         $employee_developments_id   = $employeeDevelopment->id;
-        $user_id                    = Auth::user()->id;
+        if(Auth::user()->hasRole('bas') || Auth::user()->hasRole('KOORDINATOR'))
+        {
+            $user_id                    = $request->user_id;
+        }
+        else{
+           $user_id                    = Auth::user()->id; 
+        }
+        
 
         $employeeDevelopmentMember      = EmployeeDevelopmentMember::create([
             'employee_developments_id'  => $employee_developments_id,
