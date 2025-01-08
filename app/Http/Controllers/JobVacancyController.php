@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departmen;
 use App\Models\JobVacancy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class JobVacancyController
@@ -18,10 +20,10 @@ class JobVacancyController extends Controller
      */
     public function index()
     {
-        $jobVacancies = JobVacancy::paginate();
+        $jobVacancies = JobVacancy::orderBy('created_at','DESC')->get();
 
         return view('job-vacancy.index', compact('jobVacancies'))
-            ->with('i', (request()->input('page', 1) - 1) * $jobVacancies->perPage());
+            ->with('i');
     }
 
     /**
@@ -31,8 +33,9 @@ class JobVacancyController extends Controller
      */
     public function create()
     {
-        $jobVacancy = new JobVacancy();
-        return view('job-vacancy.create', compact('jobVacancy'));
+        $departments    = Departmen::orderBy('name','ASC')->pluck('id','name');    
+        $jobVacancy     = new JobVacancy();
+        return view('job-vacancy.create', compact('jobVacancy','departments'));
     }
 
     /**
@@ -45,7 +48,19 @@ class JobVacancyController extends Controller
     {
         request()->validate(JobVacancy::$rules);
 
-        $jobVacancy = JobVacancy::create($request->all());
+        $jobVacancy = JobVacancy::create(
+            ['title'            => $request->title,
+            'department_id'     => $request->department_id,
+            'gender'            => $request->gender,
+            'min_age'           => $request->min_age,
+            'max_age'           => $request->max_age,
+            'amount_needed'     => $request->amount_needed,
+            'date_start'        => $request->date_start,
+            'deadline'          => $request->deadline,            
+            'user_id'           => Auth::user()->id,
+            'created_at'        => now(),
+            ]
+        );
 
         return redirect()->route('admin.job-vacancies.index')
             ->with('success', 'JobVacancy created successfully.');
@@ -72,9 +87,10 @@ class JobVacancyController extends Controller
      */
     public function edit($id)
     {
-        $jobVacancy = JobVacancy::find($id);
+        $departments    = Departmen::orderBy('name','ASC')->pluck('id','name');    
+        $jobVacancy     = JobVacancy::find($id);
 
-        return view('job-vacancy.edit', compact('jobVacancy'));
+        return view('job-vacancy.edit', compact('jobVacancy','departments'));
     }
 
     /**

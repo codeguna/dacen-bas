@@ -201,4 +201,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
      //Route Event Types
      Route::resource('event-types', 'EventTypeController');
      //End Route Event Types
+     //Route job-vacancies
+     Route::resource('job-vacancies', 'JobVacancyController');
+     //End Route job-vacancies
 });

@@ -41,7 +41,58 @@
             {{ Form::text('date_of _application', $jobApplicant->date_of _application, ['class' => 'form-control' . ($errors->has('date_of _application') ? ' is-invalid' : ''), 'placeholder' => 'Date Of  Application']) }}
             {!! $errors->first('date_of _application', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-
+{{-- <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="level">Jenjang</label>
+            <select name="level" class="form-control{{ $errors->has('level') ? ' is-invalid' : '' }}" required>
+                <option value="1" {{ $jobVacancy->level == 'D1' ? 'selected' : '' }}>D1</option>
+                <option value="2" {{ $jobVacancy->level == 'D3' ? 'selected' : '' }}>D3</option>
+                <option value="3" {{ $jobVacancy->level == 'D4/S1' ? 'selected' : '' }}>D4/S1</option>
+                <option value="4" {{ $jobVacancy->level == 'S1' ? 'selected' : '' }}>S1</option>
+                <option value="5" {{ $jobVacancy->level == 'S2' ? 'selected' : '' }}>S2</option>
+                <option value="6" {{ $jobVacancy->level == 'S3' ? 'selected' : '' }}>S3</option>
+            </select>
+            <div class="invalid-feedback">{{ $errors->first('level') }}</div>
+        </div>
+        
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="university">Nama Universitas</label>
+            <input type="text" name="university" required value="{{ $jobVacancy->university }}"
+                class="form-control{{ $errors->has('university') ? ' is-invalid' : '' }}"
+                placeholder="University">
+            <div class="invalid-feedback">{{ $errors->first('university') }}</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="major">Jurusan</label>
+            <input type="text" name="major" required value="{{ $jobVacancy->major }}"
+                class="form-control{{ $errors->has('major') ? ' is-invalid' : '' }}">
+            <div class="invalid-feedback">{{ $errors->first('major') }}</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="university_base">Kota Universitas</label>
+            <input type="text" name="university_base" required value="{{ $jobVacancy->university_base }}"
+                class="form-control{{ $errors->has('university_base') ? ' is-invalid' : '' }}">
+            <div class="invalid-feedback">{{ $errors->first('university_base') }}</div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="graduation_year">Lulus Tahun</label>
+            <input type="text" name="graduation_year" required value="{{ $jobVacancy->graduation_year }}"
+                class="form-control{{ $errors->has('graduation_year') ? ' is-invalid' : '' }}" min="0"
+                max="9999" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);"
+                placeholder="Input 4-digit tahun">
+            <div class="invalid-feedback">{{ $errors->first('graduation_year') }}</div>
+        </div>
+    </div>
+</div> --}}
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>

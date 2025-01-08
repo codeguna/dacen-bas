@@ -23,6 +23,11 @@ class CreateJobApplicantsTable extends Migration
             $table->string('born_place');
             $table->string('born_date');
             $table->date('date_of _application');
+            $table->char('level');
+            $table->string('university');
+            $table->string('major');
+            $table->string('university_base');
+            $table->char('graduation_year',4);
             $table->timestamps();
         });
     }

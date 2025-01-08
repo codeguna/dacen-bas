@@ -22,12 +22,7 @@ class CreateJobVacanciesTable extends Migration
             $table->char('max_age',2);
             $table->char('amount_needed');
             $table->date('date_start');
-            $table->date('deadline');
-            $table->char('level');
-            $table->string('university');
-            $table->string('major');
-            $table->string('university_base');
-            $table->char('graduation_year',4);
+            $table->date('deadline');           
             $table->integer('user_id')->unsigned();
             $table->timestamps();
         });

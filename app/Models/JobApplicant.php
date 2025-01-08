@@ -24,26 +24,43 @@ use Illuminate\Database\Eloquent\Model;
  */
 class JobApplicant extends Model
 {
-    
-    static $rules = [
-		'job_vacancies_id' => 'required',
-		'full_name' => 'required',
-		'back_title' => 'required',
-		'gender' => 'required',
-		'born_place' => 'required',
-		'born_date' => 'required',
-		'date_of _application' => 'required',
-    ];
 
-    protected $perPage = 20;
+  static $rules = [
+    'job_vacancies_id' => 'required',
+    'full_name' => 'required',
+    'back_title' => 'required',
+    'gender' => 'required',
+    'born_place' => 'required',
+    'born_date' => 'required',
+    'date_of _application' => 'required',
+    'level' => 'required',
+    'university' => 'required',
+    'major' => 'required',
+    'university_base' => 'required',
+    'graduation_year' => 'required',
+  ];
 
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['job_vacancies_id','full_name','front_title','back_title','gender','born_place','born_date','date_of _application'];
+  protected $perPage = 20;
 
-
-
+  /**
+   * Attributes that should be mass-assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+    'job_vacancies_id',
+    'full_name',
+    'front_title',
+    'back_title',
+    'gender',
+    'born_place',
+    'born_date',
+    'date_of _application',
+    'is_approved',
+    'level',
+    'university',
+    'major',
+    'university_base',
+    'graduation_year'
+  ];
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Permission;
 
 class PermissionSeed extends Seeder
@@ -12,7 +13,9 @@ class PermissionSeed extends Seeder
      */
     public function run()
     {
-        Artisan::call('cache:clear');
+        Artisan::call('cache:clear'); 
+        Artisan::call('composer dump-autoload');
+               
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         Permission::create(['name' => 'users_manage']);

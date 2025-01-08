@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsApprovedToEmployeeDevelopmentsTable extends Migration
+class AddIsApprovedToJobApplicantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddIsApprovedToEmployeeDevelopmentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('employee_developments', function (Blueprint $table) {
+        Schema::table('job_applicants', function (Blueprint $table) {
             $table->boolean('is_approved')->default(0);
         });
     }
@@ -25,7 +25,7 @@ class AddIsApprovedToEmployeeDevelopmentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('employee_developments', function (Blueprint $table) {
+        Schema::table('job_applicants', function (Blueprint $table) {
             //
         });
     }

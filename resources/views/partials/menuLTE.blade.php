@@ -53,51 +53,6 @@
                 </a>
             </li>
         @endcan
-        @can('menu_employee_developments')
-            <li
-                class="nav-item {{ request()->is('admin/employee-developments/create/*') ||
-                request()->is('admin/employee-developments/create') ||
-                request()->is('admin/employee-developments/*') ||
-                request()->is('admin/employee-developments') ||
-                request()->is('admin/employee-development/report') || 
-                request()->is('admin/employee-development/report/*')
-                    ? 'menu-open'
-                    : '' }}">
-                <a
-                    href="#"class="nav-link  {{ request()->is('admin/employee-developments/create/*') ||
-                    request()->is('admin/employee-developments/create') ||
-                    request()->is('admin/employee-developments/*') ||
-                    request()->is('admin/employee-developments') ||
-                    request()->is('admin/employee-development/report') || 
-                    request()->is('admin/employee-development/report/*')
-                        ? 'active'
-                        : '' }}">
-                    <i class="fas fa-thumbs-up nav-icon"></i>
-                    <p>
-                        Pengembangan Karyawan
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('admin.employee-developments.index') }}"
-                            class="nav-link {{ request()->is('admin/employee-developments/*') || request()->is('admin/employee-developments') ? 'active' : '' }}">
-                            <i class="fas fa-certificate nav-icon"></i>
-                            <p>Pengembangan</p>
-                        </a>
-                    </li>
-                    @can('report_employee_developments')
-                       <li class="nav-item">
-                        <a href="{{ route('admin.employee-developments.report') }}"
-                            class="nav-link {{ request()->is('admin/employee-development/report') || request()->is('admin/employee-development/report') ? 'active' : '' }}">
-                            <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
-                            <p>Report</p>
-                        </a>
-                    </li> 
-                    @endcan                    
-                </ul>
-            </li>
-        @endcan
         @can('view_presences')
             <li class="nav-item">
                 <a href="{{ route('admin.scan-log.my-department-presences') }}"
@@ -113,7 +68,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -729,6 +684,76 @@
                             class="nav-link {{ request()->is('admin/universities') || request()->is('admin/universities/*') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-university"></i>
                             <p>Universitas</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endcan
+        @can('menu_employee_developments')
+            <li
+                class="nav-item {{ request()->is('admin/employee-developments/create/*') ||
+                request()->is('admin/employee-developments/create') ||
+                request()->is('admin/employee-developments/*') ||
+                request()->is('admin/employee-developments') ||
+                request()->is('admin/employee-development/report') ||
+                request()->is('admin/employee-development/report/*')
+                    ? 'menu-open'
+                    : '' }}">
+                <a
+                    href="#"class="nav-link  {{ request()->is('admin/employee-developments/create/*') ||
+                    request()->is('admin/employee-developments/create') ||
+                    request()->is('admin/employee-developments/*') ||
+                    request()->is('admin/employee-developments') ||
+                    request()->is('admin/employee-development/report') ||
+                    request()->is('admin/employee-development/report/*')
+                        ? 'active'
+                        : '' }}">
+                    <i class="fas fa-thumbs-up nav-icon"></i>
+                    <p>
+                        Pengembangan Karyawan
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.employee-developments.index') }}"
+                            class="nav-link {{ request()->is('admin/employee-developments/*') || request()->is('admin/employee-developments') ? 'active' : '' }}">
+                            <i class="fas fa-certificate nav-icon"></i>
+                            <p>Pengembangan</p>
+                        </a>
+                    </li>
+                    @can('report_employee_developments')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.employee-developments.report') }}"
+                                class="nav-link {{ request()->is('admin/employee-development/report') || request()->is('admin/employee-development/report') ? 'active' : '' }}">
+                                <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
+                                <p>Report</p>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
+        @can('menu_job_vacancies')
+            <li
+                class="nav-item {{ request()->is('admin/job-vacancies/*') || request()->is('admin/job-vacancies')
+                    ? 'menu-open'
+                    : '' }}">
+                <a
+                    href="#"class="nav-link
+                        {{ request()->is('admin/job-vacancies/*') || request()->is('admin/job-vacancies') ? 'active' : '' }}">
+                    <i class="fa fa-suitcase nav-icon" aria-hidden="true"></i>
+                    <p>
+                        Lowongan Pekerjaan
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.job-vacancies.index') }}"
+                            class="nav-link {{ request()->is('admin/job-vacancies/*') || request()->is('admin/job-vacancies') ? 'active' : '' }}">
+                            <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
+                            <p>Lowongan</p>
                         </a>
                     </li>
                 </ul>
