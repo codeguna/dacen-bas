@@ -44,6 +44,12 @@
 										<th>Born Place</th>
 										<th>Born Date</th>
 										<th>Date Of  Application</th>
+										<th>Level</th>
+										<th>University</th>
+										<th>Major</th>
+										<th>University Base</th>
+										<th>Graduation Year</th>
+										<th>Is Approved</th>
 
                                         <th></th>
                                     </tr>
@@ -61,6 +67,12 @@
 											<td>{{ $jobApplicant->born_place }}</td>
 											<td>{{ $jobApplicant->born_date }}</td>
 											<td>{{ $jobApplicant->date_of _application }}</td>
+											<td>{{ $jobApplicant->level }}</td>
+											<td>{{ $jobApplicant->university }}</td>
+											<td>{{ $jobApplicant->major }}</td>
+											<td>{{ $jobApplicant->university_base }}</td>
+											<td>{{ $jobApplicant->graduation_year }}</td>
+											<td>{{ $jobApplicant->is_approved }}</td>
 
                                             <td>
                                                 <form action="{{ route('job-applicants.destroy',$jobApplicant->id) }}" method="POST">

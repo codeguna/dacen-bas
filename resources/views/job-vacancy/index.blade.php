@@ -78,7 +78,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                Daftar Lowongan Pekerjaan
+                              <i class="fas fa-list"></i>  Daftar Lowongan Pekerjaan
                             </span>
 
                             <div class="float-right">
@@ -132,8 +132,7 @@
 
                                             <td>{{ $jobVacancy->title }}</td>
                                             <td>{{ $jobVacancy->department->name }}</td>
-                                            <td>{{ $jobVacancy->amount_needed }} <i class="fa fa-user" aria-
-                                                    hidden="true"></i></td>
+                                            <td>{{ $jobVacancy->amount_needed }} <i class="fas fa-user-alt text-primary"></i></i></td>
                                             <td>{{ $date_start }}</td>
                                             <td>{{ $deadline }}</td>
                                             <td>{{ $jobVacancy->user->name }}</td>

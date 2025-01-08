@@ -52,6 +52,30 @@
                             <strong>Date Of  Application:</strong>
                             {{ $jobApplicant->date_of _application }}
                         </div>
+                        <div class="form-group">
+                            <strong>Level:</strong>
+                            {{ $jobApplicant->level }}
+                        </div>
+                        <div class="form-group">
+                            <strong>University:</strong>
+                            {{ $jobApplicant->university }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Major:</strong>
+                            {{ $jobApplicant->major }}
+                        </div>
+                        <div class="form-group">
+                            <strong>University Base:</strong>
+                            {{ $jobApplicant->university_base }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Graduation Year:</strong>
+                            {{ $jobApplicant->graduation_year }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Is Approved:</strong>
+                            {{ $jobApplicant->is_approved }}
+                        </div>
 
                     </div>
                 </div>
