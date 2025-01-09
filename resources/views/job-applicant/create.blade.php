@@ -16,14 +16,8 @@
                         <span class="card-title"><i class="fa fa-plus text-success" aria-hidden="true"></i> Tambah Pelamar |
                             {{ $job_name }}</span>
                     </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('admin.job-applicants.store') }}" role="form"
-                            enctype="multipart/form-data">
-                            @csrf
-
+                    <div class="card-body">  
                             @include('job-applicant.form')
-
-                        </form>
                     </div>
                 </div>
             </div>

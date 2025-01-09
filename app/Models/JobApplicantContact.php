@@ -22,7 +22,6 @@ class JobApplicantContact extends Model
 {
     
     static $rules = [
-		'job_applicant_id' => 'required',
 		'type' => 'required',
 		'number' => 'required',
 		'email' => 'required',

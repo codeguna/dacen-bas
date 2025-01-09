@@ -25,7 +25,6 @@ class JobApplicantAddress extends Model
 {
     
     static $rules = [
-		'job_applicant_id' => 'required',
 		'address' => 'required',
 		'village' => 'required',
 		'district' => 'required',

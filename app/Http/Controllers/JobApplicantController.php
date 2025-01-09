@@ -115,4 +115,9 @@ class JobApplicantController extends Controller
         
         return view('job-applicant.create',compact('jobapplicant_id','job_name'));
     }
+
+    public function saveApplicant(Request $request)
+    {
+        return $request->all();
+    }
 }
