@@ -112,8 +112,9 @@ class JobApplicantController extends Controller
     {
         $jobapplicant_id    = JobVacancy::find($id);
         $job_name           = $jobapplicant_id->title;
+        $job_applicants_id  = $id;
         
-        return view('job-applicant.create',compact('jobapplicant_id','job_name'));
+        return view('job-applicant.create',compact('jobapplicant_id','job_name','job_applicants_id'));
     }
 
     public function saveApplicant(Request $request)

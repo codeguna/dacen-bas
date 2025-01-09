@@ -24,6 +24,7 @@
                             <form action="{{ route('admin.job-applicants.save-applicant') }}" method="POST" role="form"
                             enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" name="job_applicants_id" value="{{ $job_applicants_id }}">
                                 <div id="step1" class="content" role="tabpanel" aria-labelledby="steppertrigger1">
                                     {{-- FORM --}}
                                     @include('job-applicant.form.personal')
