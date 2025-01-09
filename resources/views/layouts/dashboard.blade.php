@@ -270,13 +270,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 return greeting;
             }
             document.getElementById("greeting").innerText = getGreeting();
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                window.stepper = new Stepper(document.querySelector('.bs-stepper'))
-            });
-        </script>
+        </script>       
     </body>
 
 </html>
