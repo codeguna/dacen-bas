@@ -78,7 +78,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                              <i class="fas fa-list"></i>  Daftar Lowongan Pekerjaan
+                                <i class="fas fa-list"></i> Daftar Lowongan Pekerjaan
                             </span>
 
                             <div class="float-right">
@@ -125,14 +125,17 @@
                                             $deadline = \Carbon\Carbon::parse($jobVacancy->deadline)->format('j F y');
 
                                             $endDate = \Carbon\Carbon::parse($jobVacancy->deadline)->format('Y-m-d');
-                                            $startDate = \Carbon\Carbon::parse($jobVacancy->date_start)->format('Y-m-d');
+                                            $startDate = \Carbon\Carbon::parse($jobVacancy->date_start)->format(
+                                                'Y-m-d',
+                                            );
                                         @endphp
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
                                             <td>{{ $jobVacancy->title }}</td>
                                             <td>{{ $jobVacancy->department->name }}</td>
-                                            <td>{{ $jobVacancy->amount_needed }} <i class="fas fa-user-alt text-primary"></i></i></td>
+                                            <td>{{ $jobVacancy->amount_needed }} <i
+                                                    class="fas fa-user-alt text-primary"></i></i></td>
                                             <td>{{ $date_start }}</td>
                                             <td>{{ $deadline }}</td>
                                             <td>{{ $jobVacancy->user->name }}</td>
@@ -149,11 +152,13 @@
                                                         <button type="submit" class="btn btn-danger btn-sm"><i
                                                                 class="fa fa-fw fa-trash"></i></button>
                                                         @if ($deadline <= $today)
-                                                            <a href="" class="btn btn-sm btn-info" title="Tambah Pelamar">
+                                                            <a href="{{ route('admin.job-applicants.add-applicant',$jobVacancy->id) }}"
+                                                                class="btn btn-sm btn-info" title="Tambah Pelamar">
                                                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                                                             </a>
                                                         @else
-                                                            <a href="#" class="btn btn-sm btn-dark" title="Sudah Melewati Batas Waktu">
+                                                            <a href="#" class="btn btn-sm btn-dark"
+                                                                title="Sudah Melewati Batas Waktu">
                                                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                                                             </a>
                                                         @endif

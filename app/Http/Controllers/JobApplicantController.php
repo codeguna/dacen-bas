@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobApplicant;
+use App\Models\JobVacancy;
 use Illuminate\Http\Request;
 
 /**
@@ -47,7 +48,7 @@ class JobApplicantController extends Controller
 
         $jobApplicant = JobApplicant::create($request->all());
 
-        return redirect()->route('job-applicants.index')
+        return redirect()->route('admin.job-applicants.index')
             ->with('success', 'JobApplicant created successfully.');
     }
 
@@ -90,7 +91,7 @@ class JobApplicantController extends Controller
 
         $jobApplicant->update($request->all());
 
-        return redirect()->route('job-applicants.index')
+        return redirect()->route('admin.job-applicants.index')
             ->with('success', 'JobApplicant updated successfully');
     }
 
@@ -103,7 +104,15 @@ class JobApplicantController extends Controller
     {
         $jobApplicant = JobApplicant::find($id)->delete();
 
-        return redirect()->route('job-applicants.index')
+        return redirect()->route('admin.job-applicants.index')
             ->with('success', 'JobApplicant deleted successfully');
+    }
+
+    public function addApplicant($id)
+    {
+        $jobapplicant_id    = JobVacancy::find($id);
+        $job_name           = $jobapplicant_id->title;
+        
+        return view('job-applicant.create',compact('jobapplicant_id','job_name'));
     }
 }

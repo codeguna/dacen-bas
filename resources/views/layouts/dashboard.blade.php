@@ -26,6 +26,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Theme style -->
         <link rel="stylesheet" href="{{ asset('adminLTE/dist/css/adminlte.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
         @yield('scripts-head')
         @stack('custom-scripts')
     </head>
@@ -214,6 +215,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- SLEECT2 -->
         <!-- Select2 -->
         <script src="{{ asset('adminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+        <script src="{{ asset('adminLTE/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
         @yield('scripts')
         <script>
             const quotes = ["Bekerja keras hari ini, biar besok bisa malas-malasan tanpa merasa bersalah. 😎✨",
@@ -268,6 +270,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 return greeting;
             }
             document.getElementById("greeting").innerText = getGreeting();
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+            });
         </script>
     </body>
 

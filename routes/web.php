@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmployeeDevelopmentController;
 use App\Http\Controllers\HomebaseController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\JobApplicantController;
 use App\Http\Controllers\LetterController;
 use App\Http\Controllers\ScanlogController;
 use App\Http\Controllers\WillingnessController;
@@ -203,5 +204,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
      //End Route Event Types
      //Route job-vacancies
      Route::resource('job-vacancies', 'JobVacancyController');
+     //End Route job-vacancies
+     //Route job-vacancies
+     Route::resource('job-applicants', 'JobApplicantController');
+     Route::get('job-applicant/addapplicant/{id}', [JobApplicantController::class, 'addApplicant'])->name('job-applicants.add-applicant');
      //End Route job-vacancies
 });

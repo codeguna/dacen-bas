@@ -26,7 +26,6 @@ class JobApplicant extends Model
 {
 
   static $rules = [
-    'job_vacancies_id' => 'required',
     'full_name' => 'required',
     'back_title' => 'required',
     'gender' => 'required',

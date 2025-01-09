@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('template_title')
-    {{ __('Create') }} Job Applicant
+    Tambah Pelamar | {{ $job_name }}
 @endsection
 
 @section('content')
@@ -13,10 +13,10 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Job Applicant</span>
+                        <span class="card-title"><i class="fa fa-plus text-success" aria-hidden="true"></i> Tambah Pelamar | {{ $job_name }}</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('job-applicants.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.job-applicants.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
                             @include('job-applicant.form')

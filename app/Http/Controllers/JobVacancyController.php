@@ -32,7 +32,7 @@ class JobVacancyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
         $departments    = Departmen::orderBy('name','ASC')->pluck('id','name');    
         $jobVacancy     = new JobVacancy();
         return view('job-vacancy.create', compact('jobVacancy','departments'));

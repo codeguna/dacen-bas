@@ -68,7 +68,7 @@
 
         @can('bas_menu')
             <!-- Add icons to the links using the .nav-icon class
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        with font-awesome or any other icon font library -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="{{ route('admin.home') }}"
                     class="nav-link {{ request()->is('admin/home') || request()->is('admin/home/*') ? 'active' : '' }}">
@@ -736,12 +736,20 @@
         @endcan
         @can('menu_job_vacancies')
             <li
-                class="nav-item {{ request()->is('admin/job-vacancies/*') || request()->is('admin/job-vacancies')
+                class="nav-item {{ request()->is('admin/job-vacancies/*') ||
+                request()->is('admin/job-vacancies') ||
+                request()->is('admin/job-applicant/addapplicant/') ||
+                request()->is('admin/job-applicant/addapplicant/*')
                     ? 'menu-open'
                     : '' }}">
                 <a
                     href="#"class="nav-link
-                        {{ request()->is('admin/job-vacancies/*') || request()->is('admin/job-vacancies') ? 'active' : '' }}">
+                            {{ request()->is('admin/job-vacancies/*') ||
+                            request()->is('admin/job-vacancies') ||
+                            request()->is('admin/job-applicant/addapplicant/') ||
+                            request()->is('admin/job-applicant/addapplicant/*')
+                                ? 'active'
+                                : '' }}">
                     <i class="fa fa-suitcase nav-icon" aria-hidden="true"></i>
                     <p>
                         Lowongan Pekerjaan
@@ -751,7 +759,8 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{ route('admin.job-vacancies.index') }}"
-                            class="nav-link {{ request()->is('admin/job-vacancies/*') || request()->is('admin/job-vacancies') ? 'active' : '' }}">
+                            class="nav-link {{ request()->is('admin/job-applicant/addapplicant/') ||
+                            request()->is('admin/job-applicant/addapplicant/*') ? 'active' : '' }}">
                             <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
                             <p>Lowongan</p>
                         </a>

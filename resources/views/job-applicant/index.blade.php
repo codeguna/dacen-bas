@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('template_title')
     Job Applicant
@@ -17,7 +17,7 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('job-applicants.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('admin.job-applicants.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Create New') }}
                                 </a>
                               </div>
@@ -75,9 +75,9 @@
 											<td>{{ $jobApplicant->is_approved }}</td>
 
                                             <td>
-                                                <form action="{{ route('job-applicants.destroy',$jobApplicant->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('job-applicants.show',$jobApplicant->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('job-applicants.edit',$jobApplicant->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('admin.job-applicants.destroy',$jobApplicant->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('admin.job-applicants.show',$jobApplicant->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('admin.job-applicants.edit',$jobApplicant->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
