@@ -43,7 +43,7 @@
     <div class="col-md-12">
         <div class="form-group">
             <label for="date_of_application">Tanggal Melamar</label>
-            <input type="date" class="form-control" id="date_of_application" name="date_of_application" required>
+            <input type="date" class="form-control" name="date_of_application" required>
         </div>
         <hr>
     </div>

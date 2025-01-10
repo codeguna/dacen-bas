@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobApplicant;
+use App\Models\JobApplicantAddress;
+use App\Models\JobApplicantAttachment;
 use App\Models\JobVacancy;
 use Illuminate\Http\Request;
 
@@ -113,12 +115,83 @@ class JobApplicantController extends Controller
         $jobapplicant_id    = JobVacancy::find($id);
         $job_name           = $jobapplicant_id->title;
         $job_applicants_id  = $id;
-        
-        return view('job-applicant.create',compact('jobapplicant_id','job_name','job_applicants_id'));
+
+        return view('job-applicant.create', compact('jobapplicant_id', 'job_name', 'job_applicants_id'));
     }
 
     public function saveApplicant(Request $request)
     {
+        $job_vacancies_id        = $request->job_applicants_id;
+        $full_name              = $request->full_name;
+        $front_title            = $request->front_title;
+        $back_title             = $request->back_title;
+        $gender                 = $request->gender;
+        $born_place             = $request->born_place;
+        $born_date              = $request->born_date;
+        $date_of_application    = $request->date_of_application;
+        $university             = $request->university;
+        $level                  = $request->level;
+        $major                  = $request->major;
+        $university_base        = $request->university_base;
+        $graduation_year        = $request->graduation_year;
         return $request->all();
+        $jobApplicants          = JobApplicant::create([
+            'job_vacancies_id'      => $job_vacancies_id,
+            'full_name'             => $full_name,
+            'front_title'           => $front_title,
+            'back_title'            => $back_title,
+            'gender'                => $gender,
+            'born_place'            => $born_place,
+            'born_date'             => $born_date,
+            'date_of_application'   => $date_of_application,
+            'university'            => $university,
+            'level'                 => $level,
+            'major'                 => $major,
+            'university_base'       => $university_base,
+            'graduation_year'       => $graduation_year,
+
+        ]);
+
+        $address        = $request->address;
+        $province       = $request->province;
+        $city           = $request->city;
+        $village        = $request->village;
+        $district       = $request->district;
+        $postal_code    = $request->postal_code;
+
+        $jobApplicantAddress    = JobApplicantAddress::create([
+            'job_applicant_id'  => $jobApplicants->id,
+            'address'           => $address,
+            'province'          => $province,
+            'city'              => $city,
+            'village'           => $village,
+            'district'          => $district,
+            'postal_code'       => $postal_code,
+
+        ]);
+
+        $type   = $request->type;
+        $number = $request->number;
+        $email = $request->email;
+
+        $jobApplicantContacts   = JobApplicantAddress::create([
+            'job_applicant_id'  => $jobApplicants->id,
+            'type'      => $type,
+            'number'    => $number,
+            'email'     => $email,
+        ]);
+
+        $file_applicant       = $request->file('files');       
+        $name_file = time() . "_" . $file_applicant->getClientOriginalName();
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'data_lampiran_pelamar';
+        $file_applicant->move($tujuan_upload, $name_file);
+
+        $jobApplicantFiles   = JobApplicantAttachment::create([
+            'job_applicant_id'  => $jobApplicants->id,
+            'files'             => $name_file,
+        ]);
+
+        return redirect()->route('admin.job-vacancies.index')->with('success','Berhasil menambahkan data pelamar!');
     }
 }
