@@ -22,7 +22,7 @@ class CreateJobApplicantsTable extends Migration
             $table->tinyInteger('gender');
             $table->string('born_place');
             $table->string('born_date');
-            $table->date('date_of _application');
+            $table->date('date_of_application');
             $table->char('level');
             $table->string('university');
             $table->string('major');

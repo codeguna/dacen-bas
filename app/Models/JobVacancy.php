@@ -61,5 +61,9 @@ class JobVacancy extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+	public function jobApplicant()
+    {
+        return $this->belongsTo(JobApplicant::class, 'id', 'job_vacancies_id');
+    }	
 
 }

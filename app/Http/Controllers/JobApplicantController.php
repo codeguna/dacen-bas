@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JobApplicant;
 use App\Models\JobApplicantAddress;
 use App\Models\JobApplicantAttachment;
+use App\Models\JobApplicantContact;
 use App\Models\JobVacancy;
 use Illuminate\Http\Request;
 
@@ -134,7 +135,7 @@ class JobApplicantController extends Controller
         $major                  = $request->major;
         $university_base        = $request->university_base;
         $graduation_year        = $request->graduation_year;
-        return $request->all();
+
         $jobApplicants          = JobApplicant::create([
             'job_vacancies_id'      => $job_vacancies_id,
             'full_name'             => $full_name,
@@ -167,14 +168,13 @@ class JobApplicantController extends Controller
             'village'           => $village,
             'district'          => $district,
             'postal_code'       => $postal_code,
-
         ]);
 
         $type   = $request->type;
         $number = $request->number;
         $email = $request->email;
 
-        $jobApplicantContacts   = JobApplicantAddress::create([
+        $jobApplicantContacts   = JobApplicantContact::create([
             'job_applicant_id'  => $jobApplicants->id,
             'type'      => $type,
             'number'    => $number,

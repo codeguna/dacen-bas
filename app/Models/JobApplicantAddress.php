@@ -30,11 +30,11 @@ class JobApplicantAddress extends Model
 		'district' => 'required',
 		'province' => 'required',
 		'city' => 'required',
-		'postal_code' => 'required',
+		'postal_code' => 'required'
     ];
 
     protected $perPage = 20;
-
+    protected $table = 'job_applicant_address';
     /**
      * Attributes that should be mass-assignable.
      *

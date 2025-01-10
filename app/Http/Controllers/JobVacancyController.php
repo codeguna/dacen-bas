@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departmen;
+use App\Models\JobApplicant;
 use App\Models\JobVacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,8 +76,9 @@ class JobVacancyController extends Controller
     public function show($id)
     {
         $jobVacancy = JobVacancy::find($id);
+        $getApplicant = JobApplicant::where('job_vacancies_id',$jobVacancy->id)->orderBy('date_of_application','ASC')->get();
 
-        return view('job-vacancy.show', compact('jobVacancy'));
+        return view('job-vacancy.show', compact('jobVacancy','getApplicant'));
     }
 
     /**

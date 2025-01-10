@@ -33,36 +33,42 @@
                                     {{-- FORM --}}
                                     @include('job-applicant.form.personal')
                                     {{-- END FORM --}}
-                                    <button class="btn btn-primary" onclick="stepper.next()"><i
-                                            class="fa fa-arrow-right" aria-hidden="true"></i> Tahap Berikutnya</button>
+                                    <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.next()">
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i> Berikutnya
+                                    </a>
+                                    
                                 </div>
                                 <div id="step2" class="content" role="tabpanel" aria-labelledby="steppertrigger2">
                                     {{-- FORM --}}
                                     @include('job-applicant.form.address')
                                     {{-- END FORM --}}
-                                    <button class="btn btn-primary" onclick="stepper.previous()"><i
-                                            class="fa fa-arrow-left" aria-hidden="true"></i>
-                                        Sebelumnya</button> <button class="btn btn-primary" onclick="stepper.next()"><i
-                                            class="fa fa-arrow-right" aria-hidden="true"></i>
-                                        Berikutnya</button>
+                                    <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.previous()">
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Sebelumnya
+                                    </a>
+                                    <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.next()">
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i> Berikutnya
+                                    </a>
+                                    
                                 </div>
                                 <div id="step3" class="content" role="tabpanel" aria-labelledby="steppertrigger3">
                                     {{-- FORM --}}
                                     @include('job-applicant.form.contact')
                                     {{-- FORM --}}
-                                    <button class="btn btn-primary" onclick="stepper.previous()"><i
-                                        class="fa fa-arrow-left" aria-hidden="true"></i>
-                                    Sebelumnya</button> <button class="btn btn-primary" onclick="stepper.next()"><i
-                                        class="fa fa-arrow-right" aria-hidden="true"></i>
-                                    Berikutnya</button>
+                                    <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.previous()">
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Sebelumnya
+                                    </a>
+                                    <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.next()">
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i> Berikutnya
+                                    </a>
+                                    
                                 </div>
                                 <div id="step4" class="content" role="tabpanel" aria-labelledby="steppertrigger4">
                                     {{-- FORM --}}
                                     @include('job-applicant.form.files')
                                     {{-- FORM --}}
-                                    <button class="btn btn-primary" onclick="stepper.previous()"><i
-                                            class="fa fa-arrow-left" aria-hidden="true"></i>
-                                        Sebelumnya</button>
+                                    <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.previous()">
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Sebelumnya
+                                    </a>                                    
                                     <button type="submit" class="btn btn-success"><i class="fa fa-check-circle"
                                             aria-hidden="true"></i> Submit</button>
                                 </div>

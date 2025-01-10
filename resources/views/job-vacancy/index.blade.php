@@ -8,14 +8,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h3><i class="fas fa-chalkboard"></i> Dashboard Lowongan Kerja</h3>
+                <h3><i class="fas fa-chalkboard"></i> Dashboard Permintaan Kerja</h3>
             </div>
             <div class="col-md-3">
                 <div class="small-box bg-lightblue">
                     <div class="inner">
                         <h3>65</h3>
 
-                        <p>Lowongan Aktif</p>
+                        <p>Permintaan Aktif</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-check-circle" aria-hidden="true"></i>
@@ -30,7 +30,7 @@
                     <div class="inner">
                         <h3>65</h3>
 
-                        <p>Lowongan Tidak Aktif</p>
+                        <p>Permintaan Tidak Aktif</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-hourglass-end" aria-hidden="true"></i>
@@ -78,13 +78,13 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                <i class="fas fa-list"></i> Daftar Lowongan Pekerjaan
+                                <i class="fas fa-list"></i> Daftar Permintaan Pekerjaan
                             </span>
 
                             <div class="float-right">
                                 <a href="{{ route('admin.job-vacancies.create') }}"
                                     class="btn btn-primary btn-sm float-right" data-placement="left">
-                                    <i class="fa fa-plus" aria-hidden="true"></i> Tambah Lowongan
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Tambah Permintaan
                                 </a>
                             </div>
                         </div>
@@ -99,11 +99,11 @@
                         <div class="table-responsive">
                             <table id="example1" class="table table-striped table-hover">
                                 <thead class="thead">
-                                    <tr>
+                                    <tr align="center">
                                         <th>No</th>
-                                        <th>Nama Lowongan</th>
+                                        <th>Nama Permintaan</th>
                                         <th>Departemen</th>
-                                        <th>Jumlah Kebutuhan</th>
+                                        <th>Jumlah Kebutuhan | Lamaran Masuk</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Berakhir</th>
                                         <th>Pemohon</th>
@@ -134,8 +134,10 @@
 
                                             <td>{{ $jobVacancy->title }}</td>
                                             <td>{{ $jobVacancy->department->name }}</td>
-                                            <td>{{ $jobVacancy->amount_needed }} <i
-                                                    class="fas fa-user-alt text-primary"></i></i></td>
+                                            <td>
+                                                <i class="fas fa-user-alt text-primary"></i></i>
+                                                {{ $jobVacancy->amount_needed }} | <i class="fa fa-sign-in-alt text-success" aria-hidden="true"></i> {{ $jobVacancy->jobApplicant->count() }}
+                                            </td>
                                             <td>{{ $date_start }}</td>
                                             <td>{{ $deadline }}</td>
                                             <td>{{ $jobVacancy->user->name }}</td>
@@ -149,10 +151,10 @@
                                                         <a class="btn btn-sm btn-success"
                                                             href="{{ route('admin.job-vacancies.edit', $jobVacancy->id) }}"><i
                                                                 class="fa fa-fw fa-edit"></i></a>
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                        <button type="submit" class="btn btn-danger btn-sm"  onclick="return confirm('Hapus data Permintaan Karyawan {{ $jobVacancy->title }}?')"><i
                                                                 class="fa fa-fw fa-trash"></i></button>
                                                         @if ($deadline <= $today)
-                                                            <a href="{{ route('admin.job-applicants.add-applicant',$jobVacancy->id) }}"
+                                                            <a href="{{ route('admin.job-applicants.add-applicant', $jobVacancy->id) }}"
                                                                 class="btn btn-sm btn-info" title="Tambah Pelamar">
                                                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                                                             </a>

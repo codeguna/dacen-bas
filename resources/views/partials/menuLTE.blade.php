@@ -759,7 +759,10 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{ route('admin.job-vacancies.index') }}"
-                            class="nav-link {{ request()->is('admin/job-applicant/addapplicant/') ||
+                            class="nav-link {{ 
+                            request()->is('admin/job-vacancies/*') ||
+                            request()->is('admin/job-vacancies') ||
+                            request()->is('admin/job-applicant/addapplicant/') ||
                             request()->is('admin/job-applicant/addapplicant/*') ? 'active' : '' }}">
                             <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
                             <p>Lowongan</p>

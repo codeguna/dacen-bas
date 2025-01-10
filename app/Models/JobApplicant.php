@@ -54,7 +54,7 @@ class JobApplicant extends Model
     'gender',
     'born_place',
     'born_date',
-    'date_of _application',
+    'date_of_application',
     'is_approved',
     'level',
     'university',
@@ -62,4 +62,22 @@ class JobApplicant extends Model
     'university_base',
     'graduation_year'
   ];
+
+  public function jobApplicantAddress()
+    {
+        return $this->belongsTo(JobApplicantAddress::class, 'job_applicant_id', 'id');
+    }
+  public function jobApplicantAttachments()
+    {
+        return $this->belongsTo(JobApplicantAttachment::class, 'job_applicant_id', 'id');
+    }
+  public function jobApplicantContact()
+    {
+        return $this->belongsTo(JobApplicantContact::class, 'job_applicant_id', 'id');
+    } 
+
+    public function jobVacancy()
+    {
+        return $this->hasMany(JobVacancy::class);
+    }
 }
