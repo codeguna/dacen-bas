@@ -114,9 +114,9 @@
                     @php
                         $i = 0;
                     @endphp
-                    @forelse ($getApplicant as $applicant)
+                    @forelse ($getApplicant as $jobApplicant)
                         @php
-                            $birthDate = '1994-04-04';
+                            $birthDate = $jobApplicant->born_date;
                             $birthDateTimestamp = strtotime($birthDate);
                             $age = date('Y') - date('Y', $birthDateTimestamp); // Jika bulan dan hari saat ini belum melewati bulan dan hari lahir, kurangi umur dengan satu tahun if (date('md', $birthDateTimestamp) > date('md')) { $age--; }
                         @endphp
@@ -125,10 +125,10 @@
                                 {{ ++$i }}
                             </td>
                             <td>
-                                {{ $applicant->full_name }}
+                                {{ $jobApplicant->full_name }}
                             </td>
                             <td>
-                                @switch($applicant->level)
+                                @switch($jobApplicant->level)
                                     @case(1)
                                         SMA/SMK
                                     @break
@@ -158,13 +158,13 @@
                                     @break
 
                                     @default
-                                @endswitch | {{ $applicant->university }}
+                                @endswitch | {{ $jobApplicant->university }}
                             </td>
                             <td>
-                                {{ $applicant->graduation_year }}
+                                {{ $jobApplicant->graduation_year }}
                             </td>
                             <td>
-                                {{ date('d M Y', strtotime($applicant->date_of_application)) }}
+                                {{ date('d M Y', strtotime($jobApplicant->date_of_application)) }}
                             </td>
                             <td>
                                 <strong>
@@ -176,9 +176,9 @@
                                 </strong>
                             </td>
                             <td>
-                                @if ($applicant->is_approved == 0)
+                                @if ($jobApplicant->is_approved == 0)
                                     <div class="btn-group">
-                                        <a href="#" class="btn btn-primary" style="text-decoration: none">
+                                        <a href="{{ route('admin.job-applicants.show',$jobApplicant->id) }}" class="btn btn-primary" style="text-decoration: none">
                                             <i class="fa fa-eye" aria-hidden="true"></i> Detail
                                         </a>
                                         <a href="#" class="btn btn-success" style="text-decoration: none">
@@ -187,7 +187,7 @@
                                     </div>
                                 @else
                                     <div class="btn-group">
-                                        <a href="#" class="btn btn-primary" style="text-decoration: none">
+                                        <a href="{{ route('admin.job-applicants.show',$jobVacancy->id) }}" class="btn btn-primary" style="text-decoration: none">
                                             <i class="fa fa-eye" aria-hidden="true"></i> Detail
                                         </a>
                                         <a href="#" class="btn btn-danger" style="text-decoration: none">

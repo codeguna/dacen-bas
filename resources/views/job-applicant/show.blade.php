@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    {{ $jobApplicant->name }}
+    Detail Pelamar {{ $jobApplicant->full_name }}
 @endsection
 
 @section('content')
@@ -11,72 +11,227 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Job Applicant</span>
+                            <h4 class="card-title"><i class="fa fa-eye text-primary" aria-hidden="true"></i> Detail Pelamar
+                            </h4>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('admin.job-applicants.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('admin.job-applicants.index') }}">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
                         </div>
                     </div>
-
+                    @php
+                        $birthDate = $jobApplicant->born_date;
+                        $birthDateTimestamp = strtotime($birthDate);
+                        $age = date('Y') - date('Y', $birthDateTimestamp); // Jika bulan dan hari saat ini belum melewati bulan dan hari lahir, kurangi umur dengan satu tahun if (date('md', $birthDateTimestamp) > date('md')) { $age--; }
+                    @endphp
                     <div class="card-body">
-                        
-                        <div class="form-group">
-                            <strong>Job Vacancies Id:</strong>
-                            {{ $jobApplicant->job_vacancies_id }}
+                        <div class="row">
+                            <input type="hidden" name="job_vacancies_id" value="{{ $jobApplicant->job_vacancies_id }}">
+                            <div class="col-md-12">
+                                <h4 class="font-weight-bold">Data Personal</h4>
+                                <div class="form-group">
+                                    <strong>Nama Lengkap:</strong>
+                                    {{ $jobApplicant->full_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Gelar Depan:</strong>
+                                    {{ $jobApplicant->front_title ?? 'Tidak Ada' }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Gelar Belakang:</strong>
+                                    {{ $jobApplicant->back_title }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Jenis Kelamin:</strong>
+                                    @if ($jobApplicant->gender == 1)
+                                        Laki-laki
+                                    @elseif ($jobApplicant->gender == 2)
+                                        Perempuan
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Tempat Lahir:</strong>
+                                    {{ $jobApplicant->born_place }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Tanggal Lahir:</strong>
+                                    {{ date('d M Y', strtotime($jobApplicant->born_date)) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Umur: </strong>{{ $age }} tahun
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <hr>
+                                <div class="form-group">
+                                    <strong>Tanggal Melamar:</strong>
+                                    {{ date('d M Y', strtotime($jobApplicant->date_of_application)) }}
+                                </div>
+                                <hr>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Pendidikan:</strong>
+                                    @switch($jobApplicant->level)
+                                        @case(1)
+                                            SMA/SMK
+                                        @break
+
+                                        @case(2)
+                                            D1
+                                        @break
+
+                                        @case(3)
+                                            D3
+                                        @break
+
+                                        @case(4)
+                                            D4
+                                        @break
+
+                                        @case(5)
+                                            S1
+                                        @break
+
+                                        @case(6)
+                                            S2
+                                        @break
+
+                                        @case(7)
+                                            S3
+                                        @break
+
+                                        @default
+                                    @endswitch {{ $jobApplicant->major }} - {{ $jobApplicant->university }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Kota Universitas:</strong>
+                                    {{ $jobApplicant->university_base }}
+                                </div>
+                            </div>
                         </div>
+
                         <div class="form-group">
-                            <strong>Full Name:</strong>
-                            {{ $jobApplicant->full_name }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Front Title:</strong>
-                            {{ $jobApplicant->front_title }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Back Title:</strong>
-                            {{ $jobApplicant->back_title }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Gender:</strong>
-                            {{ $jobApplicant->gender }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Born Place:</strong>
-                            {{ $jobApplicant->born_place }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Born Date:</strong>
-                            {{ $jobApplicant->born_date }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Date Of  Application:</strong>
-                            {{ $jobApplicant->date_of _application }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Level:</strong>
-                            {{ $jobApplicant->level }}
-                        </div>
-                        <div class="form-group">
-                            <strong>University:</strong>
-                            {{ $jobApplicant->university }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Major:</strong>
-                            {{ $jobApplicant->major }}
-                        </div>
-                        <div class="form-group">
-                            <strong>University Base:</strong>
-                            {{ $jobApplicant->university_base }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Graduation Year:</strong>
+                            <strong>Tahun Lulus:</strong>
                             {{ $jobApplicant->graduation_year }}
                         </div>
-                        <div class="form-group">
-                            <strong>Is Approved:</strong>
-                            {{ $jobApplicant->is_approved }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="font-weight-bold">Data Alamat</h4>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Alamat Lengkap:</strong>
+                                    {{ $jobApplicant->jobApplicantAddress->address }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Kota/Kab:</strong>
+                                    {{ $jobApplicant->jobApplicantAddress->city }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Kelurahan:</strong>
+                                    {{ $jobApplicant->jobApplicantAddress->village }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Kecamatan:</strong>
+                                    {{ $jobApplicant->jobApplicantAddress->province }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Kelurahan:</strong>
+                                    {{ $jobApplicant->jobApplicantAddress->postal_code }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Kecamatan:</strong>
+                                    {{ $jobApplicant->jobApplicantAddress->district }}
+                                </div>
+                            </div>
                         </div>
-
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="font-weight-bold">Data Kontak</h4>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>Tipe Nomor:</strong>
+                                    @if ($jobApplicant->jobApplicantContact->type == 1)
+                                        Handphone (WA)
+                                    @elseif($jobApplicant->jobApplicantContact->type == 2)
+                                        Telepon
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Nomor:</strong>
+                                    {{ $jobApplicant->jobApplicantContact->number }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Alamat Email:</strong>
+                                    {{ $jobApplicant->jobApplicantContact->email }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="font-weight-bold">Data Lampiran</h4>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>Surat Lamaran dan CV:</strong>
+                                    <a href="{{ url('/data_lampiran_pelamar/' . $jobApplicant->jobApplicantAttachments->files) }}"
+                                        target="_blank">
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i> Lampiran
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

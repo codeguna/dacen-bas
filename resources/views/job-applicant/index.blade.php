@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    Job Applicant
+   Data Pelamar
 @endsection
 
 @section('content')
@@ -66,7 +66,7 @@
 											<td>{{ $jobApplicant->gender }}</td>
 											<td>{{ $jobApplicant->born_place }}</td>
 											<td>{{ $jobApplicant->born_date }}</td>
-											<td>{{ $jobApplicant->date_of _application }}</td>
+											<td>{{ $jobApplicant->date_of_application }}</td>
 											<td>{{ $jobApplicant->level }}</td>
 											<td>{{ $jobApplicant->university }}</td>
 											<td>{{ $jobApplicant->major }}</td>

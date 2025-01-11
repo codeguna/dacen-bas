@@ -65,15 +65,15 @@ class JobApplicant extends Model
 
   public function jobApplicantAddress()
     {
-        return $this->belongsTo(JobApplicantAddress::class, 'job_applicant_id', 'id');
+        return $this->belongsTo(JobApplicantAddress::class,'id', 'job_applicant_id' );
     }
   public function jobApplicantAttachments()
     {
-        return $this->belongsTo(JobApplicantAttachment::class, 'job_applicant_id', 'id');
+        return $this->belongsTo(JobApplicantAttachment::class, 'id', 'job_applicant_id' );
     }
   public function jobApplicantContact()
     {
-        return $this->belongsTo(JobApplicantContact::class, 'job_applicant_id', 'id');
+        return $this->belongsTo(JobApplicantContact::class, 'id', 'job_applicant_id' );
     } 
 
     public function jobVacancy()

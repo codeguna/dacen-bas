@@ -739,7 +739,9 @@
                 class="nav-item {{ request()->is('admin/job-vacancies/*') ||
                 request()->is('admin/job-vacancies') ||
                 request()->is('admin/job-applicant/addapplicant/') ||
-                request()->is('admin/job-applicant/addapplicant/*')
+                request()->is('admin/job-applicant/addapplicant/*') ||
+                 request()->is('admin/job-applicants/*') || 
+                            request()->is('admin/job-applicants')
                     ? 'menu-open'
                     : '' }}">
                 <a
@@ -747,7 +749,9 @@
                             {{ request()->is('admin/job-vacancies/*') ||
                             request()->is('admin/job-vacancies') ||
                             request()->is('admin/job-applicant/addapplicant/') ||
-                            request()->is('admin/job-applicant/addapplicant/*')
+                            request()->is('admin/job-applicant/addapplicant/*') ||
+                             request()->is('admin/job-applicants/*') || 
+                            request()->is('admin/job-applicants')
                                 ? 'active'
                                 : '' }}">
                     <i class="fa fa-suitcase nav-icon" aria-hidden="true"></i>
@@ -766,6 +770,15 @@
                             request()->is('admin/job-applicant/addapplicant/*') ? 'active' : '' }}">
                             <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
                             <p>Lowongan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.job-applicants.index') }}"
+                            class="nav-link {{ 
+                            request()->is('admin/job-applicants/*') || 
+                            request()->is('admin/job-applicants') ? 'active' : '' }}">
+                            <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
+                            <p>Pelamar</p>
                         </a>
                     </li>
                 </ul>

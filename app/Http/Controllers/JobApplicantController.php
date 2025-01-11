@@ -63,8 +63,8 @@ class JobApplicantController extends Controller
      */
     public function show($id)
     {
-        $jobApplicant = JobApplicant::find($id);
 
+        $jobApplicant = JobApplicant::find($id);
         return view('job-applicant.show', compact('jobApplicant'));
     }
 
@@ -181,7 +181,7 @@ class JobApplicantController extends Controller
             'email'     => $email,
         ]);
 
-        $file_applicant       = $request->file('files');       
+        $file_applicant       = $request->file('files');
         $name_file = time() . "_" . $file_applicant->getClientOriginalName();
         // isi dengan nama folder tempat kemana file diupload
         $tujuan_upload = 'data_lampiran_pelamar';
@@ -192,6 +192,6 @@ class JobApplicantController extends Controller
             'files'             => $name_file,
         ]);
 
-        return redirect()->route('admin.job-vacancies.index')->with('success','Berhasil menambahkan data pelamar!');
+        return redirect()->route('admin.job-vacancies.index')->with('success', 'Berhasil menambahkan data pelamar!');
     }
 }
