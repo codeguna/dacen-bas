@@ -777,7 +777,7 @@
                             class="nav-link {{ 
                             request()->is('admin/job-applicants/*') || 
                             request()->is('admin/job-applicants') ? 'active' : '' }}">
-                            <i class="fa fa-binoculars nav-icon" aria-hidden="true"></i>
+                           <i class="fas fa-user-tie nav-icon"></i>
                             <p>Pelamar</p>
                         </a>
                     </li>

@@ -21,7 +21,13 @@
                     </div>
 
                     <div class="card-body">
+                        @php
+                            $date       = $jobVacancy->deadline;
+                            $date_start = $jobVacancy->date_start;
 
+                            $deadline = date('d-m-Y', strtotime($date));
+                            $startdate = date('d-m-Y', strtotime($date_start));
+                        @endphp
                         <div class="row">
                             <div class="col-md-12">
                                 <table class="table table-bordered">
@@ -68,11 +74,11 @@
                                         </tr>
                                         <tr>
                                             <th>Tanggal Mulai</th>
-                                            <td>{{ $jobVacancy->date_start }}</td>
+                                            <td>{{ $startdate}}</td>
                                         </tr>
                                         <tr>
                                             <th>Tanggal Berakhir</th>
-                                            <td>{{ $jobVacancy->deadline }}</td>
+                                            <td>{{ $deadline }}</td>
                                         </tr>
                                         <tr>
                                             <th>Pemohon</th>
@@ -171,14 +177,15 @@
                                     @if ($age <= $jobVacancy->max_age)
                                         {{ $age }} | Usia Memenuhi
                                     @else
-                                    {{ $age }} | Usia Tidak Memenuhi
+                                        {{ $age }} | Usia Tidak Memenuhi
                                     @endif
                                 </strong>
                             </td>
                             <td>
                                 @if ($jobApplicant->is_approved == 0)
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.job-applicants.show',$jobApplicant->id) }}" class="btn btn-primary" style="text-decoration: none">
+                                        <a href="{{ route('admin.job-applicants.show', $jobApplicant->id) }}"
+                                            class="btn btn-primary" style="text-decoration: none">
                                             <i class="fa fa-eye" aria-hidden="true"></i> Detail
                                         </a>
                                         <a href="#" class="btn btn-success" style="text-decoration: none">
@@ -187,7 +194,8 @@
                                     </div>
                                 @else
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.job-applicants.show',$jobVacancy->id) }}" class="btn btn-primary" style="text-decoration: none">
+                                        <a href="{{ route('admin.job-applicants.show', $jobVacancy->id) }}"
+                                            class="btn btn-primary" style="text-decoration: none">
                                             <i class="fa fa-eye" aria-hidden="true"></i> Detail
                                         </a>
                                         <a href="#" class="btn btn-danger" style="text-decoration: none">

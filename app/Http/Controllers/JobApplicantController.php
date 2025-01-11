@@ -22,10 +22,10 @@ class JobApplicantController extends Controller
      */
     public function index()
     {
-        $jobApplicants = JobApplicant::paginate();
+        $jobApplicants = JobApplicant::orderBy('created_at','DESC')->get();
 
         return view('job-applicant.index', compact('jobApplicants'))
-            ->with('i', (request()->input('page', 1) - 1) * $jobApplicants->perPage());
+            ->with('i');
     }
 
     /**

@@ -55,23 +55,26 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.roles.show', $role->id) }}">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
+                                    <div class="btn-group">
+                                        <a class="btn btn-primary"
+                                            href="{{ route('admin.roles.show', $role->id) }}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
 
-                                    <a class="btn btn-xs btn-warning" href="{{ route('admin.roles.edit', $role->id) }}">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
+                                        <a class="btn btn-warning"
+                                            href="{{ route('admin.roles.edit', $role->id) }}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
 
-                                    <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST"
-                                        onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
-                                        style="display: inline-block;">
-                                        <div class="btn-group">
+                                        <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST"
+                                            onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                            style="display: inline-block;">
+
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <button type="submit" class="btn btn-xs btn-danger"><i
+                                            <button type="submit" class="btn btn-danger"><i
                                                     class="fa fa-trash"></i></button>
-                                        </div>
+                                    </div>
                                     </form>
                                 </td>
 

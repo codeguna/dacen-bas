@@ -34,7 +34,7 @@
                                     @include('job-applicant.form.personal')
                                     {{-- END FORM --}}
                                     <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.next()">
-                                        <i class="fa fa-arrow-right" aria-hidden="true"></i> Berikutnya
+                                        Berikutnya <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                     </a>
                                     
                                 </div>
@@ -42,11 +42,11 @@
                                     {{-- FORM --}}
                                     @include('job-applicant.form.address')
                                     {{-- END FORM --}}
-                                    <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.previous()">
+                                    <a class="btn btn-warning" href="javascript:void(0);" onclick="stepper.previous()">
                                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Sebelumnya
                                     </a>
                                     <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.next()">
-                                        <i class="fa fa-arrow-right" aria-hidden="true"></i> Berikutnya
+                                        Berikutnya  <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                     </a>
                                     
                                 </div>
@@ -54,11 +54,11 @@
                                     {{-- FORM --}}
                                     @include('job-applicant.form.contact')
                                     {{-- FORM --}}
-                                    <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.previous()">
+                                    <a class="btn btn-warning" href="javascript:void(0);" onclick="stepper.previous()">
                                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Sebelumnya
                                     </a>
                                     <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.next()">
-                                        <i class="fa fa-arrow-right" aria-hidden="true"></i> Berikutnya
+                                      Berikutnya    <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                     </a>
                                     
                                 </div>
@@ -66,7 +66,7 @@
                                     {{-- FORM --}}
                                     @include('job-applicant.form.files')
                                     {{-- FORM --}}
-                                    <a class="btn btn-primary" href="javascript:void(0);" onclick="stepper.previous()">
+                                    <a class="btn btn-warning" href="javascript:void(0);" onclick="stepper.previous()">
                                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Sebelumnya
                                     </a>                                    
                                     <button type="submit" class="btn btn-success"><i class="fa fa-check-circle"
