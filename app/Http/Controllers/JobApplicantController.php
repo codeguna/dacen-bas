@@ -78,7 +78,7 @@ class JobApplicantController extends Controller
     {
         $jobApplicant = JobApplicant::find($id);
 
-        return view('job-applicant.edit', compact('jobApplicant'));
+        return view('job-applicant.edit-form', compact('jobApplicant'));
     }
 
     /**
@@ -194,4 +194,5 @@ class JobApplicantController extends Controller
 
         return redirect()->route('admin.job-vacancies.index')->with('success', 'Berhasil menambahkan data pelamar!');
     }
+    
 }
