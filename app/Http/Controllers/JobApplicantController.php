@@ -8,6 +8,7 @@ use App\Models\JobApplicantAttachment;
 use App\Models\JobApplicantContact;
 use App\Models\JobVacancy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class JobApplicantController
@@ -22,7 +23,7 @@ class JobApplicantController extends Controller
      */
     public function index()
     {
-        $jobApplicants = JobApplicant::orderBy('created_at','DESC')->get();
+        $jobApplicants = JobApplicant::orderBy('created_at', 'DESC')->get();
 
         return view('job-applicant.index', compact('jobApplicants'))
             ->with('i');
@@ -90,12 +91,97 @@ class JobApplicantController extends Controller
      */
     public function update(Request $request, JobApplicant $jobApplicant)
     {
-        request()->validate(JobApplicant::$rules);
+        // request()->validate(JobApplicant::$rules);
 
-        $jobApplicant->update($request->all());
+        $full_name              = $request->full_name;
+        $front_title            = $request->front_title;
+        $back_title             = $request->back_title;
+        $gender                 = $request->gender;
+        $born_place             = $request->born_place;
+        $born_date              = $request->born_date;
+        $date_of_application    = $request->date_of_application;
+        $level                  = $request->level;
+        $major                  = $request->major;
+        $university_base        = $request->university_base;
+        $graduation_year        = $request->graduation_year;
+        $university             = $request->university;
+        $jobID                  = $jobApplicant->id;
+        $updateDataApplicant = [
+            'job_vacancies_id'      => $jobID,
+            'full_name'             => $full_name,
+            'front_title'           => $front_title,
+            'back_title'            => $back_title,
+            'gender'                => $gender,
+            'born_place'            => $born_place,
+            'born_date'             => $born_date,
+            'date_of_application'   => $date_of_application,
+            'level'                 => $level,
+            'major'                 => $major,
+            'university_base'       => $university_base,
+            'graduation_year'       => $graduation_year,
+            'university'            => $university,
+            'is_approved'           => $jobApplicant->is_approved
+        ];
 
-        return redirect()->route('admin.job-applicants.index')
-            ->with('success', 'JobApplicant updated successfully');
+        $jobApplicant->update($updateDataApplicant);
+
+        $address        = $request->address;
+        $village        = $request->village;
+        $district       = $request->district;
+        $province       = $request->province;
+        $city           = $request->city;
+        $postal_code    = $request->postal_code;
+
+        $jobApplicantAddress    = JobApplicantAddress::where('job_applicant_id', '=', $jobID)->first();
+        $updateDataApplicantAddress = [
+            'job_applicant_id'  => $jobID,
+            'address'           => $address,
+            'village'           => $village,
+            'district'          => $district,
+            'province'          => $province,
+            'city'              => $city,
+            'postal_code'       => $postal_code
+        ];
+
+        $jobApplicantAddress->update($updateDataApplicantAddress);
+
+        $type        = $request->type;
+        $number      = $request->number;
+        $email       = $request->email;
+        $jobApplicantContact   = JobApplicantContact::where('job_applicant_id', '=', $jobID)->first();
+        $updateDataApplicantContact = [
+            'job_applicant_id'  => $jobID,
+            'type'              => $type,
+            'number'            => $number,
+            'email'             => $email,
+        ];
+
+        $jobApplicantContact->update($updateDataApplicantContact);
+
+        $updateDataAttachment = [
+            'job_applicant_id'           => $jobID,
+        ];
+
+        $id_card_file = $request->file('files');
+        if ($id_card_file) {
+            $file = public_path('data_lampiran_pelamar/' . $jobApplicant->jobApplicantAttachments->files);
+            $img = File::delete($file);
+
+            $name_file = time() . "_" . $id_card_file->getClientOriginalName();
+            // Directory for uploading the file
+            $tujuan_upload = 'data_lampiran_pelamar';
+            $id_card_file->move($tujuan_upload, $name_file);
+
+            $updateDataAttachment['files'] = $name_file;
+        }
+        if($jobApplicant)
+        {
+            $jobApplicantAttachment = JobApplicantAttachment::where('job_applicant_id','=',$jobID)->first();
+            $jobApplicantAttachment->update($updateDataAttachment);
+        }
+
+        return redirect()->back()
+            ->with('success', 'Berhasil Perbarui Data Pelamar');
     }
 
     /**
@@ -194,5 +280,4 @@ class JobApplicantController extends Controller
 
         return redirect()->route('admin.job-vacancies.index')->with('success', 'Berhasil menambahkan data pelamar!');
     }
-    
 }

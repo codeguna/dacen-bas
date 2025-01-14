@@ -24,13 +24,15 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <h4 class="font-weight-bold">Data Personal</h4>
-                            <div class="form-group">
-                                <label for="full_name"><strong>Nama Lengkap:</strong></label>
-                                <input type="text" name="full_name" id="full_name" class="form-control"
-                                    value="{{ $jobApplicant->full_name }}" required>
-                            </div>
                             <div class="row">
+                                <div class="col-md-12">
+                                    <h4 class="font-weight-bold">Data Personal</h4>
+                                    <div class="form-group">
+                                        <label for="full_name"><strong>Nama Lengkap:</strong></label>
+                                        <input type="text" name="full_name" id="full_name" class="form-control"
+                                            value="{{ $jobApplicant->full_name }}" required>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="front_title"><strong>Gelar Depan:</strong></label>
@@ -92,9 +94,50 @@
                                 <input type="date" name="date_of_application" id="date_of_application"
                                     class="form-control" value="{{ $jobApplicant->date_of_application }}" required>
                             </div>
-                            <hr>
-                            <h4 class="font-weight-bold">Data Pendidikan</h4>
                             <div class="row">
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h4 class="font-weight-bold">Data Kontak</h4>
+                                    <hr>
+                                </div>
+                                @if ($jobApplicant->jobApplicantContact->type == 1)
+                                    @php
+                                        $type = 1;
+                                    @endphp
+                                @elseif($jobApplicant->jobApplicantContact->type == 2)
+                                    @php
+                                        $type = 2;
+                                    @endphp
+                                @endif
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label><strong>Tipe Kontak:</strong></label>
+                                        <select name="type" class="form-control" required>                                           
+                                            <option value="2" {{ $type == '2' ? 'selected' : '' }}>Handphone (WA)</option>
+                                            <option value="1" {{ $type == '1' ? 'selected' : '' }}>Telepon</option>
+                                        </select>
+                                        
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="born_place"><strong>Tipe Kontak:</strong></label>
+                                        <input type="text" name="number" class="form-control"
+                                            value="{{ $jobApplicant->jobApplicantContact->number }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="born_place"><strong>Tipe Kontak:</strong></label>
+                                        <input type="text" name="email" class="form-control"
+                                            value="{{ $jobApplicant->jobApplicantContact->email }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h4 class="font-weight-bold">Data Pendidikan</h4>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="level"><strong>Pendidikan:</strong></label>
@@ -145,73 +188,74 @@
                                         value="{{ $jobApplicant->university }}" required>
                                 </div>
                             </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4 class="font-weight-bold">Data Alamat</h4>
-                                <div class="form-group">
-                                    <label for="address"><strong>Alamat Lengkap:</strong></label>
-                                    <input type="text" name="address" id="address" class="form-control"
-                                        value="{{ $jobApplicant->jobApplicantAddress->address }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="city"><strong>Kota/Kab:</strong></label>
-                                    <input type="text" name="city" id="city" class="form-control"
-                                        value="{{ $jobApplicant->jobApplicantAddress->city }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="city"><strong>Kelurahan</strong></label>
-                                    <input type="text" name="city" id="city" class="form-control"
-                                        value="{{ $jobApplicant->jobApplicantAddress->village }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="city"><strong>Kecamatan</strong></label>
-                                    <input type="text" name="city" id="city" class="form-control"
-                                        value="{{ $jobApplicant->jobApplicantAddress->district }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="city"><strong>Provinsi</strong></label>
-                                    <input type="text" name="city" id="city" class="form-control"
-                                        value="{{ $jobApplicant->jobApplicantAddress->province }}">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="city"><strong>Kode Pos</strong></label>
-                                    <input type="text" name="city" id="city" class="form-control"
-                                        value="{{ $jobApplicant->jobApplicantAddress->postal_code }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <hr>
-                                <div class="form-group">
-                                    <h4 class="font-weight-bold">Surat Lamaran dan CV:</h4>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 class="font-weight-bold">Data Alamat</h4>
                                     <div class="form-group">
-                                        <label>Perbarui data Surat Pelamar dan CV?</label>
-                                        <input type="file" class="form-control-file" name="files">
-                                        <small id="fileHelpId" class="form-text text-danger">Tipe file: .pdf, doc, docx
-                                            maks 2MB</small>
+                                        <label for="address"><strong>Alamat Lengkap:</strong></label>
+                                        <input type="text" name="address" id="address" class="form-control"
+                                            value="{{ $jobApplicant->jobApplicantAddress->address }}">
                                     </div>
-                                    <a href="{{ url('/data_lampiran_pelamar/' . $jobApplicant->jobApplicantAttachments->files) }}"
-                                        target="_blank">
-                                        <i class="fa fa-paperclip" aria-hidden="true"></i> Lampiran
-                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="city"><strong>Kota/Kab:</strong></label>
+                                        <input type="text" name="city" id="city" class="form-control"
+                                            value="{{ $jobApplicant->jobApplicantAddress->city }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="city"><strong>Kelurahan</strong></label>
+                                        <input type="text" name="village" id="city" class="form-control"
+                                            value="{{ $jobApplicant->jobApplicantAddress->village }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="city"><strong>Kecamatan</strong></label>
+                                        <input type="text" name="district" id="city" class="form-control"
+                                            value="{{ $jobApplicant->jobApplicantAddress->district }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="city"><strong>Provinsi</strong></label>
+                                        <input type="text" name="province" id="city" class="form-control"
+                                            value="{{ $jobApplicant->jobApplicantAddress->province }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="city"><strong>Kode Pos</strong></label>
+                                        <input type="text" name="postal_code" id="city" class="form-control"
+                                            value="{{ $jobApplicant->jobApplicantAddress->postal_code }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr>
+                                    <div class="form-group">
+                                        <h4 class="font-weight-bold">Surat Lamaran dan CV:</h4>
+                                        <div class="form-group">
+                                            <label>Perbarui data Surat Pelamar dan CV?</label>
+                                            <input type="file" class="form-control-file" name="files">
+                                            <small id="fileHelpId" class="form-text text-danger">Tipe file: .pdf, doc,
+                                                docx
+                                                maks 2MB</small>
+                                        </div>
+                                        <a href="{{ url('/data_lampiran_pelamar/' . $jobApplicant->jobApplicantAttachments->files) }}"
+                                            target="_blank">
+                                            <i class="fa fa-paperclip" aria-hidden="true"></i> Lampiran
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-12">
