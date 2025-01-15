@@ -233,6 +233,39 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer">
+                       <h4>Status Pelamar Saat ini:</h4> 
+                        @switch($jobApplicant->is_approved)
+                            @case(0)
+                                <span class="badge bg-info"><i class="fa fa-hourglass-start" aria-hidden="true"></i> Dalam
+                                    proses</span>
+                            @break
+
+                            @case(1)
+                                <span class="badge bg-success"><i class="fa fa-check-circle" aria-hidden="true"></i>
+                                    Diterima</span>
+                            @break
+
+                            @case(2)
+                                <span class="badge bg-danger"><i class="fa fa-times-circle" aria-hidden="true"></i>
+                                    Ditolak</span>
+                            @break
+
+                            @default
+                        @endswitch
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 m-3">
+                <div class="btn-group">
+                    <a href="{{ route('admin.job-vacancies.update-status', ['jobID' => $jobApplicant->id, 'status' => 1]) }}"
+                        class="btn btn-success" style="text-decoration: none">
+                        <i class="fa fa-check-circle" aria-hidden="true"></i> Terima
+                    </a>
+                    <a href="{{ route('admin.job-vacancies.update-status', ['jobID' => $jobApplicant->id, 'status' => 2]) }}"
+                        class="btn btn-danger" style="text-decoration: none">
+                        <i class="fa fa-times-circle" aria-hidden="true"></i> Tolak
+                    </a>
                 </div>
             </div>
         </div>

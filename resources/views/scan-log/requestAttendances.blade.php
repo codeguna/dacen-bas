@@ -76,6 +76,9 @@
         <div class="card">
             <div class="card-header">
                 <h3><i class="fa fa-check-circle text-primary" aria-hidden="true"></i> Pengajuan Presensi di Luar</h3>
+                <div class="alert alert-warning" role="alert">
+                    <strong><i class="fa fa-info" aria-hidden="true"></i> Lakukan proses ini 2x, saat akan melakukan aktivitas dinas/mengajar & setelah melakukan aktivitas dinas/mengajar</strong>
+                </div>
             </div>
             <form action="{{ route('admin.scan-log.request-attendances-store') }}" method="POST"
                 enctype="multipart/form-data">

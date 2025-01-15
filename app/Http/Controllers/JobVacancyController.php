@@ -21,7 +21,7 @@ class JobVacancyController extends Controller
      */
     public function index()
     {
-        $jobVacancies = JobVacancy::orderBy('created_at','DESC')->get();
+        $jobVacancies = JobVacancy::orderBy('created_at', 'DESC')->get();
 
         return view('job-vacancy.index', compact('jobVacancies'))
             ->with('i');
@@ -33,10 +33,10 @@ class JobVacancyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        $departments    = Departmen::orderBy('name','ASC')->pluck('id','name');    
+    {
+        $departments    = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
         $jobVacancy     = new JobVacancy();
-        return view('job-vacancy.create', compact('jobVacancy','departments'));
+        return view('job-vacancy.create', compact('jobVacancy', 'departments'));
     }
 
     /**
@@ -50,16 +50,17 @@ class JobVacancyController extends Controller
         request()->validate(JobVacancy::$rules);
 
         $jobVacancy = JobVacancy::create(
-            ['title'            => $request->title,
-            'department_id'     => $request->department_id,
-            'gender'            => $request->gender,
-            'min_age'           => $request->min_age,
-            'max_age'           => $request->max_age,
-            'amount_needed'     => $request->amount_needed,
-            'date_start'        => $request->date_start,
-            'deadline'          => $request->deadline,            
-            'user_id'           => Auth::user()->id,
-            'created_at'        => now(),
+            [
+                'title'            => $request->title,
+                'department_id'     => $request->department_id,
+                'gender'            => $request->gender,
+                'min_age'           => $request->min_age,
+                'max_age'           => $request->max_age,
+                'amount_needed'     => $request->amount_needed,
+                'date_start'        => $request->date_start,
+                'deadline'          => $request->deadline,
+                'user_id'           => Auth::user()->id,
+                'created_at'        => now(),
             ]
         );
 
@@ -76,9 +77,9 @@ class JobVacancyController extends Controller
     public function show($id)
     {
         $jobVacancy = JobVacancy::find($id);
-        $getApplicant = JobApplicant::where('job_vacancies_id',$jobVacancy->id)->orderBy('date_of_application','ASC')->get();
+        $getApplicant = JobApplicant::where('job_vacancies_id', $jobVacancy->id)->orderBy('date_of_application', 'ASC')->get();
 
-        return view('job-vacancy.show', compact('jobVacancy','getApplicant'));
+        return view('job-vacancy.show', compact('jobVacancy', 'getApplicant'));
     }
 
     /**
@@ -89,10 +90,10 @@ class JobVacancyController extends Controller
      */
     public function edit($id)
     {
-        $departments    = Departmen::orderBy('name','ASC')->pluck('id','name');    
+        $departments    = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
         $jobVacancy     = JobVacancy::find($id);
 
-        return view('job-vacancy.edit', compact('jobVacancy','departments'));
+        return view('job-vacancy.edit', compact('jobVacancy', 'departments'));
     }
 
     /**
@@ -123,5 +124,17 @@ class JobVacancyController extends Controller
 
         return redirect()->route('admin.job-vacancies.index')
             ->with('success', 'JobVacancy deleted successfully');
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $jobID  = $request->jobID;
+        $status = $request->status;
+        $jobApplicant = JobApplicant::find($jobID);
+
+        $jobApplicant->update([
+            'is_approved' => $status
+        ]);
+        return redirect()->back()->with('success');
     }
 }

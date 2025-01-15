@@ -22,7 +22,7 @@
 
                     <div class="card-body">
                         @php
-                            $date       = $jobVacancy->deadline;
+                            $date = $jobVacancy->deadline;
                             $date_start = $jobVacancy->date_start;
 
                             $deadline = date('d-m-Y', strtotime($date));
@@ -62,19 +62,19 @@
                                         </tr>
                                         <tr>
                                             <th>Usia Minimal</th>
-                                            <td>{{ $jobVacancy->min_age }}</td>
+                                            <td>{{ $jobVacancy->min_age }} tahun</td>
                                         </tr>
                                         <tr>
                                             <th>Usia Maksimal</th>
-                                            <td>{{ $jobVacancy->max_age }}</td>
+                                            <td>{{ $jobVacancy->max_age }} tahun</td>
                                         </tr>
                                         <tr>
                                             <th>Jumlah Kebutuhan</th>
-                                            <td>{{ $jobVacancy->amount_needed }}</td>
+                                            <td>{{ $jobVacancy->amount_needed }} orang</td>
                                         </tr>
                                         <tr>
                                             <th>Tanggal Mulai</th>
-                                            <td>{{ $startdate}}</td>
+                                            <td>{{ $startdate }}</td>
                                         </tr>
                                         <tr>
                                             <th>Tanggal Berakhir</th>
@@ -114,6 +114,7 @@
                         <th>Tanggal Melamar</th>
                         <th>Keterangan</th>
                         <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
+                        <th>Status Akhir</i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -175,39 +176,54 @@
                             <td>
                                 <strong>
                                     @if ($age <= $jobVacancy->max_age)
-                                        {{ $age }} | Usia Memenuhi
+                                        {{ $age }} |<i class="fa fa-check-square text-success"
+                                            aria-hidden="true"></i> Usia Memenuhi
                                     @else
-                                        {{ $age }} | Usia Tidak Memenuhi
+                                        {{ $age }} |<i class="fa fa-times-circle text-danger"
+                                            aria-hidden="true"></i> Usia Tidak Memenuhi
                                     @endif
                                 </strong>
                             </td>
                             <td>
-                                @if ($jobApplicant->is_approved == 0)
-                                    <div class="btn-group">
-                                        <a href="{{ route('admin.job-applicants.show', $jobApplicant->id) }}"
-                                            class="btn btn-primary" style="text-decoration: none">
-                                            <i class="fa fa-eye" aria-hidden="true"></i> Detail
-                                        </a>
-                                        <a href="#" class="btn btn-success" style="text-decoration: none">
-                                            <i class="fa fa-check-circle" aria-hidden="true"></i> Terima
-                                        </a>
-                                    </div>
-                                @else
-                                    <div class="btn-group">
-                                        <a href="{{ route('admin.job-applicants.show', $jobVacancy->id) }}"
-                                            class="btn btn-primary" style="text-decoration: none">
-                                            <i class="fa fa-eye" aria-hidden="true"></i> Detail
-                                        </a>
-                                        <a href="#" class="btn btn-danger" style="text-decoration: none">
-                                            <i class="fa fa-times-circle" aria-hidden="true"></i> Tolak
-                                        </a>
-                                    </div>
-                                @endif
+                                <div class="btn-group">
+                                    <a href="{{ route('admin.job-applicants.show', $jobApplicant->id) }}"
+                                        class="btn btn-xs btn-primary" style="text-decoration: none">
+                                        <i class="fa fa-eye" aria-hidden="true"></i> Detail
+                                    </a>
+                                    <a href="{{ route('admin.job-vacancies.update-status', ['jobID' => $jobApplicant->id, 'status' => 1]) }}"
+                                        class="btn btn-xs btn-success" style="text-decoration: none">
+                                        <i class="fa fa-check-circle" aria-hidden="true"></i> Terima
+                                    </a>
+                                    <a href="{{ route('admin.job-vacancies.update-status', ['jobID' => $jobApplicant->id, 'status' => 2]) }}"
+                                        class="btn btn-xs btn-danger" style="text-decoration: none">
+                                        <i class="fa fa-times-circle" aria-hidden="true"></i> Tolak
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                @switch($jobApplicant->is_approved)
+                                    @case(0)
+                                        <span class="badge bg-info"><i class="fa fa-hourglass-start" aria-hidden="true"></i> Dalam
+                                            proses</span>
+                                    @break
+
+                                    @case(1)
+                                        <span class="badge bg-success"><i class="fa fa-check-circle" aria-hidden="true"></i>
+                                            Diterima</span>
+                                    @break
+
+                                    @case(2)
+                                        <span class="badge bg-danger"><i class="fa fa-times-circle" aria-hidden="true"></i>
+                                            Ditolak</span>
+                                    @break
+
+                                    @default
+                                @endswitch
                             </td>
                         </tr>
                         @empty
                             <tr>
-                                <td colspan="6">== Data Tidak Ada ==</td>
+                                <td colspan="7">== Data Tidak Ada ==</td>
                             </tr>
                         @endforelse
 
