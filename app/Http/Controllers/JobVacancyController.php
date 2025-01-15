@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Departmen;
 use App\Models\JobApplicant;
 use App\Models\JobVacancy;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,25 @@ class JobVacancyController extends Controller
      */
     public function index()
     {
-        $jobVacancies = JobVacancy::orderBy('created_at', 'DESC')->get();
+        $year = Carbon::parse(now('Y'))->format('Y');
+
+        $jobVacancies   = JobVacancy::orderBy('created_at', 'DESC')->get();
+        // WIDGET
+        foreach ($jobVacancies as $vacancy) {
+            $endDate = Carbon::parse($vacancy->deadline)->format('Y-m-d');
+            $startDate = Carbon::parse($vacancy->date_start)->format('Y-m-d');
+            
+            $activeRequest = JobVacancy::whereYear('created_at', $year)->where(function ($query) use ($startDate, $endDate) {
+                $query->whereDate('date_start', '<=', $endDate)->whereDate('deadline', '>=', $startDate);
+            })->count();
+            $notActiveRequest = JobVacancy::whereYear('created_at', $year)->where(function ($query) use ($startDate, $endDate) {
+                $query->whereDate('date_start', '>=', $endDate)->whereDate('deadline', '<=', $startDate);
+            })->count();
+
+            $accepted       = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 1)->count();
+            $notAccepted    = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 2)->count();
+            $proses         = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 0)->count();
+        }
 
         return view('job-vacancy.index', compact('jobVacancies'))
             ->with('i');
