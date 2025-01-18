@@ -24,25 +24,28 @@ class JobVacancyController extends Controller
     {
         $year = Carbon::parse(now('Y'))->format('Y');
 
-        $jobVacancies   = JobVacancy::orderBy('created_at', 'DESC')->get();
+        $jobVacancies   = JobVacancy::orderBy('created_at', 'DESC')->whereYear('created_at', $year)->get();
         // WIDGET
         foreach ($jobVacancies as $vacancy) {
             $endDate = Carbon::parse($vacancy->deadline)->format('Y-m-d');
             $startDate = Carbon::parse($vacancy->date_start)->format('Y-m-d');
-            
-            $activeRequest = JobVacancy::whereYear('created_at', $year)->where(function ($query) use ($startDate, $endDate) {
-                $query->whereDate('date_start', '<=', $endDate)->whereDate('deadline', '>=', $startDate);
-            })->count();
-            $notActiveRequest = JobVacancy::whereYear('created_at', $year)->where(function ($query) use ($startDate, $endDate) {
-                $query->whereDate('date_start', '>=', $endDate)->whereDate('deadline', '<=', $startDate);
-            })->count();
+
+            $vacancyRequest = JobVacancy::whereYear('created_at', $year)->count();
 
             $accepted       = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 1)->count();
             $notAccepted    = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 2)->count();
             $proses         = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 0)->count();
+            $applicantCount = $vacancy->jobApplicant->count();
         }
 
-        return view('job-vacancy.index', compact('jobVacancies'))
+        return view('job-vacancy.index', compact(
+            'jobVacancies',
+            'vacancyRequest',
+            'applicantCount',
+            'accepted',
+            'notAccepted',
+            'proses'
+        ))
             ->with('i');
     }
 

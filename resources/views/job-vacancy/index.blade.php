@@ -64,7 +64,7 @@
                                             $startDate = \Carbon\Carbon::parse($jobVacancy->date_start)->format(
                                                 'Y-m-d',
                                             );
-                                            $applicantCount = $jobVacancy->jobApplicant ? $jobVacancy->jobApplicant->count() : 0;
+
                                         @endphp
                                         <tr>
                                             <td>{{ ++$i }}</td>
@@ -73,7 +73,8 @@
                                             <td>{{ $jobVacancy->department->name }}</td>
                                             <td>
                                                 <i class="fas fa-user-alt text-primary"></i></i>
-                                                {{ $jobVacancy->amount_needed }} | <i class="fa fa-sign-in-alt text-success" aria-hidden="true"></i> {{ $applicantCount }}
+                                                {{ $jobVacancy->amount_needed }} | <i class="fa fa-sign-in-alt text-success"
+                                                    aria-hidden="true"></i> {{ $applicantCount }}
                                             </td>
                                             <td>{{ $date_start }}</td>
                                             <td>{{ $deadline }}</td>
@@ -88,7 +89,8 @@
                                                         <a class="btn btn-sm btn-success"
                                                             href="{{ route('admin.job-vacancies.edit', $jobVacancy->id) }}"><i
                                                                 class="fa fa-fw fa-edit"></i></a>
-                                                        <button type="submit" class="btn btn-danger btn-sm"  onclick="return confirm('Hapus data Permintaan Karyawan {{ $jobVacancy->title }}?')"><i
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Hapus data Permintaan Karyawan {{ $jobVacancy->title }}?')"><i
                                                                 class="fa fa-fw fa-trash"></i></button>
                                                         @if ($today <= $deadline)
                                                             <a href="{{ route('admin.job-applicants.add-applicant', $jobVacancy->id) }}"
@@ -130,7 +132,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 @section('scripts')
