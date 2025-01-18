@@ -122,7 +122,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="9"></td>
+                                            <td colspan="9"><center>== Tidak ada permintaan Pelamar ==</center></td>
                                         </tr>
                                     @endforelse
                                 </tbody>

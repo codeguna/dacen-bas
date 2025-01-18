@@ -24,18 +24,28 @@ class JobVacancyController extends Controller
     {
         $year = Carbon::parse(now('Y'))->format('Y');
 
-        $jobVacancies   = JobVacancy::orderBy('created_at', 'DESC')->whereYear('created_at', $year)->get();
-        // WIDGET
-        foreach ($jobVacancies as $vacancy) {
-            $endDate = Carbon::parse($vacancy->deadline)->format('Y-m-d');
-            $startDate = Carbon::parse($vacancy->date_start)->format('Y-m-d');
+        $jobVacancies = JobVacancy::orderBy('created_at', 'DESC')->whereYear('created_at', $year)->get();
 
-            $vacancyRequest = JobVacancy::whereYear('created_at', $year)->count();
+        if ($jobVacancies->isEmpty()) {
+            // No job vacancies found for the current year
+            $vacancyRequest = 0;
+            $applicantCount = 0;
+            $accepted = 0;
+            $notAccepted = 0;
+            $proses = 0;
+        } else {
+            // WIDGET
+            foreach ($jobVacancies as $vacancy) {
+                $endDate = Carbon::parse($vacancy->deadline)->format('Y-m-d');
+                $startDate = Carbon::parse($vacancy->date_start)->format('Y-m-d');
 
-            $accepted       = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 1)->count();
-            $notAccepted    = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 2)->count();
-            $proses         = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 0)->count();
-            $applicantCount = $vacancy->jobApplicant->count();
+                $vacancyRequest = JobVacancy::whereYear('created_at', $year)->count();
+
+                $accepted = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 1)->count();
+                $notAccepted = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 2)->count();
+                $proses = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 0)->count();
+                $applicantCount = $vacancy->jobApplicant->count();
+            }
         }
 
         return view('job-vacancy.index', compact(
@@ -45,9 +55,9 @@ class JobVacancyController extends Controller
             'accepted',
             'notAccepted',
             'proses'
-        ))
-            ->with('i');
+        ))->with('i');
     }
+
 
     /**
      * Show the form for creating a new resource.
