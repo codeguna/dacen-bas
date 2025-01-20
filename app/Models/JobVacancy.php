@@ -63,7 +63,7 @@ class JobVacancy extends Model
     }
 	public function jobApplicant()
     {
-        return $this->hasOne(JobApplicant::class, 'job_vacancies_id','id');
+        return $this->hasMany(JobApplicant::class, 'job_vacancies_id','id');
     }	
 
 }

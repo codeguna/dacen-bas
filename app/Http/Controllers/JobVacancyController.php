@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Departmen;
 use App\Models\JobApplicant;
+use App\Models\JobApplicantAddress;
+use App\Models\JobApplicantAttachment;
+use App\Models\JobApplicantContact;
 use App\Models\JobVacancy;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class JobVacancyController
@@ -23,13 +27,13 @@ class JobVacancyController extends Controller
     public function index()
     {
         $year = now()->year;
-    
+
         // Ambil semua job vacancies untuk tahun ini
         $jobVacancies = JobVacancy::whereYear('created_at', $year)
             ->orderBy('created_at', 'DESC')
             ->with('jobApplicant') // Load relasi jobApplicant untuk efisiensi
             ->get();
-    
+
         if ($jobVacancies->isEmpty()) {
             // Jika tidak ada lowongan pekerjaan
             $vacancyRequest = 0;
@@ -40,30 +44,24 @@ class JobVacancyController extends Controller
         } else {
             // Hitung data secara agregat
             $vacancyRequest = $jobVacancies->count();
-    
+
             $accepted = JobApplicant::whereYear('created_at', $year)
                 ->where('is_approved', 1)
                 ->count();
-    
+
             $notAccepted = JobApplicant::whereYear('created_at', $year)
                 ->where('is_approved', 2)
                 ->count();
-    
+
             $proses = JobApplicant::whereYear('created_at', $year)
                 ->where('is_approved', 0)
                 ->count();
-    
-            // Hitung total pelamar dari semua lowongan
-            $applicantCount = $jobVacancies->sum(function ($vacancy) {
-                return $vacancy->jobApplicant ? $vacancy->jobApplicant->count() : 0;
-            });
         }
-    
+
         // Return data atau render view
         return view('job-vacancy.index', compact(
             'jobVacancies',
             'vacancyRequest',
-            'applicantCount',
             'accepted',
             'notAccepted',
             'proses'
@@ -163,11 +161,39 @@ class JobVacancyController extends Controller
      */
     public function destroy($id)
     {
-        $jobVacancy = JobVacancy::find($id)->delete();
+        // Ambil data pelamar berdasarkan job vacancy ID
+        $jobApplicant = JobApplicant::where('job_vacancies_id', $id)->first();
 
-        return redirect()->route('admin.job-vacancies.index')
-            ->with('success', 'JobVacancy deleted successfully');
+        if (!$jobApplicant) {
+            return redirect()->route('admin.job-vacancies.index')
+                ->with('error', 'Data pelamar tidak ditemukan!');
+        }
+
+        try {
+            // Hapus job vacancy
+            JobVacancy::findOrFail($id)->delete();
+
+            // Hapus data pelamar dan relasi terkait
+            JobApplicant::where('id', $jobApplicant->id)->delete();
+            JobApplicantAddress::where('job_applicant_id', $jobApplicant->id)->delete();
+            JobApplicantContact::where('job_applicant_id', $jobApplicant->id)->delete();
+
+            // Hapus file lampiran jika ada
+            $attachment = $jobApplicant->jobApplicantAttachments;
+            if ($attachment && File::exists(public_path('data_lampiran_pelamar/' . $attachment->files))) {
+                File::delete(public_path('data_lampiran_pelamar/' . $attachment->files));
+            }
+
+            JobApplicantAttachment::where('job_applicant_id', $jobApplicant->id)->delete();
+
+            return redirect()->route('admin.job-vacancies.index')
+                ->with('success', 'Data Lowongan berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.job-vacancies.index')
+                ->with('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
+        }
     }
+
 
     public function updateStatus(Request $request)
     {
@@ -179,5 +205,20 @@ class JobVacancyController extends Controller
             'is_approved' => $status
         ]);
         return redirect()->back()->with('success');
+    }
+
+    public function resultAllVacancies(Request $request)
+    {
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        $jobVacancies = JobVacancy::whereDate('date_start','>=',$start_date)
+        ->whereDate('deadline','<=',$end_date)
+        ->get();
+        return view('job-vacancy.tab.result.all', compact(
+            'jobVacancies',
+            'start_date',
+            'end_date'
+        ))->with('i');
     }
 }
