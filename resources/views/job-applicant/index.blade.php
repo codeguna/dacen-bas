@@ -55,7 +55,7 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-                                            <td>{{ $jobApplicant->jobVacancy->title }}</td>
+                                            <td>{{ $jobApplicant->jobVacancy->title??'' }}</td>
                                             <td>{{ $jobApplicant->full_name }}, {{ $jobApplicant->back_title }}</td>
                                             <td>
                                                 @switch($jobApplicant->level)
