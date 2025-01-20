@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="small-box bg-lightblue">
             <div class="inner">
-                <h3></h3>
+                <h3>{{ $vacancyRequest }}</h3>
 
                 <p>Permintaan Lowongan</p>
             </div>

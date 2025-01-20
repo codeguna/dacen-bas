@@ -22,32 +22,44 @@ class JobVacancyController extends Controller
      */
     public function index()
     {
-        $year = Carbon::parse(now('Y'))->format('Y');
-
-        $jobVacancies = JobVacancy::orderBy('created_at', 'DESC')->whereYear('created_at', $year)->get();
-
+        $year = now()->year;
+    
+        // Ambil semua job vacancies untuk tahun ini
+        $jobVacancies = JobVacancy::whereYear('created_at', $year)
+            ->orderBy('created_at', 'DESC')
+            ->with('jobApplicant') // Load relasi jobApplicant untuk efisiensi
+            ->get();
+    
         if ($jobVacancies->isEmpty()) {
-            // No job vacancies found for the current year
+            // Jika tidak ada lowongan pekerjaan
             $vacancyRequest = 0;
             $applicantCount = 0;
             $accepted = 0;
             $notAccepted = 0;
             $proses = 0;
         } else {
-            // WIDGET
-            foreach ($jobVacancies as $vacancy) {
-                $endDate = Carbon::parse($vacancy->deadline)->format('Y-m-d');
-                $startDate = Carbon::parse($vacancy->date_start)->format('Y-m-d');
-
-                $vacancyRequest = JobVacancy::whereYear('created_at', $year)->count();
-
-                $accepted = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 1)->count();
-                $notAccepted = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 2)->count();
-                $proses = JobApplicant::whereYear('created_at', '=', $year)->where('is_approved', 0)->count();
-                $applicantCount = $vacancy->jobApplicant->count();
-            }
+            // Hitung data secara agregat
+            $vacancyRequest = $jobVacancies->count();
+    
+            $accepted = JobApplicant::whereYear('created_at', $year)
+                ->where('is_approved', 1)
+                ->count();
+    
+            $notAccepted = JobApplicant::whereYear('created_at', $year)
+                ->where('is_approved', 2)
+                ->count();
+    
+            $proses = JobApplicant::whereYear('created_at', $year)
+                ->where('is_approved', 0)
+                ->count();
+    
+            // Hitung total pelamar dari semua lowongan
+            $applicantCount = $jobVacancies->sum(function ($vacancy) {
+                return $vacancy->jobApplicant ? $vacancy->jobApplicant->count() : 0;
+            });
         }
-
+    
+        // Return data atau render view
         return view('job-vacancy.index', compact(
             'jobVacancies',
             'vacancyRequest',
@@ -57,7 +69,6 @@ class JobVacancyController extends Controller
             'proses'
         ))->with('i');
     }
-
 
     /**
      * Show the form for creating a new resource.
