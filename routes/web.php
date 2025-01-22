@@ -213,5 +213,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
      Route::get('job-applicant/addapplicant/{id}', [JobApplicantController::class, 'addApplicant'])->name('job-applicants.add-applicant');
      Route::post('job-applicant/saveapplicant', [JobApplicantController::class, 'saveApplicant'])->name('job-applicants.save-applicant');
      Route::get('job-applicant/result-vacancy', [JobVacancyController::class, 'resultAllVacancies'])->name('job-applicants.result-all-applicant');
+     Route::get('job-applicant/set-as-employee', [JobVacancyController::class, 'setAsEmployee'])->name('job-applicants.set-as-employee');
      //End Route job-vacancies
 });

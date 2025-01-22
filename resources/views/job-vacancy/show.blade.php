@@ -185,20 +185,24 @@
                                 </strong>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <a href="{{ route('admin.job-applicants.show', $jobApplicant->id) }}"
-                                        class="btn btn-xs btn-primary" style="text-decoration: none">
-                                        <i class="fa fa-eye" aria-hidden="true"></i> Detail
-                                    </a>
-                                    <a href="{{ route('admin.job-vacancies.update-status', ['jobID' => $jobApplicant->id, 'status' => 1]) }}"
-                                        class="btn btn-xs btn-success" style="text-decoration: none">
-                                        <i class="fa fa-check-circle" aria-hidden="true"></i> Terima
-                                    </a>
-                                    <a href="{{ route('admin.job-vacancies.update-status', ['jobID' => $jobApplicant->id, 'status' => 2]) }}"
-                                        class="btn btn-xs btn-danger" style="text-decoration: none">
-                                        <i class="fa fa-times-circle" aria-hidden="true"></i> Tolak
-                                    </a>
-                                </div>
+                                @if ($jobApplicant->is_approved != 3)
+                                    <div class="btn-group">
+                                        <a href="{{ route('admin.job-applicants.show', $jobApplicant->id) }}"
+                                            class="btn btn-xs btn-primary" style="text-decoration: none">
+                                            <i class="fa fa-eye" aria-hidden="true"></i> Detail
+                                        </a>
+                                        <a href="{{ route('admin.job-vacancies.update-status', ['jobID' => $jobApplicant->id, 'status' => 1]) }}"
+                                            class="btn btn-xs btn-success" style="text-decoration: none">
+                                            <i class="fa fa-check-circle" aria-hidden="true"></i> Terima
+                                        </a>
+                                        <a href="{{ route('admin.job-vacancies.update-status', ['jobID' => $jobApplicant->id, 'status' => 2]) }}"
+                                            class="btn btn-xs btn-danger" style="text-decoration: none">
+                                            <i class="fa fa-times-circle" aria-hidden="true"></i> Tolak
+                                        </a>
+                                    </div>
+                                    @else
+                                    
+                                @endif
                             </td>
                             <td>
                                 @switch($jobApplicant->is_approved)
@@ -210,11 +214,26 @@
                                     @case(1)
                                         <span class="badge bg-success"><i class="fa fa-check-circle" aria-hidden="true"></i>
                                             Diterima</span>
+                                        <div class="btn-group">
+                                            <a class="btn btn-info btn-xs"
+                                                href="{{ route('admin.job-applicants.set-as-employee', ['id' => $jobApplicant->id, 'full_name' => $jobApplicant->full_name, 'deptID' => $jobVacancy->department, 'status' => 'tendik']) }}">
+                                                <i class="fas fa-user-tie"></i> Jadikan TenDik?
+                                            </a>
+                                            <a class="btn btn-warning btn-xs"
+                                                href="{{ route('admin.job-applicants.set-as-employee', ['id' => $jobApplicant->id, 'full_name' => $jobApplicant->full_name, 'status' => 'dosen']) }}">
+                                                <i class="fas fa-user-graduate"></i> Jadikan Dosen?
+                                            </a>
+                                        </div>
                                     @break
 
                                     @case(2)
                                         <span class="badge bg-danger"><i class="fa fa-times-circle" aria-hidden="true"></i>
                                             Ditolak</span>
+                                    @break
+
+                                    @case(3)
+                                        <span class="badge bg-dark"><i class="fa fa-check-circle" aria-hidden="true"></i>
+                                            Sudah jadi Pegawai</span>
                                     @break
 
                                     @default
@@ -223,7 +242,7 @@
                         </tr>
                         @empty
                             <tr>
-                                <td colspan="7">== Data Tidak Ada ==</td>
+                                <td class="text-center" colspan="8">== Data Tidak Ada ==</td>
                             </tr>
                         @endforelse
 

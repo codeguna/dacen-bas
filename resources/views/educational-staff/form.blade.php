@@ -21,7 +21,7 @@ $lastTwoDigits = substr($currentYear, -2);
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Nama Lengkap') }}
-                    <input type="text" name="name" class="form-control" value="{{ $educationalStaff->name }}"
+                    <input type="text" name="name" class="form-control" value="{{ $educationalStaff->name ? $educationalStaff->name : $full_name }}"
                         required>
                     {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
@@ -37,23 +37,25 @@ $lastTwoDigits = substr($currentYear, -2);
             <div class="col-md-12">
                 <div class="form-group">
                     {{ Form::label('Departemen') }}
-                    <select class="form-control" name="department_id"
-                        {{ $errors->has('department_id') ? ' is-invalid' : '' }} required>
+                    <select class="form-control" name="department_id" {{ $errors->has('department_id') ? ' is-invalid' : '' }} required>
                         @if (request()->is('admin/educational-staffs/create'))
-                            <option disabled selected>
-                                == Pilih Departemen ==
-                            </option>
+                            <option disabled selected> == Pilih Departemen == </option>
                         @else
-                            <option value="{{ $educationalStaff->department_id }}" selected>
-                                {{ $educationalStaff->departmens->short_name }}
+                            @php
+                                $selectedDepartmentId = $educationalStaff->department_id ?? $DeptID; // Gunakan $DeptID jika $educationalStaff->department_id null
+                            @endphp
+                            <option value="{{ $selectedDepartmentId }}" selected>
+                                {{ $educationalStaff->departmens->short_name ?? '' }}
                             </option>
                         @endif
+                    
                         @foreach ($getDepartmensId as $value => $key)
-                            <option value="{{ $key }}">
+                            <option value="{{ $key }}" {{ ($key == ($educationalStaff->department_id ?? $DeptID)) ? 'selected' : '' }}>
                                 {{ $value }}
                             </option>
                         @endforeach
                     </select>
+                    
                     {!! $errors->first('department_id', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>

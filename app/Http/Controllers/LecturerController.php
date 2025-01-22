@@ -55,9 +55,10 @@ class LecturerController extends Controller
     public function create()
     {
         $lecturer   = new Lecturer();
+        $full_name = null;
         $homebases  = Homebase::orderBy('name')->pluck('id', 'name');
 
-        return view('lecturer.create', compact('lecturer', 'homebases'));
+        return view('lecturer.create', compact('lecturer', 'homebases','full_name'));
     }
 
     /**

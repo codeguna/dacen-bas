@@ -14,7 +14,7 @@
                 <div class="form-group">
                     {{ Form::label('Nama Lengkap') }}
                     <input class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" type="text"
-                        name="name" value="{{ $lecturer->name }}" required>
+                        name="name" value="{{ $lecturer->name ? $lecturer->name : $full_name }}" required>
                     {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -45,7 +45,7 @@
                             </option>
                         @else
                             <option value="{{ $lecturer->homebase_id }}" selected>
-                                {{ $lecturer->homebases->name }}
+                                {{ $lecturer->homebases->name??'' }}
                             </option>
                         @endif
                         @foreach ($homebases as $value => $key)

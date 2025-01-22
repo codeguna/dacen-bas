@@ -33,6 +33,12 @@
             .kop-address {
                 font-size: 1rem;
             }
+
+            .footer {
+                text-align: center;
+                padding: 10px;
+                background-color: #f2f2f2;
+            }
         </style>
     </head>
 
@@ -46,11 +52,16 @@
                 <div class="ml-3 kop-text">
                     <div class="kop-title">Institut Digital Ekonomi LPKIA</div>
                     <div class="kop-address">Jalan Soekarno Hatta No. 456, Bandung</div>
+                    <div class="kop-address"><i class="fas fa-phone"></i> 022-7564283 / 7564284</div>
                 </div>
             </div>
+            @php
+                $dari = \Carbon\Carbon::parse($start_date)->format('j F Y');
+                $sampai = \Carbon\Carbon::parse($end_date)->format('j F Y');
+            @endphp
             <center>
-                <h3>Daftar Permintaan Pegawai</h3>
-                <h4>Periode {{ $start_date }} s/d {{ $end_date }}</h4>
+                <h3>Daftar Permintaan Pegawai | {{ $type }}</h3>
+                <h4>Periode {{ $dari }} s/d {{ $sampai }}</h4>
             </center>
             <div class="row">
                 <div class="col-md-12">
@@ -77,6 +88,8 @@
                                 @forelse ($jobVacancies as $vacancy)
                                     @php
                                         $requestDate = \Carbon\Carbon::parse($vacancy->created_at)->format('j F Y');
+                                        $date_start = \Carbon\Carbon::parse($vacancy->date_start)->format('j F Y');
+                                        $deadline = \Carbon\Carbon::parse($vacancy->deadline)->format('j F Y');
                                     @endphp
                                     <tr>
                                         <td>{{ ++$i }}</td>
@@ -86,16 +99,14 @@
                                         <td>{{ $vacancy->amount_needed }}</td>
                                         <td>{{ $vacancy->min_age }}</td>
                                         <td>{{ $vacancy->max_age }}</td>
-                                        <td>{{ $vacancy->deadline }}</td>
-                                        <td>{{ $vacancy->deadline }}</td>
+                                        <td>{{ $date_start }}</td>
+                                        <td>{{ $deadline }}</td>
                                         <td>
                                             @foreach ($vacancy->jobApplicant as $applicant)
                                                 @if ($applicant)
                                                     @if ($loop->first)
-                                                        {{ $applicant->count() }}
+                                                        {{ $applicant->count() }} orang
                                                     @endif
-                                                @else
-                                                    0
                                                 @endif
                                             @endforeach
                                         </td>
@@ -110,7 +121,20 @@
             </div>
 
         </div>
-
+        <footer class="footer">
+            <p>
+                <strong>&copy; {{ date('Y') }} IDE LPKIA.</strong>
+                All rights reserved. | Dicetak pada:
+                <span id="timestamp"></span>
+            </p>
+        </footer>
+        <script>
+            // Mengatur timestamp pada elemen span dengan id "timestamp"
+            var timestampElement = document.getElementById('timestamp');
+            var currentDate = new Date();
+            var timestamp = currentDate.toLocaleString();
+            timestampElement.innerHTML = timestamp;
+        </script>
         <!-- Bootstrap JS, Popper.js, and jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

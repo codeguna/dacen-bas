@@ -49,8 +49,7 @@
                                 $date_start = \Carbon\Carbon::parse($jobVacancy->date_start)->format('j F y');
                                 $deadline = \Carbon\Carbon::parse($jobVacancy->deadline)->format('j F y');
                                 $endDate = \Carbon\Carbon::parse($jobVacancy->deadline)->format('Y-m-d');
-                                $startDate = \Carbon\Carbon::parse($jobVacancy->date_start)->format('Y-m-d');
-
+                                $startDate = \Carbon\Carbon::parse($jobVacancy->date_start)->format('Y-m-d');                                
                             @endphp
                             <tr>
                                 <td>{{ ++$i }}</td>
@@ -60,16 +59,7 @@
                                 <td>
                                     <i class="fas fa-user-alt text-primary"></i></i>
                                     {{ $jobVacancy->amount_needed }} | <i class="fa fa-sign-in-alt text-success"
-                                        aria-hidden="true"></i>
-                                    @foreach ($jobVacancy->jobApplicant as $applicant)
-                                        @if ($applicant)
-                                            @if ($loop->first)
-                                                {{ $applicant->count() }}
-                                            @endif
-                                        @else
-                                            0
-                                        @endif
-                                    @endforeach
+                                        aria-hidden="true"></i> {{ $pelamar = App\Models\JobApplicant::where('job_vacancies_id',$jobVacancy->id)->count(); }}
                                 </td>
                                 <td>{{ $date_start }}</td>
                                 <td>{{ $deadline }}</td>
@@ -88,7 +78,7 @@
                                             <button type="submit" class="btn btn-danger btn-sm"
                                                 onclick="return confirm('Hapus data Permintaan Karyawan {{ $jobVacancy->title }}?')"><i
                                                     class="fa fa-fw fa-trash"></i></button>
-                                            @if ($today <= $deadline)
+                                            @if (date('Y-m-d') <= $endDate)
                                                 <a href="{{ route('admin.job-applicants.add-applicant', $jobVacancy->id) }}"
                                                     class="btn btn-sm btn-info" title="Tambah Pelamar">
                                                     <i class="fa fa-user-plus" aria-hidden="true"></i>
@@ -105,7 +95,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    @if ($startDate <= $endDate)
+                                    @if (date('Y-m-d') <= $endDate)
                                         <div class="badge bg-primary">
                                             <i class="fa fa-check" aria-hidden="true"></i> Aktif
                                         </div>

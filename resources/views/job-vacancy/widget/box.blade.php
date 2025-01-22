@@ -20,7 +20,7 @@
     <div class="col-md-3">
         <div class="small-box bg-orange">
             <div class="inner">
-                <h3></h3>
+                <h3>{{ $proses }}</h3>
 
                 <p>Pelamar Masuk</p>
             </div>

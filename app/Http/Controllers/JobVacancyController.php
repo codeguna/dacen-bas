@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departmen;
+use App\Models\EducationalStaff;
+use App\Models\Homebase;
 use App\Models\JobApplicant;
 use App\Models\JobApplicantAddress;
 use App\Models\JobApplicantAttachment;
 use App\Models\JobApplicantContact;
 use App\Models\JobVacancy;
+use App\Models\Lecturer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +30,7 @@ class JobVacancyController extends Controller
     public function index()
     {
         $year = now()->year;
-
+        $departments = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
         // Ambil semua job vacancies untuk tahun ini
         $jobVacancies = JobVacancy::whereYear('created_at', $year)
             ->orderBy('created_at', 'DESC')
@@ -46,7 +49,7 @@ class JobVacancyController extends Controller
             $vacancyRequest = $jobVacancies->count();
 
             $accepted = JobApplicant::whereYear('created_at', $year)
-                ->where('is_approved', 1)
+                ->where('is_approved', 3)
                 ->count();
 
             $notAccepted = JobApplicant::whereYear('created_at', $year)
@@ -56,6 +59,8 @@ class JobVacancyController extends Controller
             $proses = JobApplicant::whereYear('created_at', $year)
                 ->where('is_approved', 0)
                 ->count();
+
+            $jobApplicantCount = JobVacancy::withCount('jobApplicant')->get();
         }
 
         // Return data atau render view
@@ -64,7 +69,9 @@ class JobVacancyController extends Controller
             'vacancyRequest',
             'accepted',
             'notAccepted',
-            'proses'
+            'proses',
+            'departments',
+            'jobApplicantCount'
         ))->with('i');
     }
 
@@ -209,16 +216,62 @@ class JobVacancyController extends Controller
 
     public function resultAllVacancies(Request $request)
     {
-        $start_date = $request->start_date;
-        $end_date = $request->end_date;
+        $start_date     = $request->start_date;
+        $end_date       = $request->end_date;
+        $departments    = $request->department;
 
-        $jobVacancies = JobVacancy::whereDate('date_start','>=',$start_date)
-        ->whereDate('deadline','<=',$end_date)
-        ->get();
+        if ($start_date && $end_date) {
+            $jobVacancies = JobVacancy::whereDate('date_start', '>=', $start_date)
+                ->whereDate('deadline', '<=', $end_date)
+                ->get();
+            $type = 'Semua Pegawai';
+        }
+        if ($start_date && $end_date && $departments) {
+            $jobVacancies = JobVacancy::where('department_id', $departments)->whereDate('date_start', '>=', $start_date)
+                ->whereDate('deadline', '<=', $end_date)
+                ->get();
+            $type_departmen = Departmen::find($departments);
+            $type = $type_departmen->name;
+        }
+
         return view('job-vacancy.tab.result.all', compact(
             'jobVacancies',
             'start_date',
-            'end_date'
+            'end_date',
+            'type'
         ))->with('i');
+    }
+
+    public function setAsEmployee(Request $request)
+    {
+        $id         = $request->id;
+        $full_name  = $request->full_name;
+        $DeptID     = $request->deptID;
+        $status     = $request->status;
+
+        if ($DeptID) {
+            $DeptID = $request->deptID;
+        } else {
+            $DeptID = null;
+        }
+
+        if ($status == 'tendik') {
+            $educationalStaff   = new EducationalStaff();
+            $getDepartmensId    = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
+            $person             = JobApplicant::find($id);
+            $person->update([
+                'is_approved' => 3
+            ]);
+            return view('educational-staff.create', compact('getDepartmensId', 'educationalStaff', 'full_name', 'DeptID'))->with('warning', 'Silahkan lengkapi data yang masih kosong!');
+        }
+        if ($status == 'dosen') {
+            $lecturer = new Lecturer();
+            $homebases  = Homebase::orderBy('name')->pluck('id', 'name');
+            $person             = JobApplicant::find($id);
+            $person->update([
+                'is_approved' => 3
+            ]);
+            return view('lecturer.create', compact('full_name', 'lecturer', 'homebases'))->with('warning', 'Silahkan lengkapi data yang masih kosong!');
+        }
     }
 }

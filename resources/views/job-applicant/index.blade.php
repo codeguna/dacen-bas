@@ -37,6 +37,7 @@
                                     <th>Tanggal Melamar Pekerjaan</th>
                                     <th>Surat & CV Lamaran</th>
                                     <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
+                                    <th>Status</th>
                                 </tr>
                                 </thead>
                                 @php
@@ -55,7 +56,7 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-                                            <td>{{ $jobApplicant->jobVacancy->title??'' }}</td>
+                                            <td>{{ $jobApplicant->jobVacancy->title ?? '' }}</td>
                                             <td>{{ $jobApplicant->full_name }}, {{ $jobApplicant->back_title }}</td>
                                             <td>
                                                 @switch($jobApplicant->level)
@@ -134,6 +135,45 @@
                                                     @method('DELETE')
 
                                                 </form>
+                                            </td>
+                                            <td>
+                                                @switch($jobApplicant->is_approved)
+                                                    @case(0)
+                                                        <span class="badge bg-info"><i class="fa fa-hourglass-start"
+                                                                aria-hidden="true"></i> Dalam
+                                                            proses</span>
+                                                    @break
+
+                                                    @case(1)
+                                                        <span class="badge bg-success"><i class="fa fa-check-circle"
+                                                                aria-hidden="true"></i>
+                                                            Diterima</span>
+                                                        <div class="btn-group">
+                                                            <a class="btn btn-info btn-xs"
+                                                                href="{{ route('admin.job-applicants.set-as-employee', ['id' => $jobApplicant->id, 'full_name' => $jobApplicant->full_name, 'deptID' => $jobVacancy->department, 'status' => 'tendik']) }}">
+                                                                <i class="fas fa-user-tie"></i> Jadikan TenDik?
+                                                            </a>
+                                                            <a class="btn btn-warning btn-xs"
+                                                                href="{{ route('admin.job-applicants.set-as-employee', ['id' => $jobApplicant->id, 'full_name' => $jobApplicant->full_name, 'status' => 'dosen']) }}">
+                                                                <i class="fas fa-user-graduate"></i> Jadikan Dosen?
+                                                            </a>
+                                                        </div>
+                                                    @break
+
+                                                    @case(2)
+                                                        <span class="badge bg-danger"><i class="fa fa-times-circle"
+                                                                aria-hidden="true"></i>
+                                                            Ditolak</span>
+                                                    @break
+
+                                                    @case(3)
+                                                        <span class="badge bg-dark"><i class="fa fa-check-circle"
+                                                                aria-hidden="true"></i>
+                                                            Sudah jadi Pegawai</span>
+                                                    @break
+
+                                                    @default
+                                                @endswitch
                                             </td>
                                         </tr>
                                         @empty
