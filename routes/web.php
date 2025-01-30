@@ -206,7 +206,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
      //Route job-vacancies
      Route::resource('job-vacancies', 'JobVacancyController');
      Route::get('job-vacancy/update-status',[JobVacancyController::class, 'updateStatus'])->name('job-vacancies.update-status');
-     Route::get('job-vacancy/result-vancancies',[JobVacancyController::class, 'updateStatus'])->name('job-vacancies.update-status');
      //End Route job-vacancies
      //Route job-vacancies
      Route::resource('job-applicants', 'JobApplicantController');
@@ -214,5 +213,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
      Route::post('job-applicant/saveapplicant', [JobApplicantController::class, 'saveApplicant'])->name('job-applicants.save-applicant');
      Route::get('job-applicant/result-vacancy', [JobVacancyController::class, 'resultAllVacancies'])->name('job-applicants.result-all-applicant');
      Route::get('job-applicant/set-as-employee', [JobVacancyController::class, 'setAsEmployee'])->name('job-applicants.set-as-employee');
+     Route::get('job-applicant/result-applicant', [JobApplicantController::class, 'resultAllApplicants'])->name('job-applicants.all-applicant');
      //End Route job-vacancies
 });

@@ -600,7 +600,7 @@ class ScanlogController extends Controller
     public function requestAttendances()
     {
         $user                   = Auth::user()->id;
-        $request_attendances    = AttendancesRequest::where('user_id', $user)->orderBy('created_at', 'ASC')->get();
+        $request_attendances    = AttendancesRequest::where('user_id', $user)->orderBy('created_at', 'ASC')->paginate(6);
         $activities             = Activity::pluck('id', 'name');
 
         return view('scan-log.requestAttendances', compact('request_attendances', 'activities'))->with('i');

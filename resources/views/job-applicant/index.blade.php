@@ -11,10 +11,11 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-
+            
                             <span id="card_title">
                                 <h3><i class="fas fa-user-tie text-indigo"></i> Data Pelamar</h3>
                             </span>
+            
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -22,15 +23,26 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-
+            
                     <div class="card-body">
+                        <div class="float-right">
+                            <form action="{{ route('admin.job-applicants.index') }}" method="GET">
+                                @csrf
+                                <div class="form-group">
+                                    <input type="search" class="form-control w-100" name="search"
+                                        placeholder="Tekan [ENTER]" value="{{ request('search') }}">
+                                </div>
+            
+                            </form>
+            
+                        </div>
                         <div class="table-responsive">
-                            <table id="dataTable1" class="table table-hover">
+                            <table class="table table-hover">
                                 <tr>
                                     <th>No</th>
                                     <th>Melamar di</th>
                                     <th>Nama Lengkap</th>
-                                    <th>Jenjang & Pendidikan</th>
+                                    <th>Jenjang Pendidikan</th>
                                     <th>Jenis Kelamin</th>
                                     <th>Kota Lahir</th>
                                     <th>Umur</th>
@@ -55,7 +67,7 @@
                                         @endphp
                                         <tr>
                                             <td>{{ ++$i }}</td>
-
+            
                                             <td>{{ $jobApplicant->jobVacancy->title ?? '' }}</td>
                                             <td>{{ $jobApplicant->full_name }}, {{ $jobApplicant->back_title }}</td>
                                             <td>
@@ -63,46 +75,46 @@
                                                     @case(1)
                                                         SMA/SMK
                                                     @break
-
+            
                                                     @case(2)
                                                         D1
                                                     @break
-
+            
                                                     @case(3)
                                                         D3
                                                     @break
-
+            
                                                     @case(4)
                                                         D4
                                                     @break
-
+            
                                                     @case(5)
                                                         S1
                                                     @break
-
+            
                                                     @case(6)
                                                         S2
                                                     @break
-
+            
                                                     @case(7)
                                                         S3
                                                     @break
-
+            
                                                     @default
                                                 @endswitch - {{ $jobApplicant->university }}
                                                 ({{ $jobApplicant->graduation_year }})
                                             </td>
-
+            
                                             <td>
                                                 @switch($jobApplicant->gender)
                                                     @case(1)
                                                         Laki-laki
                                                     @break
-
+            
                                                     @case(2)
                                                         Perempuan
                                                     @break
-
+            
                                                     @default
                                                 @endswitch
                                             </td>
@@ -113,28 +125,35 @@
                                                 <a class="btn btn-info"
                                                     href="{{ url('/data_lampiran_pelamar/', $jobApplicant->jobApplicantAttachments->files) }}"
                                                     target="_blank">
-                                                    <i class="fa fa-paperclip" aria-hidden="true"></i> Klik Disini!
+                                                    <i class="fa fa-paperclip" aria-hidden="true"></i>
                                                 </a>
                                             </td>
-
+            
                                             <td>
-                                                <form
-                                                    action="{{ route('admin.job-applicants.destroy', $jobApplicant->id) }}"
-                                                    method="POST">
-                                                    <div class="btn-group">
-                                                        <a class="btn btn-sm btn-primary "
-                                                            href="{{ route('admin.job-applicants.show', $jobApplicant->id) }}"><i
-                                                                class="fa fa-fw fa-eye"></i></a>
-                                                        <a class="btn btn-sm btn-success"
-                                                            href="{{ route('admin.job-applicants.edit', $jobApplicant->id) }}"><i
-                                                                class="fa fa-fw fa-edit"></i></a>
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i
-                                                                class="fa fa-fw fa-trash"></i></button>
-                                                    </div>
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                                </form>
+                                                @if ($jobApplicant->is_approved != 3)
+                                                    <form
+                                                        action="{{ route('admin.job-applicants.destroy', $jobApplicant->id) }}"
+                                                        method="POST">
+                                                        <div class="btn-group">
+                                                            <a class="btn btn-sm btn-primary "
+                                                                href="{{ route('admin.job-applicants.show', $jobApplicant->id) }}"><i
+                                                                    class="fa fa-fw fa-eye"></i></a>
+                                                            <a class="btn btn-sm btn-success"
+                                                                href="{{ route('admin.job-applicants.edit', $jobApplicant->id) }}"><i
+                                                                    class="fa fa-fw fa-edit"></i></a>
+                                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                    class="fa fa-fw fa-trash"></i></button>
+                                                        </div>
+                                                        @csrf
+                                                        @method('DELETE')
+            
+                                                    </form>
+                                                @else
+                                                    <span class="badge bg-info">
+                                                        <i class="fas fa-check-double"></i> Sudah jadi Pegawai
+                                                    </span>
+                                                @endif
+            
                                             </td>
                                             <td>
                                                 @switch($jobApplicant->is_approved)
@@ -143,35 +162,25 @@
                                                                 aria-hidden="true"></i> Dalam
                                                             proses</span>
                                                     @break
-
+            
                                                     @case(1)
                                                         <span class="badge bg-success"><i class="fa fa-check-circle"
                                                                 aria-hidden="true"></i>
                                                             Diterima</span>
-                                                        <div class="btn-group">
-                                                            <a class="btn btn-info btn-xs"
-                                                                href="{{ route('admin.job-applicants.set-as-employee', ['id' => $jobApplicant->id, 'full_name' => $jobApplicant->full_name, 'deptID' => $jobVacancy->department, 'status' => 'tendik']) }}">
-                                                                <i class="fas fa-user-tie"></i> Jadikan TenDik?
-                                                            </a>
-                                                            <a class="btn btn-warning btn-xs"
-                                                                href="{{ route('admin.job-applicants.set-as-employee', ['id' => $jobApplicant->id, 'full_name' => $jobApplicant->full_name, 'status' => 'dosen']) }}">
-                                                                <i class="fas fa-user-graduate"></i> Jadikan Dosen?
-                                                            </a>
-                                                        </div>
                                                     @break
-
+            
                                                     @case(2)
                                                         <span class="badge bg-danger"><i class="fa fa-times-circle"
                                                                 aria-hidden="true"></i>
                                                             Ditolak</span>
                                                     @break
-
+            
                                                     @case(3)
                                                         <span class="badge bg-dark"><i class="fa fa-check-circle"
                                                                 aria-hidden="true"></i>
                                                             Sudah jadi Pegawai</span>
                                                     @break
-
+            
                                                     @default
                                                 @endswitch
                                             </td>
@@ -190,17 +199,7 @@
                     </div>
                 </div>
             </div>
+            @include('job-applicant.tab.report')
         </div>
-    @endsection
-    @section('scripts')
-        <script>
-            $(function() {
-                $("#dataTable1").DataTable({
-                    "responsive": true,
-                    "lengthChange": false,
-                    "autoWidth": false,
-                    // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            });
-        </script>
-    @endsection
+    </div>
+@endsection

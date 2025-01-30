@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('template_title')
-    Job Vacancy
+    Permintaan Pegawai
 @endsection
 
 @section('content')
@@ -33,9 +33,9 @@
                     <div class="col-md-12">
                         <div class="tab-content">
                             <div class="tab-pane active" id="table" role="tabpanel" aria-labelledby="table-tab">
-                                <div class="row">   
-                                    @include('job-vacancy.tab.index-vacancy') 
-                                </div>                               
+                                <div class="row">
+                                    @include('job-vacancy.tab.index-vacancy')
+                                </div>
                             </div>
                             <div class="tab-pane" id="report" role="tabpanel" aria-labelledby="report-tab">
                                 <div class="row">
@@ -45,11 +45,8 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
-    </div>
     </div>
 @endsection
 @section('scripts')

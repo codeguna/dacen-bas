@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departmen;
 use App\Models\JobApplicant;
 use App\Models\JobApplicantAddress;
 use App\Models\JobApplicantAttachment;
@@ -21,11 +22,19 @@ class JobApplicantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jobApplicants = JobApplicant::orderBy('created_at', 'DESC')->get();
+        $search = $request->search;
+        $departments = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
+        if ($search) {
+            $jobApplicants = JobApplicant::where('full_name', 'like', '%' . $search . '%')->orderBy('created_at', 'DESC')->get();
+        } else {
+            $jobApplicants = JobApplicant::orderBy('created_at', 'DESC')->get();
+        }
 
-        return view('job-applicant.index', compact('jobApplicants'))
+
+
+        return view('job-applicant.index', compact('jobApplicants','departments'))
             ->with('i');
     }
 
@@ -174,9 +183,8 @@ class JobApplicantController extends Controller
 
             $updateDataAttachment['files'] = $name_file;
         }
-        if($jobApplicant)
-        {
-            $jobApplicantAttachment = JobApplicantAttachment::where('job_applicant_id','=',$jobID)->first();
+        if ($jobApplicant) {
+            $jobApplicantAttachment = JobApplicantAttachment::where('job_applicant_id', '=', $jobID)->first();
             $jobApplicantAttachment->update($updateDataAttachment);
         }
 
@@ -279,5 +287,33 @@ class JobApplicantController extends Controller
         ]);
 
         return redirect()->route('admin.job-vacancies.index')->with('success', 'Berhasil menambahkan data pelamar!');
+    }
+
+    public function resultAllApplicants(Request $request)
+    {
+        $start_date     = $request->start_date;
+        $end_date       = $request->end_date;
+        $departments    = $request->department;
+
+        if ($start_date && $end_date) {
+            $jobVacancies = JobVacancy::whereDate('date_start', '>=', $start_date)
+                ->whereDate('deadline', '<=', $end_date)
+                ->get();
+            $type = 'Semua Pegawai';
+        }
+        if ($start_date && $end_date && $departments) {
+            $jobVacancies = JobVacancy::where('department_id', $departments)->whereDate('date_start', '>=', $start_date)
+                ->whereDate('deadline', '<=', $end_date)
+                ->get();
+            $type_departmen = Departmen::find($departments);
+            $type = $type_departmen->name;
+        }
+
+        return view('job-vacancy.tab.result.all', compact(
+            'jobVacancies',
+            'start_date',
+            'end_date',
+            'type'
+        ))->with('i');
     }
 }
