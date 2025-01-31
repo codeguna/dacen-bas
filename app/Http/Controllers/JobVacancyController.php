@@ -44,6 +44,7 @@ class JobVacancyController extends Controller
             $accepted = 0;
             $notAccepted = 0;
             $proses = 0;
+            $jobApplicantCount = 0;
         } else {
             // Hitung data secara agregat
             $vacancyRequest = $jobVacancies->count();
