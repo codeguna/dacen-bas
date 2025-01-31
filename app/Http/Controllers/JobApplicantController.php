@@ -27,14 +27,11 @@ class JobApplicantController extends Controller
         $search = $request->search;
         $departments = Departmen::orderBy('name', 'ASC')->pluck('id', 'name');
         if ($search) {
-            $jobApplicants = JobApplicant::where('full_name', 'like', '%' . $search . '%')->orderBy('created_at', 'DESC')->get();
+            $jobApplicants = JobApplicant::where('full_name', 'like', '%' . $search . '%')->orderBy('created_at', 'DESC')->paginate(10);
         } else {
-            $jobApplicants = JobApplicant::orderBy('created_at', 'DESC')->get();
+            $jobApplicants = JobApplicant::orderBy('created_at', 'DESC')->paginate(10);
         }
-
-
-
-        return view('job-applicant.index', compact('jobApplicants','departments'))
+        return view('job-applicant.index', compact('jobApplicants', 'departments'))
             ->with('i');
     }
 
@@ -296,21 +293,23 @@ class JobApplicantController extends Controller
         $departments    = $request->department;
 
         if ($start_date && $end_date) {
-            $jobVacancies = JobVacancy::whereDate('date_start', '>=', $start_date)
-                ->whereDate('deadline', '<=', $end_date)
+            $jobApplicant = JobApplicant::whereDate('created_at', '>=', $start_date)
+                ->whereDate('created_at', '<=', $end_date)
                 ->get();
             $type = 'Semua Pegawai';
         }
         if ($start_date && $end_date && $departments) {
-            $jobVacancies = JobVacancy::where('department_id', $departments)->whereDate('date_start', '>=', $start_date)
-                ->whereDate('deadline', '<=', $end_date)
+            $jobApplicant = JobApplicant::whereHas('jobVacancy', function ($query) use ($departments) {
+                $query->where('department_id', $departments);
+            })->whereDate('created_at', '>=', $start_date)
+                ->whereDate('created_at', '<=', $end_date)
                 ->get();
             $type_departmen = Departmen::find($departments);
             $type = $type_departmen->name;
         }
 
-        return view('job-vacancy.tab.result.all', compact(
-            'jobVacancies',
+        return view('job-applicant.result.all', compact(
+            'jobApplicant',
             'start_date',
             'end_date',
             'type'

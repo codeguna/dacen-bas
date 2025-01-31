@@ -1,6 +1,6 @@
 <div class="col-md-12 mt-2">
     <hr>
-    
+
 </div>
 <div class="col-md-12">
     <div class="card">
@@ -12,8 +12,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Tanggal Awal</label>
-                        <input class="form-control" type="date" name="start_date"
-                            value="{{ request('start_date') }}">
+                        <input class="form-control" type="date" name="start_date" value="{{ request('start_date') }}">
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -26,6 +25,7 @@
                     <div class="form-group">
                         <label>Departemen</label>
                         <select class="form-control" name="department">
+                            <option disabled selected>== Pilih Departemen ==</option>
                             @foreach ($departments as $value => $key)
                                 <option value="{{ $key }}">{{ $value }}</option>
                             @endforeach

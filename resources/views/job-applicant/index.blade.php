@@ -11,11 +11,11 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-            
+
                             <span id="card_title">
                                 <h3><i class="fas fa-user-tie text-indigo"></i> Data Pelamar</h3>
                             </span>
-            
+
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -23,7 +23,7 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-            
+
                     <div class="card-body">
                         <div class="float-right">
                             <form action="{{ route('admin.job-applicants.index') }}" method="GET">
@@ -32,9 +32,9 @@
                                     <input type="search" class="form-control w-100" name="search"
                                         placeholder="Tekan [ENTER]" value="{{ request('search') }}">
                                 </div>
-            
+
                             </form>
-            
+
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover">
@@ -67,7 +67,7 @@
                                         @endphp
                                         <tr>
                                             <td>{{ ++$i }}</td>
-            
+
                                             <td>{{ $jobApplicant->jobVacancy->title ?? '' }}</td>
                                             <td>{{ $jobApplicant->full_name }}, {{ $jobApplicant->back_title }}</td>
                                             <td>
@@ -75,46 +75,46 @@
                                                     @case(1)
                                                         SMA/SMK
                                                     @break
-            
+
                                                     @case(2)
                                                         D1
                                                     @break
-            
+
                                                     @case(3)
                                                         D3
                                                     @break
-            
+
                                                     @case(4)
                                                         D4
                                                     @break
-            
+
                                                     @case(5)
                                                         S1
                                                     @break
-            
+
                                                     @case(6)
                                                         S2
                                                     @break
-            
+
                                                     @case(7)
                                                         S3
                                                     @break
-            
+
                                                     @default
                                                 @endswitch - {{ $jobApplicant->university }}
                                                 ({{ $jobApplicant->graduation_year }})
                                             </td>
-            
+
                                             <td>
                                                 @switch($jobApplicant->gender)
                                                     @case(1)
                                                         Laki-laki
                                                     @break
-            
+
                                                     @case(2)
                                                         Perempuan
                                                     @break
-            
+
                                                     @default
                                                 @endswitch
                                             </td>
@@ -128,7 +128,7 @@
                                                     <i class="fa fa-paperclip" aria-hidden="true"></i>
                                                 </a>
                                             </td>
-            
+
                                             <td>
                                                 @if ($jobApplicant->is_approved != 3)
                                                     <form
@@ -146,14 +146,14 @@
                                                         </div>
                                                         @csrf
                                                         @method('DELETE')
-            
+
                                                     </form>
                                                 @else
                                                     <span class="badge bg-info">
                                                         <i class="fas fa-check-double"></i> Sudah jadi Pegawai
                                                     </span>
                                                 @endif
-            
+
                                             </td>
                                             <td>
                                                 @switch($jobApplicant->is_approved)
@@ -162,25 +162,25 @@
                                                                 aria-hidden="true"></i> Dalam
                                                             proses</span>
                                                     @break
-            
+
                                                     @case(1)
                                                         <span class="badge bg-success"><i class="fa fa-check-circle"
                                                                 aria-hidden="true"></i>
                                                             Diterima</span>
                                                     @break
-            
+
                                                     @case(2)
                                                         <span class="badge bg-danger"><i class="fa fa-times-circle"
                                                                 aria-hidden="true"></i>
                                                             Ditolak</span>
                                                     @break
-            
+
                                                     @case(3)
                                                         <span class="badge bg-dark"><i class="fa fa-check-circle"
                                                                 aria-hidden="true"></i>
                                                             Sudah jadi Pegawai</span>
                                                     @break
-            
+
                                                     @default
                                                 @endswitch
                                             </td>
@@ -194,12 +194,16 @@
                                         @endforelse
                                     </tbody>
                                 </table>
+                                {!! $jobApplicants->links() !!}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            @include('job-applicant.tab.report')
+            <form action="{{ route('admin.job-applicants.all-applicant') }}" method="GET">
+                @csrf
+                @include('job-applicant.tab.report')
+            </form>
+
         </div>
-    </div>
-@endsection
+    @endsection

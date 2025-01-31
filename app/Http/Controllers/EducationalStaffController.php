@@ -181,7 +181,7 @@ class EducationalStaffController extends Controller
         if ($id_card_file) {
             $name_file = time() . "_" . $id_card_file->getClientOriginalName();
             // Directory for uploading the file
-            $tujuan_upload = 'data_lampiran_pelamar';
+            $tujuan_upload = 'data_ktp_tendik';
             $id_card_file->move($tujuan_upload, $name_file);
 
             $updateData['id_card'] = $name_file;

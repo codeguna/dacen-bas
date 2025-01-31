@@ -81,55 +81,113 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse
+                                @forelse($jobApplicant as $applicant)
+                                    @php
+                                        $birthDate = $applicant->born_date;
+                                        $birthDateTimestamp = strtotime($birthDate);
+                                        $age = date('Y') - date('Y', $birthDateTimestamp); // Jika bulan dan hari saat ini belum melewati bulan dan hari lahir, kurangi umur dengan satu tahun if (date('md', $birthDateTimestamp) > date('md')) { $age--; }
+                                    @endphp
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td>{{ $requestDate }}</td>
-                                        <td>{{ $vacancy->title }}</td>
-                                        <td>{{ $vacancy->department->name }}</td>
-                                        <td>{{ $vacancy->amount_needed }}</td>
-                                        <td>{{ $vacancy->min_age }}</td>
-                                        <td>{{ $vacancy->max_age }}</td>
-                                        <td>{{ $date_start }}</td>
-                                        <td>{{ $deadline }}</td>
+                                        <td>{{ $applicant->jobVacancy->department->name }}</td>
+                                        <td>{{ $applicant->full_name }}</td>
                                         <td>
-                                            @foreach ($vacancy->jobApplicant as $applicant)
-                                                @if ($applicant)
-                                                    @if ($loop->first)
-                                                        {{ $applicant->count() }} orang
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                            @switch($applicant->level)
+                                                @case(1)
+                                                    SMA/SMK
+                                                @break
+
+                                                @case(2)
+                                                    D1
+                                                @break
+
+                                                @case(3)
+                                                    D3
+                                                @break
+
+                                                @case(4)
+                                                    D4
+                                                @break
+
+                                                @case(5)
+                                                    S1
+                                                @break
+
+                                                @case(6)
+                                                    S2
+                                                @break
+
+                                                @case(7)
+                                                    S3
+                                                @break
+
+                                                @default
+                                            @endswitch | {{ $applicant->university }} -
+                                            {{ $applicant->university_base }}</td>
+                                        <td>
+                                            @if ($applicant->gender == 1)
+                                                Laki-laki
+                                            @elseif ($applicant->gender == 2)
+                                                Perempuan
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $applicant->born_place }}
+                                        </td>
+                                        <td>{{ $age }} tahun</td>
+                                        <td>{{ $applicant->jobVacancy->created_at->diffForHumans() }}</td>
+                                        <td> @switch($applicant->is_approved)
+                                                @case(0)
+                                                    <i class="fa fa-hourglass-start" aria-hidden="true"></i> Dalam
+                                                    proses
+                                                @break
+
+                                                @case(1)
+                                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                                    Diterima
+                                                @break
+
+                                                @case(2)
+                                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                                    Ditolak
+                                                @break
+
+                                                @case(3)
+                                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                                    Sudah jadi Pegawai
+                                                @break
+
+                                                @default
+                                            @endswitch
                                         </td>
                                     </tr>
-                                @empty
-                                @endforelse
-
-                            </tbody>
-                        </table>
+                                    @empty
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
             </div>
+            <footer class="footer">
+                <p>
+                    <strong>&copy; {{ date('Y') }} IDE LPKIA.</strong>
+                    All rights reserved. | Dicetak pada:
+                    <span id="timestamp"></span>
+                </p>
+            </footer>
+            <script>
+                // Mengatur timestamp pada elemen span dengan id "timestamp"
+                var timestampElement = document.getElementById('timestamp');
+                var currentDate = new Date();
+                var timestamp = currentDate.toLocaleString();
+                timestampElement.innerHTML = timestamp;
+            </script>
+            <!-- Bootstrap JS, Popper.js, and jQuery -->
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        </body>
 
-        </div>
-        <footer class="footer">
-            <p>
-                <strong>&copy; {{ date('Y') }} IDE LPKIA.</strong>
-                All rights reserved. | Dicetak pada:
-                <span id="timestamp"></span>
-            </p>
-        </footer>
-        <script>
-            // Mengatur timestamp pada elemen span dengan id "timestamp"
-            var timestampElement = document.getElementById('timestamp');
-            var currentDate = new Date();
-            var timestamp = currentDate.toLocaleString();
-            timestampElement.innerHTML = timestamp;
-        </script>
-        <!-- Bootstrap JS, Popper.js, and jQuery -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </body>
-
-</html>
+    </html>
