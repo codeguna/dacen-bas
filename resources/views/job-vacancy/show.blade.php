@@ -176,12 +176,14 @@
                             <td>
                                 <strong>
                                     @if ($age <= $jobVacancy->max_age)
-                                        {{ $age }} |<i class="fa fa-check-square text-success"
+                                        {{ $age }} tahun | <i class="fa fa-check-square text-success"
                                             aria-hidden="true"></i> Usia Memenuhi
                                     @else
                                         {{ $age }} |<i class="fa fa-times-circle text-danger"
                                             aria-hidden="true"></i> Usia Tidak Memenuhi
                                     @endif
+
+
                                 </strong>
                             </td>
                             <td>
@@ -200,8 +202,7 @@
                                             <i class="fa fa-times-circle" aria-hidden="true"></i> Tolak
                                         </a>
                                     </div>
-                                    @else
-                                    
+                                @else
                                 @endif
                             </td>
                             <td>
