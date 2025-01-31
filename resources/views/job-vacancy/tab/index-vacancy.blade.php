@@ -108,7 +108,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9">
+                                <td colspan="10">
                                     <center>== Tidak ada permintaan Pelamar ==</center>
                                 </td>
                             </tr>
