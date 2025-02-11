@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmployeeDevelopmentController;
+use App\Http\Controllers\EmployeeLeaveController;
 use App\Http\Controllers\HomebaseController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\JobApplicantController;
@@ -215,4 +216,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
      Route::get('job-applicant/set-as-employee', [JobVacancyController::class, 'setAsEmployee'])->name('job-applicants.set-as-employee');
      Route::get('job-applicant/result-applicant', [JobApplicantController::class, 'resultAllApplicants'])->name('job-applicants.all-applicant');
      //End Route job-vacancies
+     //Route Employee Leaves
+     Route::resource('employee-leaves', 'EmployeeLeaveController');
+     Route::get('employee-leave', [EmployeeLeaveController::class, 'generateEmployee'])->name('employee-leaves.generate');
+     //End Route Employee Leaves
+
 });
