@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departmen;
+use App\Models\EmployeeLeave;
 use App\Models\NotScanLog;
 use App\Models\Reason;
 use App\User;
@@ -61,9 +62,42 @@ class NotScanLogController extends Controller
     public function store(Request $request)
     {
         request()->validate(NotScanLog::$rules);
+        $pin            = $request->pin;
+        $reason_id      = $request->reason_id;
+        $note           = $request->note;
+        $date           = $request->date;
+        $year           = date('Y');
 
-        $notScanLog = NotScanLog::create($request->all());
+        $notScanLog = NotScanLog::create([
+            'pin'           => $pin,
+            'reason_id'     => $reason_id,
+            'note'          => $note,
+            'date'          => $date,
+            'created_at'    => now(),
+        ]);
 
+        $checkLeave     = EmployeeLeave::where('pin', '=', $pin)
+            ->where('year', '=', $year)
+            ->exists();
+        $currentLeave   = EmployeeLeave::select('amount')
+            ->where('pin', '=', $pin)
+            ->where('year', '=', $year)
+            ->sum('amount');
+
+        if ($checkLeave) {
+            $employeeLeaves = EmployeeLeave::select('pin')
+                ->where('pin', '=', $pin)
+                ->where('year', '=', $year)
+                ->first();
+
+            EmployeeLeave::where('pin', '=', $pin)
+                ->where('year', '=', $year)
+                ->update([
+                    'amount' => $currentLeave - 1
+                ]);
+        } else {
+            return redirect()->back()->with('warning', 'Tidak ditemukan data Cuti Karyawan Ini!');
+        }
         return redirect()->route('admin.not-scan-logs.index')
             ->with('success', 'Berhasil menambahkan data ketidakhadiran.');
     }
@@ -126,12 +160,17 @@ class NotScanLogController extends Controller
 
     public function getNotScan(Request $request)
     {
+        $year       = date('Y');
         $pin        = $request->pin;
         $date       = $request->date;
         $name       = User::select('name')->where('pin', $pin)->first();
         $reasons    = Reason::orderBy('name', 'ASC')->pluck('id', 'name');
+        $currentLeave   = EmployeeLeave::select('amount')
+            ->where('pin', '=', $pin)
+            ->where('year', '=', $year)
+            ->sum('amount');
 
-        return view('not-scan-log.create', compact('pin', 'date', 'reasons', 'name'));
+        return view('not-scan-log.create', compact('pin', 'date', 'reasons', 'name', 'currentLeave'));
     }
 
     public function selectRecapNotPresent()

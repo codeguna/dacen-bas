@@ -39,7 +39,12 @@
                                         <select class="form-control" name="reason_id" required>
                                             <option disabled selected>== Pilih Alasan ==</option>
                                             @foreach ($reasons as $value => $key)
-                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                <option value="{{ $key }}"
+                                                    @if ($key == 1) @if ($currentLeave < 1) disabled @endif
+                                                    @endif>{{ $value }} @if ($key == 1)
+                                                        | Sisa {{ $currentLeave }}
+                                                    @endif
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>

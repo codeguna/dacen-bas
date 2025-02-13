@@ -19,10 +19,10 @@ class EmployeeLeaveController extends Controller
      */
     public function index()
     {
-        $employeeLeaves = EmployeeLeave::latest()->paginate();
+        $employeeLeaves = EmployeeLeave::latest()->get();
 
         return view('employee-leave.index', compact('employeeLeaves'))
-            ->with('i', (request()->input('page', 1) - 1) * $employeeLeaves->perPage());
+            ->with('i');
     }
 
     /**

@@ -34,7 +34,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table id="example1" class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -76,8 +76,29 @@
                         </div>
                     </div>
                 </div>
-                {!! $employeeLeaves->links() !!}
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    @parent
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            });
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
 @endsection
