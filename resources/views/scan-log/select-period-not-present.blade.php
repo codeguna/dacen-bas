@@ -45,6 +45,13 @@
                 <div class="card">
                     <div class="card-header">
                         <h4><i class="fa fa-plus-circle text-success" aria-hidden="true"></i> Daftar Nama Karyawan</h4>
+                        <div class="alert alert-warning" role="alert">
+                            <strong>Pastikan sudah Generate Cuti, jika belum</strong> Klik tombol disamping <a
+                                class="btn btn-success" href="{{ route('admin.employee-leaves.index') }}">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+
                     </div>
                     <div class="card-body">
                         <table class="table table-sm table-striped">

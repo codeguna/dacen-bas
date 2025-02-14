@@ -68,21 +68,28 @@ class NotScanLogController extends Controller
         $date           = $request->date;
         $year           = date('Y');
 
-        $notScanLog = NotScanLog::create([
-            'pin'           => $pin,
-            'reason_id'     => $reason_id,
-            'note'          => $note,
-            'date'          => $date,
-            'created_at'    => now(),
-        ]);
-
-        $checkLeave     = EmployeeLeave::where('pin', '=', $pin)
-            ->where('year', '=', $year)
-            ->exists();
         $currentLeave   = EmployeeLeave::select('amount')
             ->where('pin', '=', $pin)
             ->where('year', '=', $year)
             ->sum('amount');
+        if ($currentLeave < 1) {
+            return redirect()->back()->with('warning', 'Jatah cuti karyawan ini sudah habis!');
+        }
+        if ($currentLeave > 0) {
+            $notScanLog = NotScanLog::create([
+                'pin'           => $pin,
+                'reason_id'     => $reason_id,
+                'note'          => $note,
+                'date'          => $date,
+                'created_at'    => now(),
+            ]);
+        }
+
+
+        $checkLeave     = EmployeeLeave::where('pin', '=', $pin)
+            ->where('year', '=', $year)
+            ->exists();
+
 
         if ($checkLeave) {
             $employeeLeaves = EmployeeLeave::select('pin')
@@ -150,13 +157,39 @@ class NotScanLogController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $notScanLog = NotScanLog::find($id)->delete();
+        $cuti = $request->reason;
+        $pin = $request->pin;
+        $year = date('Y');
+
+        $notScanLog = NotScanLog::where('pin', '=', $pin)->first();
+
+        //mengembalikan jumlah cuti +1
+        if ($cuti == 1 && $notScanLog) {
+            $employeeLeave = EmployeeLeave::where('pin', '=', $pin)
+                ->where('year', '=', $year)
+                ->first();
+
+            if ($employeeLeave) {
+                $currentLeave = $employeeLeave->amount;
+
+                // Ensure that we update the 'amount' field properly
+                $employeeLeave->update([
+                    'amount' => $currentLeave + 1
+                ]);
+            }
+        }
+
+        // Delete the NotScanLog record
+        if ($notScanLog) {
+            $notScanLog->delete();
+        }
 
         return redirect()->route('admin.not-scan-logs.index')
             ->with('success', 'NotScanLog deleted successfully');
     }
+
 
     public function getNotScan(Request $request)
     {

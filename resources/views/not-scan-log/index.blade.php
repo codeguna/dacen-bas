@@ -89,6 +89,8 @@
                                                             class="fa fa-fw fa-edit"></i></a>
                                                     @csrf
                                                     @method('DELETE')
+                                                    <input type="hidden" name="reason" value="{{ $notScanLog->reason_id }}">
+                                                    <input type="hidden" name="pin" value="{{ $notScanLog->pin }}">
                                                     <button type="submit" class="btn btn-danger btn-sm"><i
                                                             class="fa fa-fw fa-trash"></i></button>
                                                 </form>

@@ -19,12 +19,24 @@
                                 $tahun = date('Y');
                             @endphp
                             <div class="float-right">
-                                <a href="{{ route('admin.employee-leaves.generate', ['year' => $tahun]) }}"
-                                    class="btn btn-warning btn-sm float-right" data-placement="left">
-                                    <i class="fa fa-magic" aria-hidden="true"></i> Generate
-                                </a>
+                                <div class="btn-group">
+                                    <a href="#" data-toggle="modal" data-target="#createEmployeeLeave"
+                                            class="btn btn-success btn-sm float-right" data-placement="left">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Karyawan
+                                        </a>
+                                    <a href="{{ route('admin.employee-leaves.generate', ['year' => $tahun]) }}"
+                                        class="btn btn-warning btn-sm float-right" data-placement="left">
+                                        <i class="fa fa-magic" aria-hidden="true"></i> Generate
+                                    </a>
+                                </div>
                             </div>
+                            @include('employee-leave.modal.create')
                         </div>
+                        <div class="alert alert-primary" role="alert">
+                            <strong>Perhatian!</strong> Cukup lakukan proses <b>Generate</b> ini 1x. Jika ada
+                            ketidaksesuaian data silahkan hapus atau edit.
+                        </div>
+
                     </div>
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success">
@@ -37,8 +49,6 @@
                             <table id="example1" class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
-                                        <th>No</th>
-
                                         <th>Nama</th>
                                         <th>Jumlah Cuti</th>
 
@@ -48,25 +58,22 @@
                                 <tbody>
                                     @foreach ($employeeLeaves as $employeeLeave)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
 
                                             <td>{{ $employeeLeave->user->name }}</td>
                                             <td>{{ $employeeLeave->amount }}</td>
 
                                             <td>
                                                 <form
-                                                    action="{{ route('admin.employee-leaves.destroy', $employeeLeave->id) }}"
+                                                    action="{{ route('admin.employee-leaves.destroy', $employeeLeave->pin) }}"
                                                     method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('admin.employee-leaves.show', $employeeLeave->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <input type="hidden" name="year" value="{{ date('Y') }}">
                                                     <a class="btn btn-sm btn-success"
-                                                        href="{{ route('admin.employee-leaves.edit', $employeeLeave->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                        href="{{ route('admin.employee-leaves.edit', $employeeLeave->pin) }}"><i
+                                                            class="fa fa-fw fa-edit"></i></a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                            class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -88,16 +95,7 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            });
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
+                "order": [[0, 'asc']]
             });
         });
     </script>

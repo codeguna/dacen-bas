@@ -4,7 +4,7 @@
         <form method="post" action="{{ route('admin.not-scan-logs.store') }}" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Aktivitas Scan-Logs Baru</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Ketidakhadiran Baru</h5>
                 </div>
                 <div class="modal-body">
                     @csrf

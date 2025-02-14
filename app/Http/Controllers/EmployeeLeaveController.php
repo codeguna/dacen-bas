@@ -19,9 +19,10 @@ class EmployeeLeaveController extends Controller
      */
     public function index()
     {
-        $employeeLeaves = EmployeeLeave::latest()->get();
+        $employeeLeaves = EmployeeLeave::where('year','=', date('Y'))->latest()->get();
+        $users = User::select('pin','name')->orderBy('name','ASC')->whereNotNull('pin')->pluck('pin','name');
 
-        return view('employee-leave.index', compact('employeeLeaves'))
+        return view('employee-leave.index', compact('employeeLeaves','users'))
             ->with('i');
     }
 
@@ -32,8 +33,8 @@ class EmployeeLeaveController extends Controller
      */
     public function create()
     {
-        $EmployeeLeave = new EmployeeLeave();
-        return view('employee-leave.create', compact('EmployeeLeave'));
+        $employeeLeave = new EmployeeLeave();
+        return view('employee-leave.create', compact('employeeLeave'));
     }
 
     /**
@@ -44,12 +45,20 @@ class EmployeeLeaveController extends Controller
      */
     public function store(Request $request)
     {
+        $pin = $request->pin;
+        $year = date('Y');
+
+        $checkDuplicate = EmployeeLeave::where('pin','=',$pin)->where('year','=',$year)->exists();
+        if($checkDuplicate)
+        {
+            return redirect()->back()->with('warning','Data Karyawan Sudah ada di tahun ini!');
+        }
         request()->validate(EmployeeLeave::$rules);
 
         $EmployeeLeave = EmployeeLeave::create($request->all());
 
-        return redirect()->route('employee-leaves.index')
-            ->with('success', 'EmployeeLeave created successfully.');
+        return redirect()->route('admin.employee-leaves.index')
+            ->with('success', 'Berhasil menambahkan data karyawan!');
     }
 
     /**
@@ -71,11 +80,11 @@ class EmployeeLeaveController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($pin)
     {
-        $EmployeeLeave = EmployeeLeave::find($id);
+        $employeeLeave = EmployeeLeave::where('pin','=',$pin)->first();
 
-        return view('employee-leave.edit', compact('EmployeeLeave'));
+        return view('employee-leave.edit', compact('employeeLeave'));
     }
 
     /**
@@ -85,14 +94,18 @@ class EmployeeLeaveController extends Controller
      * @param  EmployeeLeave $EmployeeLeave
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EmployeeLeave $EmployeeLeave)
+    public function update(Request $request, $pin)
     {
         request()->validate(EmployeeLeave::$rules);
+        $amount         = $request->amount;
+        $EmployeeLeave  = EmployeeLeave::where('pin','=',$pin)->first();
 
-        $EmployeeLeave->update($request->all());
+        $EmployeeLeave->update([
+            'amount'    => $amount
+        ]);
 
-        return redirect()->route('employee-leaves.index')
-            ->with('success', 'EmployeeLeave updated successfully');
+        return redirect()->route('admin.employee-leaves.index')
+            ->with('success', 'Berhasil perbarui data Cuti!');
     }
 
     /**
@@ -100,12 +113,14 @@ class EmployeeLeaveController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($pin, Request $request)
     {
-        $EmployeeLeave = EmployeeLeave::find($id)->delete();
+        $year          = $request->year;
+        $EmployeeLeave = EmployeeLeave::where('pin','=',$pin)->where('year','=',$year)->first();
+        $EmployeeLeave->delete();
 
-        return redirect()->route('employee-leaves.index')
-            ->with('success', 'EmployeeLeave deleted successfully');
+        return redirect()->back()
+            ->with('success', 'Berhasil hapus data karyawan!');
     }
 
     public function generateEmployee(Request $request)
