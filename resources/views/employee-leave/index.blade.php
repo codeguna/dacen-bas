@@ -36,6 +36,9 @@
                             <strong>Perhatian!</strong> Cukup lakukan proses <b>Generate</b> ini 1x. Jika ada
                             ketidaksesuaian data silahkan hapus atau edit.
                         </div>
+                        <div class="alert alert-success" role="alert">
+                            <strong>Tambah Karyawan.</strong> Jika ada Karyawan yang terlewat!.
+                        </div>
 
                     </div>
                     @if ($message = Session::get('success'))
