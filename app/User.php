@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Departmen;
 use App\Models\EmployeeDevelopmentMember;
+use App\Models\EmployeeLeave;
 use App\Models\NotScanLog;
 use App\Models\ScanLog;
 use App\Models\Willingness;
@@ -79,5 +80,10 @@ class User extends Authenticatable
     public function developmentMember()
     {
         return $this->belongsTo(EmployeeDevelopmentMember::class, 'user_id', 'id');
+    }
+
+    public function leaves()
+    {
+        return $this->hasMany(EmployeeLeave::class,'pin','pin');
     }
 }
