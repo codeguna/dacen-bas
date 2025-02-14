@@ -183,7 +183,7 @@ class NotScanLogController extends Controller
 
         // Delete the NotScanLog record
         if ($notScanLog) {
-            $notScanLog->delete();
+            NotScanLog::find($id)->delete();
         }
 
         return redirect()->route('admin.not-scan-logs.index')
