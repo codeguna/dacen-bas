@@ -74,7 +74,7 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $notScanLog->date }}</td>
-                                            <td>{{ $notScanLog->user->name ?? '' }}</td>
+                                            <td>{{ $notScanLog->user->name ?? 'Resign/Pensiun' }}</td>
                                             <td>{{ $notScanLog->reason->name }}</td>
                                             <td>{{ $notScanLog->note }}</td>
 
