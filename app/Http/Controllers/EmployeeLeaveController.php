@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EmployeeLeave;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class EmployeeLeaveController
@@ -17,12 +18,23 @@ class EmployeeLeaveController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employeeLeaves = EmployeeLeave::where('year','=', date('Y'))->latest()->get();
-        $users = User::select('pin','name')->orderBy('name','ASC')->whereNotNull('pin')->pluck('pin','name');
+        $year = $request->years;
+        //return $year;
+        if (!Gate::allows('bas_menu')) {
+            return abort(401);
+        }
+        if ($year) {
+            $employeeLeaves = EmployeeLeave::where('year', '=', $year)->latest()->get();
+        } else {
+            $employeeLeaves = EmployeeLeave::where('year', '=', date('Y'))->latest()->get();
+        }
 
-        return view('employee-leave.index', compact('employeeLeaves','users'))
+        $users = User::select('pin', 'name')->orderBy('name', 'ASC')->whereNotNull('pin')->pluck('pin', 'name');
+        $year = EmployeeLeave::select('year')->groupBy('year')->pluck('year');
+
+        return view('employee-leave.index', compact('employeeLeaves', 'users', 'year'))
             ->with('i');
     }
 
@@ -48,10 +60,9 @@ class EmployeeLeaveController extends Controller
         $pin = $request->pin;
         $year = date('Y');
 
-        $checkDuplicate = EmployeeLeave::where('pin','=',$pin)->where('year','=',$year)->exists();
-        if($checkDuplicate)
-        {
-            return redirect()->back()->with('warning','Data Karyawan Sudah ada di tahun ini!');
+        $checkDuplicate = EmployeeLeave::where('pin', '=', $pin)->where('year', '=', $year)->exists();
+        if ($checkDuplicate) {
+            return redirect()->back()->with('warning', 'Data Karyawan Sudah ada di tahun ini!');
         }
         request()->validate(EmployeeLeave::$rules);
 
@@ -82,7 +93,7 @@ class EmployeeLeaveController extends Controller
      */
     public function edit($pin)
     {
-        $employeeLeave = EmployeeLeave::where('pin','=',$pin)->first();
+        $employeeLeave = EmployeeLeave::where('pin', '=', $pin)->first();
 
         return view('employee-leave.edit', compact('employeeLeave'));
     }
@@ -98,7 +109,7 @@ class EmployeeLeaveController extends Controller
     {
         request()->validate(EmployeeLeave::$rules);
         $amount         = $request->amount;
-        $EmployeeLeave  = EmployeeLeave::where('pin','=',$pin)->first();
+        $EmployeeLeave  = EmployeeLeave::where('pin', '=', $pin)->first();
 
         $EmployeeLeave->update([
             'amount'    => $amount
@@ -116,7 +127,7 @@ class EmployeeLeaveController extends Controller
     public function destroy($pin, Request $request)
     {
         $year          = $request->year;
-        $EmployeeLeave = EmployeeLeave::where('pin','=',$pin)->where('year','=',$year)->first();
+        $EmployeeLeave = EmployeeLeave::where('pin', '=', $pin)->where('year', '=', $year)->first();
         $EmployeeLeave->delete();
 
         return redirect()->back()
@@ -131,7 +142,7 @@ class EmployeeLeaveController extends Controller
         if ($checkData) {
             return redirect()->back()->with('success', 'Data cuti karyawan sudah di generate untuk tahun ' . $year);
         }
-        $users = User::select('pin','name')->orderBy('name','ASC')->whereNotNull('pin')->get();
+        $users = User::select('pin', 'name')->orderBy('name', 'ASC')->whereNotNull('pin')->get();
 
         $dataToInsert = [];
 
@@ -148,5 +159,24 @@ class EmployeeLeaveController extends Controller
         EmployeeLeave::insert($dataToInsert);
 
         return redirect()->back()->with('success', 'Data cuti karyawan berhasil digenerate untuk tahun ' . $year);
+    }
+
+    public function printPerson(Request $request)
+    {
+        $name = $request->pin;
+        $year = $request->years;
+
+        if ($name && $year) {
+            $employee = EmployeeLeave::where('pin', '=', $name)->where('year', '=', $year)->first();
+            $type = 'Individu';
+            return view('employee-leave.report.result-person', compact('employee', 'year', 'type'));
+        }
+        if ($year) {
+            $employee = EmployeeLeave::where('year', '=', $year)->whereHas('user', function ($query) {
+                $query->orderBy('name', 'ASC');
+            })->get();
+            $type = 'Semua';
+            return view('employee-leave.report.result-all', compact('employee', 'year', 'type'))->with('i');
+        }
     }
 }

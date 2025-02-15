@@ -218,7 +218,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
      //End Route job-vacancies
      //Route Employee Leaves
      Route::resource('employee-leaves', 'EmployeeLeaveController');
-     Route::get('employee-leave', [EmployeeLeaveController::class, 'generateEmployee'])->name('employee-leaves.generate');
+     Route::get('employee-leave/generate', [EmployeeLeaveController::class, 'generateEmployee'])->name('employee-leaves.generate');
+     Route::get('employee-leave/report', [EmployeeLeaveController::class, 'printPerson'])->name('employee-leaves.report-person');
      //End Route Employee Leaves
 
 });
