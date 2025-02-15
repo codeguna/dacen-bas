@@ -167,13 +167,15 @@ class EmployeeLeaveController extends Controller
         $year = $request->years;
 
         if ($name && $year) {
-            $employee = EmployeeLeave::where('pin', '=', $name)->where('year', '=', $year)->first();
+            $employee = User::where('pin', '=', $name)->orderBy('name', 'ASC')->whereHas('leaves', function ($query) use ($year){
+                $query->where('year', '=', $year);
+            })->first();
             $type = 'Individu';
             return view('employee-leave.report.result-person', compact('employee', 'year', 'type'));
         }
         if ($year) {
-            $employee = EmployeeLeave::where('year', '=', $year)->whereHas('user', function ($query) {
-                $query->orderBy('name', 'ASC');
+            $employee = User::where('pin', '<>', null)->orderBy('name', 'ASC')->whereHas('leaves', function ($query) use ($year){
+                $query->where('year', '=', $year);
             })->get();
             $type = 'Semua';
             return view('employee-leave.report.result-all', compact('employee', 'year', 'type'))->with('i');

@@ -51,16 +51,14 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
                                     <th>Nama</th>
                                     <th>Jumlah Cuti</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>1</td>
-                                    <td>{{ $employee->user->name }}</td>
-                                    <td>{{ $employee->amount }}</td>
+                                    <td>{{ $employee->name }}</td>
+                                    <td>{{ $employee->leaves->amount }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -75,5 +73,4 @@
             </div>
         </div>
     </body>
-
 </html>

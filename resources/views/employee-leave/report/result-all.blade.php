@@ -48,10 +48,9 @@
                         <div style="border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 20px;"></div>
                     </div>
                     <div class="col-md-12">
-                        <table class="table">
+                        <table id="tableBody" class="table">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
                                     <th>Nama</th>
                                     <th>Jumlah Cuti</th>
                                 </tr>
@@ -59,14 +58,13 @@
                             <tbody>
                                 @forelse ($employee as $emp)
                                     <tr>
-                                        <td>{{ ++$i }}</td>
-                                        <td>{{ $emp->user->name }}</td>
-                                        <td>{{ $emp->amount }}</td>
+                                        <td>{{ $emp->name }}</td>
+                                        <td>{{ $emp->leaves->amount }}</td>
                                     </tr>
                                 @empty
-                                <tr>
-                                    <td colspan="3" align="center">== Tidak Ada Data ==</td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="2" align="center">== Tidak Ada Data ==</td>
+                                    </tr>
                                 @endforelse
 
                             </tbody>
@@ -82,5 +80,4 @@
             </div>
         </div>
     </body>
-
 </html>
