@@ -235,7 +235,7 @@ Presensi Saya
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="small-box bg-primary">
                 <div class="inner">
                     <p>Total jam kerja</p>
@@ -245,6 +245,18 @@ Presensi Saya
                     <i class="fas fa-clock    "></i>
                 </div>
                 <a href="#" class="small-box-footer">Detail data <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <p>Sisa Cuti</p>
+                    <h3>{{ Auth::user()->leaves->amount??'Data Cuti Belum di set. Hubungi BAS!' }}</h3>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-briefcase    "></i>
+                </div>
+                <a href="#" class="small-box-footer">Jika ada perbedaan/kesalahan data. Silahkan konfirmasikan ke BAS. <i class="fa fa-info-circle" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>

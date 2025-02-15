@@ -84,6 +84,6 @@ class User extends Authenticatable
 
     public function leaves()
     {
-        return $this->hasMany(EmployeeLeave::class,'pin','pin');
+        return $this->hasOne(EmployeeLeave::class,'pin','pin');
     }
 }
