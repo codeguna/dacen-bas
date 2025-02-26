@@ -184,7 +184,7 @@
                                         @endphp
                                         <tr>
                                             @if ($resultLateTime == null)
-                                            @elseif ($times <= $resultLateTime)
+                                            @elseif ($times < $resultLateTime)
                                                 @if ($now == date('Y-m-d'))
                                                 @else
                                                     <td>
