@@ -876,6 +876,7 @@ class ScanlogController extends Controller
 
         return view(
             'scan-log.result-late',
+            //'scan-log.report.report-scan',
             compact(
                 'users',
                 'start_date',

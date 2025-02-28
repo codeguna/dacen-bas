@@ -105,7 +105,7 @@
                                             @foreach ($scanlogs as $log)
                                                 @php
                                                     $date = $log->date;
-                                                    $firstScan = \App\Models\ScanLog::where('pin', $user->pin)
+                                                    $firstScan = \App\Models\ScanLog::select('scan','pin')->where('pin', $user->pin)
                                                         ->where(function ($query) use ($date) {
                                                             $query->whereDate('scan', '=', $date);
                                                         })
@@ -164,7 +164,7 @@
                                             @foreach ($scanlogs as $cepat)
                                                 @php
                                                     $date = $cepat->date;
-                                                    $firstScan = \App\Models\ScanLog::where('pin', $user->pin)
+                                                    $firstScan = \App\Models\ScanLog::select('scan')->where('pin', $user->pin)
                                                         ->whereDate('scan', '=', $date)
                                                         ->orderBy('scan', 'DESC')
                                                         ->first();
