@@ -109,7 +109,9 @@
                                 <small class="text-danger">Gunakan tanda koma (,)</small>
                         </td>
                         <td>
-                            <input class="form-control" type="number" min="0" name="contribution[0]" required>
+                            <input class="form-control" type="number" min="0" name="contribution[0]" step="any"
+                            lang="id" required>
+                            <small class="text-danger">Gunakan tanda koma (,)</small>
                         </td>
                         <td>
                             <input class="form-control" type="text" name="note[0]" required>

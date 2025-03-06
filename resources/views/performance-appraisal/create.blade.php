@@ -111,9 +111,11 @@
                         <td>
                             <input class="form-control" type="number" min="0" name="pure_pa[${paCount}]" step="any"
                                 lang="id" required>
+                                <small class="text-danger">Gunakan tanda koma (,)</small>
                         </td>
                         <td>
-                            <input class="form-control" type="number" min="0" name="contribution[${contributionCount}]" required>
+                            <input class="form-control" type="number" min="0" name="contribution[${contributionCount}]" step="any"
+                                lang="id"  required>
                             <small class="text-danger">Gunakan tanda koma (,)</small>
                         </td>
                         <td>

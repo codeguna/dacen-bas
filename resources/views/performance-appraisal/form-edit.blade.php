@@ -46,19 +46,26 @@
                     <tr>
                         <td>{{ ++$i }}</td>
                         <td>
-                            <input class="form-control" type="text" value="{{ $performanceAppraisal->user->name }}" readonly>
+                            <input class="form-control" type="text" value="{{ $performanceAppraisal->user->name }}"
+                                readonly>
                         </td>
                         <td>
-                            <input class="form-control" type="number" min="0" name="late_total" value="{{ $performanceAppraisal->late_total }}" required>
+                            <input class="form-control" type="number" min="0" name="late_total"
+                                value="{{ $performanceAppraisal->late_total }}" required>
                         </td>
                         <td>
-                            <input class="form-control" type="number" min="0" name="pure_pa" value="{{ $performanceAppraisal->pure_pa }}" required>
+                            <input class="form-control" type="number" min="0" name="pure_pa" step="any"
+                                lang="id" value="{{ $performanceAppraisal->pure_pa }}" required>
+                            <small class="text-danger">Gunakan tanda koma (,)</small>
                         </td>
                         <td>
-                            <input class="form-control" type="number" min="0" name="contribution" value="{{ $performanceAppraisal->contribution }}"  required>
+                            <input class="form-control" type="number" min="0" name="contribution" step="any"
+                                lang="id" value="{{ $performanceAppraisal->contribution }}" required>
+                            <small class="text-danger">Gunakan tanda koma (,)</small>
                         </td>
                         <td>
-                            <input class="form-control" type="text" name="note" value="{{ $performanceAppraisal->note }}" required>
+                            <input class="form-control" type="text" name="note"
+                                value="{{ $performanceAppraisal->note }}" required>
                         </td>
                     </tr>
                 </tbody>
