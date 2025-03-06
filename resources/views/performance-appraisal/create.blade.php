@@ -68,7 +68,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <button class="btn btn-danger w-100" type="submit" onclick="return confirm('Hapus data PA ini?')">
+                                    <button class="btn btn-danger w-100" type="submit"
+                                        onclick="return confirm('Hapus data PA ini?')">
                                         <i class="fa fa-trash" aria-hidden="true"></i> Hapus?
                                     </button>
                                 </div>
@@ -108,10 +109,12 @@
                            <input class="form-control" type="number" min="0" name="late_total[${lateCount}]" required>
                         </td>
                         <td>
-                            <input class="form-control" type="number" min="0" name="pure_pa[${paCount}]" required>
+                            <input class="form-control" type="number" min="0" name="pure_pa[${paCount}]" step="any"
+                                lang="id" required>
                         </td>
                         <td>
                             <input class="form-control" type="number" min="0" name="contribution[${contributionCount}]" required>
+                            <small class="text-danger">Gunakan tanda koma (,)</small>
                         </td>
                         <td>
                             <input class="form-control" type="text" name="note[${noteCount}]" required>

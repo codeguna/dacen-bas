@@ -101,8 +101,7 @@
                             </select>
                         </td>
                         <td>
-                            <input class="form-control" type="number" min="0" name="late_total[0]"
-                                step="any" lang="id" required>
+                            <input class="form-control" type="number" min="0" name="late_total[0]" required>
                         </td>
                         <td>
                             <input class="form-control" type="number" min="0" name="pure_pa[0]" step="any"
