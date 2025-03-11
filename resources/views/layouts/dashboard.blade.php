@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ env('APP_NAME') }} - @yield('template_title')</title>
+        <title>H.E.R.A - @yield('template_title')</title>
         <!-- DataTable -->
         <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
         <link rel="stylesheet"
@@ -105,7 +105,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="#" class="brand-link">
                     <img src="{{ asset('adminLTE/dist/img/dacen.png') }}" alt="AdminLTE Logo"
                         class="brand-image elevation-3" style="opacity: .8">
-                    <span class="brand-text font-weight-light">{{ env('APP_NAME') }}</span>
+                    <span class="brand-text font-weight-light">H.E.R.A</span>
                 </a>
 
                 <!-- Sidebar -->
