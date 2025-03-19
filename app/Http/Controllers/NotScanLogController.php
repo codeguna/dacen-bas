@@ -68,13 +68,16 @@ class NotScanLogController extends Controller
         $date           = $request->date;
         $year           = date('Y');
 
+
         $currentLeave   = EmployeeLeave::select('amount')
             ->where('pin', '=', $pin)
             ->where('year', '=', $year)
             ->sum('amount');
-        if ($currentLeave < 1) {
+            
+        if ($currentLeave < 1 && $reason_id == 1) {
             return redirect()->back()->with('warning', 'Jatah cuti karyawan ini sudah habis!');
         }
+
         if ($currentLeave > 0) {
             $notScanLog = NotScanLog::create([
                 'pin'           => $pin,
@@ -84,6 +87,7 @@ class NotScanLogController extends Controller
                 'created_at'    => now(),
             ]);
         }
+
 
 
         $checkLeave     = EmployeeLeave::where('pin', '=', $pin)
