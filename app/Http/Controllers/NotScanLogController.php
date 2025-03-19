@@ -73,7 +73,7 @@ class NotScanLogController extends Controller
             ->where('pin', '=', $pin)
             ->where('year', '=', $year)
             ->sum('amount');
-            
+
         if ($currentLeave < 1 && $reason_id == 1) {
             return redirect()->back()->with('warning', 'Jatah cuti karyawan ini sudah habis!');
         }
@@ -174,7 +174,7 @@ class NotScanLogController extends Controller
             $employeeLeave = EmployeeLeave::where('pin', '=', $pin)
                 ->where('year', '=', $year)
                 ->first();
-
+ 
             if ($employeeLeave) {
                 $currentLeave = $employeeLeave->amount;
 
