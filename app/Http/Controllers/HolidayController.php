@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Holiday;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -18,10 +19,10 @@ class HolidayController extends Controller
      */
     public function index()
     {
-        $holidays = Holiday::orderBy('date', 'ASC')->paginate();
+        $holidays = Holiday::orderBy('date', 'ASC')->whereYear('date','=',now()->year)->get();
 
         return view('holiday.index', compact('holidays'))
-            ->with('i', (request()->input('page', 1) - 1) * $holidays->perPage());
+            ->with('i');
     }
 
     /**

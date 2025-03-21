@@ -16,7 +16,7 @@ class ImportExcelController extends Controller
 
         Excel::import(new WillingnesessImport(), $file); // Lakukan impor menggunakan class import yang telah Anda buat
 
-        return redirect()->back()->with('success', 'Data kesediaan berhasil diimpor');
+        return redirect()->back()->with('success', 'Data kesediaan berhasil di unggah!');
     }
 
     public function importHolidays(Request $request)
@@ -25,6 +25,6 @@ class ImportExcelController extends Controller
 
         Excel::import(new HolidaysImport(), $file); // Lakukan impor menggunakan class import yang telah Anda buat
 
-        return redirect()->back()->with('success', 'Data kesediaan berhasil diimpor');
+        return redirect()->back()->with('success', 'Data Hari Libur berhasil di unggah!');
     }
 }
