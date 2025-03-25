@@ -13,7 +13,7 @@ $lastTwoDigits = substr($currentYear, -2);
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('NIP') }}
-                    <input class="form-control" type="number" min="0" name="nip" value="{{ $educationalStaff->nip }}"
+                    <input class="form-control" type="number" min="0" name="nip" value="{{ $educationalStaff->nip?? '' }}"
                         {{ $errors->has('nip') ? ' is-invalid' : '' }} required>
                     {!! $errors->first('nip', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
@@ -21,7 +21,7 @@ $lastTwoDigits = substr($currentYear, -2);
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Nama Lengkap') }}
-                    <input type="text" name="name" class="form-control" value="{{ $educationalStaff->name ? $educationalStaff->name : $full_name }}"
+                    <input type="text" name="name" class="form-control" value="{{ $educationalStaff->name??'' }}"
                         required>
                     {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
@@ -50,7 +50,7 @@ $lastTwoDigits = substr($currentYear, -2);
                         @endif
                     
                         @foreach ($getDepartmensId as $value => $key)
-                            <option value="{{ $key }}" {{ ($key == ($educationalStaff->department_id ?? $DeptID)) ? 'selected' : '' }}>
+                            <option value="{{ $key }}">
                                 {{ $value }}
                             </option>
                         @endforeach
