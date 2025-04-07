@@ -91,7 +91,13 @@
                                         <tr>
 
                                             <td>{{ $employeeLeave->user->name }}</td>
-                                            <td>{{ $employeeLeave->amount }}</td>
+                                            <td>
+                                                @if ($employeeLeave->amount < 1)
+                                                    0
+                                                @else
+                                                    {{ $employeeLeave->amount??'Cuti Not Set' }}
+                                                @endif
+                                            </td>
 
                                             <td>
                                                 <form

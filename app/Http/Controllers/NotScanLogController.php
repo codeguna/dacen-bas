@@ -106,7 +106,7 @@ class NotScanLogController extends Controller
             ->exists();
 
 
-        if ($checkLeave) {
+        if ($checkLeave && $reason_id == 1) {
             $employeeLeaves = EmployeeLeave::select('pin')
                 ->where('pin', '=', $pin)
                 ->where('year', '=', $year)
