@@ -252,11 +252,9 @@ Presensi Saya
                 <div class="inner">
                     <p>Sisa Cuti</p>
                     <h3>
-                        @if (Auth::user()->leaves->amount<1)
-                            0
-                            @else 
-                            {{Auth::user()->leaves->amount??'Data Cuti Belum di set. Hubungi BAS!'}}
-                        @endif
+                        {{ (Auth::user()->leaves->amount ?? 0) < 1 ? 0 : Auth::user()->leaves->amount }}
+
+                        
                     </h3>
                 </div>
                 <div class="icon">
