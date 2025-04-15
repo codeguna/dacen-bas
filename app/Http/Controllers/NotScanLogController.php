@@ -61,65 +61,43 @@ class NotScanLogController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(NotScanLog::$rules);
-        $pin            = $request->pin;
-        $reason_id      = $request->reason_id;
-        $note           = $request->note;
-        $date           = $request->date;
-        $year           = date('Y');
+        $request->validate(NotScanLog::$rules);
+        $pin = $request->pin;
+        $reason_id = $request->reason_id;
+        $note = $request->note;
+        $date = $request->date;
+        $year = date('Y');
 
-
-        $currentLeave   = EmployeeLeave::select('amount')
-            ->where('pin', '=', $pin)
-            ->where('year', '=', $year)
+        $currentLeave = EmployeeLeave::where('pin', $pin)
+            ->where('year', $year)
             ->sum('amount');
 
+        if ($reason_id == 1 && $currentLeave < 1) {
+            return redirect()->back()->with('warning', 'Jatah cuti karyawan ini sudah habis!');
+        }
+
+        NotScanLog::create([
+            'pin' => $pin,
+            'reason_id' => $reason_id,
+            'note' => $note,
+            'date' => $date,
+            'created_at' => now(),
+        ]);
+
         if ($reason_id == 1) {
-            if ($currentLeave < 1) {
-                return redirect()->back()->with('warning', 'Jatah cuti karyawan ini sudah habis!');
-            }
+            $checkLeave = EmployeeLeave::where('pin', $pin)
+                ->where('year', $year)
+                ->exists();
 
-            if ($currentLeave > 0) {
-                $notScanLog = NotScanLog::create([
-                    'pin'           => $pin,
-                    'reason_id'     => $reason_id,
-                    'note'          => $note,
-                    'date'          => $date,
-                    'created_at'    => now(),
-                ]);
+            if ($checkLeave) {
+                EmployeeLeave::where('pin', $pin)
+                    ->where('year', $year)
+                    ->decrement('amount');
+            } else {
+                return redirect()->back()->with('warning', 'Tidak ditemukan data Cuti Karyawan Ini!');
             }
-        }elseif($reason_id != 1){
-            $notScanLog = NotScanLog::create([
-                'pin'           => $pin,
-                'reason_id'     => $reason_id,
-                'note'          => $note,
-                'date'          => $date,
-                'created_at'    => now(),
-            ]);
         }
 
-
-
-
-        $checkLeave     = EmployeeLeave::where('pin', '=', $pin)
-            ->where('year', '=', $year)
-            ->exists();
-
-
-        if ($checkLeave && $reason_id == 1) {
-            $employeeLeaves = EmployeeLeave::select('pin')
-                ->where('pin', '=', $pin)
-                ->where('year', '=', $year)
-                ->first();
-
-            EmployeeLeave::where('pin', '=', $pin)
-                ->where('year', '=', $year)
-                ->update([
-                    'amount' => $currentLeave - 1
-                ]);
-        } else {
-            return redirect()->back()->with('warning', 'Tidak ditemukan data Cuti Karyawan Ini!');
-        }
         return redirect()->route('admin.not-scan-logs.index')
             ->with('success', 'Berhasil menambahkan data ketidakhadiran.');
     }
