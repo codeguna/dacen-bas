@@ -441,7 +441,7 @@
                             <i class="fa fa-database nav-icon" aria-hidden="true"></i>
                             <p>Import Presensi</p>
                         </a>
-                    </li>
+                    </li>                    
                 </ul>
             <li
                 class="nav-item {{ request()->is('admin/not-scan-logs/*') || request()->is('admin/not-scan-logs') || request()->is('admin/not-scan-log') || request()->is('admin/not-scan-log/input') ? 'menu-open' : '' }}">
@@ -597,6 +597,13 @@
                             class="nav-link {{ request()->is('admin/reasons') || request()->is('admin/reasons/*') ? 'active' : '' }}">
                             <i class="fa fa-question-circle nav-icon" aria-hidden="true"></i>
                             <p>Alasan Tidak Hadir</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.user.pin') }}"
+                            class="nav-link {{ request()->is('admin/user/view_users_pin') || request()->is('admin/user/view_users_pin/*') || request()->is('admin/user/set_users_pin/*') || request()->is('admin/user/set_users_pin/*') ? 'active' : '' }}">
+                            <i class="fa fa-calculator nav-icon" aria-hidden="true"></i>
+                            <p>Atur PIN Pengguna</p>
                         </a>
                     </li>
                     <li class="nav-item">
